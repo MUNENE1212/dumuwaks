@@ -78,8 +78,49 @@ exports.createTicket = async (req, res) => {
 
     await ticket.save();
 
-    // TODO: Notify support team
-    // TODO: Auto-assign based on category and agent availability
+    // Notify support team and auto-assign
+    try {
+      const { emitToUser } = require('../config/socket');
+      const notificationService = require('../services/notification.service');
+
+      // Auto-assign based on category and agent availability
+      const supportAgents = await User.find({ role: 'support' }).select('_id firstName lastName');
+      if (supportAgents.length > 0) {
+        // Pick agent with lowest open ticket count
+        const SupportTicket = require('../models/SupportTicket');
+        let bestAgent = supportAgents[0];
+        let lowestCount = Infinity;
+        for (const agent of supportAgents) {
+          const count = await SupportTicket.countDocuments({
+            'assignedTo.agent': agent._id,
+            status: { $in: ['open', 'in_progress'] }
+          });
+          if (count < lowestCount) {
+            lowestCount = count;
+            bestAgent = agent;
+          }
+        }
+        ticket.assignedTo = { agent: bestAgent._id, assignedAt: new Date() };
+        await ticket.save();
+
+        // Notify the assigned agent
+        await notificationService.createNotification(bestAgent._id, {
+          type: 'system_update',
+          title: 'New Support Ticket',
+          body: `Ticket #${ticket.ticketNumber}: ${subject}`,
+          category: 'system',
+          priority: priority === 'urgent' || priority === 'high' ? 'high' : 'normal'
+        });
+        emitToUser(bestAgent._id.toString(), 'ticket:assigned', { ticketId: ticket._id });
+      }
+
+      // Notify all support staff of new ticket
+      for (const agent of supportAgents) {
+        emitToUser(agent._id.toString(), 'ticket:new', { ticketId: ticket._id, category });
+      }
+    } catch (notifError) {
+      console.error('Support notification error:', notifError);
+    }
 
     await ticket.populate([
       { path: 'customer', select: 'firstName lastName email phoneNumber' }
@@ -309,8 +350,32 @@ exports.addMessage = async (req, res) => {
 
     await ticket.populate('messages.sender', 'firstName lastName profilePicture role');
 
-    // TODO: Send notification to other party
-    // TODO: Create real-time update via Socket.io
+    // Send notification and real-time update
+    try {
+      const notificationService = require('../services/notification.service');
+      const { emitToUser } = require('../config/socket');
+
+      // Determine who to notify
+      const customerId = ticket.customer?.toString();
+      const agentId = ticket.assignedTo?.agent?.toString();
+      const recipientId = req.user.role === 'customer' ? agentId : customerId;
+
+      if (recipientId && !messageIsInternal) {
+        await notificationService.createNotification(recipientId, {
+          type: 'system_update',
+          title: 'New Support Message',
+          body: `New message on ticket #${ticket.ticketNumber}`,
+          category: 'system',
+          priority: 'normal'
+        });
+        emitToUser(recipientId, 'support:message', {
+          ticketId: ticket._id,
+          messageId: ticket.messages[ticket.messages.length - 1]._id
+        });
+      }
+    } catch (notifError) {
+      console.error('Support message notification error:', notifError);
+    }
 
     res.status(201).json({
       success: true,
@@ -371,7 +436,21 @@ exports.assignTicket = async (req, res) => {
 
     await ticket.populate('assignedTo', 'firstName lastName email');
 
-    // TODO: Notify assigned agent
+    // Notify assigned agent
+    try {
+      const notificationService = require('../services/notification.service');
+      const { emitToUser } = require('../config/socket');
+      await notificationService.createNotification(agentId, {
+        type: 'system_update',
+        title: 'Ticket Assigned',
+        body: `You have been assigned ticket #${ticket.ticketNumber}`,
+        category: 'system',
+        priority: 'high'
+      });
+      emitToUser(agentId, 'ticket:assigned', { ticketId: ticket._id });
+    } catch (notifError) {
+      console.error('Agent notification error:', notifError);
+    }
 
     res.status(200).json({
       success: true,
@@ -491,7 +570,23 @@ exports.closeTicket = async (req, res) => {
 
     await ticket.save();
 
-    // TODO: Send satisfaction survey to customer
+    // Send satisfaction survey notification to customer
+    try {
+      const notificationService = require('../services/notification.service');
+      const customerId = ticket.customer?.toString();
+      if (customerId) {
+        await notificationService.createNotification(customerId, {
+          type: 'system_update',
+          title: 'How was your experience?',
+          body: `Your support ticket #${ticket.ticketNumber} has been resolved. Please rate your experience.`,
+          category: 'system',
+          priority: 'normal',
+          actionData: { ticketId: ticket._id, action: 'rate_ticket' }
+        });
+      }
+    } catch (notifError) {
+      console.error('Survey notification error:', notifError);
+    }
 
     res.status(200).json({
       success: true,
@@ -574,7 +669,21 @@ exports.escalateTicket = async (req, res) => {
 
     await ticket.populate('escalatedTo', 'firstName lastName email');
 
-    // TODO: Notify escalated person
+    // Notify escalated person
+    try {
+      const notificationService = require('../services/notification.service');
+      const { emitToUser } = require('../config/socket');
+      await notificationService.createNotification(escalatedTo, {
+        type: 'system_update',
+        title: 'Ticket Escalated to You',
+        body: `Ticket #${ticket.ticketNumber} has been escalated: ${reason}`,
+        category: 'system',
+        priority: 'urgent'
+      });
+      emitToUser(escalatedTo, 'ticket:escalated', { ticketId: ticket._id });
+    } catch (notifError) {
+      console.error('Escalation notification error:', notifError);
+    }
 
     res.status(200).json({
       success: true,

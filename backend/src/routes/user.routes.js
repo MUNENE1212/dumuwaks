@@ -18,6 +18,7 @@ const {
 } = require('../controllers/user.controller');
 const { protect, authorize, optionalAuth } = require('../middleware/auth');
 const { validate } = require('../middleware/validation');
+const { uploadProfilePicture: profilePictureUpload } = require('../middleware/upload');
 
 const router = express.Router();
 
@@ -39,7 +40,7 @@ router.post('/:id/follow', protect, toggleFollow);
 router.post(
   '/:id/profile-picture',
   protect,
-  // TODO: Add multer middleware for file upload
+  profilePictureUpload,
   uploadProfilePicture
 );
 

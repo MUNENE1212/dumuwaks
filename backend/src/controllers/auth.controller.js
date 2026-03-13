@@ -421,9 +421,15 @@ exports.forgotPassword = async (req, res) => {
 
     await user.save();
 
-    // TODO: Send reset email
-    // const resetUrl = `${process.env.CLIENT_WEB_URL}/reset-password/${resetToken}`;
-    // await sendPasswordResetEmail(user.email, resetUrl);
+    // Send reset email
+    try {
+      const resetUrl = `${process.env.CLIENT_WEB_URL || 'http://localhost:5173'}/reset-password/${resetToken}`;
+      const emailService = require('../services/email.service');
+      await emailService.sendPasswordResetEmail(user, resetToken);
+    } catch (emailError) {
+      console.error('Password reset email error:', emailError);
+      // Don't fail the request if email fails — token is still valid
+    }
 
     res.status(200).json({
       success: true,

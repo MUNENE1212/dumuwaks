@@ -36,10 +36,31 @@ exports.createNotification = async (req, res) => {
       }
     });
 
-    // TODO: Send notification through various channels
-    // - Push notification via FCM
-    // - Email via Nodemailer
-    // - SMS via Africa's Talking
+    // Send push notification if requested
+    if (channels?.includes('push')) {
+      try {
+        const notificationService = require('../services/notification.service');
+        const User = require('../models/User');
+        const recipient = await User.findById(recipientId).select('fcmTokens');
+        if (recipient?.fcmTokens?.length > 0) {
+          const tokens = recipient.fcmTokens.map(t => t.token);
+          await notificationService.sendPushNotification(tokens, title, message, data || {});
+          notification.deliveryStatus.push = { sent: true, sentAt: new Date() };
+          await notification.save();
+        }
+      } catch (pushError) {
+        console.error('Push notification error:', pushError);
+      }
+    }
+    // Email and SMS channels require provider configuration (deferred)
+
+    // Emit real-time notification
+    try {
+      const { emitToUser } = require('../config/socket');
+      emitToUser(recipientId.toString(), 'notification', { notificationId: notification._id, title, body: message });
+    } catch (socketError) {
+      console.error('Socket notification error:', socketError);
+    }
 
     res.status(201).json({
       success: true,

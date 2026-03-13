@@ -278,8 +278,22 @@ exports.deleteMessageForEveryone = async (req, res) => {
     // Delete for everyone
     await message.deleteForEveryone(req.user.id);
 
-    // TODO: Emit socket.io event to notify all participants
-    // TODO: Send push notification about deleted message
+    // Emit socket event to notify all participants
+    try {
+      const { emitToUser } = require('../config/socket');
+      const Conversation = require('../models/Conversation');
+      const conv = await Conversation.findById(message.conversation);
+      if (conv) {
+        conv.participants.forEach(p => {
+          const uid = (p.user?._id || p.user)?.toString();
+          if (uid && uid !== req.user.id) {
+            emitToUser(uid, 'message:deleted', { messageId: message._id, conversationId: conv._id });
+          }
+        });
+      }
+    } catch (socketError) {
+      console.error('Socket notification error:', socketError);
+    }
 
     res.status(200).json({
       success: true,

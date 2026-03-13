@@ -407,7 +407,22 @@ exports.toggleFollow = async (req, res) => {
 
       await Promise.all([currentUser.save(), targetUser.save()]);
 
-      // TODO: Create notification for target user
+      // Notify target user of new follower
+      try {
+        const notificationService = require('../services/notification.service');
+        const { emitToUser } = require('../config/socket');
+        await notificationService.createNotification(targetUserId, {
+          type: 'new_follower',
+          title: 'New Follower',
+          body: `${currentUser.firstName} ${currentUser.lastName} started following you`,
+          category: 'social',
+          sender: currentUserId,
+          priority: 'low'
+        });
+        emitToUser(targetUserId, 'notification', { type: 'new_follower', userId: currentUserId });
+      } catch (notifError) {
+        console.error('Follow notification error:', notifError);
+      }
 
       return res.status(200).json({
         success: true,

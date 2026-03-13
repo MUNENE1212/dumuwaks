@@ -318,8 +318,13 @@ exports.deletePost = async (req, res) => {
     // Soft delete - mark as deleted but keep in database
     await post.deletePost(req.user.id, req.body.reason);
 
-    // TODO: Emit socket.io event to notify followers
-    // TODO: Remove from feeds
+    // Notify via socket
+    try {
+      const { emitToUser } = require('../config/socket');
+      emitToUser(post.author.toString(), 'post:deleted', { postId: post._id });
+    } catch (socketError) {
+      console.error('Socket notification error:', socketError);
+    }
 
     res.status(200).json({
       success: true,

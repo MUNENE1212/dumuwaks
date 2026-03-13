@@ -43,8 +43,32 @@ async function autoEscalateCompletionRequests() {
 
       await booking.save();
 
-      // TODO: Send notification to support team
-      // TODO: Send reminder to customer
+      // Notify support team and send reminder to customer
+      try {
+        const notificationService = require('../services/notification.service');
+        const { emitToUser } = require('../config/socket');
+
+        // Notify support team
+        const supportAgents = await User.find({ role: 'support' }).select('_id');
+        for (const agent of supportAgents) {
+          await notificationService.createNotification(agent._id, {
+            type: 'system_update',
+            title: 'Completion Follow-up Required',
+            body: `Booking #${booking.bookingNumber} needs follow-up — customer unresponsive`,
+            category: 'system',
+            relatedBooking: booking._id,
+            priority: 'high'
+          });
+          emitToUser(agent._id.toString(), 'ticket:new', { ticketId: ticket._id });
+        }
+
+        // Send reminder to customer
+        const customerId = (booking.customer._id || booking.customer).toString();
+        await notificationService.notifyCompletionRequested(booking, booking.technician?.firstName || 'Your technician');
+        emitToUser(customerId, 'booking:completion_reminder', { bookingId: booking._id });
+      } catch (notifError) {
+        console.error('Escalation notification error:', notifError);
+      }
     }
 
     return {
@@ -82,8 +106,39 @@ async function sendCompletionReminders() {
       .populate('technician', 'firstName lastName');
 
     for (const booking of bookings) {
-      // TODO: Send notification to customer
-      // TODO: Send email/SMS reminder to customer
+      try {
+        const notificationService = require('../services/notification.service');
+        const { emitToUser } = require('../config/socket');
+        const customerId = (booking.customer._id || booking.customer).toString();
+        const hoursLeft = Math.round((booking.completionRequest.escalationDeadline - now) / (1000 * 60 * 60));
+
+        await notificationService.createNotification(customerId, {
+          type: 'completion_requested',
+          title: 'Action Required — Confirm Job Completion',
+          body: `Please confirm completion of booking #${booking.bookingNumber}. ${hoursLeft} hours remaining before auto-escalation.`,
+          category: 'booking',
+          relatedBooking: booking._id,
+          priority: 'urgent',
+          actionData: { bookingId: booking._id, action: 'confirm_completion' }
+        });
+        emitToUser(customerId, 'booking:completion_reminder', { bookingId: booking._id, hoursLeft });
+
+        // Attempt email reminder if email service is configured
+        try {
+          const emailService = require('../services/email.service');
+          if (booking.customer.email) {
+            await emailService.sendEmail({
+              to: booking.customer.email,
+              subject: `Action Required: Confirm Job Completion — ${booking.bookingNumber}`,
+              text: `Hi ${booking.customer.firstName}, please confirm the completion of your booking #${booking.bookingNumber}. You have ${hoursLeft} hours remaining.`
+            });
+          }
+        } catch (emailError) {
+          console.error('Email reminder error:', emailError);
+        }
+      } catch (notifError) {
+        console.error('Completion reminder notification error:', notifError);
+      }
     }
 
     return {
@@ -133,7 +188,23 @@ async function autoCompleteUnreachable() {
         await booking.save();
         autoCompletedCount++;
 
-        // TODO: Send final notification to customer and technician
+        // Send final notification to customer and technician
+        try {
+          const notificationService = require('../services/notification.service');
+          const customerId = (booking.customer?._id || booking.customer)?.toString();
+          const technicianId = (booking.technician?._id || booking.technician)?.toString();
+
+          if (customerId) {
+            await notificationService.notifyStatusChange(booking, 'verified', customerId,
+              `Booking #${booking.bookingNumber} has been auto-completed after follow-up period.`);
+          }
+          if (technicianId) {
+            await notificationService.notifyStatusChange(booking, 'verified', technicianId,
+              `Booking #${booking.bookingNumber} has been verified. Payment will be processed.`);
+          }
+        } catch (notifError) {
+          console.error('Auto-complete notification error:', notifError);
+        }
       }
     }
 
