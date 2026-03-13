@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { X, DollarSign, FileText } from 'lucide-react';
+import { X, DollarSign } from 'lucide-react';
 import { Button, Input, Textarea } from '@/components/ui';
 import { Booking, submitCounterOffer } from '@/store/slices/bookingSlice';
 import { useAppDispatch } from '@/store/hooks';
 import toast from 'react-hot-toast';
+import { getErrorMessage } from '@/lib/errorUtils';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { counterOfferSchema, type CounterOfferFormData } from '@/lib/validation';
 
 interface CounterOfferModalProps {
   booking: Booking;
@@ -13,48 +17,47 @@ interface CounterOfferModalProps {
 
 const CounterOfferModal: React.FC<CounterOfferModalProps> = ({ booking, isOpen, onClose }) => {
   const dispatch = useAppDispatch();
-  const [proposedAmount, setProposedAmount] = useState(booking.pricing.totalAmount.toString());
-  const [reason, setReason] = useState('');
-  const [additionalNotes, setAdditionalNotes] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<CounterOfferFormData>({
+    resolver: zodResolver(counterOfferSchema),
+    defaultValues: {
+      proposedAmount: booking.pricing.totalAmount,
+      reason: '',
+      additionalNotes: '',
+    },
+  });
 
   if (!isOpen) return null;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const proposedAmount = watch('proposedAmount');
+  const priceDifference = (proposedAmount || 0) - booking.pricing.totalAmount;
+  const percentageChange = ((priceDifference / booking.pricing.totalAmount) * 100).toFixed(1);
 
-    const amount = parseFloat(proposedAmount);
-    if (isNaN(amount) || amount <= 0) {
-      toast.error('Please enter a valid amount');
-      return;
-    }
-
-    if (!reason.trim()) {
-      toast.error('Please provide a reason for the counter offer');
-      return;
-    }
-
+  const onSubmit = async (data: CounterOfferFormData) => {
     try {
       setIsSubmitting(true);
       await dispatch(
         submitCounterOffer({
           bookingId: booking._id,
-          proposedAmount: amount,
-          reason: reason.trim(),
-          additionalNotes: additionalNotes.trim(),
+          proposedAmount: data.proposedAmount,
+          reason: data.reason,
+          additionalNotes: data.additionalNotes || '',
         })
       ).unwrap();
       toast.success('Counter offer submitted successfully!');
       onClose();
-    } catch (error: any) {
-      toast.error(error || 'Failed to submit counter offer');
+    } catch (error: unknown) {
+      toast.error(getErrorMessage(error, 'Failed to submit counter offer'));
     } finally {
       setIsSubmitting(false);
     }
   };
-
-  const priceDifference = parseFloat(proposedAmount) - booking.pricing.totalAmount;
-  const percentageChange = ((priceDifference / booking.pricing.totalAmount) * 100).toFixed(1);
 
   return (
     <div
@@ -84,7 +87,7 @@ const CounterOfferModal: React.FC<CounterOfferModalProps> = ({ booking, isOpen, 
         </div>
 
         {/* Content */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-5">
           {/* Original Price */}
           <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
             <p className="text-sm text-gray-600 dark:text-gray-400">Original Price</p>
@@ -102,16 +105,17 @@ const CounterOfferModal: React.FC<CounterOfferModalProps> = ({ booking, isOpen, 
               <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
               <Input
                 type="number"
-                value={proposedAmount}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProposedAmount(e.target.value)}
+                {...register('proposedAmount', { valueAsNumber: true })}
                 className="pl-10"
                 placeholder="Enter proposed amount"
-                required
                 min="0"
                 step="1"
               />
             </div>
-            {priceDifference !== 0 && (
+            {errors.proposedAmount && (
+              <p className="mt-1 text-sm text-red-600">{errors.proposedAmount.message}</p>
+            )}
+            {!errors.proposedAmount && priceDifference !== 0 && !isNaN(priceDifference) && (
               <p
                 className={`mt-1 text-sm ${
                   priceDifference > 0 ? 'text-red-600' : 'text-green-600'
@@ -131,12 +135,13 @@ const CounterOfferModal: React.FC<CounterOfferModalProps> = ({ booking, isOpen, 
               Reason for Counter Offer *
             </label>
             <Textarea
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
+              {...register('reason')}
               placeholder="e.g., Additional materials needed, More time required, etc."
               rows={3}
-              required
             />
+            {errors.reason && (
+              <p className="mt-1 text-sm text-red-600">{errors.reason.message}</p>
+            )}
           </div>
 
           {/* Additional Notes */}
@@ -145,8 +150,7 @@ const CounterOfferModal: React.FC<CounterOfferModalProps> = ({ booking, isOpen, 
               Additional Notes (Optional)
             </label>
             <Textarea
-              value={additionalNotes}
-              onChange={(e) => setAdditionalNotes(e.target.value)}
+              {...register('additionalNotes')}
               placeholder="Any additional information for the customer..."
               rows={2}
             />
@@ -155,7 +159,7 @@ const CounterOfferModal: React.FC<CounterOfferModalProps> = ({ booking, isOpen, 
           {/* Info */}
           <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
             <p className="text-sm text-blue-800 dark:text-blue-300">
-              ℹ️ The customer has 24 hours to accept or reject your counter offer.
+              The customer has 24 hours to accept or reject your counter offer.
             </p>
           </div>
 

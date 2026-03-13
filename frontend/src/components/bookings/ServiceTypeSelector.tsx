@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, AlertCircle, Check, HelpCircle } from 'lucide-react';
 import { Card, Input, Button } from '@/components/ui';
 import axios from '@/lib/axios';
+import { customServiceInputSchema } from '@/lib/validation';
 
 interface ServiceType {
   serviceType: string;
@@ -78,6 +79,13 @@ const ServiceTypeSelector: React.FC<ServiceTypeSelectorProps> = ({
 
   const validateCustomInput = async () => {
     if (!customInput.trim()) return;
+
+    const parseResult = customServiceInputSchema.safeParse(customInput.trim());
+    if (!parseResult.success) {
+      setValidationMessage(parseResult.error.errors[0]?.message || 'Invalid input');
+      setShowSuggestions(false);
+      return;
+    }
 
     try {
       setLoading(true);

@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Search, MapPin, DollarSign, Zap, Calendar, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui';
 import { FindTechniciansParams } from '@/store/slices/matchingSlice';
 import { geocodeAddress } from '@/services/geocoding.service';
 import toast from 'react-hot-toast';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { searchFiltersSchema, type SearchFiltersFormData } from '@/lib/validation';
 
 interface SearchFiltersProps {
   onSearch: (params: FindTechniciansParams) => void;
@@ -37,16 +40,32 @@ const urgencyLevels = [
 ];
 
 const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = false }) => {
-  const [serviceCategory, setServiceCategory] = useState('');
-  const [address, setAddress] = useState('');
   const [coordinates, setCoordinates] = useState<[number, number]>([36.8219, -1.2921]); // Default: Nairobi
-  const [urgency, setUrgency] = useState('medium');
-  const [budget, setBudget] = useState('');
-  const [preferredDate, setPreferredDate] = useState('');
-  const [description, setDescription] = useState('');
   const [useCurrentLocation, setUseCurrentLocation] = useState(false);
   const [locationError, setLocationError] = useState('');
   const [isGeocodingAddress, setIsGeocodingAddress] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<SearchFiltersFormData>({
+    resolver: zodResolver(searchFiltersSchema),
+    defaultValues: {
+      serviceCategory: '',
+      address: '',
+      urgency: 'medium',
+      budget: '',
+      preferredDate: '',
+      description: '',
+    },
+  });
+
+  const address = watch('address');
+  const urgency = watch('urgency');
+  const description = watch('description');
 
   // Get user's current location
   const getCurrentLocation = () => {
@@ -56,7 +75,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
         (position) => {
           setCoordinates([position.coords.longitude, position.coords.latitude]);
           setUseCurrentLocation(true);
-          setAddress('Current Location');
+          setValue('address', 'Current Location');
           toast.success('Using your current location');
         },
         (error) => {
@@ -73,7 +92,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
 
   // Geocode the entered address
   const handleGeocodeAddress = async () => {
-    if (!address.trim()) {
+    if (!address?.trim()) {
       toast.error('Please enter an address first');
       return;
     }
@@ -88,7 +107,6 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
         setCoordinates(result.coordinates);
         setUseCurrentLocation(false);
         toast.success('Location coordinates found!');
-        console.log('Geocoded address to coordinates:', result.coordinates);
       } else {
         setLocationError('Could not find coordinates for this address. Try a more specific location.');
         toast.error('Could not find this location');
@@ -102,34 +120,25 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!serviceCategory) {
-      alert('Please select a service category');
-      return;
-    }
-
-    if (!address && !useCurrentLocation) {
-      alert('Please enter a location or use your current location');
+  const onSubmit = (data: SearchFiltersFormData) => {
+    if (!data.address && !useCurrentLocation) {
+      setLocationError('Please enter a location or use your current location');
       return;
     }
 
     const params: FindTechniciansParams = {
-      serviceCategory,
+      serviceCategory: data.serviceCategory,
       location: {
         type: 'Point',
         coordinates,
-        address: address || 'Current Location',
+        address: data.address || 'Current Location',
       },
-      urgency,
-      ...(budget && { budget: parseFloat(budget) }),
-      ...(preferredDate && { preferredDate: new Date(preferredDate).toISOString() }),
-      ...(description && { description }),
+      urgency: data.urgency,
+      ...(data.budget && { budget: parseFloat(data.budget) }),
+      ...(data.preferredDate && { preferredDate: new Date(data.preferredDate).toISOString() }),
+      ...(data.description && { description: data.description }),
     };
 
-    console.log('Search params:', params);
-    console.log('Location coordinates:', coordinates);
     onSearch(params);
   };
 
@@ -140,17 +149,15 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
         <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">Find a Technician</h2>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* Service Category */}
         <div>
           <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
             What service do you need? *
           </label>
           <select
-            value={serviceCategory}
-            onChange={(e) => setServiceCategory(e.target.value)}
+            {...register('serviceCategory')}
             className="w-full rounded-lg border border-gray-300 dark:border-gray-600 px-3 sm:px-4 py-2.5 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 text-gray-700 dark:text-gray-200 bg-indigo-100 dark:bg-gray-700 text-sm"
-            required
           >
             <option value="">Select a service...</option>
             {serviceCategories.map((category) => (
@@ -159,6 +166,9 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
               </option>
             ))}
           </select>
+          {errors.serviceCategory && (
+            <p className="mt-1 text-sm text-red-600">{errors.serviceCategory.message}</p>
+          )}
         </div>
 
         {/* Location */}
@@ -171,11 +181,9 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
             <div className="flex flex-col sm:flex-row gap-2">
               <input
                 type="text"
-                value={address}
-                onChange={(e) => {
-                  setAddress(e.target.value);
-                  setUseCurrentLocation(false);
-                }}
+                {...register('address', {
+                  onChange: () => setUseCurrentLocation(false),
+                })}
                 placeholder="Enter your city or area"
                 className="flex-1 rounded-lg border border-gray-300 px-3 sm:px-4 py-2.5 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 bg-indigo-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm"
               />
@@ -184,7 +192,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
                 variant="outline"
                 size="sm"
                 onClick={handleGeocodeAddress}
-                disabled={isGeocodingAddress || !address.trim()}
+                disabled={isGeocodingAddress || !address?.trim()}
                 className="whitespace-nowrap w-full sm:w-auto"
               >
                 {isGeocodingAddress ? (
@@ -215,12 +223,12 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
           {locationError && <p className="mt-1 text-sm text-red-600">{locationError}</p>}
           {useCurrentLocation && (
             <p className="mt-1 text-sm text-green-600">
-              ✓ Using your current location
+              Using your current location
             </p>
           )}
           {!useCurrentLocation && coordinates[0] !== 36.8219 && (
             <p className="mt-1 text-sm text-green-600">
-              ✓ Location set: {coordinates[0].toFixed(4)}, {coordinates[1].toFixed(4)}
+              Location set: {coordinates[0].toFixed(4)}, {coordinates[1].toFixed(4)}
             </p>
           )}
           <p className="mt-1 text-xs text-gray-500">
@@ -239,7 +247,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
               <button
                 key={level.value}
                 type="button"
-                onClick={() => setUrgency(level.value)}
+                onClick={() => setValue('urgency', level.value)}
                 className={`rounded-lg border-2 px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all text-left sm:text-center ${
                   urgency === level.value
                     ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300'
@@ -262,8 +270,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
             <span className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 text-sm">KES</span>
             <input
               type="number"
-              value={budget}
-              onChange={(e) => setBudget(e.target.value)}
+              {...register('budget')}
               placeholder="0"
               min="0"
               step="100"
@@ -283,8 +290,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
           </label>
           <input
             type="date"
-            value={preferredDate}
-            onChange={(e) => setPreferredDate(e.target.value)}
+            {...register('preferredDate')}
             min={new Date().toISOString().split('T')[0]}
             className="w-full rounded-lg border border-gray-300 dark:border-gray-600 px-3 sm:px-4 py-2.5 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 bg-indigo-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm"
           />
@@ -296,14 +302,16 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
             Description (Optional)
           </label>
           <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            {...register('description')}
             placeholder="Describe the work you need done..."
             rows={3}
             maxLength={500}
             className="w-full resize-none rounded-lg border border-gray-300 dark:border-gray-600 px-3 sm:px-4 py-2.5 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 bg-indigo-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm"
           />
-          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{description.length}/500 characters</p>
+          {errors.description && (
+            <p className="mt-1 text-sm text-red-600">{errors.description.message}</p>
+          )}
+          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{(description || '').length}/500 characters</p>
         </div>
 
         {/* Submit Button */}
