@@ -15,6 +15,7 @@ import { X, Smartphone, Shield, CheckCircle, AlertCircle, Loader2 } from 'lucide
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import toast from 'react-hot-toast';
+import { getErrorMessage } from '@/lib/errorUtils';
 import mpesaService, { validateKenyanPhone, formatAmount } from '@/services/mpesa.service';
 import type { MPesaPaymentType, MPesaPaymentStatus } from '@/types/mpesa';
 
@@ -141,9 +142,9 @@ const MPesaPaymentModal: React.FC<MPesaPaymentModalProps> = ({
 
       // Start polling
       pollStatus(response.data.transactionId);
-    } catch (error: any) {
+    } catch (error: unknown) {
       setStep('failed');
-      const message = error.response?.data?.message || error.message || 'Payment initiation failed';
+      const message = getErrorMessage(error, 'Payment initiation failed');
       setErrorMessage(message);
       onPaymentFailure?.(message);
     }

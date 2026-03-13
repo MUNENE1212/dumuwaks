@@ -24,6 +24,7 @@ import { fetchTechnicianGallery } from '@/store/slices/workGallerySlice';
 import toast from 'react-hot-toast';
 import { MessageCircle } from 'lucide-react';
 import { formatRating } from '@/utils/rating';
+import { getErrorMessage } from '@/lib/errorUtils';
 import { WorkGalleryCarousel, WorkGalleryLightbox } from '@/components/workgallery';
 import type { WorkGalleryImage } from '@/types/workGallery';
 
@@ -155,9 +156,9 @@ const TechnicianProfile: React.FC = () => {
 
       toast.success('Opening conversation...');
       navigate('/messages');
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to create conversation:', error);
-      toast.error(error || 'Failed to start conversation');
+      toast.error(getErrorMessage(error, 'Failed to start conversation'));
     }
   };
 

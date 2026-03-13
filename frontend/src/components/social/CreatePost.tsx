@@ -6,6 +6,7 @@ import { Button } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import axios from '@/lib/axios';
 import toast from 'react-hot-toast';
+import { getErrorMessage } from '@/lib/errorUtils';
 import MentionTextarea from '../common/MentionTextarea';
 
 const CreatePost: React.FC = () => {
@@ -47,7 +48,7 @@ const CreatePost: React.FC = () => {
       });
 
       if (response.data.success) {
-        const uploadedMedia = response.data.data.media.map((m: any) => ({
+        const uploadedMedia = response.data.data.media.map((m: { url: string; type: 'image' | 'video'; fileId?: string }) => ({
           url: m.url,
           type: m.type,
           fileId: m.fileId,
@@ -56,9 +57,9 @@ const CreatePost: React.FC = () => {
         setSelectedMedia(prev => [...prev, ...uploadedMedia]);
         toast.success(`${uploadedMedia.length} file(s) uploaded successfully!`);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Upload error:', error);
-      toast.error(error.response?.data?.message || 'Failed to upload media');
+      toast.error(getErrorMessage(error, 'Failed to upload media'));
     } finally {
       setIsUploadingMedia(false);
       if (fileInputRef.current) {
@@ -137,7 +138,7 @@ const CreatePost: React.FC = () => {
                 key={postType.value}
                 type="button"
                 onClick={() => {
-                  setType(postType.value as any);
+                  setType(postType.value as typeof type);
                   setShowTypeSelector(false);
                 }}
                 className={cn(

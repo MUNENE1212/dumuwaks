@@ -31,10 +31,13 @@ import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import toast from 'react-hot-toast';
 import { formatRating } from '@/utils/rating';
+import { getErrorMessage } from '@/lib/errorUtils';
+import type { ImageUploadFormData } from '@/types/workGallery';
+import type { LucideIcon } from 'lucide-react';
 
 const STATUS_CONFIG: Record<
   string,
-  { label: string; color: string; bgColor: string; icon: any }
+  { label: string; color: string; bgColor: string; icon: LucideIcon }
 > = {
   pending: {
     label: 'Pending',
@@ -176,8 +179,8 @@ const BookingDetail: React.FC = () => {
         })
       ).unwrap();
       setShowCancelDialog(false);
-    } catch (error: any) {
-      toast.error(error || 'Failed to cancel booking');
+    } catch (error: unknown) {
+      toast.error(getErrorMessage(error, 'Failed to cancel booking'));
     }
   };
 
@@ -193,14 +196,14 @@ const BookingDetail: React.FC = () => {
   };
 
   // Handle work gallery upload
-  const handleWorkGalleryUpload = async (data: any) => {
+  const handleWorkGalleryUpload = async (data: ImageUploadFormData) => {
     try {
       await dispatch(addGalleryImage(data)).unwrap();
       toast.success('Work photo added to your gallery!');
       setIsUploadModalOpen(false);
       setShowWorkGalleryPrompt(false);
-    } catch (error: any) {
-      toast.error(error || 'Failed to add work photo');
+    } catch (error: unknown) {
+      toast.error(getErrorMessage(error, 'Failed to add work photo'));
     }
   };
 

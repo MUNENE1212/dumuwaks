@@ -3,6 +3,7 @@ import { Upload, X, Image as ImageIcon, Loader2, Check } from 'lucide-react';
 import axios from '@/lib/axios';
 import toast from 'react-hot-toast';
 import { cn } from '@/lib/utils';
+import { getErrorMessage } from '@/lib/errorUtils';
 
 interface ImageUploadProps {
   onUploadComplete?: (url: string, fileId: string) => void;
@@ -122,10 +123,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         // Reset success indicator after 2 seconds
         setTimeout(() => setUploadSuccess(false), 2000);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Upload error:', error);
-      const message = error.response?.data?.message || 'Failed to upload image';
-      toast.error(message);
+      toast.error(getErrorMessage(error, 'Failed to upload image'));
       setPreview(currentImage || null);
     } finally {
       setUploading(false);

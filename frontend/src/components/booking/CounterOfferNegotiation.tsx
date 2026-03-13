@@ -30,6 +30,7 @@ import {
 import { Booking } from '@/types';
 import socketService from '@/services/socket';
 import toast from 'react-hot-toast';
+import { getErrorMessage } from '@/lib/errorUtils';
 
 interface CounterOfferNegotiationProps {
   booking: Booking;
@@ -150,8 +151,8 @@ const CounterOfferNegotiation: React.FC<CounterOfferNegotiationProps> = ({
     try {
       await onAccept(booking._id);
       toast.success('Counter-offer accepted!');
-    } catch (error: any) {
-      toast.error(error.message || 'Failed to accept counter-offer');
+    } catch (error: unknown) {
+      toast.error(getErrorMessage(error, 'Failed to accept counter-offer'));
     } finally {
       setIsLoading(false);
     }
@@ -163,8 +164,8 @@ const CounterOfferNegotiation: React.FC<CounterOfferNegotiationProps> = ({
       await onReject(booking._id, rejectReason);
       toast.success('Counter-offer rejected');
       setShowRejectForm(false);
-    } catch (error: any) {
-      toast.error(error.message || 'Failed to reject counter-offer');
+    } catch (error: unknown) {
+      toast.error(getErrorMessage(error, 'Failed to reject counter-offer'));
     } finally {
       setIsLoading(false);
     }
@@ -188,8 +189,8 @@ const CounterOfferNegotiation: React.FC<CounterOfferNegotiationProps> = ({
       setShowCounterForm(false);
       setCounterAmount('');
       setCounterReason('');
-    } catch (error: any) {
-      toast.error(error.message || 'Failed to send counter-proposal');
+    } catch (error: unknown) {
+      toast.error(getErrorMessage(error, 'Failed to send counter-proposal'));
     } finally {
       setIsLoading(false);
     }

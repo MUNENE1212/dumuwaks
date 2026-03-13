@@ -144,9 +144,9 @@ const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
 
       // Start waveform animation
       updateWaveform();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error starting recording:', error);
-      if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+      if (error instanceof DOMException && (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError')) {
         setPermissionDenied(true);
       }
     }

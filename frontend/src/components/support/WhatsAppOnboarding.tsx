@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, User, Search, Calendar, MessageCircle, Check, AlertCircle, Phone, Mail, MapPin } from 'lucide-react';
 import axios from '@/lib/axios';
 import toast from 'react-hot-toast';
+import { getErrorMessage } from '@/lib/errorUtils';
 import { format } from 'date-fns';
 
 interface WhatsAppOnboardingProps {
@@ -96,15 +97,17 @@ const WhatsAppOnboarding: React.FC<WhatsAppOnboardingProps> = ({ isOpen, onClose
       setTemporaryPassword(response.data.temporaryPassword || '');
       toast.success('Customer account created successfully!');
       setStep(2);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error creating customer:', error);
-      if (error.response?.data?.existingUser) {
+      const errObj = error && typeof error === 'object' ? error as Record<string, unknown> : null;
+      const response = (errObj?.response as Record<string, unknown>)?.data as Record<string, unknown> | undefined;
+      if (response?.existingUser) {
         // User already exists, use existing user
-        setCreatedCustomer(error.response.data.existingUser);
+        setCreatedCustomer(response.existingUser);
         toast('Customer already exists. Using existing account.');
         setStep(2);
       } else {
-        toast.error(error.response?.data?.message || 'Failed to create customer account');
+        toast.error(getErrorMessage(error, 'Failed to create customer account'));
       }
     } finally {
       setIsLoading(false);
@@ -125,9 +128,9 @@ const WhatsAppOnboarding: React.FC<WhatsAppOnboardingProps> = ({ isOpen, onClose
       if (response.data.technicians.length === 0) {
         toast('No technicians found matching your search');
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error searching technicians:', error);
-      toast.error('Failed to search technicians');
+      toast.error(getErrorMessage(error, 'Failed to search technicians'));
     } finally {
       setIsLoading(false);
     }
@@ -150,9 +153,9 @@ const WhatsAppOnboarding: React.FC<WhatsAppOnboardingProps> = ({ isOpen, onClose
       setCreatedBooking(response.data.booking);
       toast.success('Booking created successfully!');
       setStep(4);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error creating booking:', error);
-      toast.error(error.response?.data?.message || 'Failed to create booking');
+      toast.error(getErrorMessage(error, 'Failed to create booking'));
     } finally {
       setIsLoading(false);
     }

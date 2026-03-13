@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, CreditCard, Smartphone, Wallet, DollarSign, Shield, CheckCircle } from 'lucide-react';
 import { Button, Input } from '@/components/ui';
 import toast from 'react-hot-toast';
+import { getErrorMessage } from '@/lib/errorUtils';
 
 interface BookingFeePaymentModalProps {
   isOpen: boolean;
@@ -66,17 +67,8 @@ const BookingFeePaymentModal: React.FC<BookingFeePaymentModalProps> = ({
       toast.success('Payment successful!');
       onPaymentSuccess(transactionId);
       onClose();
-    } catch (error: any) {
-      // Extract detailed error message from axios error
-      let errorMessage = 'Payment failed. Please try again.';
-
-      if (error.response?.data?.message) {
-        errorMessage = error.response.data.message;
-      } else if (error.message) {
-        errorMessage = error.message;
-      }
-
-      toast.error(errorMessage);
+    } catch (error: unknown) {
+      toast.error(getErrorMessage(error, 'Payment failed. Please try again.'));
     } finally {
       setIsProcessing(false);
     }

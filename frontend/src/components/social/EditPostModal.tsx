@@ -6,6 +6,7 @@ import { Button } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import axios from '@/lib/axios';
 import toast from 'react-hot-toast';
+import { getErrorMessage } from '@/lib/errorUtils';
 import MentionTextarea from '../common/MentionTextarea';
 
 interface EditPostModalProps {
@@ -63,7 +64,7 @@ const EditPostModal: React.FC<EditPostModalProps> = ({ post, isOpen, onClose }) 
       });
 
       if (response.data.success) {
-        const uploadedMedia = response.data.data.media.map((m: any) => ({
+        const uploadedMedia = response.data.data.media.map((m: { url: string; type: 'image' | 'video'; fileId?: string }) => ({
           url: m.url,
           type: m.type,
           fileId: m.fileId,
@@ -72,9 +73,9 @@ const EditPostModal: React.FC<EditPostModalProps> = ({ post, isOpen, onClose }) 
         setSelectedMedia(prev => [...prev, ...uploadedMedia]);
         toast.success(`${uploadedMedia.length} file(s) uploaded successfully!`);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Upload error:', error);
-      toast.error(error.response?.data?.message || 'Failed to upload media');
+      toast.error(getErrorMessage(error, 'Failed to upload media'));
     } finally {
       setIsUploadingMedia(false);
       if (fileInputRef.current) {
@@ -139,7 +140,7 @@ const EditPostModal: React.FC<EditPostModalProps> = ({ post, isOpen, onClose }) 
                 <button
                   key={postType.value}
                   type="button"
-                  onClick={() => setType(postType.value as any)}
+                  onClick={() => setType(postType.value as typeof type)}
                   className={cn(
                     'p-3 rounded-lg text-sm font-medium transition-all border-2',
                     type === postType.value

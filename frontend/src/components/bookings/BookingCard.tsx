@@ -17,6 +17,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui';
 import CounterOfferModal from './CounterOfferModal';
 import toast from 'react-hot-toast';
+import { getErrorMessage } from '@/lib/errorUtils';
 
 interface BookingCardProps {
   booking: Booking;
@@ -37,8 +38,8 @@ const BookingCard: React.FC<BookingCardProps> = ({ booking, userRole }) => {
       setIsProcessing(true);
       await dispatch(acceptBooking(booking._id)).unwrap();
       toast.success('Booking accepted successfully!');
-    } catch (error: any) {
-      toast.error(error || 'Failed to accept booking');
+    } catch (error: unknown) {
+      toast.error(getErrorMessage(error, 'Failed to accept booking'));
     } finally {
       setIsProcessing(false);
     }
@@ -55,8 +56,8 @@ const BookingCard: React.FC<BookingCardProps> = ({ booking, userRole }) => {
       setIsProcessing(true);
       await dispatch(rejectBooking({ bookingId: booking._id, reason })).unwrap();
       toast.success('Booking rejected. Finding another technician...');
-    } catch (error: any) {
-      toast.error(error || 'Failed to reject booking');
+    } catch (error: unknown) {
+      toast.error(getErrorMessage(error, 'Failed to reject booking'));
     } finally {
       setIsProcessing(false);
     }

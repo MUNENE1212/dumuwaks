@@ -138,8 +138,8 @@ const FeeTierModal: React.FC<FeeTierModalProps> = ({
     try {
       await onSave(formData);
       onClose();
-    } catch (error: any) {
-      setErrors([error.message || 'Failed to save tier']);
+    } catch (error: unknown) {
+      setErrors([error instanceof Error ? error.message : 'Failed to save tier']);
     } finally {
       setIsSubmitting(false);
     }

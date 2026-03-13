@@ -8,11 +8,13 @@ import { acceptMatch, AcceptMatchParams } from '@/store/slices/matchingSlice';
 import { Input, Textarea } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import toast from 'react-hot-toast';
+import { getErrorMessage } from '@/lib/errorUtils';
 import { generateBotResponse } from '@/lib/problemDetection';
 import ServiceTypeSelector from './ServiceTypeSelector';
 import { useSwipeGestures } from '@/hooks/useSwipeGestures';
 import { hapticMedium } from '@/lib/haptics';
 import { CameraCapture } from '@/components/camera';
+import { bookingStepSchemas } from '@/lib/validation';
 
 const SERVICE_CATEGORIES = [
   { value: 'plumbing', label: 'Plumbing' },
@@ -35,7 +37,7 @@ const SERVICE_CATEGORIES = [
 
 interface BookingWizardProps {
   matchId?: string;
-  technician?: any;
+  technician?: { _id: string; firstName: string; lastName: string };
   serviceCategory?: string;
   location?: { coordinates: [number, number]; address: string };
   prefilledData?: {
@@ -136,6 +138,11 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
   });
 
   const nextStep = () => {
+    const { valid, error } = validateCurrentStep();
+    if (!valid) {
+      toast.error(error || 'Please complete all required fields');
+      return;
+    }
     if (currentStep < steps.length) {
       setDirection(1);
       setCurrentStep(currentStep + 1);
@@ -201,8 +208,8 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
         toast.success('Booking created successfully!');
         navigate(`/bookings/${result.booking._id}`);
       }
-    } catch (error: any) {
-      toast.error(error || 'Failed to create booking');
+    } catch (error: unknown) {
+      toast.error(getErrorMessage(error, 'Failed to create booking'));
     }
   };
 
@@ -554,21 +561,20 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
     }
   };
 
+  const validateCurrentStep = (): { valid: boolean; error?: string } => {
+    const stepIndex = currentStep - 1;
+    if (stepIndex >= bookingStepSchemas.length) return { valid: true };
+
+    const schema = bookingStepSchemas[stepIndex];
+    const result = schema.safeParse(formData);
+    if (result.success) return { valid: true };
+
+    const firstError = result.error.errors[0]?.message;
+    return { valid: false, error: firstError };
+  };
+
   const isStepValid = () => {
-    switch (currentStep) {
-      case 1:
-        return formData.serviceCategory && formData.serviceType;
-      case 2:
-        return formData.description.trim().length > 0;
-      case 3:
-        return formData.scheduledDate && formData.scheduledTime;
-      case 4:
-        return formData.serviceLocation.address.trim().length > 0;
-      case 5:
-        return true;
-      default:
-        return false;
-    }
+    return validateCurrentStep().valid;
   };
 
   return (

@@ -57,6 +57,7 @@ import { BOOKING_STEPS, calculateEscrowDeposit, calculatePlatformFee } from '@/t
 import type { Service as ServiceType } from '@/types/service';
 import { ArrowLeft, Calendar, MapPin, Clock, FileText, Sparkles, AlertTriangle, Check, Trash2, Save } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { getErrorMessage } from '@/lib/errorUtils';
 import { format } from 'date-fns';
 import { getPriceEstimate, calculatePrice, PricingBreakdown } from '@/services/pricing.service';
 import {
@@ -824,9 +825,9 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
         setShowPaymentModal(true);
         toast.success('Booking created! Please complete payment.');
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to create booking:', error);
-      toast.error(error || 'Failed to create booking');
+      toast.error(getErrorMessage(error, 'Failed to create booking'));
     } finally {
       dispatch(setBookingSubmitting(false));
     }

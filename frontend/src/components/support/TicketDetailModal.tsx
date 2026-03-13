@@ -5,6 +5,7 @@ import { getTicketDetails, addTicketMessage, updateTicketStatus, TicketDetails }
 import { useAppSelector } from '@/store/hooks';
 import Loading from '@/components/ui/Loading';
 import toast from 'react-hot-toast';
+import { getErrorMessage } from '@/lib/errorUtils';
 
 interface TicketDetailModalProps {
   ticketId: string;
@@ -36,9 +37,9 @@ const TicketDetailModal: React.FC<TicketDetailModalProps> = ({ ticketId, isOpen,
       setIsLoading(true);
       const data = await getTicketDetails(ticketId);
       setTicket(data);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error fetching ticket details:', error);
-      toast.error(error.response?.data?.message || 'Failed to load ticket details');
+      toast.error(getErrorMessage(error, 'Failed to load ticket details'));
     } finally {
       setIsLoading(false);
     }
@@ -59,9 +60,9 @@ const TicketDetailModal: React.FC<TicketDetailModalProps> = ({ ticketId, isOpen,
       await fetchTicketDetails();
       toast.success('Message sent successfully');
       if (onUpdate) onUpdate();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error sending message:', error);
-      toast.error(error.response?.data?.message || 'Failed to send message');
+      toast.error(getErrorMessage(error, 'Failed to send message'));
     } finally {
       setIsSending(false);
     }
@@ -69,13 +70,13 @@ const TicketDetailModal: React.FC<TicketDetailModalProps> = ({ ticketId, isOpen,
 
   const handleStatusChange = async (newStatus: string) => {
     try {
-      await updateTicketStatus(ticketId, newStatus as any);
+      await updateTicketStatus(ticketId, newStatus as 'open' | 'assigned' | 'in_progress' | 'waiting_customer' | 'waiting_internal' | 'resolved' | 'closed' | 'reopened');
       await fetchTicketDetails();
       toast.success(`Ticket status updated to ${newStatus}`);
       if (onUpdate) onUpdate();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error updating status:', error);
-      toast.error(error.response?.data?.message || 'Failed to update status');
+      toast.error(getErrorMessage(error, 'Failed to update status'));
     }
   };
 

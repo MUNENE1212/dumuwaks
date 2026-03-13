@@ -3,6 +3,7 @@ import { X, Upload, Image as ImageIcon, CheckCircle, AlertCircle, Plus, Trash2 }
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from '@/lib/axios';
 import toast from 'react-hot-toast';
+import { getErrorMessage } from '@/lib/errorUtils';
 
 interface PortfolioUploadModalProps {
   isOpen: boolean;
@@ -133,9 +134,9 @@ export const PortfolioUploadModal: React.FC<PortfolioUploadModalProps> = ({
       resetForm();
       onSuccess?.();
       onClose();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error uploading portfolio item:', error);
-      toast.error(error.response?.data?.message || 'Failed to upload portfolio item');
+      toast.error(getErrorMessage(error, 'Failed to upload portfolio item'));
       setStep('details');
     } finally {
       setUploading(false);

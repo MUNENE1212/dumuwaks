@@ -3,6 +3,7 @@ import { X, Star, Sparkles, Gift, Zap, Trophy, CheckCircle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from '@/lib/axios';
 import toast from 'react-hot-toast';
+import { getErrorMessage } from '@/lib/errorUtils';
 
 interface ReviewRequestModalProps {
   isOpen: boolean;
@@ -82,9 +83,9 @@ export const ReviewRequestModal: React.FC<ReviewRequestModalProps> = ({
         onReviewSubmitted();
         setTimeout(() => onClose(), 3000);
       }, 2000);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to submit review:', error);
-      toast.error(error.response?.data?.message || 'Failed to submit review. Please try again.');
+      toast.error(getErrorMessage(error, 'Failed to submit review. Please try again.'));
       setIsSubmitting(false);
     }
   };
