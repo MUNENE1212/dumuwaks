@@ -1,5 +1,14 @@
 const Booking = require('../models/Booking');
 const Transaction = require('../models/Transaction');
+const {
+  BOOKING_POPULATES,
+  isCustomer,
+  isTechnician,
+  isSupportOrAdmin,
+  getBookingRole,
+  notFound,
+  notAuthorized
+} = require('../utils/bookingHelpers');
 
 /**
  * @desc    Confirm booking fee payment (20% refundable deposit)
@@ -20,11 +29,8 @@ exports.confirmBookingFee = async (req, res) => {
     }
 
     // Verify customer owns this booking
-    if (booking.customer.toString() !== req.user.id) {
-      return res.status(403).json({
-        success: false,
-        message: 'Not authorized to confirm booking fee for this booking'
-      });
+    if (!isCustomer(booking, req.user.id)) {
+      return notAuthorized(res, 'Not authorized to confirm booking fee for this booking');
     }
 
     // Check if booking fee already paid
@@ -77,8 +83,33 @@ exports.confirmBookingFee = async (req, res) => {
           reason: 'Payment verified, preferred technician assigned'
         });
 
-        // TODO: Send notification to assigned technician
-        // TODO: Create conversation between customer and technician
+        // Notify assigned technician
+        try {
+          const User = require('../models/User');
+          const notificationService = require('../services/notification.service');
+          const tech = await User.findById(booking.technician);
+          if (tech) {
+            await notificationService.notifyNewBooking(tech, booking);
+          }
+          // Create conversation between customer and technician
+          const Conversation = require('../models/Conversation');
+          const existingConv = await Conversation.findOne({
+            'participants.user': { $all: [booking.customer, booking.technician] },
+            booking: booking._id
+          });
+          if (!existingConv) {
+            await Conversation.create({
+              participants: [
+                { user: booking.customer, role: 'customer' },
+                { user: booking.technician, role: 'technician' }
+              ],
+              booking: booking._id,
+              type: 'booking'
+            });
+          }
+        } catch (notifError) {
+          console.error('Notification/conversation error:', notifError);
+        }
       } else {
         // No preferred technician, move to matching status
         booking.status = 'matching';
@@ -89,7 +120,18 @@ exports.confirmBookingFee = async (req, res) => {
           reason: 'Booking fee confirmed, ready for technician matching'
         });
 
-        // TODO: Trigger AI matching algorithm
+        // Trigger matching via socket event
+        try {
+          const { emitToBooking } = require('../config/socket');
+          emitToBooking(booking._id.toString(), 'matching:new_booking', {
+            bookingId: booking._id,
+            serviceCategory: booking.serviceCategory,
+            serviceType: booking.serviceType,
+            location: booking.serviceLocation
+          });
+        } catch (socketError) {
+          console.error('Matching trigger error:', socketError);
+        }
       }
     }
 
@@ -123,22 +165,13 @@ exports.confirmBookingFee = async (req, res) => {
 exports.releaseBookingFee = async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id)
-      .populate('technician', 'firstName lastName')
-      .populate('customer', '_id');
+      .populate(BOOKING_POPULATES.feeRelease);
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
     // Only support or system can release booking fee
-    if (req.user.role !== 'support' && req.user.role !== 'admin') {
-      return res.status(403).json({
-        success: false,
-        message: 'Not authorized to release booking fee'
-      });
+    if (!isSupportOrAdmin(req.user.role)) {
+      return notAuthorized(res, 'Not authorized to release booking fee');
     }
 
     // Check if booking fee is held in escrow
@@ -212,21 +245,13 @@ exports.refundBookingFee = async (req, res) => {
     const { reason } = req.body;
 
     const booking = await Booking.findById(req.params.id)
-      .populate('customer', 'firstName lastName');
+      .populate(BOOKING_POPULATES.feeRefund);
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
     // Only support or admin can refund booking fee
-    if (req.user.role !== 'support' && req.user.role !== 'admin') {
-      return res.status(403).json({
-        success: false,
-        message: 'Not authorized to refund booking fee'
-      });
+    if (!isSupportOrAdmin(req.user.role)) {
+      return notAuthorized(res, 'Not authorized to refund booking fee');
     }
 
     // Check if booking fee is held
@@ -313,16 +338,10 @@ exports.getBookingFeeStatus = async (req, res) => {
     }
 
     // Verify user is customer, technician, or support
-    const isAuthorized =
-      booking.customer.toString() === req.user.id ||
-      (booking.technician && booking.technician.toString() === req.user.id) ||
-      ['support', 'admin'].includes(req.user.role);
+    const { authorized } = getBookingRole(booking, req.user.id, req.user.role);
 
-    if (!isAuthorized) {
-      return res.status(403).json({
-        success: false,
-        message: 'Not authorized to view booking fee status'
-      });
+    if (!authorized) {
+      return notAuthorized(res, 'Not authorized to view booking fee status');
     }
 
     res.status(200).json({

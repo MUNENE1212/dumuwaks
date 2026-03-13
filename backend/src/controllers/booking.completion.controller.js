@@ -1,6 +1,16 @@
 const Booking = require('../models/Booking');
 const cloudinaryService = require('../services/cloudinary.service');
 const mongoose = require('mongoose');
+const {
+  BOOKING_POPULATES,
+  findBookingPopulated,
+  isTechnician,
+  isCustomer,
+  isSupportOrAdmin,
+  getBookingRole,
+  notFound,
+  notAuthorized
+} = require('../utils/bookingHelpers');
 
 // Maximum number of completion media items allowed per booking
 const MAX_COMPLETION_MEDIA = 5;
@@ -33,16 +43,9 @@ const getMediaType = (mimetype) => {
  */
 exports.initiateFollowUp = async (req, res) => {
   try {
-    const booking = await Booking.findById(req.params.id)
-      .populate('customer', 'firstName lastName email phoneNumber')
-      .populate('technician', 'firstName lastName');
+    const booking = await findBookingPopulated(req.params.id, 'followUp');
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
     // Check if there's a pending completion request
     if (!booking.completionRequest || booking.completionRequest.status !== 'pending') {
@@ -153,16 +156,9 @@ exports.completeBySupport = async (req, res) => {
       });
     }
 
-    const booking = await Booking.findById(req.params.id)
-      .populate('customer', 'firstName lastName')
-      .populate('technician', 'firstName lastName');
+    const booking = await findBookingPopulated(req.params.id, 'minimal');
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
     // Check if support follow-up is initiated
     if (!booking.completionRequest?.supportFollowUp?.initiated) {
@@ -231,9 +227,7 @@ exports.getPendingCompletions = async (req, res) => {
       'completionRequest.escalationDeadline': { $lte: new Date() },
       'completionRequest.autoEscalated': false
     })
-      .populate('customer', 'firstName lastName email phoneNumber')
-      .populate('technician', 'firstName lastName')
-      .populate('completionRequest.requestedBy', 'firstName lastName')
+      .populate(BOOKING_POPULATES.pendingCompletion)
       .sort({ 'completionRequest.requestedAt': 1 })
       .skip(skip)
       .limit(parseInt(limit));
@@ -283,23 +277,12 @@ exports.uploadCompletionMedia = async (req, res) => {
     }
 
     // Find the booking
-    const booking = await Booking.findById(bookingId)
-      .populate('customer', 'firstName lastName')
-      .populate('technician', 'firstName lastName');
+    const booking = await findBookingPopulated(bookingId, 'minimal');
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
-    // Verify the user is the assigned technician
-    if (booking.technician?._id?.toString() !== req.user.id) {
-      return res.status(403).json({
-        success: false,
-        message: 'Only the assigned technician can upload completion media'
-      });
+    if (!isTechnician(booking, req.user.id)) {
+      return notAuthorized(res, 'Only the assigned technician can upload completion media');
     }
 
     // Verify booking is in a valid status for uploading completion media
@@ -432,28 +415,15 @@ exports.getCompletionMedia = async (req, res) => {
     }
 
     // Find the booking
-    const booking = await Booking.findById(bookingId)
-      .populate('customer', 'firstName lastName')
-      .populate('technician', 'firstName lastName')
-      .populate('completionMedia.uploadedBy', 'firstName lastName');
+    const booking = await findBookingPopulated(bookingId, 'completionMedia');
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
     // Check authorization
-    const isCustomer = booking.customer?._id?.toString() === req.user.id;
-    const isTechnician = booking.technician?._id?.toString() === req.user.id;
-    const isSupport = ['support', 'admin'].includes(req.user.role);
+    const { authorized } = getBookingRole(booking, req.user.id, req.user.role);
 
-    if (!isCustomer && !isTechnician && !isSupport) {
-      return res.status(403).json({
-        success: false,
-        message: 'Not authorized to view completion media for this booking'
-      });
+    if (!authorized) {
+      return notAuthorized(res, 'Not authorized to view completion media for this booking');
     }
 
     // Get completion media with additional context
@@ -536,13 +506,9 @@ exports.deleteCompletionMedia = async (req, res) => {
 
     // Check authorization - only uploader, support, or admin can delete
     const isUploader = mediaItem.uploadedBy?.toString() === req.user.id;
-    const isSupport = ['support', 'admin'].includes(req.user.role);
 
-    if (!isUploader && !isSupport) {
-      return res.status(403).json({
-        success: false,
-        message: 'Not authorized to delete this media item'
-      });
+    if (!isUploader && !isSupportOrAdmin(req.user.role)) {
+      return notAuthorized(res, 'Not authorized to delete this media item');
     }
 
     // Delete from Cloudinary
@@ -634,13 +600,9 @@ exports.updateCompletionMediaCaption = async (req, res) => {
 
     // Check authorization
     const isUploader = mediaItem.uploadedBy?.toString() === req.user.id;
-    const isSupport = ['support', 'admin'].includes(req.user.role);
 
-    if (!isUploader && !isSupport) {
-      return res.status(403).json({
-        success: false,
-        message: 'Not authorized to update this media item'
-      });
+    if (!isUploader && !isSupportOrAdmin(req.user.role)) {
+      return notAuthorized(res, 'Not authorized to update this media item');
     }
 
     // Update caption

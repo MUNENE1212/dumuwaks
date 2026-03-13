@@ -1,4 +1,13 @@
 const Booking = require('../models/Booking');
+const {
+  findBookingPopulated,
+  isTechnician,
+  isCustomer,
+  isSupportOrAdmin,
+  getBookingRole,
+  notFound,
+  notAuthorized
+} = require('../utils/bookingHelpers');
 
 /**
  * @desc    Technician updates status to "en_route" (on the way)
@@ -9,23 +18,12 @@ exports.updateToEnRoute = async (req, res) => {
   try {
     const { notes } = req.body;
 
-    const booking = await Booking.findById(req.params.id)
-      .populate('customer', 'firstName lastName email phoneNumber')
-      .populate('technician', 'firstName lastName email');
+    const booking = await findBookingPopulated(req.params.id, 'statusOps');
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
-    // Verify technician is assigned to this booking
-    if (booking.technician?._id?.toString() !== req.user.id) {
-      return res.status(403).json({
-        success: false,
-        message: 'You are not assigned to this booking'
-      });
+    if (!isTechnician(booking, req.user.id)) {
+      return notAuthorized(res, 'You are not assigned to this booking');
     }
 
     // Verify booking is in accepted status
@@ -85,23 +83,12 @@ exports.updateToArrived = async (req, res) => {
   try {
     const { notes } = req.body;
 
-    const booking = await Booking.findById(req.params.id)
-      .populate('customer', 'firstName lastName email phoneNumber')
-      .populate('technician', 'firstName lastName email');
+    const booking = await findBookingPopulated(req.params.id, 'statusOps');
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
-    // Verify technician is assigned to this booking
-    if (booking.technician?._id?.toString() !== req.user.id) {
-      return res.status(403).json({
-        success: false,
-        message: 'You are not assigned to this booking'
-      });
+    if (!isTechnician(booking, req.user.id)) {
+      return notAuthorized(res, 'You are not assigned to this booking');
     }
 
     // Verify booking is in en_route status
@@ -160,23 +147,12 @@ exports.updateToInProgress = async (req, res) => {
   try {
     const { notes } = req.body;
 
-    const booking = await Booking.findById(req.params.id)
-      .populate('customer', 'firstName lastName email phoneNumber')
-      .populate('technician', 'firstName lastName email');
+    const booking = await findBookingPopulated(req.params.id, 'statusOps');
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
-    // Verify technician is assigned to this booking
-    if (booking.technician?._id?.toString() !== req.user.id) {
-      return res.status(403).json({
-        success: false,
-        message: 'You are not assigned to this booking'
-      });
+    if (!isTechnician(booking, req.user.id)) {
+      return notAuthorized(res, 'You are not assigned to this booking');
     }
 
     // Verify booking is in arrived or paused status
@@ -235,23 +211,12 @@ exports.requestCompletion = async (req, res) => {
   try {
     const { notes, completionImages } = req.body;
 
-    const booking = await Booking.findById(req.params.id)
-      .populate('customer', 'firstName lastName email phoneNumber')
-      .populate('technician', 'firstName lastName email');
+    const booking = await findBookingPopulated(req.params.id, 'statusOps');
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
-    // Verify technician is assigned to this booking
-    if (booking.technician?._id?.toString() !== req.user.id) {
-      return res.status(403).json({
-        success: false,
-        message: 'Only the assigned technician can request completion'
-      });
+    if (!isTechnician(booking, req.user.id)) {
+      return notAuthorized(res, 'Only the assigned technician can request completion');
     }
 
     // Verify booking is in_progress
@@ -338,26 +303,16 @@ exports.confirmCompletion = async (req, res) => {
       });
     }
 
-    const booking = await Booking.findById(req.params.id)
-      .populate('customer', 'firstName lastName email phoneNumber')
-      .populate('technician', 'firstName lastName email phoneNumber');
+    const booking = await findBookingPopulated(req.params.id, 'confirmCompletion');
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
     // Check authorization - customer or support
-    const isCustomer = booking.customer?._id?.toString() === req.user.id;
-    const isSupport = ['support', 'admin'].includes(req.user.role);
+    const isBookingCustomer = isCustomer(booking, req.user.id);
+    const isSupport = isSupportOrAdmin(req.user.role);
 
-    if (!isCustomer && !isSupport) {
-      return res.status(403).json({
-        success: false,
-        message: 'Only the customer or support can confirm completion'
-      });
+    if (!isBookingCustomer && !isSupport) {
+      return notAuthorized(res, 'Only the customer or support can confirm completion');
     }
 
     // Check if there's a pending completion request
@@ -483,23 +438,12 @@ exports.pauseJob = async (req, res) => {
   try {
     const { reason } = req.body;
 
-    const booking = await Booking.findById(req.params.id)
-      .populate('customer', 'firstName lastName')
-      .populate('technician', 'firstName lastName');
+    const booking = await findBookingPopulated(req.params.id, 'minimal');
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
-    // Verify technician is assigned to this booking
-    if (booking.technician?._id?.toString() !== req.user.id) {
-      return res.status(403).json({
-        success: false,
-        message: 'You are not assigned to this booking'
-      });
+    if (!isTechnician(booking, req.user.id)) {
+      return notAuthorized(res, 'You are not assigned to this booking');
     }
 
     // Verify booking is in_progress
@@ -546,28 +490,19 @@ exports.cancelBooking = async (req, res) => {
   try {
     const { reason } = req.body;
 
-    const booking = await Booking.findById(req.params.id)
-      .populate('customer', 'firstName lastName')
-      .populate('technician', 'firstName lastName');
+    const booking = await findBookingPopulated(req.params.id, 'minimal');
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
     // Check authorization
-    const isCustomer = booking.customer?._id?.toString() === req.user.id;
-    const isTechnician = booking.technician?._id?.toString() === req.user.id;
-    const isAdmin = ['admin', 'support'].includes(req.user.role);
+    const { authorized, role: bookingRole } = getBookingRole(booking, req.user.id, req.user.role);
 
-    if (!isCustomer && !isTechnician && !isAdmin) {
-      return res.status(403).json({
-        success: false,
-        message: 'Not authorized to cancel this booking'
-      });
+    if (!authorized) {
+      return notAuthorized(res, 'Not authorized to cancel this booking');
     }
+
+    const isCancellingCustomer = bookingRole === 'customer';
+    const isCancellingTechnician = bookingRole === 'technician';
 
     // Check if booking can be cancelled
     const cancellableStatuses = ['pending', 'matching', 'assigned', 'accepted', 'en_route'];
@@ -582,7 +517,7 @@ exports.cancelBooking = async (req, res) => {
     const hoursTillStart = (new Date(booking.timeSlot.date) - new Date()) / (1000 * 60 * 60);
     let cancellationFee = 0;
 
-    if (isCustomer && hoursTillStart < 24 && booking.status !== 'pending') {
+    if (isCancellingCustomer && hoursTillStart < 24 && booking.status !== 'pending') {
       if (hoursTillStart < 2) {
         cancellationFee = booking.pricing.totalAmount * 0.75; // 75%
       } else if (hoursTillStart < 6) {
@@ -606,13 +541,40 @@ exports.cancelBooking = async (req, res) => {
       changedBy: req.user.id,
       changedAt: new Date(),
       reason: reason || 'Booking cancelled',
-      notes: `Cancelled by ${isCustomer ? 'customer' : isTechnician ? 'technician' : 'admin'}. Fee: ${cancellationFee}`
+      notes: `Cancelled by ${isCancellingCustomer ? 'customer' : isCancellingTechnician ? 'technician' : 'admin'}. Fee: ${cancellationFee}`
     });
 
     await booking.save();
 
-    // TODO: Process refund if applicable
-    // TODO: Send notifications
+    // Process refund if booking fee was held
+    try {
+      if (booking.bookingFee?.status === 'held' && booking.escrow) {
+        const escrowService = require('../services/escrow.service');
+        await escrowService.refundEscrow(booking.escrow, 'system', 'Booking cancelled');
+      }
+    } catch (refundError) {
+      console.error('Refund processing error:', refundError);
+    }
+
+    // Send cancellation notifications
+    try {
+      const notificationService = require('../services/notification.service');
+      const { emitToBooking } = require('../config/socket');
+      const customerId = (booking.customer?._id || booking.customer)?.toString();
+      const technicianId = (booking.technician?._id || booking.technician)?.toString();
+
+      if (customerId && customerId !== req.user.id) {
+        await notificationService.notifyStatusChange(booking, 'cancelled', customerId,
+          `Booking #${booking.bookingNumber} has been cancelled`);
+      }
+      if (technicianId && technicianId !== req.user.id) {
+        await notificationService.notifyStatusChange(booking, 'cancelled', technicianId,
+          `Booking #${booking.bookingNumber} has been cancelled`);
+      }
+      emitToBooking(booking._id.toString(), 'booking:cancelled', { bookingId: booking._id });
+    } catch (notifError) {
+      console.error('Cancellation notification error:', notifError);
+    }
 
     res.status(200).json({
       success: true,

@@ -1,3 +1,6 @@
+// DEPRECATED: This monolithic controller is not used by any routes.
+// See booking.base, booking.status, booking.completion, booking.payment,
+// booking.offer, and booking.misc controllers instead.
 const Booking = require('../models/Booking');
 const User = require('../models/User');
 const Transaction = require('../models/Transaction');

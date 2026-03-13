@@ -1,6 +1,13 @@
 const Booking = require('../models/Booking');
 const User = require('../models/User');
 const pricingService = require('../services/pricing.service');
+const {
+  BOOKING_POPULATES,
+  isCustomer,
+  isTechnician,
+  getBookingRole,
+  notAuthorized
+} = require('../utils/bookingHelpers');
 
 // Service and PaymentPlan models (will be created if they exist)
 let Service, PaymentPlan, Escrow;
@@ -317,8 +324,7 @@ exports.getBookings = async (req, res) => {
     const skip = (parseInt(page) - 1) * parseInt(limit);
 
     const bookings = await Booking.find(query)
-      .populate('customer', 'firstName lastName phoneNumber profilePicture')
-      .populate('technician', 'firstName lastName phoneNumber profilePicture rating skills')
+      .populate(BOOKING_POPULATES.list)
       .sort(sort)
       .skip(skip)
       .limit(parseInt(limit));
@@ -413,17 +419,10 @@ exports.getBooking = async (req, res) => {
     }
 
     // Check authorization
-    const isAuthorized =
-      booking.customer?._id?.toString() === req.user.id ||
-      booking.technician?._id?.toString() === req.user.id ||
-      req.user.role === 'admin' ||
-      req.user.role === 'support';
+    const { authorized } = getBookingRole(booking, req.user.id, req.user.role);
 
-    if (!isAuthorized) {
-      return res.status(403).json({
-        success: false,
-        message: 'Not authorized to view this booking'
-      });
+    if (!authorized) {
+      return notAuthorized(res, 'Not authorized to view this booking');
     }
 
     // Hide contact information until payment is verified

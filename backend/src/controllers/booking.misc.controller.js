@@ -1,5 +1,11 @@
 const Booking = require('../models/Booking');
 const User = require('../models/User');
+const {
+  isTechnician,
+  isCustomer,
+  notFound,
+  notAuthorized
+} = require('../utils/bookingHelpers');
 
 /**
  * @desc    Assign technician to booking
@@ -51,7 +57,15 @@ exports.assignTechnician = async (req, res) => {
 
     await booking.populate('technician', 'firstName lastName phoneNumber rating skills');
 
-    // TODO: Send notification to technician
+    // Notify technician of assignment
+    try {
+      const notificationService = require('../services/notification.service');
+      await notificationService.notifyNewBooking(tech, booking);
+      const { emitToUser } = require('../config/socket');
+      emitToUser(technician, 'booking:assigned', { bookingId: booking._id, bookingNumber: booking.bookingNumber });
+    } catch (notifError) {
+      console.error('Notification error:', notifError);
+    }
 
     res.status(200).json({
       success: true,
@@ -87,14 +101,11 @@ exports.updatePricing = async (req, res) => {
 
     // Check authorization
     const canUpdate =
-      (req.user.role === 'technician' && booking.technician?.toString() === req.user.id) ||
+      (req.user.role === 'technician' && isTechnician(booking, req.user.id)) ||
       req.user.role === 'admin';
 
     if (!canUpdate) {
-      return res.status(403).json({
-        success: false,
-        message: 'Not authorized to update pricing'
-      });
+      return notAuthorized(res, 'Not authorized to update pricing');
     }
 
     if (serviceCharge) booking.pricing.serviceCharge = serviceCharge;
@@ -145,11 +156,8 @@ exports.addQACheckpoint = async (req, res) => {
       });
     }
 
-    if (booking.technician?.toString() !== req.user.id) {
-      return res.status(403).json({
-        success: false,
-        message: 'Only assigned technician can add QA checkpoints'
-      });
+    if (!isTechnician(booking, req.user.id)) {
+      return notAuthorized(res, 'Only assigned technician can add QA checkpoints');
     }
 
     // Initialize quality assurance if not exists
@@ -202,15 +210,8 @@ exports.createDispute = async (req, res) => {
     }
 
     // Check authorization
-    const canDispute =
-      booking.customer.toString() === req.user.id ||
-      booking.technician?.toString() === req.user.id;
-
-    if (!canDispute) {
-      return res.status(403).json({
-        success: false,
-        message: 'Not authorized to create dispute for this booking'
-      });
+    if (!isCustomer(booking, req.user.id) && !isTechnician(booking, req.user.id)) {
+      return notAuthorized(res, 'Not authorized to create dispute for this booking');
     }
 
     if (booking.dispute?.status === 'open' || booking.dispute?.status === 'investigating') {
@@ -238,8 +239,35 @@ exports.createDispute = async (req, res) => {
 
     await booking.save();
 
-    // TODO: Notify admin and other party
-    // TODO: Hold payment in escrow
+    // Notify admin and other party
+    try {
+      const notificationService = require('../services/notification.service');
+      const { emitToUser } = require('../config/socket');
+      const raiserId = req.user.id;
+      const otherPartyId = isCustomer(booking, raiserId)
+        ? (booking.technician?._id || booking.technician)?.toString()
+        : (booking.customer?._id || booking.customer)?.toString();
+
+      if (otherPartyId) {
+        await notificationService.createNotification(otherPartyId, {
+          type: 'booking_disputed',
+          title: 'Booking Disputed',
+          body: `A dispute has been raised for booking #${booking.bookingNumber}`,
+          category: 'booking',
+          relatedBooking: booking._id,
+          priority: 'high'
+        });
+        emitToUser(otherPartyId, 'booking:disputed', { bookingId: booking._id });
+      }
+
+      // Hold payment in escrow
+      const escrowService = require('../services/escrow.service');
+      if (booking.escrow) {
+        await escrowService.openDispute(booking.escrow, raiserId, reason);
+      }
+    } catch (notifError) {
+      console.error('Dispute notification/escrow error:', notifError);
+    }
 
     res.status(200).json({
       success: true,
@@ -278,16 +306,13 @@ exports.resolveDispute = async (req, res) => {
     booking.dispute.resolvedBy = req.user.id;
     booking.dispute.resolvedAt = new Date();
 
-    // Update booking status based on resolution
+    // Update booking status and process escrow based on resolution
     if (resolution === 'customer_favor') {
       booking.status = 'cancelled';
-      // TODO: Process refund
     } else if (resolution === 'technician_favor') {
       booking.status = 'completed';
-      // TODO: Release payment
     } else if (resolution === 'partial_refund') {
       booking.status = 'completed';
-      // TODO: Process partial refund
     }
 
     booking.statusHistory.push({
@@ -299,7 +324,41 @@ exports.resolveDispute = async (req, res) => {
 
     await booking.save();
 
-    // TODO: Notify both parties
+    // Process escrow resolution
+    try {
+      const escrowService = require('../services/escrow.service');
+      if (booking.escrow) {
+        await escrowService.resolveDispute(
+          booking.escrow,
+          req.user.id,
+          resolution === 'customer_favor' ? 'customer_favor'
+            : resolution === 'technician_favor' ? 'technician_favor'
+            : 'split',
+          resolution === 'partial_refund' && refundAmount ? { customerPercentage: Math.round((refundAmount / booking.pricing.totalAmount) * 100) } : undefined
+        );
+      }
+    } catch (escrowError) {
+      console.error('Escrow resolution error:', escrowError);
+    }
+
+    // Notify both parties
+    try {
+      const notificationService = require('../services/notification.service');
+      const { emitToBooking } = require('../config/socket');
+      const customerId = (booking.customer?._id || booking.customer)?.toString();
+      const technicianId = (booking.technician?._id || booking.technician)?.toString();
+
+      const notifBody = `Dispute for booking #${booking.bookingNumber} has been resolved: ${resolution}`;
+      if (customerId) {
+        await notificationService.notifyStatusChange(booking, booking.status, customerId, notifBody);
+      }
+      if (technicianId) {
+        await notificationService.notifyStatusChange(booking, booking.status, technicianId, notifBody);
+      }
+      emitToBooking(booking._id.toString(), 'booking:dispute_resolved', { bookingId: booking._id, resolution });
+    } catch (notifError) {
+      console.error('Dispute notification error:', notifError);
+    }
 
     res.status(200).json({
       success: true,

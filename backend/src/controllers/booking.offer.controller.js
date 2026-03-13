@@ -1,4 +1,11 @@
 const Booking = require('../models/Booking');
+const {
+  findBookingPopulated,
+  isTechnician,
+  isCustomer,
+  notFound,
+  notAuthorized
+} = require('../utils/bookingHelpers');
 
 // Maximum negotiation rounds allowed
 const MAX_NEGOTIATION_ROUNDS = 5;
@@ -13,23 +20,12 @@ const COUNTER_OFFER_EXPIRATION_HOURS = 24;
  */
 exports.acceptBooking = async (req, res) => {
   try {
-    const booking = await Booking.findById(req.params.id)
-      .populate('customer', 'firstName lastName email phoneNumber')
-      .populate('technician', 'firstName lastName email');
+    const booking = await findBookingPopulated(req.params.id, 'offers');
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
-    // Verify technician is assigned to this booking
-    if (booking.technician?._id?.toString() !== req.user.id) {
-      return res.status(403).json({
-        success: false,
-        message: 'You are not assigned to this booking'
-      });
+    if (!isTechnician(booking, req.user.id)) {
+      return notAuthorized(res, 'You are not assigned to this booking');
     }
 
     // Verify booking is in assigned status
@@ -98,23 +94,12 @@ exports.rejectBooking = async (req, res) => {
   try {
     const { reason } = req.body;
 
-    const booking = await Booking.findById(req.params.id)
-      .populate('customer', 'firstName lastName email phoneNumber')
-      .populate('technician', 'firstName lastName email');
+    const booking = await findBookingPopulated(req.params.id, 'offers');
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
-    // Verify technician is assigned to this booking
-    if (booking.technician?._id?.toString() !== req.user.id) {
-      return res.status(403).json({
-        success: false,
-        message: 'You are not assigned to this booking'
-      });
+    if (!isTechnician(booking, req.user.id)) {
+      return notAuthorized(res, 'You are not assigned to this booking');
     }
 
     // Verify booking is in assigned status
@@ -148,7 +133,20 @@ exports.rejectBooking = async (req, res) => {
       console.error('Notification error:', notifError);
     }
 
-    // TODO: Trigger re-matching process to find another technician
+    // Trigger re-matching process
+    try {
+      booking.status = 'matching';
+      await booking.save();
+      const { emitToBooking } = require('../config/socket');
+      emitToBooking(booking._id.toString(), 'matching:re_match', {
+        bookingId: booking._id,
+        serviceCategory: booking.serviceCategory,
+        serviceType: booking.serviceType,
+        rejectedBy: req.user.id
+      });
+    } catch (matchError) {
+      console.error('Re-matching trigger error:', matchError);
+    }
 
     res.status(200).json({
       success: true,
@@ -188,23 +186,12 @@ exports.submitCounterOffer = async (req, res) => {
       });
     }
 
-    const booking = await Booking.findById(req.params.id)
-      .populate('customer', 'firstName lastName email phoneNumber')
-      .populate('technician', 'firstName lastName email');
+    const booking = await findBookingPopulated(req.params.id, 'offers');
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
-    // Verify technician is assigned to this booking
-    if (booking.technician?._id?.toString() !== req.user.id) {
-      return res.status(403).json({
-        success: false,
-        message: 'You are not assigned to this booking'
-      });
+    if (!isTechnician(booking, req.user.id)) {
+      return notAuthorized(res, 'You are not assigned to this booking');
     }
 
     // Verify booking is in assigned status (or counter-offer rejected state)
@@ -337,23 +324,12 @@ exports.respondToCounterOffer = async (req, res) => {
       });
     }
 
-    const booking = await Booking.findById(req.params.id)
-      .populate('customer', 'firstName lastName email phoneNumber')
-      .populate('technician', 'firstName lastName email');
+    const booking = await findBookingPopulated(req.params.id, 'offers');
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
-    // Verify user is the customer
-    if (booking.customer?._id?.toString() !== req.user.id) {
-      return res.status(403).json({
-        success: false,
-        message: 'Only the customer can respond to counter offers'
-      });
+    if (!isCustomer(booking, req.user.id)) {
+      return notAuthorized(res, 'Only the customer can respond to counter offers');
     }
 
     // Verify counter offer exists and is pending
@@ -579,15 +555,8 @@ exports.getNegotiationHistory = async (req, res) => {
     }
 
     // Verify access
-    const userId = req.user.id;
-    const customerId = booking.customer._id?.toString() || booking.customer.toString();
-    const technicianId = booking.technician?._id?.toString() || booking.technician?.toString();
-
-    if (userId !== customerId && userId !== technicianId) {
-      return res.status(403).json({
-        success: false,
-        message: 'Access denied to this booking'
-      });
+    if (!isCustomer(booking, req.user.id) && !isTechnician(booking, req.user.id)) {
+      return notAuthorized(res, 'Access denied to this booking');
     }
 
     res.status(200).json({
@@ -619,23 +588,12 @@ exports.withdrawCounterOffer = async (req, res) => {
   try {
     const { reason } = req.body;
 
-    const booking = await Booking.findById(req.params.id)
-      .populate('customer', 'firstName lastName email phoneNumber')
-      .populate('technician', 'firstName lastName email');
+    const booking = await findBookingPopulated(req.params.id, 'offers');
 
-    if (!booking) {
-      return res.status(404).json({
-        success: false,
-        message: 'Booking not found'
-      });
-    }
+    if (!booking) return notFound(res);
 
-    // Verify technician is assigned to this booking
-    if (booking.technician?._id?.toString() !== req.user.id) {
-      return res.status(403).json({
-        success: false,
-        message: 'You are not assigned to this booking'
-      });
+    if (!isTechnician(booking, req.user.id)) {
+      return notAuthorized(res, 'You are not assigned to this booking');
     }
 
     // Verify counter offer exists and is pending
