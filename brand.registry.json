@@ -11,7 +11,7 @@
     "baitechEmail": "baitech@ementech.co.ke is taken from the storefront's SITE_CONFIG; mailbox existence not independently verified. info@baitech.co.ke is dead (baitech.co.ke has no DNS).",
     "baitechDomain": "baitech.co.ke is dead (no A/NS/SOA records). Whether it is recoverable is unconfirmed (decision D5). Do not cite it anywhere.",
     "keroma": "Downgraded 2026-09-04: 502 and the unresolved 2026-08-02 security incident. Do not restore to make a portfolio claim true.",
-    "kukuTracker": "Downgraded 2026-09-04: zebra.ementech.co.ke served a page titled 'Zebra Development Group'. Fixed in repo 2026/zebray/kuku-egg-tracker on 2026-09-04 (product identity is now 'Kuku Egg Tracker', group default 'Zebra Youth'). Pending: deploy to VPS + verify:claims passes + then flip to live with liveUrl https://zebra.ementech.co.ke.",
+    "kukuTracker": "Fixed + deployed 2026-09-04: product identity corrected (repo 2026/zebray/kuku-egg-tracker) and zebra.ementech.co.ke now serves title 'Kuku Egg Tracker'. Verified live; registry flipped to live same day.",
     "tomtin": "Downgraded 2026-09-04: hostname does not resolve; nginx server_name fix and DNS record not yet deployed.",
     "iphoneOnlineduka": "iphone.onlineduka.shop unreachable as of 2026-09-04."
   },
@@ -154,9 +154,10 @@
       "name": "Kuku Egg Tracker",
       "category": "enterprise",
       "tagline": "Poultry Production & Savings Group PWA",
-      "status": "development",
+      "status": "live",
       "githubUrl": "https://github.com/MUNENE1212/kuku-egg-tracker",
-      "brand": "ementech"
+      "brand": "ementech",
+      "liveUrl": "https://zebra.ementech.co.ke"
     },
     {
       "slug": "transittag",
