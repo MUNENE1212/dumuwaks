@@ -130,6 +130,15 @@ cd frontend && npm install && npm run dev
 - **Monitoring:** Health checks + PM2 logging
 - **Database:** MongoDB Atlas (managed)
 
+## 🏷️ Brand identity — brand.registry.json
+
+`brand.registry.json` (repo root) is a vendored copy of the estate-wide brand
+registry (canonical source: `ementech-website/src/config/brand.registry.json`).
+It is the single source of truth for domains, emails, NAP and product status.
+`seo/src/lib/constants.ts` derives `SITE_URL` from it; the frontend contact
+details match it. When the registry changes upstream, re-vendor the copy in
+the same commit so the diff is reviewable.
+
 ## 📁 Project Structure
 
 ```

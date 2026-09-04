@@ -1,0 +1,212 @@
+{
+  "_meta": {
+    "what": "Single machine-readable source of truth for Emen Engineering identity, brands, and product portfolio. Facts only — no copy, no keywords, no voice.",
+    "rule": "No file, skill, or generated content may assert a brand fact, product status, or domain that contradicts this registry. Other repos vendor a committed copy rather than importing across repo boundaries.",
+    "version": 1,
+    "updated": "2026-09-04",
+    "verified": "All status:'live' liveUrls fetched and title-checked on 2026-09-04. Enforced by scripts/verify-claims.mjs (npm run verify:claims)."
+  },
+  "_notes": {
+    "nap": "PROVISIONAL: Nairobi is what all three live sites' JSON-LD already publish (least public drift). Director to confirm against the registered address and Google Business Profile (decision D3, brand-trust-remediation-plan.md). If Athi River is the registered address, change it HERE only.",
+    "baitechEmail": "baitech@ementech.co.ke is taken from the storefront's SITE_CONFIG; mailbox existence not independently verified. info@baitech.co.ke is dead (baitech.co.ke has no DNS).",
+    "baitechDomain": "baitech.co.ke is dead (no A/NS/SOA records). Whether it is recoverable is unconfirmed (decision D5). Do not cite it anywhere.",
+    "keroma": "Downgraded 2026-09-04: 502 and the unresolved 2026-08-02 security incident. Do not restore to make a portfolio claim true.",
+    "kukuTracker": "Downgraded 2026-09-04: zebra.ementech.co.ke served a page titled 'Zebra Development Group'. Fixed in repo 2026/zebray/kuku-egg-tracker on 2026-09-04 (product identity is now 'Kuku Egg Tracker', group default 'Zebra Youth'). Pending: deploy to VPS + verify:claims passes + then flip to live with liveUrl https://zebra.ementech.co.ke.",
+    "tomtin": "Downgraded 2026-09-04: hostname does not resolve; nginx server_name fix and DNS record not yet deployed.",
+    "iphoneOnlineduka": "iphone.onlineduka.shop unreachable as of 2026-09-04."
+  },
+  "company": {
+    "legalName": "Emen Engineering Limited",
+    "shortName": "Emen Engineering",
+    "registrationNumber": "PVT-EY137V3Z",
+    "tagline": "Build for Africa to scale globally",
+    "domain": "https://ementech.co.ke",
+    "nap": {
+      "locality": "Nairobi",
+      "region": "Nairobi",
+      "country": "KE",
+      "phone": "+254799954672"
+    },
+    "email": {
+      "main": "info@ementech.co.ke",
+      "support": "support@ementech.co.ke",
+      "sales": "sales@ementech.co.ke",
+      "billing": "billing@ementech.co.ke",
+      "hr": "hr@ementech.co.ke",
+      "tech": "tech@ementech.co.ke",
+      "security": "security@ementech.co.ke"
+    },
+    "social": {
+      "linkedin": "company/ementech",
+      "twitter": "ementech_ke",
+      "facebook": "ementech.ke",
+      "instagram": "ementech.ke",
+      "github": "ementech"
+    }
+  },
+  "brands": {
+    "ementech": {
+      "name": "Emen Engineering",
+      "role": "parent",
+      "domain": "https://ementech.co.ke",
+      "oneLiner": "Technology company in Kenya: custom software, embedded systems, IoT, automation, and AI solutions.",
+      "email": "info@ementech.co.ke"
+    },
+    "baitech": {
+      "name": "Baitech",
+      "role": "storefront-on-platform",
+      "platform": "onlineduka",
+      "domain": "https://emen.onlineduka.shop",
+      "oneLiner": "Premium Electronics & Tech Services — laptops, phones, TVs, accessories, and repairs in Kenya.",
+      "tagline": "Tech that fits your budget.",
+      "email": "baitech@ementech.co.ke",
+      "social": {
+        "twitter": "baitech_ke",
+        "facebook": "baitech.ke",
+        "instagram": "baitech.ke"
+      }
+    },
+    "dumuwaks": {
+      "name": "DumuWaks",
+      "role": "product",
+      "domain": "https://dumuwaks.ementech.co.ke",
+      "oneLiner": "AI-powered technician marketplace connecting skilled professionals with customers across Kenya.",
+      "tagline": "Find Trusted Technicians Near You",
+      "email": "dumuwaks@ementech.co.ke"
+    }
+  },
+  "platforms": {
+    "onlineduka": {
+      "name": "onlineduka.shop",
+      "role": "multi-tenant SME platform (its own product with its own GTM)",
+      "domain": "https://onlineduka.shop",
+      "oneLiner": "AI-first business platform for African SMEs. Baitech, SmartBiz and iPhone are tenants, not the platform itself."
+    }
+  },
+  "portfolio": [
+    {
+      "slug": "smartbiz",
+      "name": "SmartBiz",
+      "category": "enterprise",
+      "tagline": "SME Business Management Platform",
+      "status": "live",
+      "liveUrl": "https://app.onlineduka.shop",
+      "aliases": [
+        "SmartBiz"
+      ],
+      "brand": "onlineduka"
+    },
+    {
+      "slug": "dumuwaks",
+      "name": "DumuWaks",
+      "category": "marketplace",
+      "tagline": "Maintenance & Repair Marketplace",
+      "status": "live",
+      "liveUrl": "https://dumuwaks.ementech.co.ke",
+      "githubUrl": "https://github.com/MUNENE1212/dumuwaks",
+      "aliases": [
+        "DumuWaks",
+        "Dumu Waks"
+      ],
+      "brand": "dumuwaks"
+    },
+    {
+      "slug": "baitech",
+      "name": "Baitech",
+      "category": "ecommerce",
+      "tagline": "Tech Products & Services Marketplace",
+      "status": "live",
+      "liveUrl": "https://emen.onlineduka.shop",
+      "aliases": [
+        "Baitech",
+        "BaiTech"
+      ],
+      "brand": "baitech"
+    },
+    {
+      "slug": "image-generator",
+      "name": "Image Generator",
+      "category": "ai",
+      "tagline": "Identity-Preserving AI Portraits",
+      "status": "beta",
+      "githubUrl": "https://github.com/MUNENE1212/image-generator",
+      "brand": "ementech"
+    },
+    {
+      "slug": "keroma",
+      "name": "KEROMA",
+      "category": "ai",
+      "tagline": "African Heritage Recipe AI",
+      "status": "development",
+      "githubUrl": "https://github.com/MUNENE1212/keroma",
+      "brand": "ementech"
+    },
+    {
+      "slug": "tomtin",
+      "name": "TomTin ERP",
+      "category": "enterprise",
+      "tagline": "Multi-Business POS for Kenya",
+      "status": "development",
+      "brand": "ementech"
+    },
+    {
+      "slug": "kuku-tracker",
+      "name": "Kuku Egg Tracker",
+      "category": "enterprise",
+      "tagline": "Poultry Production & Savings Group PWA",
+      "status": "development",
+      "githubUrl": "https://github.com/MUNENE1212/kuku-egg-tracker",
+      "brand": "ementech"
+    },
+    {
+      "slug": "transittag",
+      "name": "TransitTag",
+      "category": "iot",
+      "tagline": "IoT Fleet & Passenger Experience",
+      "status": "development",
+      "githubUrl": "https://github.com/MUNENE1212/transittag",
+      "brand": "ementech"
+    },
+    {
+      "slug": "ardalink",
+      "name": "ArdaLink",
+      "category": "iot",
+      "tagline": "Pasture Intelligence for Pastoralists",
+      "status": "development",
+      "githubUrl": "https://github.com/MUNENE1212/ardalink-engine",
+      "brand": "ardalink"
+    },
+    {
+      "slug": "access-control",
+      "name": "Access Control",
+      "category": "security",
+      "tagline": "Multi-Tenant Biometric Security",
+      "status": "coming-soon",
+      "brand": "ementech"
+    },
+    {
+      "slug": "emensense",
+      "name": "EmenSense",
+      "category": "iot",
+      "tagline": "Modular Intelligent Sensing Platform",
+      "status": "development",
+      "brand": "ementech"
+    },
+    {
+      "slug": "green-rent",
+      "name": "Green Rent",
+      "category": "enterprise",
+      "tagline": "Flexible Rental Management",
+      "status": "development",
+      "brand": "ementech"
+    },
+    {
+      "slug": "safevoice",
+      "name": "SafeVoice",
+      "category": "social",
+      "tagline": "GBV Safety Platform (Hold to Record)",
+      "status": "development",
+      "brand": "ementech"
+    }
+  ]
+}

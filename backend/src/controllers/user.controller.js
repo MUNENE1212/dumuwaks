@@ -325,8 +325,8 @@ exports.deleteUser = async (req, res) => {
       });
     }
 
-    // Soft delete - set status to deleted
-    user.status = 'deleted';
+    // Soft delete
+    user.status = 'deactivated';
     user.deletedAt = new Date();
     await user.save();
 

@@ -1,0 +1,6 @@
+# Dumu Waks — dumuwaks.ementech.co.ke
+# SPA served via nginx try_files; every route renders client-side.
+# The content-site sitemap lives in the seo/ Next app (see seo/src/app/sitemap.ts).
+User-agent: *
+Allow: /
+Disallow: /admin

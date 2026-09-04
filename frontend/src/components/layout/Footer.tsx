@@ -103,8 +103,8 @@ const Footer = () => {
 
               {/* Tagline */}
               <p className="text-[var(--dw-text-secondary)] text-sm leading-relaxed mb-6 max-w-xs">
-                Kenya's leading platform connecting customers with skilled technicians
-                for professional repairs and engineering services.
+                Connecting customers with skilled technicians for professional
+                repairs and engineering services across Kenya.
               </p>
 
               {/* Website Link - Prominent */}
@@ -189,7 +189,7 @@ const Footer = () => {
               <div className="space-y-4">
                 {/* Phone */}
                 <a
-                  href="tel:+254700000000"
+                  href="tel:+254799954672"
                   className="flex items-start gap-3 text-[var(--dw-text-secondary)] text-sm transition-all duration-300 hover:text-[var(--dw-circuit-500)] group"
                 >
                   <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center rounded-lg bg-[var(--dw-circuit-500)]/10 border border-[var(--dw-circuit-500)]/20 transition-all duration-300 group-hover:bg-[var(--dw-circuit-500)]/20 group-hover:shadow-[var(--dw-shadow-led)]">
@@ -197,13 +197,13 @@ const Footer = () => {
                   </div>
                   <div>
                     <span className="block text-[var(--dw-text-tertiary)] text-xs">Phone</span>
-                    <span>+254 700 000 000</span>
+                    <span>+254 799 954 672</span>
                   </div>
                 </a>
 
                 {/* Email */}
                 <a
-                  href="mailto:contact@dumuwaks.ementech.co.ke"
+                  href="mailto:dumuwaks@ementech.co.ke"
                   className="flex items-start gap-3 text-[var(--dw-text-secondary)] text-sm transition-all duration-300 hover:text-[var(--dw-circuit-500)] group"
                 >
                   <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center rounded-lg bg-[var(--dw-wrench-500)]/10 border border-[var(--dw-wrench-500)]/20 transition-all duration-300 group-hover:bg-[var(--dw-wrench-500)]/20 group-hover:shadow-[var(--dw-shadow-led-purple)]">
@@ -211,7 +211,7 @@ const Footer = () => {
                   </div>
                   <div>
                     <span className="block text-[var(--dw-text-tertiary)] text-xs">Email</span>
-                    <span>contact@dumuwaks.ementech.co.ke</span>
+                    <span>dumuwaks@ementech.co.ke</span>
                   </div>
                 </a>
 

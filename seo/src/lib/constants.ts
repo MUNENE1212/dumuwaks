@@ -1,8 +1,16 @@
-export const SITE_URL = 'https://dumuwaks.ementech.co.ke';
+// Identity facts derive from the vendored brand.registry.json (repo root —
+// the estate-wide single source of truth, vendored from ementech-website).
+// Display name keeps the public "Dumu Waks" spelling; the registry's
+// canonical name is "DumuWaks" (both forms are aliased there).
+import brandRegistry from '../../../brand.registry.json';
+
+const dumuwaks = brandRegistry.brands.dumuwaks;
+
+export const SITE_URL = dumuwaks.domain;
 export const SITE_NAME = 'Dumu Waks';
 export const SITE_DESCRIPTION =
   'Professional maintenance & repair services in Kenya. Find verified plumbers, electricians, carpenters & more. Book in 60 seconds, pay via M-Pesa.';
-export const APP_URL = 'https://dumuwaks.ementech.co.ke';
+export const APP_URL = dumuwaks.domain;
 
 export const SERVICES = [
   {
