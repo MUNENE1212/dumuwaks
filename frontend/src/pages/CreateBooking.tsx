@@ -167,7 +167,6 @@ const CreateBooking: React.FC = () => {
   // Set minimum date to today on mount
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     if (!formData.scheduledDate) {
       setFormData((prev) => ({ ...prev, scheduledDate: today }));
     }

@@ -1242,7 +1242,7 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
           </div>
         );
 
-      case 5:
+      case 5: {
         const summaryData: BookingSummaryData = {
           service: bookingFlow.selectedService!,
           technician: bookingFlow.selectedTechnician!,
@@ -1313,6 +1313,7 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
             )}
           </div>
         );
+      }
 
       default:
         return null;

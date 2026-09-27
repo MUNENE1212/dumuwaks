@@ -167,7 +167,7 @@ export const AIDiagnosticBot: React.FC = () => {
           timestamp: new Date()
         };
 
-      case 5: // Location provided - Complete booking
+      case 5: { // Location provided - Complete booking
         const bookingData = {
           service: currentData.service,
           problem: currentData.problem,
@@ -189,6 +189,7 @@ export const AIDiagnosticBot: React.FC = () => {
           content: `✅ **Perfect!** Here's your booking summary:\n\n**Service:** ${bookingData.service}\n**Issue:** ${bookingData.problem}\n**When:** ${bookingData.date} at ${bookingData.time}\n**Where:** ${userInput}\n\n🚀 I'm taking you to the confirmation page now...`,
           timestamp: new Date()
         };
+      }
 
       default:
         // Reset booking flow

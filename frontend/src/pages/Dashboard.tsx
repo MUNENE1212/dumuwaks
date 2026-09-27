@@ -21,6 +21,15 @@ const Dashboard: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
   const { stats, recentActivity, isLoading } = useAppSelector((state) => state.dashboard);
 
+  const isStaff = user?.role === 'admin' || user?.role === 'support';
+
+  // Fetch dashboard data on mount (staff get their own dashboards)
+  useEffect(() => {
+    if (isStaff) return;
+    dispatch(fetchDashboardStats());
+    dispatch(fetchRecentActivity(10));
+  }, [dispatch, isStaff]);
+
   // Route to role-specific dashboard
   if (user?.role === 'admin') {
     return <AdminDashboard />;
@@ -29,12 +38,6 @@ const Dashboard: React.FC = () => {
   if (user?.role === 'support') {
     return <SupportDashboard />;
   }
-
-  // Fetch dashboard data on mount
-  useEffect(() => {
-    dispatch(fetchDashboardStats());
-    dispatch(fetchRecentActivity(10));
-  }, [dispatch]);
 
   const displayStats = [
     {

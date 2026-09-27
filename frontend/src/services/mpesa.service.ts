@@ -26,7 +26,7 @@ export const validateKenyanPhone = (phoneNumber: string): PhoneValidationResult 
   }
 
   // Remove spaces and dashes
-  const cleaned = phoneNumber.replace(/[\s\-]/g, '');
+  const cleaned = phoneNumber.replace(/[\s-]/g, '');
 
   // Valid Kenyan phone patterns
   const patterns = [

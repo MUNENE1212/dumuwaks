@@ -312,9 +312,10 @@ export const getDisplayPrice = (plan: PaymentPlan): string => {
       return `${formatPrice(plan.hourlyRate?.amount || 0, plan.hourlyRate?.currency)}/hr`;
     case 'fixed':
       return formatPrice(plan.fixedPrice?.amount || 0, plan.fixedPrice?.currency);
-    case 'milestone':
+    case 'milestone': {
       const total = plan.milestones?.reduce((sum, m) => sum + (m.amount || 0), 0) || 0;
       return `${formatPrice(total)} (milestones)`;
+    }
     case 'per_project':
       if (plan.perProject?.estimatedRange?.min && plan.perProject?.estimatedRange?.max) {
         return `${formatPrice(plan.perProject.estimatedRange.min)} - ${formatPrice(plan.perProject.estimatedRange.max)}`;

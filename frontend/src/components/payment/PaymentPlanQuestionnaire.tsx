@@ -145,9 +145,10 @@ const PaymentPlanQuestionnaire: React.FC<PaymentPlanQuestionnaireProps> = ({
         return hourlyRate.amount >= PAYMENT_PLAN_CONSTRAINTS.MIN_HOURLY_RATE;
       case 'fixed':
         return fixedPrice.amount >= PAYMENT_PLAN_CONSTRAINTS.MIN_FIXED_PRICE;
-      case 'milestone':
+      case 'milestone': {
         const totalPercent = milestones.reduce((sum, m) => sum + m.percentage, 0);
         return milestones.length > 0 && Math.abs(totalPercent - 100) < 0.01;
+      }
       case 'per_project':
         return perProject.requiresQuote || (perProject.estimatedRange.min > 0 && perProject.estimatedRange.max > 0);
       case 'negotiable':
@@ -605,7 +606,7 @@ const PaymentPlanQuestionnaire: React.FC<PaymentPlanQuestionnaireProps> = ({
           </div>
         );
 
-      case 'review':
+      case 'review': {
         const selectedServiceData = services.find(s => s._id === selectedService);
         return (
           <div className="space-y-6">
@@ -675,6 +676,7 @@ const PaymentPlanQuestionnaire: React.FC<PaymentPlanQuestionnaireProps> = ({
             </div>
           </div>
         );
+      }
 
       default:
         return null;

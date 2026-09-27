@@ -88,10 +88,11 @@ axiosInstance.interceptors.response.use(
         }
         break;
 
-      case 403:
+      case 403: {
         const forbiddenMsg = extractErrorMessage(data) || 'You do not have permission to perform this action.';
         toast.error(forbiddenMsg);
         break;
+      }
 
       case 404:
         if (!isAuthEndpoint) {
@@ -109,17 +110,19 @@ axiosInstance.interceptors.response.use(
         }
         break;
 
-      case 429:
+      case 429: {
         const rateLimitMsg = extractErrorMessage(data) || 'Too many requests. Please try again later.';
         toast.error(rateLimitMsg);
         break;
+      }
 
       case 500:
       case 502:
-      case 503:
+      case 503: {
         const serverMsg = extractErrorMessage(data) || 'Server error. Please try again later.';
         toast.error(serverMsg);
         break;
+      }
 
       default:
         if (!isAuthEndpoint) {

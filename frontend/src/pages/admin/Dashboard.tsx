@@ -37,46 +37,6 @@ const AdminDashboard: React.FC = () => {
   const [pendingEscrows, setPendingEscrows] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Redirect if not authenticated or not admin
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
-  const isAdmin = user?.role === 'admin';
-
-  if (!isAdmin) {
-    return (
-      <div className="min-h-screen bg-surface-100 flex items-center justify-center p-4">
-        <div className="glass-card rounded-xl p-8 max-w-md text-center">
-          <svg
-            className="w-16 h-16 mx-auto text-error"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-            />
-          </svg>
-          <h1 className="mt-4 text-xl font-bold text-bone">Access Denied</h1>
-          <p className="mt-2 text-steel">
-            You do not have permission to access this page.
-            Only administrators can manage the platform.
-          </p>
-          <a
-            href="/"
-            className="mt-6 inline-block px-6 py-3 bg-lumen text-on-lumen rounded-lg shadow-led hover:bg-lumen-hover transition-colors"
-          >
-            Go to Home
-          </a>
-        </div>
-      </div>
-    );
-  }
-
   /**
    * Fetch dashboard data
    */
@@ -117,9 +77,49 @@ const AdminDashboard: React.FC = () => {
     }
   }, []);
 
+  const isAdmin = isAuthenticated && user?.role === 'admin';
+
   useEffect(() => {
-    fetchDashboardData();
-  }, [fetchDashboardData]);
+    if (isAdmin) fetchDashboardData();
+  }, [isAdmin, fetchDashboardData]);
+
+  // Redirect if not authenticated or not admin
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen bg-surface-100 flex items-center justify-center p-4">
+        <div className="glass-card rounded-xl p-8 max-w-md text-center">
+          <svg
+            className="w-16 h-16 mx-auto text-error"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+            />
+          </svg>
+          <h1 className="mt-4 text-xl font-bold text-bone">Access Denied</h1>
+          <p className="mt-2 text-steel">
+            You do not have permission to access this page.
+            Only administrators can manage the platform.
+          </p>
+          <a
+            href="/"
+            className="mt-6 inline-block px-6 py-3 bg-lumen text-on-lumen rounded-lg shadow-led hover:bg-lumen-hover transition-colors"
+          >
+            Go to Home
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   /**
    * Render content based on current route

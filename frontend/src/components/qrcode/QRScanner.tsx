@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Camera, X, Flashlight } from 'lucide-react';
 import { Button } from '@/components/ui';
+import jsQR from 'jsqr';
 
 interface QRScannerProps {
   onScan: (data: string) => void;
@@ -93,9 +94,7 @@ export const QRScanner = ({ onScan, onClose }: QRScannerProps) => {
 
     // Try jsQR for QR code detection
     try {
-      // @ts-ignore - jsQR will be available
-      const jsqr = require('jsqr');
-      const code = jsqr(imageData.data, imageData.width, imageData.height, {
+      const code = jsQR(imageData.data, imageData.width, imageData.height, {
         inversionAttempts: 'dontInvert',
       });
 
@@ -104,8 +103,8 @@ export const QRScanner = ({ onScan, onClose }: QRScannerProps) => {
         stopScanner();
         return;
       }
-    } catch (err) {
-      // jsQR not available, continue scanning
+    } catch {
+      // unreadable frame, keep scanning
     }
 
     animationFrameRef.current = requestAnimationFrame(detectQRCode);

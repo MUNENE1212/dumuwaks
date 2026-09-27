@@ -65,7 +65,7 @@ const PaymentPlanSelector: React.FC<PaymentPlanSelectorProps> = ({
   const getDepositDisplay = () => {
     if (!plan.deposit?.required) return null;
 
-    let depositAmount = calculationResult?.depositAmount || 0;
+    const depositAmount = calculationResult?.depositAmount || 0;
 
     return (
       <div className="mt-3 p-3 bg-[var(--dw-color-warning-bg)] rounded-md border border-[var(--dw-color-warning)]">
