@@ -137,3 +137,5 @@ firebase-service-account.json
 
 # AI orchestration artifacts
 .ai/
+# Vite PWA dev build output
+frontend/dev-dist/
