@@ -47,10 +47,12 @@ switch_to() { # $1 = release dir
   pm2 reload "$PM2_NAME" >/dev/null
 }
 
-healthy() {
-  local _
+healthy() { # [$1 = commit sha the backend must report]
+  local _ body
   for _ in $(seq 1 30); do
-    if curl -fsS --max-time 3 "$HEALTH_URL" >/dev/null 2>&1; then return 0; fi
+    if body=$(curl -fsS --max-time 3 "$HEALTH_URL" 2>/dev/null); then
+      [[ -z ${1:-} || $body == *"\"release\":\"${1:0:12}\""* ]] && return 0
+    fi
     sleep 2
   done
   return 1
@@ -96,7 +98,7 @@ cmd_deploy() {
 
   log "switching to $(basename "$rel")"
   switch_to "$rel"
-  if ! healthy; then
+  if ! healthy "$sha"; then
     log "health check failed — rolling back to $(basename "$prev")"
     switch_to "$prev"
     healthy || log "WARNING: previous release is not healthy either"
