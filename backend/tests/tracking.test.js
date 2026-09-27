@@ -28,8 +28,11 @@ const {
 describe('Tracking Service', () => {
   // Clean up after each test
   afterEach(() => {
-    // Clear all active sessions
-    cleanupExpiredSessions(0); // 0 minutes = clear all
+    // End every session explicitly. cleanupExpiredSessions(0) alone loses a
+    // same-millisecond race on fast machines (sessionAge of 0 > 0 is false),
+    // which leaks sessions into later tests.
+    getAllActiveSessions().forEach((s) => endTrackingSession(s.bookingId, s.technicianId));
+    cleanupExpiredSessions(0); // belt and braces
   });
 
   describe('validateKenyaBounds', () => {
