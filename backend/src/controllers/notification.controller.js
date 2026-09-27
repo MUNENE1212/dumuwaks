@@ -315,11 +315,16 @@ exports.clearReadNotifications = async (req, res) => {
 exports.getPreferences = async (req, res) => {
   try {
     const User = require('../models/User');
-    const user = await User.findById(req.user.id).select('preferences.notifications');
+    const user = await User.findById(req.user.id).select('preferences.notifications notificationPreferences.whatsapp');
+    const whatsapp = user.notificationPreferences?.whatsapp;
 
     res.status(200).json({
       success: true,
-      preferences: user.preferences?.notifications || {}
+      preferences: {
+        ...(user.preferences?.notifications || {}),
+        // Booking and payment updates on WhatsApp (see services/whatsapp/notifier.service.js)
+        whatsapp: whatsapp ? whatsapp.bookings !== false && whatsapp.payments !== false : true
+      }
     });
   } catch (error) {
     console.error('Get preferences error:', error);
@@ -338,7 +343,7 @@ exports.getPreferences = async (req, res) => {
 exports.updatePreferences = async (req, res) => {
   try {
     const User = require('../models/User');
-    const { emailNotifications, pushNotifications, smsNotifications } = req.body;
+    const { emailNotifications, pushNotifications, smsNotifications, whatsappNotifications } = req.body;
 
     const user = await User.findById(req.user.id);
 
@@ -354,13 +359,20 @@ exports.updatePreferences = async (req, res) => {
     if (smsNotifications !== undefined) {
       user.preferences.notifications.sms = smsNotifications;
     }
+    if (whatsappNotifications !== undefined) {
+      user.set('notificationPreferences.whatsapp.bookings', Boolean(whatsappNotifications));
+      user.set('notificationPreferences.whatsapp.payments', Boolean(whatsappNotifications));
+    }
 
     await user.save();
 
     res.status(200).json({
       success: true,
       message: 'Notification preferences updated successfully',
-      preferences: user.preferences.notifications
+      preferences: {
+        ...user.preferences.notifications,
+        whatsapp: user.notificationPreferences?.whatsapp?.bookings !== false
+      }
     });
   } catch (error) {
     console.error('Update preferences error:', error);

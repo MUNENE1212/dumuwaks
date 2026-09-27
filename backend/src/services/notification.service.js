@@ -1,5 +1,6 @@
 const Notification = require('../models/Notification');
 const admin = require('firebase-admin');
+const whatsappNotifier = require('./whatsapp/notifier.service');
 
 /**
  * Notification Service
@@ -48,6 +49,9 @@ exports.createNotification = async (recipientId, data) => {
       recipient: recipientId,
       ...data
     });
+
+    // Mirror to WhatsApp in the background; it never blocks or fails the caller.
+    whatsappNotifier.deliver(notification).catch(() => {});
 
     return notification;
   } catch (error) {

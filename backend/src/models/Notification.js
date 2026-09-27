@@ -157,6 +157,12 @@ const NotificationSchema = new Schema({
       sentAt: Date,
       failed: { type: Boolean, default: false },
       error: String
+    },
+    whatsapp: {
+      sent: { type: Boolean, default: false },
+      sentAt: Date,
+      failed: { type: Boolean, default: false },
+      error: String
     }
   },
 

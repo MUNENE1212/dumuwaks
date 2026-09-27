@@ -25,6 +25,8 @@ exports.initializeSocket = (server) => {
     cors: {
       origin: [
         process.env.CLIENT_WEB_URL,
+        'https://dumuwaks.co.ke',
+        'https://www.dumuwaks.co.ke',
         'https://dumuwaks.ementech.co.ke',
         'https://api.ementech.co.ke',
         'http://localhost:3000',
@@ -69,6 +71,11 @@ exports.initializeSocket = (server) => {
 
     // Join user's personal room
     socket.join(socket.userId);
+
+    // Support and admin share a room for desk-wide events (WhatsApp requests)
+    if (['support', 'admin'].includes(socket.user?.role)) {
+      socket.join('staff');
+    }
 
     // Update user online status
     updateUserOnlineStatus(socket.userId, true);
@@ -214,6 +221,14 @@ exports.emitToConversation = (conversationId, event, data) => {
 exports.emitToBooking = (bookingId, event, data) => {
   if (!io) return;
   io.to(`booking:${bookingId}`).emit(event, data);
+};
+
+/**
+ * Emit event to support and admin staff
+ */
+exports.emitToStaff = (event, data) => {
+  if (!io) return;
+  io.to('staff').emit(event, data);
 };
 
 /**
