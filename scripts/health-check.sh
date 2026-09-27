@@ -34,8 +34,8 @@ NC='\033[0m' # No Color
 API_PORT="${API_PORT:-5000}"
 API_HOST="${API_HOST:-localhost}"
 FRONTEND_HOST="${FRONTEND_HOST:-localhost}"
-EXTERNAL_API="${EXTERNAL_API:-https://api.ementech.co.ke}"
-EXTERNAL_FRONTEND="${EXTERNAL_FRONTEND:-https://dumuwaks.ementech.co.ke}"
+EXTERNAL_API="${EXTERNAL_API:-https://dumuwaks.co.ke}"
+EXTERNAL_FRONTEND="${EXTERNAL_FRONTEND:-https://dumuwaks.co.ke}"
 
 # Options
 CHECK_EXTERNAL=false

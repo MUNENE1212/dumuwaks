@@ -121,7 +121,7 @@ jobs:
 
     environment:
       name: production-vps
-      url: https://dumuwaks.ementech.co.ke
+      url: https://dumuwaks.co.ke
 
     steps:
       - name: Checkout code
@@ -210,7 +210,7 @@ jobs:
 
             # Create production .env if it doesn't exist
             if [ ! -f "${DEPLOY_PATH}/shared/.env.frontend" ]; then
-              echo "VITE_API_URL=https://api.ementech.co.ke/api/v1" > ${DEPLOY_PATH}/shared/.env.frontend
+              echo "VITE_API_URL=https://dumuwaks.co.ke/api/v1" > ${DEPLOY_PATH}/shared/.env.frontend
             fi
 
             cp ${DEPLOY_PATH}/shared/.env.frontend .env.production
@@ -221,7 +221,7 @@ jobs:
             # Pre-deployment Health Check
             # ========================================
             echo "Checking current application health..."
-            CURRENT_HEALTH=$(curl -s -o /dev/null -w "%{http_code}" https://api.ementech.co.ke/api/v1/health || echo "000")
+            CURRENT_HEALTH=$(curl -s -o /dev/null -w "%{http_code}" https://dumuwaks.co.ke/api/v1/health || echo "000")
             echo "Current health status: ${CURRENT_HEALTH}"
 
             # ========================================
@@ -339,7 +339,7 @@ ENDSSH
           RETRY_COUNT=0
 
           while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-            HEALTH_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://api.ementech.co.ke/api/v1/health || echo "000")
+            HEALTH_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://dumuwaks.co.ke/api/v1/health || echo "000")
 
             if [ "$HEALTH_STATUS" = "200" ]; then
               echo "External health check passed!"
@@ -352,7 +352,7 @@ ENDSSH
           done
 
           echo "Warning: External health check did not pass within timeout."
-          echo "Please manually verify: https://api.ementech.co.ke/api/v1/health"
+          echo "Please manually verify: https://dumuwaks.co.ke/api/v1/health"
 
       - name: Deployment summary
         if: always()
@@ -366,9 +366,9 @@ ENDSSH
           echo "- **Environment**: Production VPS" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "## URLs" >> $GITHUB_STEP_SUMMARY
-          echo "- Frontend: https://dumuwaks.ementech.co.ke" >> $GITHUB_STEP_SUMMARY
-          echo "- API: https://api.ementech.co.ke" >> $GITHUB_STEP_SUMMARY
-          echo "- Health: https://api.ementech.co.ke/api/v1/health" >> $GITHUB_STEP_SUMMARY
+          echo "- Frontend: https://dumuwaks.co.ke" >> $GITHUB_STEP_SUMMARY
+          echo "- API: https://dumuwaks.co.ke/api/v1" >> $GITHUB_STEP_SUMMARY
+          echo "- Health: https://dumuwaks.co.ke/api/v1/health" >> $GITHUB_STEP_SUMMARY
 
   # ===========================================================================
   # Rollback Deployment
@@ -380,7 +380,7 @@ ENDSSH
 
     environment:
       name: production-vps
-      url: https://dumuwaks.ementech.co.ke
+      url: https://dumuwaks.co.ke
 
     steps:
       - name: Checkout code
@@ -546,7 +546,7 @@ ENDSSH
                     {
                       "type": "button",
                       "text": {"type": "plain_text", "text": "View Site"},
-                      "url": "https://dumuwaks.ementech.co.ke"
+                      "url": "https://dumuwaks.co.ke"
                     }
                   ]
                 }
@@ -561,6 +561,6 @@ ENDSSH
           echo "Status: **${{ steps.status.outputs.message }}**" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Links:" >> $GITHUB_STEP_SUMMARY
-          echo "- Frontend: https://dumuwaks.ementech.co.ke" >> $GITHUB_STEP_SUMMARY
-          echo "- API: https://api.ementech.co.ke" >> $GITHUB_STEP_SUMMARY
-          echo "- Health: https://api.ementech.co.ke/api/v1/health" >> $GITHUB_STEP_SUMMARY
+          echo "- Frontend: https://dumuwaks.co.ke" >> $GITHUB_STEP_SUMMARY
+          echo "- API: https://dumuwaks.co.ke/api/v1" >> $GITHUB_STEP_SUMMARY
+          echo "- Health: https://dumuwaks.co.ke/api/v1/health" >> $GITHUB_STEP_SUMMARY

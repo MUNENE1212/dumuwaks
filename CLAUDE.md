@@ -56,7 +56,11 @@ router.post('/path', protect, authorize('customer'), [body('field').notEmpty(), 
 
 **Booking FSM:** `pending → matching → assigned → accepted → en_route → arrived → in_progress → paused → completed → verified → payment_pending → paid`. Also: `disputed`, `refunded`, `cancelled`.
 
-**Fees** (`config/fees.js`): Platform 7.5%, VAT 16%, tiered cancellation (0-75%), escrow auto-release 3 days, dispute hold 7 days.
+**Payments** (`services/payments/`, `docs/PAYMENTS.md`): IntaSend. Full price held in an escrow wallet; append-only `LedgerEntry`; `Payout` state machine (initiated before sending, unknown outcomes go to review, never auto-resent); webhooks only trigger a re-read from IntaSend; jobs in `jobs/payments.jobs.js` (instance 0 + Mongo lock). Every booking is escrow (`paymentProvider` defaults to `intasend`): technician accepts → customer pays full price → held → released; the legacy 20% fee path remains only for old records.
+
+**WhatsApp** (`services/whatsapp/`, `docs/WHATSAPP.md`): Evolution API gateway; inbound bot → `WhatsAppRequest` desk inbox; `notification.service` mirrors booking/payment notifications to WhatsApp.
+
+**Fees** (`config/fees.js`): Platform 7.5% (+16% VAT on it) from the technician's share, tiered cancellation (0-75%), escrow auto-release 3 days after completion, auto-refund 14 days, dispute hold 7 days.
 
 ### Frontend
 
@@ -68,7 +72,7 @@ router.post('/path', protect, authorize('customer'), [body('field').notEmpty(), 
 
 **Components:** Feature-based: `booking/`, `bookings/`, `admin/`, `matching/`, `payment/`, `profile/`, `social/`, `ui/` (atoms), `common/` (utilities).
 
-**Design system:** Dark-only. CSS tokens in `styles/tokens.css` (mahogany, charcoal, circuit-blue, wrench-purple, soft-bone, steel-grey). Glassmorphism + LED glow. Tailwind for layout.
+**Design system:** Night-only, Emen order — see `docs/design/DESIGN_SYSTEM.md`. Tokens in `styles/tokens.css` mirrored in `tailwind.config.js`: `surface-*`, `line`, `ink*`, `lumen` (only action colour, text on it is `on-lumen`), `circuit` (live state), `ok/warn/fault`. Archivo / IBM Plex Sans / IBM Plex Mono (numbers always mono). Square radii, no blur/glow/gradients. Brand config (domain, WhatsApp number) in `config/brand.ts`.
 
 **Testing:** Vitest + RTL. `test/setup.tsx` provides `renderWithProviders()`, mock factories, mocks for localStorage/axios/socket.io.
 

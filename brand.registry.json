@@ -13,7 +13,8 @@
     "keroma": "Downgraded 2026-09-04: 502 and the unresolved 2026-08-02 security incident. Do not restore to make a portfolio claim true.",
     "kukuTracker": "Fixed + deployed 2026-09-04: product identity corrected (repo 2026/zebray/kuku-egg-tracker) and zebra.ementech.co.ke now serves title 'Kuku Egg Tracker'. Verified live; registry flipped to live same day.",
     "tomtin": "Downgraded 2026-09-04: hostname does not resolve; nginx server_name fix and DNS record not yet deployed.",
-    "iphoneOnlineduka": "iphone.onlineduka.shop unreachable as of 2026-09-04."
+    "iphoneOnlineduka": "iphone.onlineduka.shop unreachable as of 2026-09-04.",
+    "dumuwaksDomain": "Moved 2026-09-26 from dumuwaks.ementech.co.ke to dumuwaks.co.ke (old host 301s to the new one). Pending: DNS + certbot for dumuwaks.co.ke/www, then verify:claims. Mirror this change in the master registry (ementech-website)."
   },
   "company": {
     "legalName": "Emen Engineering Limited",
@@ -69,7 +70,7 @@
     "dumuwaks": {
       "name": "DumuWaks",
       "role": "product",
-      "domain": "https://dumuwaks.ementech.co.ke",
+      "domain": "https://dumuwaks.co.ke",
       "oneLiner": "AI-powered technician marketplace connecting skilled professionals with customers across Kenya.",
       "tagline": "Find Trusted Technicians Near You",
       "email": "dumuwaks@ementech.co.ke"
@@ -102,7 +103,7 @@
       "category": "marketplace",
       "tagline": "Maintenance & Repair Marketplace",
       "status": "live",
-      "liveUrl": "https://dumuwaks.ementech.co.ke",
+      "liveUrl": "https://dumuwaks.co.ke",
       "githubUrl": "https://github.com/MUNENE1212/dumuwaks",
       "aliases": [
         "DumuWaks",

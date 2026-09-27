@@ -244,7 +244,7 @@ if [ "$SKIP_BUILD" = false ]; then
 
   # Create production env if not exists
   if [ ! -f "${DEPLOY_PATH}/shared/.env.frontend" ]; then
-    echo "VITE_API_URL=https://api.ementech.co.ke/api/v1" > "${DEPLOY_PATH}/shared/.env.frontend"
+    echo "VITE_API_URL=https://dumuwaks.co.ke/api/v1" > "${DEPLOY_PATH}/shared/.env.frontend"
   fi
 
   cp "${DEPLOY_PATH}/shared/.env.frontend" .env.production
@@ -348,7 +348,7 @@ echo "Frontend: ${DEPLOY_PATH}/current-frontend"
 echo "Backend: ${DEPLOY_PATH}/current/backend"
 echo ""
 echo "Health Check: http://localhost:5000/api/v1/health"
-echo "External: https://api.ementech.co.ke/api/v1/health"
+echo "External: https://dumuwaks.co.ke/api/v1/health"
 echo ""
 
 # Show PM2 status

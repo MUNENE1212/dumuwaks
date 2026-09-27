@@ -41,7 +41,7 @@ NC='\033[0m' # No Color
 DEPLOY_PATH="${DEPLOY_PATH:-/var/www/dumuwaks}"
 NODE_VERSION="${NODE_VERSION:-20}"
 APP_USER="${APP_USER:-deploy}"
-DOMAIN_FRONTEND="${DOMAIN_FRONTEND:-dumuwaks.ementech.co.ke}"
+DOMAIN_FRONTEND="${DOMAIN_FRONTEND:-dumuwaks.co.ke}"
 DOMAIN_API="${DOMAIN_API:-api.ementech.co.ke}"
 
 # Helper functions
