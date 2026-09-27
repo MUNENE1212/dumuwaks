@@ -39,79 +39,81 @@ const fallback = {
 // Only attempt Redis if explicitly configured via REDIS_URL or REDIS_HOST env var
 const hasRedisConfig = !!(process.env.REDIS_URL || process.env.REDIS_HOST);
 
+function createClient() {
+  const redis = require('redis');
+
+  const redisHost = process.env.REDIS_HOST || 'localhost';
+  const redisPort = process.env.REDIS_PORT || 6379;
+  const redisPassword = process.env.REDIS_PASSWORD;
+
+  let redisUrl;
+  if (process.env.REDIS_URL) {
+    redisUrl = process.env.REDIS_URL;
+  } else if (redisPassword) {
+    redisUrl = `redis://:${redisPassword}@${redisHost}:${redisPort}`;
+  } else {
+    redisUrl = `redis://${redisHost}:${redisPort}`;
+  }
+
+  let client;
+
+  try {
+    client = redis.createClient({
+      url: redisUrl,
+      socket: {
+        reconnectStrategy: (retries) => {
+          if (retries > 5) {
+            console.warn('⚠️  Redis reconnection failed after 5 attempts');
+            return new Error('Redis max retries reached');
+          }
+          return Math.min(retries * 200, 3000);
+        },
+        connectTimeout: 5000,
+      }
+    });
+
+    client.on('ready', () => {
+      console.log('✅ Redis client ready');
+    });
+
+    client.on('error', (err) => {
+      console.error('Redis error:', err.message);
+    });
+
+    client.on('end', () => {
+      console.log('Redis connection ended');
+    });
+
+    // Non-blocking connect
+    client.connect().catch((err) => {
+      console.warn(`⚠️  Redis not available: ${err.message}`);
+      console.warn('   Caching and replay protection disabled');
+    });
+  } catch (err) {
+    console.warn(`⚠️  Redis init failed: ${err.message}`);
+    client = fallback;
+  }
+
+  // Graceful shutdown
+  const shutdown = async () => {
+    try {
+      if (client && client.isOpen) {
+        await client.quit();
+      }
+    } catch (_) {
+      // ignore
+    }
+  };
+
+  process.on('SIGINT', shutdown);
+  process.on('SIGTERM', shutdown);
+
+  return client;
+}
+
 if (!hasRedisConfig && process.env.NODE_ENV !== 'production') {
   console.log('ℹ️  Redis not configured — running with in-memory fallback');
   module.exports = fallback;
-  return;
-}
-
-// Redis is configured — attempt connection
-const redis = require('redis');
-
-const redisHost = process.env.REDIS_HOST || 'localhost';
-const redisPort = process.env.REDIS_PORT || 6379;
-const redisPassword = process.env.REDIS_PASSWORD;
-
-let redisUrl;
-if (process.env.REDIS_URL) {
-  redisUrl = process.env.REDIS_URL;
-} else if (redisPassword) {
-  redisUrl = `redis://:${redisPassword}@${redisHost}:${redisPort}`;
 } else {
-  redisUrl = `redis://${redisHost}:${redisPort}`;
+  module.exports = createClient();
 }
-
-let client;
-
-try {
-  client = redis.createClient({
-    url: redisUrl,
-    socket: {
-      reconnectStrategy: (retries) => {
-        if (retries > 5) {
-          console.warn('⚠️  Redis reconnection failed after 5 attempts');
-          return new Error('Redis max retries reached');
-        }
-        return Math.min(retries * 200, 3000);
-      },
-      connectTimeout: 5000,
-    }
-  });
-
-  client.on('ready', () => {
-    console.log('✅ Redis client ready');
-  });
-
-  client.on('error', (err) => {
-    console.error('Redis error:', err.message);
-  });
-
-  client.on('end', () => {
-    console.log('Redis connection ended');
-  });
-
-  // Non-blocking connect
-  client.connect().catch((err) => {
-    console.warn(`⚠️  Redis not available: ${err.message}`);
-    console.warn('   Caching and replay protection disabled');
-  });
-} catch (err) {
-  console.warn(`⚠️  Redis init failed: ${err.message}`);
-  client = fallback;
-}
-
-// Graceful shutdown
-const shutdown = async () => {
-  try {
-    if (client && client.isOpen) {
-      await client.quit();
-    }
-  } catch (_) {
-    // ignore
-  }
-};
-
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
-
-module.exports = client;

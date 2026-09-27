@@ -25,9 +25,14 @@ const app = express();
 app.set('trust proxy', 1);
 
 // Connect to MongoDB
+// Payments: refuse sandbox keys in production (and live keys elsewhere) before serving anything
+require('./config/payments').assertSafe();
+
 connectDB().then(() => {
   // Create indexes after connection
   createIndexes();
+  // Escrow jobs: STK/payout polling, auto-release/refund, daily reconciliation
+  if (process.env.NODE_ENV !== 'test') require('./jobs/payments.jobs').start();
 });
 
 // ===== MIDDLEWARE =====
@@ -44,6 +49,8 @@ const corsOptions = {
     const whitelist = [
       process.env.CLIENT_WEB_URL,
       process.env.CORS_ORIGIN,
+      'https://dumuwaks.co.ke',
+      'https://www.dumuwaks.co.ke',
       'https://dumuwaks.ementech.co.ke',
       'https://api.ementech.co.ke',
       'http://localhost:3000',
@@ -107,7 +114,14 @@ const limiter = rateLimit({
   legacyHeaders: false,
   skip: (req) => {
     // Skip rate limiting for health check and status endpoints
-    return req.path === '/api/health' || req.path === '/api/status';
+    // Evolution API posts WhatsApp events in bursts from one IP; the route
+    // authenticates with its own secret.
+    return (
+      req.path === '/api/health' ||
+      req.path === '/api/status' ||
+      req.originalUrl.startsWith('/api/v1/whatsapp/webhook') ||
+      req.originalUrl.startsWith('/api/v1/payments/intasend/webhook')
+    );
   }
 });
 
@@ -185,6 +199,8 @@ app.use('/api/v1/technician-services', require('./routes/technicianService.route
 app.use('/api/v1/profile/completeness', require('./routes/profileCompleteness.routes'));
 app.use('/api/v1/escrow', require('./routes/escrow.routes'));
 app.use('/api/v1/payment-plans', require('./routes/paymentPlan.routes'));
+app.use('/api/v1/whatsapp', require('./routes/whatsapp.routes'));
+app.use('/api/v1/payments', require('./routes/payments.routes'));
 
 // 404 Handler
 app.use((req, res) => {

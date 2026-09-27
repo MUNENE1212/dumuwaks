@@ -409,7 +409,7 @@ TechnicianServiceSchema.statics.findByService = function(serviceId, options = {}
     'rating.average': { $gte: minRating },
     deletedAt: null
   })
-    .populate('technician', 'firstName lastName profilePicture rating location')
+    .populate('technician', 'firstName lastName profilePicture rating location kyc.verified kyc.verifiedAt')
     .sort(sortOptions[sortBy] || sortOptions.rating)
     .limit(limit);
 };

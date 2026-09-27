@@ -131,7 +131,7 @@ exports.getNearbyTechnicians = async (req, res) => {
     }
 
     const technicians = await User.find(query)
-      .select('firstName lastName profilePicture rating skills location businessName')
+      .select('firstName lastName profilePicture rating skills location businessName kyc.verified kyc.verifiedAt')
       .limit(20);
 
     res.status(200).json({

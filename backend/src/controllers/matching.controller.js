@@ -66,16 +66,15 @@ exports.findTechnicians = async (req, res) => {
       techniciansQuery['certifications.0'] = { $exists: true };
     }
 
+    // "Only ID-verified technicians": an admin has checked their ID (kyc.verified).
+    // (Stored as requireBackgroundCheck for existing preferences; there is no
+    // background-check or insurance data, so no other verification filter exists.)
     if (preferences.technicianPreferences.requireBackgroundCheck) {
-      techniciansQuery['verification.backgroundCheck'] = true;
-    }
-
-    if (preferences.technicianPreferences.requireInsurance) {
-      techniciansQuery['verification.insurance'] = true;
+      techniciansQuery['kyc.verified'] = true;
     }
     // Find technicians
     let technicians = await User.find(techniciansQuery)
-      .select('firstName lastName profilePicture rating skills location availability hourlyRate yearsOfExperience completedJobs avgResponseTime completionRate subscription')
+      .select('firstName lastName profilePicture rating skills location availability hourlyRate yearsOfExperience completedJobs avgResponseTime completionRate subscription kyc.verified kyc.verifiedAt')
       .lean();
 
     // Calculate distances and filter by max distance
@@ -181,7 +180,7 @@ exports.findTechnicians = async (req, res) => {
     // Populate technician details
     await Matching.populate(topMatches, {
       path: 'technician',
-      select: 'firstName lastName profilePicture rating skills location availability hourlyRate yearsOfExperience completedJobs subscription'
+      select: 'firstName lastName profilePicture rating skills location availability hourlyRate yearsOfExperience completedJobs subscription kyc.verified kyc.verifiedAt'
     });
 
     // Update matching interaction with results
@@ -243,7 +242,7 @@ exports.getMatching = async (req, res) => {
   try {
     const matching = await Matching.findById(req.params.id)
       .populate('customer', 'firstName lastName profilePicture')
-      .populate('technician', 'firstName lastName profilePicture rating skills location availability hourlyRate yearsOfExperience completedJobs');
+      .populate('technician', 'firstName lastName profilePicture rating skills location availability hourlyRate yearsOfExperience completedJobs kyc.verified kyc.verifiedAt');
 
     if (!matching) {
       return res.status(404).json({

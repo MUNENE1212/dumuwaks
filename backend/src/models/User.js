@@ -144,6 +144,18 @@ const WorkGalleryImageSchema = new Schema({
   }
 }, { timestamps: true });
 
+/** Fields that must never be sent to any client, the owner included. */
+const PRIVATE_FIELDS = [
+  'password', 'refreshTokens', 'twoFactorSecret', 'twoFactorAuth', 'emailVerificationToken',
+  'emailVerificationExpires', 'phoneVerificationCode', 'phoneVerificationExpires', 'passwordResetToken',
+  'passwordResetExpires', 'fcmTokens', 'loginHistory', 'kyc', 'payoutDestination', 'pendingPayoutDestination'
+];
+
+function stripPrivate(ret) {
+  for (const f of PRIVATE_FIELDS) delete ret[f];
+  return ret;
+}
+
 // Main User Schema
 const UserSchema = new Schema({
   // Basic Information
@@ -532,7 +544,38 @@ const UserSchema = new Schema({
       messages: { type: Boolean, default: true },
       social: { type: Boolean, default: true },
       updates: { type: Boolean, default: true }
+    },
+    whatsapp: {
+      bookings: { type: Boolean, default: true },
+      payments: { type: Boolean, default: true },
+      messages: { type: Boolean, default: false }
     }
+  },
+
+  // Where technician payouts go (IntaSend: M-Pesa B2C or PesaLink bank transfer).
+  // Changing it needs a code sent to the new destination's phone, and payouts
+  // to a destination changed in the last 24 h are held for review.
+  payoutDestination: {
+    method: { type: String, enum: ['mpesa', 'bank'] },
+    phone: String,
+    bankCode: String,
+    bankName: String,
+    accountNumber: String,
+    accountName: String,
+    verifiedAt: Date,
+    changedAt: Date
+  },
+  pendingPayoutDestination: {
+    method: { type: String, enum: ['mpesa', 'bank'] },
+    phone: String,
+    bankCode: String,
+    bankName: String,
+    accountNumber: String,
+    accountName: String,
+    otpHash: { type: String, select: false },
+    otpExpires: Date,
+    attempts: { type: Number, default: 0 },
+    requestedAt: Date
   },
 
   // FCM Tokens for Push Notifications (Mobile)
@@ -570,8 +613,21 @@ const UserSchema = new Schema({
 
 }, {
   timestamps: true, // Adds createdAt and updatedAt
-  toJSON: { virtuals: true },
+  // Everything that leaves the server as JSON goes through stripPrivate: no
+  // endpoint can leak tokens, ID documents or payout details by forgetting a select.
+  toJSON: { virtuals: true, transform: (doc, ret) => stripPrivate(ret) },
   toObject: { virtuals: true }
+});
+
+/**
+ * Public trust signal: an admin has checked this technician's ID (kyc.verified).
+ * Technicians are shown as verified or not yet verified — never "all verified".
+ */
+UserSchema.virtual('verification').get(function() {
+  return {
+    isVerified: Boolean(this.kyc && this.kyc.verified),
+    verifiedAt: (this.kyc && this.kyc.verifiedAt) || null
+  };
 });
 
 // ===== INDEXES =====
@@ -784,6 +840,8 @@ UserSchema.methods.getPublicProfile = async function(requestingUserId = null) {
   delete userObject.fcmTokens;
   delete userObject.loginHistory;
   delete userObject.kyc;
+  delete userObject.payoutDestination;
+  delete userObject.pendingPayoutDestination;
 
   // If no requesting user or same user, return all visible data
   if (!requestingUserId || requestingUserId.toString() === this._id.toString()) {

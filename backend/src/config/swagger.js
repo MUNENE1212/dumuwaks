@@ -22,7 +22,7 @@ const options = {
         description: 'Development server'
       },
       {
-        url: 'https://api.ementech.co.ke',
+        url: 'https://dumuwaks.co.ke',
         description: 'Production server'
       }
     ],

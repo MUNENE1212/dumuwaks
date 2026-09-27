@@ -46,6 +46,23 @@ router.get('/reports', getReports);
 router.get('/users', getUsers);
 router.get('/users/:userId', [param('userId').isMongoId(), validate], getUserById);
 
+// Technician ID verification (public badge: "ID verified" / "Not yet verified")
+router.patch(
+  '/users/:userId/verification',
+  [param('userId').isMongoId(), body('verified').isBoolean(), validate],
+  async (req, res) => {
+    try {
+      const data = await require('../services/verification.service').setVerified(req.params.userId, {
+        verified: req.body.verified,
+        adminId: req.user._id
+      });
+      res.json({ success: true, message: req.body.verified ? 'Technician verified' : 'Verification removed', data });
+    } catch (error) {
+      res.status(error.status || 500).json({ success: false, message: error.message });
+    }
+  }
+);
+
 router.patch(
   '/users/:userId',
   [param('userId').isMongoId().withMessage('Valid user ID is required'), validate],

@@ -200,19 +200,28 @@ router.get('/technicians', async (req, res) => {
     }
 
     // Find technicians
+    // Public listing: allow-list the fields (lean() skips the User JSON transform)
     let technicians = await User.find(query)
-      .select('-password -email -phoneNumber -idNumber') // Exclude sensitive fields
+      .select('firstName lastName profilePicture bio skills location rating businessName isOnline lastLogin availability kyc.verified kyc.verifiedAt createdAt')
       .limit(parseInt(limit))
       .lean();
 
+    // Jobs actually completed and paid through Dumuwaks (not the rating count)
+    const done = await Booking.aggregate([
+      { $match: { technician: { $in: technicians.map((t) => t._id) }, status: { $in: ['verified', 'paid'] } } },
+      { $group: { _id: '$technician', n: { $sum: 1 } } }
+    ]);
+    const doneBy = Object.fromEntries(done.map((d) => [String(d._id), d.n]));
+
     // Add real-time availability status
-    technicians = technicians.map(tech => ({
+    technicians = technicians.map(({ kyc, ...tech }) => ({
       ...tech,
+      verification: { isVerified: Boolean(kyc && kyc.verified), verifiedAt: (kyc && kyc.verifiedAt) || null },
       isAvailableNow: tech.isOnline && tech.lastLogin >= thirtyMinutesAgo,
       lastActive: tech.lastLogin,
-      // Don't expose internal stats publicly
       publicStats: {
-        jobsCompleted: tech.rating?.count || 0,
+        jobsCompleted: doneBy[String(tech._id)] || 0,
+        reviews: tech.rating?.count || 0,
         averageRating: tech.rating?.average || 0
       }
     }));

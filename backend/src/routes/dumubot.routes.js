@@ -52,7 +52,7 @@ router.post('/chat', async (req, res) => {
 
           return res.json({
             success: true,
-            response: `Here are our top-rated ${service}s in ${user?.location?.city || 'your area'}:\n\n${techList}\n\nWould you like me to help you book one of them?`,
+            response: `Here are ${service}s with the highest ratings in ${user?.location?.city || 'your area'}:\n\n${techList}\n\nWould you like me to help you book one of them?`,
             source: 'technician-search',
             technicians: techResult.technicians
           });
@@ -80,7 +80,7 @@ router.post('/chat', async (req, res) => {
     console.error('DumuBot chat error:', error);
     res.status(500).json({
       success: false,
-      message: 'Sorry, DumuBot is having trouble right now. Please try again or contact support@dumuwaks.com'
+      message: 'Sorry, DumuBot is having trouble right now. Please try again or contact dumuwaks@ementech.co.ke'
     });
   }
 });
@@ -95,7 +95,7 @@ router.post('/action/:action', protect, async (req, res) => {
       case 'find-technician':
         return res.json({
           success: true,
-          response: "I'll help you find a technician! 🔧\n\nWhat service do you need? (e.g., 'I need a plumber in Nairobi')\n\nI can search for:\n• Plumbers\n• Electricians\n• Carpenters\n• Painters\n• Cleaners\n• Appliance Repair Technicians",
+          response: "I'll help you find a technician! 🔧\n\nWhat service do you need? (e.g., 'I need a plumber in Nairobi')\n\nI can search for:\n• Plumbers\n• Electricians\n• Carpenters\n• Painters\n• Appliance Repair Technicians",
           source: 'action',
           action: 'technician-search'
         });
@@ -129,28 +129,28 @@ router.post('/action/:action', protect, async (req, res) => {
       case 'how-it-works':
         return res.json({
           success: true,
-          response: `Here's how Dumu Waks works 🇰🇪:\n\n1️⃣ **Describe Your Problem**\nTell us what you need fixed and where you are.\n\n2️⃣ **Get Matched**\nOur AI matches you with the best technician in under 60 seconds.\n\n3️⃣ **Book & Pay**\nSchedule your service and pay securely via M-Pesa.\n\n4️⃣ **Get It Done**\nTechnician completes the job.\n\n5️⃣ **Review & Pay**\nReview the work, we release payment to technician.\n\n💰 Money held in escrow until you're satisfied!\n\nWant to try it out? Let me help you find a technician!`,
+          response: `Here's how Dumuwaks works:\n\n1️⃣ **Describe the job**\nWhat needs fixing and where — on the web, or send BOOK on WhatsApp to +254 799 954 672.\n\n2️⃣ **Choose a technician**\nCompare ratings, finished jobs, prices, and whether their ID is verified.\n\n3️⃣ **Pay into escrow**\nWhen the technician accepts, pay the agreed price by M-Pesa. Dumuwaks holds it.\n\n4️⃣ **Confirm the work**\nThe technician is paid when you confirm — or 3 days after they mark it done if you report nothing.\n\nSomething wrong? Tap Report a problem and the payment stays frozen while we sort it out.`,
           source: 'action'
         });
 
       case 'pricing':
         return res.json({
           success: true,
-          response: `Our pricing is transparent and fair 💰\n\n**How it works:**\n• Technicians set their own rates\n• You see the EXACT price before booking\n• No hidden fees or surprises\n• Pay via M-Pesa when you book\n• Money held in escrow until job complete\n\n**Typical price ranges:**\n• Plumbing: KES 500 - 5,000\n• Electrical: KES 500 - 5,000\n• Carpentry: KES 1,000 - 10,000\n• Painting: KES 2,000 - 15,000\n• Cleaning: KES 500 - 3,000\n\nExact price depends on the job. Want me to help you get a quote?`,
+          response: `How pricing works 💰\n\n• Technicians set their own rates; you see the price before you book\n• You pay exactly that price by M-Pesa once the technician accepts\n• Dumuwaks holds it until you confirm the work\n• Our 7.5% fee (+VAT) comes out of the technician's share, not yours\n\nThe price depends on the job — describe it and compare technicians' prices.`,
           source: 'action'
         });
 
       case 'get-support':
         return res.json({
           success: true,
-          response: "I'm connecting you to our support team! 🆘\n\nYou can reach them at:\n\n📧 Email: support@dumuwaks.com\n📱 Phone: +254 XXX XXX XXX\n\nOr fill out the contact form on our website.\n\nOur team typically responds within 1 hour during business hours.",
+          response: "Here's how to reach the Dumuwaks team 🆘\n\n💬 WhatsApp: send HELP to +254 799 954 672\n📱 Phone: +254 799 954 672\n📧 Email: dumuwaks@ementech.co.ke\n\nFor a problem with a job in progress, tap Report a problem on the booking — that freezes the payment until it's resolved.",
           source: 'action'
         });
 
       case 'become-technician':
         return res.json({
           success: true,
-          response: "Great choice! We'd love to have you on board! 🛠️\n\n**Requirements:**\n✓ Valid National ID\n✓ Verifiable skills & experience\n✓ Good reputation\n✓ Professional tools\n✓ M-Pesa account for payments\n\n**Benefits:**\n• Get matched with customers automatically\n• Receive payments securely via M-Pesa\n• Build your reputation with reviews\n• Flexible schedule - work when you want\n• Earn great income!\n\nReady to join? Register at: /register?role=technician",
+          response: "Good to have you 🛠️\n\n**To join:**\n1. Register as a technician\n2. Add your skills, service areas and rates\n3. Add your M-Pesa or bank payout details\n4. Optional: have Dumuwaks check your ID to show an \"ID verified\" badge\n\n**How you're paid:** the customer pays into escrow before you travel; when they confirm the work you receive the price minus the 7.5% fee and its VAT, by M-Pesa or bank.\n\nRegister at: /register?role=technician",
           source: 'action'
         });
 

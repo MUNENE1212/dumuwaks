@@ -12,7 +12,8 @@
     "seed": "node src/scripts/seed.js",
     "seed:pricing": "node src/scripts/seedPricing.js",
     "indexes": "node src/scripts/createIndexes.js",
-    "cleanup": "node src/scripts/cleanup.js"
+    "cleanup": "node src/scripts/cleanup.js",
+    "payments:setup": "node src/scripts/paymentsSetup.js"
   },
   "keywords": [
     "mern",
