@@ -191,50 +191,50 @@ const Support: React.FC = () => {
       case 'open':
         return {
           label: 'Open',
-          color: 'text-blue-700 dark:text-blue-400',
-          bgColor: 'bg-blue-100 dark:bg-blue-900/30',
+          color: 'text-blue-400',
+          bgColor: 'bg-blue-900/30',
           icon: Clock,
         };
       case 'assigned':
         return {
           label: 'Assigned',
-          color: 'text-indigo-700 dark:text-indigo-400',
-          bgColor: 'bg-indigo-100 dark:bg-indigo-900/30',
+          color: 'text-indigo-400',
+          bgColor: 'bg-indigo-900/30',
           icon: AlertCircle,
         };
       case 'in_progress':
         return {
           label: 'In Progress',
-          color: 'text-yellow-700 dark:text-yellow-400',
-          bgColor: 'bg-yellow-100 dark:bg-yellow-900/30',
+          color: 'text-yellow-400',
+          bgColor: 'bg-yellow-900/30',
           icon: AlertCircle,
         };
       case 'waiting_customer':
         return {
           label: 'Waiting for You',
-          color: 'text-orange-700 dark:text-orange-400',
-          bgColor: 'bg-orange-100 dark:bg-orange-900/30',
+          color: 'text-orange-400',
+          bgColor: 'bg-orange-900/30',
           icon: Clock,
         };
       case 'resolved':
         return {
           label: 'Resolved',
-          color: 'text-green-700 dark:text-green-400',
-          bgColor: 'bg-green-100 dark:bg-green-900/30',
+          color: 'text-green-400',
+          bgColor: 'bg-green-900/30',
           icon: CheckCircle,
         };
       case 'closed':
         return {
           label: 'Closed',
-          color: 'text-gray-700 dark:text-gray-400',
-          bgColor: 'bg-gray-100 dark:bg-gray-700',
+          color: 'text-ink-muted',
+          bgColor: 'bg-surface-300',
           icon: XCircle,
         };
       default:
         return {
           label: 'Open',
-          color: 'text-blue-700 dark:text-blue-400',
-          bgColor: 'bg-blue-100 dark:bg-blue-900/30',
+          color: 'text-blue-400',
+          bgColor: 'bg-blue-900/30',
           icon: Clock,
         };
     }
@@ -265,31 +265,31 @@ const Support: React.FC = () => {
     <div className="mx-auto max-w-7xl">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Support & Help Center</h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">
+        <h1 className="text-3xl font-bold text-ink">Support & Help Center</h1>
+        <p className="mt-2 text-ink-muted">
           Get help with your bookings, account, and technical issues
         </p>
       </div>
 
       {/* Quick Contact */}
       <div className="mb-8 grid gap-4 md:grid-cols-3">
-        <button className="flex items-center space-x-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 shadow-sm transition-shadow hover:shadow-md">
+        <button className="flex items-center space-x-4 rounded-lg border border-line bg-surface-200 p-4 shadow-sm transition-shadow hover:shadow-md">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-100">
             <Phone className="h-6 w-6 text-primary-600" />
           </div>
           <div className="text-left">
-            <h3 className="font-semibold text-gray-900 dark:text-gray-100">Call Us</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">+254 700 000 000</p>
+            <h3 className="font-semibold text-ink">Call Us</h3>
+            <p className="text-sm text-ink-muted">+254 700 000 000</p>
           </div>
         </button>
 
-        <button className="flex items-center space-x-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 shadow-sm transition-shadow hover:shadow-md">
+        <button className="flex items-center space-x-4 rounded-lg border border-line bg-surface-200 p-4 shadow-sm transition-shadow hover:shadow-md">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
             <Mail className="h-6 w-6 text-green-600" />
           </div>
           <div className="text-left">
-            <h3 className="font-semibold text-gray-900 dark:text-gray-100">Email Us</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">support@handylink.com</p>
+            <h3 className="font-semibold text-ink">Email Us</h3>
+            <p className="text-sm text-ink-muted">support@handylink.com</p>
           </div>
         </button>
 
@@ -308,29 +308,29 @@ const Support: React.FC = () => {
       </div>
 
       {/* FAQ Section */}
-      <div className="mb-8 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
-        <h2 className="mb-4 flex items-center text-lg font-semibold text-gray-900 dark:text-gray-100">
+      <div className="mb-8 rounded-lg border border-line bg-surface-200 p-6 shadow-sm">
+        <h2 className="mb-4 flex items-center text-lg font-semibold text-ink">
           <HelpCircle className="mr-2 h-5 w-5 text-primary-600" />
           Frequently Asked Questions
         </h2>
         <div className="space-y-2">
           {FAQ_ITEMS.map((faq, index) => (
-            <div key={index} className="rounded-lg border border-gray-200 dark:border-gray-700">
+            <div key={index} className="rounded-lg border border-line">
               <button
                 onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                className="flex w-full items-center justify-between p-4 text-left hover:bg-gray-50 dark:bg-gray-900"
+                className="flex w-full items-center justify-between p-4 text-left hover:bg-surface-100 bg-surface-100"
               >
-                <span className="font-medium text-gray-900 dark:text-gray-100">{faq.question}</span>
+                <span className="font-medium text-ink">{faq.question}</span>
                 <ChevronRight
                   className={cn(
-                    'h-5 w-5 text-gray-400 transition-transform',
+                    'h-5 w-5 text-ink-muted transition-transform',
                     expandedFaq === index && 'rotate-90'
                   )}
                 />
               </button>
               {expandedFaq === index && (
-                <div className="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 p-4">
-                  <p className="text-gray-700 dark:text-gray-300">{faq.answer}</p>
+                <div className="border-t border-line bg-surface-100 p-4">
+                  <p className="text-ink-muted">{faq.answer}</p>
                 </div>
               )}
             </div>
@@ -339,11 +339,11 @@ const Support: React.FC = () => {
       </div>
 
       {/* Support Tickets Section */}
-      <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+      <div className="rounded-lg border border-line bg-surface-200 shadow-sm">
         {/* Header */}
-        <div className="border-b border-gray-200 dark:border-gray-700 p-6">
+        <div className="border-b border-line p-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">My Support Tickets</h2>
+            <h2 className="text-lg font-semibold text-ink">My Support Tickets</h2>
             <Button
               variant="primary"
               size="sm"
@@ -358,18 +358,18 @@ const Support: React.FC = () => {
           {/* Filters */}
           <div className="mt-4 flex flex-col space-y-4 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted" />
               <input
                 type="text"
                 placeholder="Search tickets..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="w-full rounded-lg border border-line-strong py-2 pl-10 pr-4 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
             </div>
 
             <div className="flex items-center space-x-2">
-              <Filter className="h-4 w-4 text-gray-400" />
+              <Filter className="h-4 w-4 text-ink-muted" />
               <Select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
@@ -387,12 +387,12 @@ const Support: React.FC = () => {
         </div>
 
         {/* Tickets List */}
-        <div className="divide-y divide-gray-200">
+        <div className="divide-y divide-line">
           {filteredTickets.length === 0 ? (
             <div className="p-12 text-center">
-              <MessageCircle className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-gray-100">No support tickets</h3>
-              <p className="mt-2 text-gray-600 dark:text-gray-400">
+              <MessageCircle className="mx-auto h-12 w-12 text-ink-muted" />
+              <h3 className="mt-4 text-lg font-medium text-ink">No support tickets</h3>
+              <p className="mt-2 text-ink-muted">
                 {searchQuery || statusFilter !== 'all'
                   ? 'No tickets match your filters'
                   : 'Create a new ticket to get help from our support team'}
@@ -407,13 +407,13 @@ const Support: React.FC = () => {
                 <div
                   key={ticket._id}
                   onClick={() => handleTicketClick(ticket._id)}
-                  className="p-6 transition-colors hover:bg-gray-50 dark:hover:bg-gray-900/50 cursor-pointer"
+                  className="p-6 transition-colors hover:bg-surface-100/50 cursor-pointer"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center space-x-3">
-                          <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+                          <h3 className="font-semibold text-ink">
                             {ticket.subject}
                           </h3>
                           <span
@@ -433,18 +433,18 @@ const Support: React.FC = () => {
                             ticket.priority === 'urgent' && 'bg-red-100 text-red-700',
                             ticket.priority === 'high' && 'bg-orange-100 text-orange-700',
                             ticket.priority === 'medium' && 'bg-yellow-100 text-yellow-700',
-                            ticket.priority === 'low' && 'bg-gray-100 text-gray-700'
+                            ticket.priority === 'low' && 'bg-surface-300 text-ink'
                           )}>
                             {ticket.priority.toUpperCase()}
                           </span>
                         )}
                       </div>
 
-                      <p className="mt-2 line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
+                      <p className="mt-2 line-clamp-2 text-sm text-ink-muted">
                         {ticket.description}
                       </p>
 
-                      <div className="mt-3 flex items-center space-x-4 text-xs text-gray-500 dark:text-gray-400">
+                      <div className="mt-3 flex items-center space-x-4 text-xs text-ink-muted">
                         <span className="flex items-center gap-1">
                           <FileText className="h-3 w-3" />
                           {ticket.category}
@@ -469,13 +469,13 @@ const Support: React.FC = () => {
 
       {/* New Ticket Modal */}
       {showNewTicket && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-          <div className="w-full max-w-2xl rounded-lg bg-white dark:bg-gray-800 p-6 shadow-xl">
-            <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-gray-100">Create Support Ticket</h2>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-surface-000 bg-opacity-50 p-4">
+          <div className="w-full max-w-2xl rounded-lg bg-surface-200 p-6 shadow-xl">
+            <h2 className="mb-4 text-xl font-semibold text-ink">Create Support Ticket</h2>
 
             <form onSubmit={handleCreateTicket} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                <label className="block text-sm font-medium text-ink-muted">
                   Subject <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -483,7 +483,7 @@ const Support: React.FC = () => {
                   value={newTicket.subject}
                   onChange={(e) => setNewTicket({ ...newTicket, subject: e.target.value })}
                   placeholder="Brief description of your issue"
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="mt-1 w-full rounded-lg border border-line-strong px-4 py-2 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
                   required
                 />
               </div>

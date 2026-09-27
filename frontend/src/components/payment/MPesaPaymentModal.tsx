@@ -177,30 +177,30 @@ const MPesaPaymentModal: React.FC<MPesaPaymentModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 flex items-center justify-center p-4 z-50"
+      className="fixed inset-0 bg-surface-000 bg-opacity-50 dark:bg-opacity-70 flex items-center justify-center p-4 z-50"
       onClick={onClose}
     >
       <div
-        className="bg-white dark:bg-gray-800 rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+        className="bg-surface-200 rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-labelledby="mpesa-payment-title"
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b dark:border-gray-700">
+        <div className="flex items-center justify-between p-5 border-b border-line">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-              <Smartphone className="w-5 h-5 text-white" />
+              <Smartphone className="w-5 h-5 text-ink" />
             </div>
             <div>
-              <h2 id="mpesa-payment-title" className="text-lg font-bold dark:text-gray-100">M-Pesa {getPaymentTypeLabel()}</h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Secure payment via M-Pesa</p>
+              <h2 id="mpesa-payment-title" className="text-lg font-bold text-ink">M-Pesa {getPaymentTypeLabel()}</h2>
+              <p className="text-sm text-ink-muted">Secure payment via M-Pesa</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            className="text-ink-muted hover:text-ink-muted transition-colors"
             aria-label="Close"
           >
             <X className="w-6 h-6" />
@@ -210,7 +210,7 @@ const MPesaPaymentModal: React.FC<MPesaPaymentModalProps> = ({
         {/* Content */}
         <div className="p-5">
           {/* Amount Display */}
-          <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-5 mb-5 text-white">
+          <div className=" bg-green-500 rounded-xl p-5 mb-5 text-on-lumen">
             <div className="text-sm opacity-90 mb-1">Amount to Pay</div>
             <div className="text-4xl font-bold">{formatAmount(amount, currency)}</div>
             {paymentType === 'booking_fee' && (
@@ -224,7 +224,7 @@ const MPesaPaymentModal: React.FC<MPesaPaymentModalProps> = ({
           {step === 'input' && (
             <>
               <div className="mb-5">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   M-Pesa Phone Number
                 </label>
                 <Input
@@ -240,20 +240,20 @@ const MPesaPaymentModal: React.FC<MPesaPaymentModalProps> = ({
                 {phoneError && (
                   <p className="text-red-500 text-xs mt-1">{phoneError}</p>
                 )}
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                <p className="text-xs text-ink-muted mt-2">
                   Enter your M-Pesa number. You will receive an STK Push notification.
                 </p>
               </div>
 
               {/* Security Features */}
-              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-5 border border-blue-200 dark:border-blue-800">
+              <div className="bg-blue-900/20 rounded-lg p-4 mb-5 border border-blue-800">
                 <div className="flex items-center gap-2 mb-2">
-                  <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                  <span className="font-semibold text-blue-900 dark:text-blue-300">
+                  <Shield className="w-5 h-5 text-blue-400" />
+                  <span className="font-semibold text-blue-300">
                     Payment Protection
                   </span>
                 </div>
-                <ul className="space-y-1 text-sm text-blue-700 dark:text-blue-300">
+                <ul className="space-y-1 text-sm text-blue-300">
                   <li className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4" />
                     Funds held securely in escrow
@@ -280,7 +280,7 @@ const MPesaPaymentModal: React.FC<MPesaPaymentModalProps> = ({
                 </Button>
                 <Button
                   onClick={handlePayment}
-                  className="flex-1 bg-green-500 hover:bg-green-600 text-white"
+                  className="flex-1 bg-green-500 hover:bg-green-600 text-on-lumen"
                 >
                   <Smartphone className="w-4 h-4 mr-2" />
                   Pay Now
@@ -293,7 +293,7 @@ const MPesaPaymentModal: React.FC<MPesaPaymentModalProps> = ({
           {step === 'processing' && (
             <div className="text-center py-8">
               <Loader2 className="w-12 h-12 animate-spin text-green-500 mx-auto mb-4" />
-              <p className="text-gray-600 dark:text-gray-300">{statusMessage}</p>
+              <p className="text-ink-muted">{statusMessage}</p>
             </div>
           )}
 
@@ -303,19 +303,19 @@ const MPesaPaymentModal: React.FC<MPesaPaymentModalProps> = ({
               <div className="relative w-20 h-20 mx-auto mb-4">
                 <div className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-25" />
                 <div className="relative w-20 h-20 bg-green-500 rounded-full flex items-center justify-center">
-                  <Smartphone className="w-8 h-8 text-white animate-bounce" />
+                  <Smartphone className="w-8 h-8 text-ink animate-bounce" />
                 </div>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+              <h3 className="text-lg font-semibold text-ink mb-2">
                 Check Your Phone
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">{statusMessage}</p>
-              <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 mb-4">
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-ink-muted mb-4">{statusMessage}</p>
+              <div className="bg-surface-300 rounded-lg p-3 mb-4">
+                <p className="text-sm text-ink-muted">
                   Transaction ID: {transactionId}
                 </p>
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs text-ink-muted">
                 Waiting for M-Pesa confirmation...
               </p>
             </div>
@@ -325,20 +325,20 @@ const MPesaPaymentModal: React.FC<MPesaPaymentModalProps> = ({
           {step === 'success' && (
             <div className="text-center py-8">
               <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="w-10 h-10 text-white" />
+                <CheckCircle className="w-10 h-10 text-ink" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+              <h3 className="text-lg font-semibold text-ink mb-2">
                 Payment Successful!
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">{statusMessage}</p>
-              <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 mb-4">
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-ink-muted mb-4">{statusMessage}</p>
+              <div className="bg-surface-300 rounded-lg p-3 mb-4">
+                <p className="text-sm text-ink-muted">
                   Transaction ID: {transactionId}
                 </p>
               </div>
               <Button
                 onClick={onClose}
-                className="bg-green-500 hover:bg-green-600 text-white"
+                className="bg-green-500 hover:bg-green-600 text-on-lumen"
               >
                 Done
               </Button>
@@ -349,12 +349,12 @@ const MPesaPaymentModal: React.FC<MPesaPaymentModalProps> = ({
           {step === 'failed' && (
             <div className="text-center py-8">
               <div className="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <AlertCircle className="w-10 h-10 text-white" />
+                <AlertCircle className="w-10 h-10 text-ink" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+              <h3 className="text-lg font-semibold text-ink mb-2">
                 Payment Failed
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">{errorMessage}</p>
+              <p className="text-ink-muted mb-4">{errorMessage}</p>
               <div className="flex gap-3">
                 <Button
                   variant="outline"
@@ -365,7 +365,7 @@ const MPesaPaymentModal: React.FC<MPesaPaymentModalProps> = ({
                 </Button>
                 <Button
                   onClick={handleRetry}
-                  className="flex-1 bg-green-500 hover:bg-green-600 text-white"
+                  className="flex-1 bg-green-500 hover:bg-green-600 text-on-lumen"
                 >
                   Try Again
                 </Button>
@@ -375,8 +375,8 @@ const MPesaPaymentModal: React.FC<MPesaPaymentModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="px-5 py-3 border-t dark:border-gray-700 bg-gray-50 dark:bg-gray-900 rounded-b-xl">
-          <div className="flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+        <div className="px-5 py-3 border-t border-line bg-surface-100 rounded-b-xl">
+          <div className="flex items-center justify-center gap-2 text-xs text-ink-muted">
             <Shield className="w-4 h-4" />
             <span>Powered by Safaricom M-Pesa</span>
           </div>

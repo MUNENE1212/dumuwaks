@@ -55,7 +55,7 @@ const StatsCard: React.FC<StatsCardProps> = ({
     <div>
       <p className="text-steel text-sm">{title}</p>
       {isLoading ? (
-        <div className="h-8 w-12 bg-subtle rounded animate-pulse mt-1" />
+        <div className="h-8 w-12 bg-surface-300 rounded animate-pulse mt-1" />
       ) : (
         <p className="text-bone text-2xl font-bold">{value}</p>
       )}
@@ -70,13 +70,13 @@ const ServiceItemSkeleton: React.FC = () => (
   <div className="glass-card rounded-lg p-4 animate-pulse">
     <div className="flex items-start justify-between">
       <div className="space-y-3 flex-1">
-        <div className="h-5 w-40 bg-subtle rounded" />
-        <div className="h-4 w-24 bg-subtle rounded" />
-        <div className="h-3 w-32 bg-subtle rounded" />
+        <div className="h-5 w-40 bg-surface-300 rounded" />
+        <div className="h-4 w-24 bg-surface-300 rounded" />
+        <div className="h-3 w-32 bg-surface-300 rounded" />
       </div>
       <div className="flex gap-2">
-        <div className="h-9 w-20 bg-subtle rounded-lg" />
-        <div className="h-9 w-20 bg-subtle rounded-lg" />
+        <div className="h-9 w-20 bg-surface-300 rounded-lg" />
+        <div className="h-9 w-20 bg-surface-300 rounded-lg" />
       </div>
     </div>
   </div>
@@ -128,7 +128,7 @@ const ServiceItem: React.FC<ServiceItemProps> = ({
             <p className="text-steel text-sm mt-1">
               Category: <span className="text-bone">{service.categoryId}</span>
             </p>
-            <p className="text-circuit font-medium mt-2">
+            <p className="text-lumen-ink font-medium mt-2">
               {getPriceRangeDisplay(service.basePriceMin, service.basePriceMax)}
             </p>
           </div>
@@ -157,7 +157,7 @@ const ServiceItem: React.FC<ServiceItemProps> = ({
 
         {/* Expanded Details */}
         {isExpanded && (
-          <div className="mt-4 pt-4 border-t border-subtle space-y-3">
+          <div className="mt-4 pt-4 border-t border-line space-y-3">
             <p className="text-steel text-sm">{service.description}</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
               <div>
@@ -179,7 +179,7 @@ const ServiceItem: React.FC<ServiceItemProps> = ({
               </div>
             </div>
             {service.requestedBy && (
-              <div className="pt-3 border-t border-subtle">
+              <div className="pt-3 border-t border-line">
                 <p className="text-steel text-sm">
                   Requested by:{' '}
                   <span className="text-bone">
@@ -322,11 +322,11 @@ const FilterTabs: React.FC<FilterTabsProps> = ({
           disabled={isLoading}
           className={clsx(
             'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-circuit',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lumen',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             activeFilter === filter.value
-              ? 'bg-circuit text-white shadow-led'
-              : 'bg-charcoal text-steel hover:text-bone hover:bg-hover'
+              ? 'bg-lumen text-on-lumen shadow-led'
+              : 'bg-charcoal text-steel hover:text-bone hover:bg-surface-300'
           )}
         >
           {filter.label}
@@ -428,7 +428,7 @@ const ServiceApprovalDashboard: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-mahogany p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-surface-100 p-4 sm:p-6 lg:p-8">
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -519,7 +519,7 @@ const ServiceApprovalDashboard: React.FC = () => {
             title="Total"
             value={stats?.total ?? 0}
             isLoading={isLoading}
-            colorClass="bg-circuit/20 text-circuit"
+            colorClass="bg-lumen/20 text-lumen-ink"
             icon={
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path

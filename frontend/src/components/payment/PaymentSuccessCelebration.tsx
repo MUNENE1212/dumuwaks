@@ -86,7 +86,7 @@ const PaymentSuccessCelebration: React.FC<PaymentSuccessCelebrationProps> = ({
   const primaryButtonStyles = `
     ${buttonBaseStyles}
     h-12 min-w-[48px] px-4 py-2
-    text-white
+    text-ink
   `;
 
   const outlineButtonStyles = `
@@ -125,7 +125,7 @@ const PaymentSuccessCelebration: React.FC<PaymentSuccessCelebrationProps> = ({
       gravity: 0.8,
       decay: 0.94,
       startVelocity: 30,
-      colors: ['#0090C5', '#7D4E9F', '#00ff9d', '#E0E0E0'],
+      colors: ['#e8a317', '#1fa3d6', '#ffc94a', '#f5eee1'],
       scalar: 0.8,
     };
 
@@ -204,7 +204,7 @@ const PaymentSuccessCelebration: React.FC<PaymentSuccessCelebrationProps> = ({
       className={`
         fixed inset-0 z-50
         flex items-center justify-center
-        bg-black/70 backdrop-blur-sm
+        bg-surface-000/70
         ${prefersReducedMotion ? 'reduced-motion' : ''}
       `}
       role="dialog"
@@ -253,7 +253,7 @@ const PaymentSuccessCelebration: React.FC<PaymentSuccessCelebrationProps> = ({
             className="w-14 h-14"
             fill="none"
             stroke="currentColor"
-            style={{ color: '#00ff9d' }}
+            style={{ color: '#ffc94a' }}
           >
             <path
               data-testid="checkmark-path"
@@ -278,7 +278,7 @@ const PaymentSuccessCelebration: React.FC<PaymentSuccessCelebrationProps> = ({
             text-bone text-center text-2xl font-bold mb-2
             ${showContent ? 'animate-fade-in-up' : 'opacity-0'}
           `}
-          style={{ color: '#E0E0E0' }}
+          style={{ color: '#f5eee1' }}
         >
           {title}
         </h1>
@@ -289,7 +289,7 @@ const PaymentSuccessCelebration: React.FC<PaymentSuccessCelebrationProps> = ({
             text-steel text-center text-sm mb-6
             ${showContent ? 'animate-fade-in-up delay-100' : 'opacity-0'}
           `}
-          style={{ color: '#9BA4B0' }}
+          style={{ color: '#b8ab95' }}
         >
           Your payment has been confirmed successfully
         </p>
@@ -303,7 +303,7 @@ const PaymentSuccessCelebration: React.FC<PaymentSuccessCelebrationProps> = ({
         {/* Transaction Details Card */}
         <div
           className={`
-            bg-mahogany/50 rounded-xl p-4 mb-6
+            bg-surface-100/50 rounded-xl p-4 mb-6
             border border-steel/20
             ${showContent ? 'animate-fade-in-up delay-200' : 'opacity-0'}
           `}
@@ -311,10 +311,10 @@ const PaymentSuccessCelebration: React.FC<PaymentSuccessCelebrationProps> = ({
         >
           {/* Amount */}
           <div className="flex justify-between items-center mb-3">
-            <span className="text-steel text-sm" style={{ color: '#9BA4B0' }}>
+            <span className="text-steel text-sm" style={{ color: '#b8ab95' }}>
               Amount Paid
             </span>
-            <span className="text-bone font-bold text-lg" style={{ color: '#E0E0E0' }}>
+            <span className="text-bone font-bold text-lg" style={{ color: '#f5eee1' }}>
               {currency} {formatAmount(amount, currency)}
             </span>
           </div>
@@ -322,10 +322,10 @@ const PaymentSuccessCelebration: React.FC<PaymentSuccessCelebrationProps> = ({
           {/* Recipient */}
           {recipientName && (
             <div className="flex justify-between items-center mb-3">
-              <span className="text-steel text-sm" style={{ color: '#9BA4B0' }}>
+              <span className="text-steel text-sm" style={{ color: '#b8ab95' }}>
                 Recipient
               </span>
-              <span className="text-bone text-sm" style={{ color: '#E0E0E0' }}>
+              <span className="text-bone text-sm" style={{ color: '#f5eee1' }}>
                 {recipientName}
               </span>
             </div>
@@ -333,12 +333,12 @@ const PaymentSuccessCelebration: React.FC<PaymentSuccessCelebrationProps> = ({
 
           {/* Transaction ID */}
           <div className="flex justify-between items-center mb-3">
-            <span className="text-steel text-sm" style={{ color: '#9BA4B0' }}>
+            <span className="text-steel text-sm" style={{ color: '#b8ab95' }}>
               Reference
             </span>
             <span
               className="text-bone font-mono text-xs"
-              style={{ color: '#E0E0E0' }}
+              style={{ color: '#f5eee1' }}
               title={transactionId}
             >
               {truncateTxnId(transactionId)}
@@ -348,10 +348,10 @@ const PaymentSuccessCelebration: React.FC<PaymentSuccessCelebrationProps> = ({
           {/* Booking Reference */}
           {bookingReference && (
             <div className="flex justify-between items-center mb-3">
-              <span className="text-steel text-sm" style={{ color: '#9BA4B0' }}>
+              <span className="text-steel text-sm" style={{ color: '#b8ab95' }}>
                 Booking
               </span>
-              <span className="text-circuit text-sm" style={{ color: '#0090C5' }}>
+              <span className="text-lumen-ink text-sm" style={{ color: '#e8a317' }}>
                 {bookingReference}
               </span>
             </div>
@@ -359,11 +359,11 @@ const PaymentSuccessCelebration: React.FC<PaymentSuccessCelebrationProps> = ({
 
           {/* Timestamp */}
           <div className="flex justify-between items-center">
-            <span className="text-steel text-sm" style={{ color: '#9BA4B0' }}>
+            <span className="text-steel text-sm" style={{ color: '#b8ab95' }}>
               <Clock className="w-3 h-3 inline mr-1" />
               Time
             </span>
-            <span className="text-bone text-sm" style={{ color: '#E0E0E0' }}>
+            <span className="text-bone text-sm" style={{ color: '#f5eee1' }}>
               Just now
             </span>
           </div>
@@ -378,9 +378,9 @@ const PaymentSuccessCelebration: React.FC<PaymentSuccessCelebrationProps> = ({
         >
           <h3
             className="text-bone text-sm font-semibold mb-3 flex items-center"
-            style={{ color: '#E0E0E0' }}
+            style={{ color: '#f5eee1' }}
           >
-            <Phone className="w-4 h-4 mr-2 text-circuit" style={{ color: '#0090C5' }} />
+            <Phone className="w-4 h-4 mr-2 text-lumen-ink" style={{ color: '#e8a317' }} />
             What Happens Next
           </h3>
           <ul className="space-y-2">
@@ -388,13 +388,13 @@ const PaymentSuccessCelebration: React.FC<PaymentSuccessCelebrationProps> = ({
               <li
                 key={index}
                 className="flex items-start text-steel text-sm"
-                style={{ color: '#9BA4B0' }}
+                style={{ color: '#b8ab95' }}
               >
                 <span
                   className="w-5 h-5 rounded-full flex items-center justify-center text-xs mr-2 flex-shrink-0 mt-0.5"
                   style={{
                     background: 'rgba(0, 144, 197, 0.2)',
-                    color: '#0090C5',
+                    color: '#e8a317',
                   }}
                 >
                   {index + 1}
@@ -416,9 +416,9 @@ const PaymentSuccessCelebration: React.FC<PaymentSuccessCelebrationProps> = ({
             <button
               ref={viewBookingBtnRef}
               onClick={onViewBooking}
-              className={`${primaryButtonStyles} flex-1 bg-circuit`}
+              className={`${primaryButtonStyles} flex-1 bg-lumen`}
               style={{
-                background: 'linear-gradient(135deg, #0090C5, #00739e)',
+                background: 'linear-gradient(135deg, #e8a317, #f0b43a)',
                 boxShadow: '0 0 20px rgba(0, 144, 197, 0.4)',
               }}
             >
@@ -432,7 +432,7 @@ const PaymentSuccessCelebration: React.FC<PaymentSuccessCelebrationProps> = ({
               className={`${outlineButtonStyles} flex-1`}
               style={{
                 borderColor: 'rgba(155, 164, 176, 0.5)',
-                color: '#E0E0E0',
+                color: '#f5eee1',
               }}
             >
               Continue
@@ -532,27 +532,27 @@ const PaymentSuccessCelebration: React.FC<PaymentSuccessCelebrationProps> = ({
         }
 
         .text-bone {
-          color: var(--dw-text-primary, #E0E0E0);
+          color: var(--dw-text-primary, #f5eee1);
         }
 
         .text-steel {
-          color: var(--dw-text-secondary, #9BA4B0);
+          color: var(--dw-text-secondary, #b8ab95);
         }
 
-        .text-circuit {
-          color: var(--dw-accent-primary, #0090C5);
+        .text-lumen-ink {
+          color: var(--dw-accent-primary, #e8a317);
         }
 
-        .bg-circuit {
-          background: var(--dw-accent-primary, #0090C5);
+        .bg-lumen {
+          background: var(--dw-accent-primary, #e8a317);
         }
 
         .bg-circuit-dark {
-          background: var(--dw-circuit-600, #00739e);
+          background: var(--dw-circuit-600, #f0b43a);
         }
 
-        .bg-mahogany {
-          background: var(--dw-bg-primary, #261212);
+        .bg-surface-100 {
+          background: var(--dw-bg-primary, #14110c);
         }
       `}</style>
     </div>

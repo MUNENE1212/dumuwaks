@@ -1,182 +1,162 @@
 /**
- * Dumu Waks Design Tokens
- * RICH DARK DESIGN SYSTEM with Mahogany/Iron Charcoal base
- * Circuit Blue Primary Accent + Wrench Purple Secondary Accent
+ * Dumuwaks design tokens
+ *
+ * Built in the order of the Emen brand system (Dumuwaks is an Emen Tech
+ * product): warm night surfaces, one amber ramp that means "act here",
+ * square-cut geometry, and every measured number in mono.
+ *
+ * Heritage carried over from the original Dumuwaks identity:
+ *   - circuit blue  → the screwdriver in the mark; in the UI it means
+ *                     "live / in motion" (tracking, en route, online).
+ *   - mahogany      → one heritage ground for a single feature band per page.
+ *
+ * Rules
+ *   - `lumen` is the only action colour. Anything on a lumen fill uses
+ *     `on-lumen` (dark ink). White on amber fails contrast.
+ *   - `warn` sits near amber on purpose and means attention — never decoration.
+ *   - Status colours (ok / warn / fault / circuit) are functional only.
+ *   - Elevation comes from surface steps first; shadows only for floating UI.
+ *   - No blur, no glow, no gradients on brand geometry.
  */
 
 :root {
-  /* ============================================
-     COLOR TOKENS - RICH DARK PALETTE
-     ============================================ */
+  color-scheme: dark;
 
-  /* Primary Background Colors (Mahogany-based) */
-  --dw-mahogany-50: #f5e6e6;
-  --dw-mahogany-100: #e6cccc;
-  --dw-mahogany-200: #c29999;
-  --dw-mahogany-300: #9e6666;
-  --dw-mahogany-400: #7a3333;
-  --dw-mahogany-500: #261212;  /* Deep Mahogany - main page sections */
-  --dw-mahogany-600: #1d0e0e;
-  --dw-mahogany-700: #140a0a;
-  --dw-mahogany-800: #0b0505;
-  --dw-mahogany-900: #030000;
+  /* ---------- Surfaces (night) ---------- */
+  --surface-000: #0b0907; /* deepest ground: behind the mark, hero */
+  --surface-100: #14110c; /* default page background */
+  --surface-200: #1d1811; /* raised: cards, panels, rows */
+  --surface-300: #262017; /* sunken: inputs, code, inset fields */
+  --surface-400: #2f271c; /* hover on a raised surface */
+  --mahogany: #261212; /* heritage ground — one feature band per page */
 
-  /* Secondary Background Colors (Iron Charcoal) */
-  --dw-charcoal-50: #f5f5f5;
-  --dw-charcoal-100: #e0e0e0;
-  --dw-charcoal-200: #b3b3b3;
-  --dw-charcoal-300: #858585;
-  --dw-charcoal-400: #585858;
-  --dw-charcoal-500: #1C1C1C;  /* Iron Charcoal - cards, nav, footers */
-  --dw-charcoal-600: #141414;
-  --dw-charcoal-700: #0d0d0d;
-  --dw-charcoal-800: #060606;
-  --dw-charcoal-900: #000000;
+  --line: #332b1f; /* default hairline */
+  --line-strong: #453a29; /* input borders, table header rules (3:1) */
 
-  /* Accent 1 - Circuit Blue (Primary) */
-  --dw-circuit-50: #e6f7fc;
-  --dw-circuit-100: #cceff9;
-  --dw-circuit-200: #99dff3;
-  --dw-circuit-300: #66cfed;
-  --dw-circuit-400: #33bfe7;
-  --dw-circuit-500: #0090C5;  /* Circuit Blue - buttons, links, active states */
-  --dw-circuit-600: #00739e;
-  --dw-circuit-700: #005677;
-  --dw-circuit-800: #003950;
-  --dw-circuit-900: #001c28;
+  /* ---------- Ink ---------- */
+  --ink: #f5eee1; /* primary text */
+  --ink-muted: #b8ab95; /* secondary text, captions — 4.5:1 on surface-100..300 */
+  --ink-faint: #8a7f6d; /* placeholders & disabled only */
 
-  /* Accent 2 - Wrench Purple (Secondary) */
-  --dw-wrench-50: #f3edf8;
-  --dw-wrench-100: #e7dbf1;
-  --dw-wrench-200: #cfb7e3;
-  --dw-wrench-300: #b793d5;
-  --dw-wrench-400: #9f6fc7;
-  --dw-wrench-500: #7D4E9F;  /* Wrench Purple - hover effects, secondary icons */
-  --dw-wrench-600: #643f7f;
-  --dw-wrench-700: #4a305f;
-  --dw-wrench-800: #31203f;
-  --dw-wrench-900: #18101f;
+  /* ---------- The amber ramp (a sequence, not three accents) ---------- */
+  --core: #fff6e2;
+  --filament: #ffc94a; /* the source — once per view */
+  --lumen: #e8a317; /* THE brand colour & the only action colour */
+  --lumen-hover: #f0b43a;
+  --ember: #b4740f; /* far end of the falloff; fills under ink */
+  --lumen-ink: #f6c45c; /* amber used as text or legible icon */
+  --on-lumen: #14110c; /* text/icons on lumen, filament, ember */
+  --lumen-tint: rgba(232, 163, 23, 0.12); /* selected row, active chip ground */
 
-  /* Text Colors */
-  --dw-bone-50: #fafafa;
-  --dw-bone-100: #f5f5f5;
-  --dw-bone-200: #E0E0E0;  /* Soft Bone - primary text */
-  --dw-bone-300: #cccccc;
-  --dw-bone-400: #b2b2b2;
-  --dw-bone-500: #999999;
-  --dw-bone-600: #808080;
-  --dw-bone-700: #666666;
-  --dw-bone-800: #4d4d4d;
-  --dw-bone-900: #262626;
+  /* ---------- Heritage + status (functional only) ---------- */
+  --circuit: #1fa3d6; /* live / en route / online */
+  --circuit-ink: #6cc4ea;
+  --circuit-tint: rgba(31, 163, 214, 0.12);
+  --ok: #5cb860;
+  --ok-tint: rgba(92, 184, 96, 0.12);
+  --warn: #d9a040;
+  --warn-tint: rgba(217, 160, 64, 0.12);
+  --fault: #e0705c;
+  --fault-tint: rgba(224, 112, 92, 0.12);
+  --whatsapp: #25d366; /* WhatsApp's own green — only on WhatsApp entry points */
 
-  /* Steel Grey Text */
-  --dw-steel-50: #f5f6f7;
-  --dw-steel-100: #ebedef;
-  --dw-steel-200: #d7dade;
-  --dw-steel-300: #c3c7cc;
-  --dw-steel-400: #aeb3b9;
-  --dw-steel-500: #9BA4B0;  /* Steel Grey - meta text, borders */
-  --dw-steel-600: #7d858f;
-  --dw-steel-700: #5f666e;
-  --dw-steel-800: #41474d;
-  --dw-steel-900: #23282c;
+  /* ---------- Type ---------- */
+  --font-display: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Hero Gradient Center Color */
-  --dw-mahogany-light: #3D1E1E;  /* For radial gradient centers */
+  /* ---------- Geometry ---------- */
+  --radius-none: 0;
+  --radius-sm: 2px; /* inputs, tables, spec panels */
+  --radius-md: 4px; /* buttons, cards — as round as a button gets */
+  --radius-lg: 8px; /* modals and feature panels only */
+  --radius-pill: 999px; /* status chips only — a pill always means state */
 
-  /* Background Hierarchy */
-  --dw-bg-primary: #261212;      /* Deep Mahogany */
-  --dw-bg-secondary: #1C1C1C;    /* Iron Charcoal */
-  --dw-bg-tertiary: #161616;
-  --dw-bg-elevated: #2a2a2a;
-  --dw-bg-hover: rgba(125, 78, 159, 0.15);
-  --dw-bg-active: rgba(0, 144, 197, 0.2);
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.6);
+  --shadow-float: 0 12px 32px -18px rgba(0, 0, 0, 0.9);
 
-  /* Text Hierarchy */
-  --dw-text-primary: #E0E0E0;    /* Soft Bone */
-  --dw-text-secondary: #9BA4B0;  /* Steel Grey */
-  --dw-text-tertiary: #7a7a7a;
-  --dw-text-disabled: #536471;
-  --dw-text-link: #0090C5;      /* Circuit Blue */
+  /* =================================================================
+     Legacy aliases — the pre-2026 --dw-* names, re-pointed.
+     New code uses the names above.
+     ================================================================= */
+  --dw-mahogany-500: var(--mahogany);
+  --dw-mahogany-light: var(--surface-300);
+  --dw-charcoal-500: var(--surface-200);
+  --dw-circuit-500: var(--lumen);
+  --dw-wrench-500: var(--circuit);
+  --dw-wrench-600: var(--circuit);
+  --dw-steel-500: var(--ink-faint);
+  --dw-steel-600: var(--line-strong);
+  --dw-steel-700: var(--surface-400);
 
-  /* Brand Colors */
-  --dw-accent-primary: #0090C5;  /* Circuit Blue */
-  --dw-accent-secondary: #7D4E9F; /* Wrench Purple */
-  --dw-accent-hover: #00739e;
-  --dw-accent-light: #66cfed;
+  --dw-bg-primary: var(--surface-100);
+  --dw-bg-secondary: var(--surface-200);
+  --dw-bg-tertiary: var(--surface-300);
+  --dw-bg-elevated: var(--surface-400);
+  --dw-bg-hover: var(--surface-400);
+  --dw-bg-active: var(--lumen-tint);
 
-  /* Semantic Colors */
-  --dw-color-success: #00ba7c;
-  --dw-color-success-bg: rgba(0, 186, 124, 0.15);
-  --dw-color-warning: #f9c74f;
-  --dw-color-warning-bg: rgba(249, 199, 79, 0.15);
-  --dw-color-error: #f4212e;
-  --dw-color-error-bg: rgba(244, 33, 46, 0.15);
-  --dw-color-info: #0090C5;
-  --dw-color-info-bg: rgba(0, 144, 197, 0.15);
+  --dw-text-primary: var(--ink);
+  --dw-text-secondary: var(--ink-muted);
+  --dw-text-tertiary: var(--ink-faint);
+  --dw-text-disabled: var(--ink-faint);
+  --dw-text-link: var(--lumen-ink);
 
-  /* Border Colors */
-  --dw-border-subtle: rgba(155, 164, 176, 0.3);
-  --dw-border-default: rgba(155, 164, 176, 0.5);
-  --dw-border-strong: #9BA4B0;
-  --dw-border-focus: #0090C5;
+  --dw-accent-primary: var(--lumen);
+  --dw-accent-secondary: var(--circuit);
+  --dw-accent-hover: var(--lumen-hover);
+  --dw-accent-light: var(--filament);
 
-  /* Overlay Colors */
-  --dw-overlay-subtle: rgba(0, 0, 0, 0.5);
-  --dw-overlay-medium: rgba(0, 0, 0, 0.7);
-  --dw-overlay-strong: rgba(0, 0, 0, 0.85);
+  --dw-color-success: var(--ok);
+  --dw-color-success-bg: var(--ok-tint);
+  --dw-color-warning: var(--warn);
+  --dw-color-warning-bg: var(--warn-tint);
+  --dw-color-error: var(--fault);
+  --dw-color-error-bg: var(--fault-tint);
+  --dw-color-info: var(--circuit);
+  --dw-color-info-bg: var(--circuit-tint);
 
-  /* ============================================
-     TYPOGRAPHY TOKENS
-     ============================================ */
+  --dw-border-subtle: var(--line);
+  --dw-border-default: var(--line);
+  --dw-border-strong: var(--line-strong);
+  --dw-border-focus: var(--lumen);
 
-  /* Font Families */
-  --dw-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  --dw-font-family-mono: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
-  --dw-font-family-display: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --dw-overlay-subtle: rgba(11, 9, 7, 0.5);
+  --dw-overlay-medium: rgba(11, 9, 7, 0.7);
+  --dw-overlay-strong: rgba(11, 9, 7, 0.85);
 
-  /* Font Sizes - Display */
-  --dw-text-display-xl: 48px;
-  --dw-text-display-lg: 40px;
-  --dw-text-display-md: 32px;
+  --dw-font-family-base: var(--font-sans);
+  --dw-font-family-mono: var(--font-mono);
+  --dw-font-family-display: var(--font-display);
 
-  /* Font Sizes - Headings */
+  --dw-text-display-xl: 64px;
+  --dw-text-display-lg: 44px;
+  --dw-text-display-md: 30px;
   --dw-text-heading-xl: 24px;
   --dw-text-heading-lg: 20px;
   --dw-text-heading-md: 18px;
   --dw-text-heading-sm: 16px;
-
-  /* Font Sizes - Body */
-  --dw-text-body-lg: 16px;
+  --dw-text-body-lg: 17px;
   --dw-text-body-md: 15px;
-  --dw-text-body-sm: 14px;
-
-  /* Font Sizes - Meta */
+  --dw-text-body-sm: 13.5px;
   --dw-text-meta: 13px;
   --dw-text-caption: 12px;
   --dw-text-tiny: 11px;
 
-  /* Line Heights */
-  --dw-leading-tight: 1.2;
-  --dw-leading-snug: 1.35;
-  --dw-leading-normal: 1.5;
-  --dw-leading-relaxed: 1.65;
+  --dw-leading-tight: 1.1;
+  --dw-leading-snug: 1.3;
+  --dw-leading-normal: 1.6;
+  --dw-leading-relaxed: 1.7;
 
-  /* Font Weights */
-  --dw-weight-light: 300;
+  --dw-weight-light: 400;
   --dw-weight-regular: 400;
   --dw-weight-medium: 500;
   --dw-weight-semibold: 600;
   --dw-weight-bold: 700;
 
-  /* Letter Spacing */
   --dw-tracking-tight: -0.02em;
   --dw-tracking-normal: 0;
-  --dw-tracking-wide: 0.05em;
-
-  /* ============================================
-     SPACING TOKENS
-     ============================================ */
+  --dw-tracking-wide: 0.1em;
 
   --dw-spacing-0: 0;
   --dw-spacing-1: 4px;
@@ -192,10 +172,6 @@
   --dw-spacing-20: 80px;
   --dw-spacing-24: 96px;
 
-  /* ============================================
-     BREAKPOINT TOKENS
-     ============================================ */
-
   --dw-breakpoint-xs: 375px;
   --dw-breakpoint-sm: 640px;
   --dw-breakpoint-md: 768px;
@@ -203,84 +179,55 @@
   --dw-breakpoint-xl: 1280px;
   --dw-breakpoint-2xl: 1536px;
 
-  /* Container Widths */
   --dw-container-xs: 100%;
   --dw-container-sm: 640px;
   --dw-container-md: 768px;
   --dw-container-lg: 1024px;
-  --dw-container-xl: 1280px;
-  --dw-container-2xl: 1536px;
-
-  /* ============================================
-     BORDER TOKENS
-     ============================================ */
+  --dw-container-xl: 1200px;
+  --dw-container-2xl: 1200px;
 
   --dw-radius-none: 0;
-  --dw-radius-sm: 4px;
-  --dw-radius-md: 8px;
-  --dw-radius-lg: 12px;
-  --dw-radius-xl: 16px;
-  --dw-radius-2xl: 24px;
-  --dw-radius-full: 9999px;
+  --dw-radius-sm: var(--radius-sm);
+  --dw-radius-md: var(--radius-md);
+  --dw-radius-lg: var(--radius-md);
+  --dw-radius-xl: var(--radius-md);
+  --dw-radius-2xl: var(--radius-lg);
+  --dw-radius-full: var(--radius-pill);
 
   --dw-border-width-thin: 1px;
   --dw-border-width-medium: 2px;
   --dw-border-width-thick: 3px;
 
-  /* ============================================
-     SHADOW TOKENS
-     ============================================ */
+  --dw-shadow-sm: var(--shadow-raised);
+  --dw-shadow-md: var(--shadow-raised);
+  --dw-shadow-lg: var(--shadow-float);
+  --dw-shadow-xl: var(--shadow-float);
+  --dw-shadow-2xl: var(--shadow-float);
+  --dw-shadow-glass: var(--shadow-raised);
+  --dw-shadow-glass-lg: var(--shadow-float);
+  --dw-shadow-led: none;
+  --dw-shadow-led-lg: none;
+  --dw-shadow-led-purple: none;
+  --dw-shadow-brand: none;
+  --dw-shadow-brand-lg: none;
+  --dw-shadow-mahogany: var(--shadow-raised);
+  --dw-shadow-mahogany-lg: var(--shadow-float);
 
-  --dw-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --dw-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
-  --dw-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.6);
-  --dw-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.7);
-  --dw-shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.8);
+  --dw-blur-xs: 0;
+  --dw-blur-sm: 0;
+  --dw-blur-md: 0;
+  --dw-blur-lg: 0;
+  --dw-blur-xl: 0;
 
-  /* Glassmorphism Shadows */
-  --dw-shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  --dw-shadow-glass-lg: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-
-  /* LED Glow Effects (Circuit Blue) */
-  --dw-shadow-led: 0 0 10px rgba(0, 144, 197, 0.5), 0 0 20px rgba(0, 144, 197, 0.3);
-  --dw-shadow-led-lg: 0 0 15px rgba(0, 144, 197, 0.6), 0 0 30px rgba(0, 144, 197, 0.4);
-  --dw-shadow-led-purple: 0 0 10px rgba(125, 78, 159, 0.5), 0 0 20px rgba(125, 78, 159, 0.3);
-
-  /* Brand Shadows (Circuit Blue) */
-  --dw-shadow-brand: 0 4px 16px rgba(0, 144, 197, 0.3);
-  --dw-shadow-brand-lg: 0 6px 24px rgba(0, 144, 197, 0.4);
-
-  /* Mahogany-tinted Shadows */
-  --dw-shadow-mahogany: 0 4px 16px rgba(38, 18, 18, 0.5);
-  --dw-shadow-mahogany-lg: 0 8px 32px rgba(38, 18, 18, 0.6);
-
-  /* ============================================
-     EFFECT TOKENS
-     ============================================ */
-
-  /* Blur Values */
-  --dw-blur-xs: 2px;
-  --dw-blur-sm: 4px;
-  --dw-blur-md: 8px;
-  --dw-blur-lg: 16px;
-  --dw-blur-xl: 24px;
-
-  /* Transition Durations */
-  --dw-duration-instant: 100ms;
-  --dw-duration-fast: 200ms;
-  --dw-duration-normal: 300ms;
-  --dw-duration-slow: 500ms;
-
-  /* Transition Easing */
-  --dw-ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --dw-duration-instant: 50ms;
+  --dw-duration-fast: 120ms;
+  --dw-duration-normal: 200ms;
+  --dw-duration-slow: 300ms;
+  --dw-ease-default: cubic-bezier(0.2, 0, 0, 1);
   --dw-ease-in: cubic-bezier(0.4, 0, 1, 1);
   --dw-ease-out: cubic-bezier(0, 0, 0.2, 1);
-  --dw-ease-in-out: cubic-bezier(0.4, 0, 0.6, 1);
-  --dw-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
-  /* ============================================
-     Z-INDEX TOKENS
-     ============================================ */
+  --dw-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --dw-ease-spring: cubic-bezier(0.2, 0, 0, 1);
 
   --dw-z-dropdown: 1000;
   --dw-z-sticky: 1020;
@@ -291,153 +238,10 @@
   --dw-z-tooltip: 1070;
 }
 
-/* ============================================
-   GLASSMORPHISM UTILITIES
-   ============================================ */
-
-.glass {
-  background: rgba(28, 28, 28, 0.6);
-  backdrop-filter: blur(var(--dw-blur-lg)) saturate(180%);
-  -webkit-backdrop-filter: blur(var(--dw-blur-lg)) saturate(180%);
-  border: 1px solid var(--dw-border-subtle);
-}
-
-.glass-nav {
-  background: rgba(38, 18, 18, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--dw-border-subtle);
-}
-
-.glass-card {
-  background: rgba(28, 28, 28, 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--dw-border-default);
-  box-shadow: var(--dw-shadow-glass);
-}
-
-.glass-modal {
-  background: rgba(28, 28, 28, 0.95);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--dw-border-default);
-  box-shadow: var(--dw-shadow-glass-lg);
-}
-
-.glass-button {
-  background: linear-gradient(135deg, rgba(0, 144, 197, 0.8), rgba(0, 115, 158, 0.9));
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: var(--dw-shadow-led);
-}
-
-/* ============================================
-   LED GLOW UTILITIES
-   ============================================ */
-
-.led-glow {
-  box-shadow: var(--dw-shadow-led);
-  transition: box-shadow var(--dw-duration-normal) var(--dw-ease-out);
-}
-
-.led-glow:hover {
-  box-shadow: var(--dw-shadow-led-lg);
-}
-
-.led-glow-purple {
-  box-shadow: var(--dw-shadow-led-purple);
-  transition: box-shadow var(--dw-duration-normal) var(--dw-ease-out);
-}
-
-/* ============================================
-   GRADIENT UTILITIES
-   ============================================ */
-
-.hero-gradient {
-  background: radial-gradient(circle at center, #3D1E1E 0%, #261212 70%);
-}
-
-.mahogany-gradient {
-  background: linear-gradient(135deg, #261212 0%, #1C1C1C 100%);
-}
-
-.circuit-gradient {
-  background: linear-gradient(90deg, #0090C5 0%, #7D4E9F 100%);
-}
-
-.text-gradient {
-  background: linear-gradient(135deg, #0090C5, #7D4E9F);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ============================================
-   CIRCUIT BOARD PATTERN
-   ============================================ */
-
-.circuit-pattern {
-  background-image:
-    radial-gradient(circle at 25% 25%, rgba(0, 144, 197, 0.03) 1px, transparent 1px),
-    radial-gradient(circle at 75% 75%, rgba(125, 78, 159, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(155, 164, 176, 0.02) 1px, transparent 1px),
-    linear-gradient(rgba(155, 164, 176, 0.02) 1px, transparent 1px);
-  background-size: 40px 40px, 40px 40px, 40px 40px, 40px 40px;
-  background-position: 0 0, 20px 20px, 0 0, 0 0;
-}
-
-/* ============================================
-   REDUCED MOTION SUPPORT
-   ============================================ */
-
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  :root {
+    --dw-duration-fast: 0ms;
+    --dw-duration-normal: 0ms;
+    --dw-duration-slow: 0ms;
   }
-}
-
-/* ============================================
-   ACCESSIBILITY UTILITIES
-   ============================================ */
-
-/* Screen reader only */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-/* Focus visible styles */
-*:focus-visible {
-  outline: 2px solid var(--dw-accent-primary);
-  outline-offset: 2px;
-  border-radius: var(--dw-radius-sm);
-}
-
-/* Skip to content link */
-.skip-to-content {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background: var(--dw-accent-primary);
-  color: white;
-  padding: 8px 16px;
-  z-index: var(--dw-z-tooltip);
-  transition: top var(--dw-duration-fast);
-}
-
-.skip-to-content:focus {
-  top: 0;
 }

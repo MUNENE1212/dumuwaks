@@ -92,7 +92,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
       case 'pending':
         return {
           label: 'Payment Processing',
-          color: 'text-circuit',
+          color: 'text-lumen-ink',
           icon: <ClockIcon className="w-6 h-6" />,
         };
       case 'partially_released':
@@ -150,7 +150,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
       <Card variant="glass" className="p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-bone">Booking Reference</h2>
-          <span className="text-circuit font-mono font-bold text-lg">
+          <span className="text-lumen-ink font-mono font-bold text-lg">
             #{bookingNumber}
           </span>
         </div>
@@ -159,7 +159,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
         <div className="space-y-4">
           {/* Service */}
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-charcoal rounded-lg flex items-center justify-center text-circuit">
+            <div className="w-10 h-10 bg-charcoal rounded-lg flex items-center justify-center text-lumen-ink">
               <ServiceIcon className="w-5 h-5" />
             </div>
             <div>
@@ -193,7 +193,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
 
           {/* Schedule */}
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-charcoal rounded-lg flex items-center justify-center text-circuit">
+            <div className="w-10 h-10 bg-charcoal rounded-lg flex items-center justify-center text-lumen-ink">
               <CalendarIcon className="w-5 h-5" />
             </div>
             <div>
@@ -239,10 +239,10 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
 
       {/* SMS Confirmation Notice */}
       {phoneNumber && (
-        <Card variant="default" className="p-6 border-circuit/30 bg-circuit/5">
+        <Card variant="default" className="p-6 border-lumen/30 bg-lumen/5">
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-full bg-circuit/20 flex items-center justify-center flex-shrink-0">
-              <PhoneIcon className="w-5 h-5 text-circuit" />
+            <div className="w-10 h-10 rounded-full bg-lumen/20 flex items-center justify-center flex-shrink-0">
+              <PhoneIcon className="w-5 h-5 text-lumen-ink" />
             </div>
             <div>
               <p className="text-bone font-medium">
@@ -250,7 +250,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
               </p>
               <p className="text-sm text-steel mt-1">
                 Booking confirmations and reminders will be sent to{' '}
-                <span className="text-circuit font-medium">{phoneNumber}</span>
+                <span className="text-lumen-ink font-medium">{phoneNumber}</span>
               </p>
             </div>
           </div>
@@ -263,7 +263,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
         <ol className="space-y-3">
           {nextSteps.map((step, index) => (
             <li key={index} className="flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-circuit text-mahogany text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span className="w-6 h-6 rounded-full bg-lumen text-on-lumen text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
                 {index + 1}
               </span>
               <p className="text-sm text-steel">{step}</p>
@@ -311,7 +311,7 @@ const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
           Need help?{' '}
           <a
             href="/support"
-            className="text-circuit hover:text-circuit-300 underline"
+            className="text-lumen-ink hover:text-lumen-ink underline"
           >
             Contact Support
           </a>

@@ -24,7 +24,7 @@ const MyBookings: React.FC = () => {
     { value: 'accepted', label: 'Accepted', color: 'text-green-600' },
     { value: 'in_progress', label: 'In Progress', color: 'text-blue-600' },
     { value: 'completed', label: 'Completed', color: 'text-green-600' },
-    { value: 'cancelled', label: 'Cancelled', color: 'text-gray-600' },
+    { value: 'cancelled', label: 'Cancelled', color: 'text-ink-muted' },
   ];
 
   useEffect(() => {
@@ -46,11 +46,11 @@ const MyBookings: React.FC = () => {
     <div className="mx-auto max-w-7xl">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="flex items-center text-3xl font-bold text-gray-900 dark:text-gray-100">
+        <h1 className="flex items-center text-3xl font-bold text-ink">
           <Calendar className="mr-3 h-8 w-8 text-primary-600" />
           My Bookings
         </h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">
+        <p className="mt-2 text-ink-muted">
           Manage and track all your service bookings
         </p>
       </div>
@@ -70,20 +70,20 @@ const MyBookings: React.FC = () => {
       <div className="mb-6 space-y-4">
         {/* Search Bar */}
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+          <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-muted" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by booking number, service type, or description..."
-            className="w-full rounded-lg border border-gray-300 py-3 pl-12 pr-4 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20"
+            className="w-full rounded-lg border border-line-strong py-3 pl-12 pr-4 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20"
           />
         </div>
 
         {/* Status Filters */}
-        <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-2 shadow-sm">
+        <div className="rounded-lg border border-line bg-surface-200 p-2 shadow-sm">
           <div className="flex items-center space-x-2 overflow-x-auto">
-            <Filter className="h-4 w-4 text-gray-400" />
+            <Filter className="h-4 w-4 text-ink-muted" />
             {statusFilters.map((filter) => {
               const Icon = filter.icon;
               return (
@@ -94,7 +94,7 @@ const MyBookings: React.FC = () => {
                     'flex items-center space-x-2 whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium transition-all',
                     activeFilter === filter.value
                       ? 'bg-primary-50 text-primary-700 shadow-sm'
-                      : 'text-gray-600 hover:bg-gray-50'
+                      : 'text-ink-muted hover:bg-surface-100'
                   )}
                 >
                   {Icon && <Icon className="h-4 w-4" />}
@@ -108,22 +108,22 @@ const MyBookings: React.FC = () => {
 
       {/* Stats Summary */}
       <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 shadow-sm">
+        <div className="rounded-lg border border-line bg-surface-200 p-4 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Total Bookings</p>
-              <p className="mt-1 text-2xl font-bold text-gray-900 dark:text-gray-100">
+              <p className="text-sm text-ink-muted">Total Bookings</p>
+              <p className="mt-1 text-2xl font-bold text-ink">
                 {pagination.total}
               </p>
             </div>
-            <Package className="h-10 w-10 text-gray-400" />
+            <Package className="h-10 w-10 text-ink-muted" />
           </div>
         </div>
 
-        <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 shadow-sm">
+        <div className="rounded-lg border border-line bg-surface-200 p-4 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Active</p>
+              <p className="text-sm text-ink-muted">Active</p>
               <p className="mt-1 text-2xl font-bold text-blue-600">
                 {bookings.filter((b) =>
                   ['pending', 'assigned', 'accepted', 'in_progress'].includes(b.status)
@@ -136,10 +136,10 @@ const MyBookings: React.FC = () => {
           </div>
         </div>
 
-        <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 shadow-sm">
+        <div className="rounded-lg border border-line bg-surface-200 p-4 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Completed</p>
+              <p className="text-sm text-ink-muted">Completed</p>
               <p className="mt-1 text-2xl font-bold text-green-600">
                 {bookings.filter((b) => b.status === 'completed').length}
               </p>
@@ -150,16 +150,16 @@ const MyBookings: React.FC = () => {
           </div>
         </div>
 
-        <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 shadow-sm">
+        <div className="rounded-lg border border-line bg-surface-200 p-4 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Cancelled</p>
-              <p className="mt-1 text-2xl font-bold text-gray-600 dark:text-gray-400">
+              <p className="text-sm text-ink-muted">Cancelled</p>
+              <p className="mt-1 text-2xl font-bold text-ink-muted">
                 {bookings.filter((b) => b.status === 'cancelled').length}
               </p>
             </div>
-            <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center">
-              <Calendar className="h-6 w-6 text-gray-600 dark:text-gray-400" />
+            <div className="h-10 w-10 rounded-full bg-surface-300 flex items-center justify-center">
+              <Calendar className="h-6 w-6 text-ink-muted" />
             </div>
           </div>
         </div>
@@ -171,12 +171,12 @@ const MyBookings: React.FC = () => {
           <Loading size="lg" text="Loading bookings..." />
         </div>
       ) : filteredBookings.length === 0 ? (
-        <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-12 text-center shadow-sm">
-          <Package className="mx-auto h-16 w-16 text-gray-400" />
-          <h3 className="mt-4 text-lg font-semibold text-gray-900 dark:text-gray-100">
+        <div className="rounded-lg border border-line bg-surface-200 p-12 text-center shadow-sm">
+          <Package className="mx-auto h-16 w-16 text-ink-muted" />
+          <h3 className="mt-4 text-lg font-semibold text-ink">
             No bookings found
           </h3>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-sm text-ink-muted">
             {activeFilter !== 'all'
               ? `No ${activeFilter} bookings at the moment.`
               : searchQuery
@@ -213,8 +213,8 @@ const MyBookings: React.FC = () => {
                     className={cn(
                       'rounded-lg px-4 py-2 text-sm font-medium transition-colors',
                       page === pagination.page
-                        ? 'bg-primary-600 text-white'
-                        : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'
+                        ? 'bg-primary-600 text-on-lumen'
+                        : 'bg-surface-200 text-ink hover:bg-surface-100 border border-line-strong'
                     )}
                   >
                     {page}

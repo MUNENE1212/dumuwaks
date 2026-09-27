@@ -144,7 +144,7 @@ export const registerBiometric = async (userId: string, username: string): Promi
       publicKey: {
         challenge,
         rp: {
-          name: 'Dumu Waks',
+          name: 'Dumuwaks',
           id: window.location.hostname
         },
         user: {

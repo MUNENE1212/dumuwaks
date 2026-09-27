@@ -168,7 +168,7 @@ const BookingFeePaymentModal: React.FC<BookingFeePaymentModalProps> = ({
         aria-labelledby="booking-fee-payment-title"
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-subtle">
+        <div className="flex items-center justify-between p-6 border-b border-line">
           <div>
             <h2 id="booking-fee-payment-title" className="text-xl font-bold text-bone">Pay Booking Fee</h2>
             <p className="text-sm text-steel mt-1">
@@ -211,18 +211,18 @@ const BookingFeePaymentModal: React.FC<BookingFeePaymentModalProps> = ({
                     onClick={() => setPaymentMethod(method.id)}
                     className={`p-4 rounded-lg border-2 transition-all ${
                       paymentMethod === method.id
-                        ? 'border-circuit bg-circuit/20 led-glow'
-                        : 'border-subtle hover:border-default glass'
+                        ? 'border-lumen bg-lumen/20 led-glow'
+                        : 'border-line hover:border-default glass'
                     }`}
                   >
                     <Icon
                       className={`w-6 h-6 mx-auto mb-2 ${
-                        paymentMethod === method.id ? 'text-circuit' : 'text-steel'
+                        paymentMethod === method.id ? 'text-lumen-ink' : 'text-steel'
                       }`}
                     />
                     <div
                       className={`text-xs font-medium ${
-                        paymentMethod === method.id ? 'text-circuit' : 'text-steel'
+                        paymentMethod === method.id ? 'text-lumen-ink' : 'text-steel'
                       }`}
                     >
                       {method.name}
@@ -297,7 +297,7 @@ const BookingFeePaymentModal: React.FC<BookingFeePaymentModalProps> = ({
             )}
 
             {paymentMethod === 'wallet' && (
-              <div className="glass rounded-lg p-4 border border-subtle">
+              <div className="glass rounded-lg p-4 border border-line">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm text-steel">Wallet Balance:</span>
                   <span className="font-semibold text-bone">5,000 {currency}</span>
@@ -313,10 +313,10 @@ const BookingFeePaymentModal: React.FC<BookingFeePaymentModalProps> = ({
           </div>
 
           {/* Security Features */}
-          <div className="bg-info-bg rounded-lg p-4 mb-6 border border-circuit/30">
+          <div className="bg-info-bg rounded-lg p-4 mb-6 border border-lumen/30">
             <div className="flex items-center gap-2 mb-2">
-              <Shield className="w-5 h-5 text-circuit" />
-              <span className="font-semibold text-circuit">
+              <Shield className="w-5 h-5 text-lumen-ink" />
+              <span className="font-semibold text-lumen-ink">
                 Payment Protection
               </span>
             </div>
@@ -353,7 +353,7 @@ const BookingFeePaymentModal: React.FC<BookingFeePaymentModalProps> = ({
             >
               {isProcessing ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-line mr-2" />
                   Processing...
                 </>
               ) : (

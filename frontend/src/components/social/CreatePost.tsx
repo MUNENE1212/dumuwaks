@@ -102,16 +102,16 @@ const CreatePost: React.FC = () => {
   const selectedType = postTypes.find(t => t.value === type);
 
   return (
-    <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-indigo-50 dark:bg-gray-800 p-4 shadow-sm">
+    <div className="rounded-lg border border-line bg-surface-200 p-4 shadow-sm">
       {/* Header */}
       <div className="flex items-center space-x-3">
         <img
           src={getProfilePicture()}
           alt={user?.firstName}
-          className="h-10 w-10 rounded-full object-cover ring-2 ring-gray-100"
+          className="h-10 w-10 rounded-full object-cover ring-2 ring-line"
         />
         <div className="flex-1">
-          <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">
+          <h3 className="text-sm font-medium text-ink">
             {user?.firstName} {user?.lastName}
           </h3>
           <p className="text-xs text-amber-500 capitalize">{user?.role}</p>
@@ -145,7 +145,7 @@ const CreatePost: React.FC = () => {
                   'flex items-center justify-center space-x-2 rounded-lg border-2 p-3 text-sm font-medium transition-all',
                   type === postType.value
                     ? 'border-primary-500 bg-primary-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                    : 'border-line hover:border-line-strong'
                 )}
               >
                 <span className="text-lg">{postType.icon}</span>
@@ -165,7 +165,7 @@ const CreatePost: React.FC = () => {
             <button
               type="button"
               onClick={() => setType('text')}
-              className="text-gray-400 hover:text-gray-600 dark:text-gray-400"
+              className="hover:text-ink-muted text-ink-muted"
             >
               <X className="h-4 w-4" />
             </button>
@@ -177,7 +177,7 @@ const CreatePost: React.FC = () => {
           value={caption}
           onChange={setCaption}
           placeholder={`What's on your mind, ${user?.firstName}? Use @ to mention someone`}
-          className="w-full resize-none rounded-lg border border-gray-200 dark:border-gray-700 p-3 text-sm placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 bg-indigo-100 dark:bg-gray-900 dark:text-gray-100"
+          className="w-full resize-none rounded-lg border border-line p-3 text-sm placeholder-ink-faint focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 bg-surface-100 text-ink"
           rows={3}
           maxLength={2000}
         />
@@ -191,18 +191,18 @@ const CreatePost: React.FC = () => {
                   <img
                     src={media.url}
                     alt={`Upload ${index + 1}`}
-                    className="h-24 w-full object-cover rounded-lg border border-gray-200 dark:border-gray-700"
+                    className="h-24 w-full object-cover rounded-lg border border-line"
                   />
                 ) : (
                   <video
                     src={media.url}
-                    className="h-24 w-full object-cover rounded-lg border border-gray-200 dark:border-gray-700"
+                    className="h-24 w-full object-cover rounded-lg border border-line"
                   />
                 )}
                 <button
                   type="button"
                   onClick={() => handleRemoveMedia(index)}
-                  className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-1 right-1 bg-red-500 text-on-lumen rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
                 >
                   <X className="h-3 w-3" />
                 </button>
@@ -217,7 +217,7 @@ const CreatePost: React.FC = () => {
             <button
               type="button"
               onClick={() => setShowTypeSelector(!showTypeSelector)}
-              className="flex items-center space-x-1 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm text-gray-600 dark:text-gray-400 transition-colors hover:bg-gray-50 dark:bg-gray-900"
+              className="flex items-center space-x-1 rounded-lg border border-line px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-surface-100 bg-surface-100"
             >
               <span className="text-lg">{selectedType?.icon}</span>
               <span className="hidden sm:inline">Type</span>
@@ -227,7 +227,7 @@ const CreatePost: React.FC = () => {
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={isUploadingMedia}
-              className="flex items-center space-x-1 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm text-gray-600 dark:text-gray-400 transition-colors hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center space-x-1 rounded-lg border border-line px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-surface-300 disabled:opacity-50 disabled:cursor-not-allowed"
               title="Add photo or video"
             >
               <Image className="h-4 w-4" />
@@ -236,7 +236,7 @@ const CreatePost: React.FC = () => {
 
             <button
               type="button"
-              className="flex items-center space-x-1 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm text-gray-600 dark:text-gray-400 transition-colors hover:bg-gray-50 dark:bg-gray-900"
+              className="flex items-center space-x-1 rounded-lg border border-line px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-surface-100 bg-surface-100"
               disabled
               title="Coming soon"
             >

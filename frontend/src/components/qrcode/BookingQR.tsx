@@ -28,7 +28,7 @@ export const BookingQR = ({
     : format(scheduledDate, 'PPP p');
 
   return (
-    <div className="bg-gradient-to-br from-success-50 to-success-100 dark:from-success-950 dark:to-success-900 rounded-2xl p-6">
+    <div className=" bg-success-50 dark:bg-success-950 rounded-2xl p-6">
       {/* Confirmation Header */}
       <div className="text-center mb-6">
         <motion.div
@@ -37,12 +37,12 @@ export const BookingQR = ({
           transition={{ type: 'spring', duration: 0.5 }}
           className="inline-flex items-center justify-center w-16 h-16 bg-success-500 rounded-full mb-4"
         >
-          <CheckCircle className="h-10 w-10 text-white" />
+          <CheckCircle className="h-10 w-10 text-ink" />
         </motion.div>
         <h3 className="text-2xl font-bold text-success-700 dark:text-success-300 mb-2">
           Booking Confirmed!
         </h3>
-        <p className="text-neutral-700 dark:text-neutral-300 font-medium">
+        <p className="text-ink-muted font-medium">
           Ref: {bookingRef}
         </p>
       </div>
@@ -57,7 +57,7 @@ export const BookingQR = ({
       />
 
       {/* Booking Details */}
-      <div className="mt-6 p-4 bg-white dark:bg-neutral-900 rounded-xl space-y-3">
+      <div className="mt-6 p-4 bg-surface-100 rounded-xl space-y-3">
         <div className="flex items-start gap-3">
           <div className="flex-shrink-0">
             {technicianPhoto ? (
@@ -67,43 +67,43 @@ export const BookingQR = ({
                 className="w-12 h-12 rounded-full object-cover"
               />
             ) : (
-              <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center text-white font-bold">
+              <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center text-on-lumen font-bold">
                 {technicianName.charAt(0)}
               </div>
             )}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="font-medium text-neutral-900 dark:text-white">
+            <p className="font-medium text-ink dark:text-ink">
               {technicianName}
             </p>
             {service && (
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">
+              <p className="text-sm text-ink-muted">
                 {service}
               </p>
             )}
           </div>
         </div>
 
-        <div className="flex items-center gap-3 pt-3 border-t border-neutral-200 dark:border-neutral-800">
+        <div className="flex items-center gap-3 pt-3 border-t border-line">
           <Calendar className="h-5 w-5 text-primary-500 flex-shrink-0" />
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-neutral-900 dark:text-white">
+            <p className="text-sm font-medium text-ink dark:text-ink">
               Scheduled
             </p>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">
+            <p className="text-sm text-ink-muted">
               {formattedDate}
             </p>
           </div>
         </div>
 
         {address && (
-          <div className="flex items-center gap-3 pt-3 border-t border-neutral-200 dark:border-neutral-800">
+          <div className="flex items-center gap-3 pt-3 border-t border-line">
             <MapPin className="h-5 w-5 text-primary-500 flex-shrink-0" />
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-neutral-900 dark:text-white">
+              <p className="text-sm font-medium text-ink dark:text-ink">
                 Location
               </p>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">
+              <p className="text-sm text-ink-muted">
                 {address}
               </p>
             </div>

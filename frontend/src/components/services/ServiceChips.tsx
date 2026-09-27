@@ -45,7 +45,7 @@ const ServiceChips: React.FC<ServiceChipsProps> = ({
             key={index}
             className={clsx(
               'h-11 w-32 flex-shrink-0 flex flex-col items-start justify-center px-4 py-2',
-              'bg-charcoal border border-subtle rounded-full',
+              'bg-charcoal border border-line rounded-full',
               'shimmer'
             )}
           >
@@ -67,7 +67,7 @@ const ServiceChips: React.FC<ServiceChipsProps> = ({
         )}
         data-testid="service-chips-empty"
       >
-        <div className="w-12 h-12 mb-3 rounded-full bg-charcoal border border-subtle flex items-center justify-center">
+        <div className="w-12 h-12 mb-3 rounded-full bg-charcoal border border-line flex items-center justify-center">
           <svg
             className="w-6 h-6 text-steel"
             fill="none"
@@ -96,10 +96,10 @@ const ServiceChips: React.FC<ServiceChipsProps> = ({
   return (
     <div className={clsx('relative', className)}>
       {/* Left scroll indicator */}
-      <div className="absolute left-0 top-0 bottom-2 w-8 bg-gradient-to-r from-mahogany to-transparent z-10 pointer-events-none hidden sm:block" />
+      <div className="absolute left-0 top-0 bottom-2 w-8 bg-surface-100 z-10 pointer-events-none hidden sm:block" />
 
       {/* Right scroll indicator */}
-      <div className="absolute right-0 top-0 bottom-2 w-8 bg-gradient-to-l from-mahogany to-transparent z-10 pointer-events-none hidden sm:block" />
+      <div className="absolute right-0 top-0 bottom-2 w-8 bg-surface-100 z-10 pointer-events-none hidden sm:block" />
 
       {/* Scrollable container */}
       <div
@@ -161,18 +161,18 @@ const ServiceChip: React.FC<ServiceChipProps> = ({
         'min-h-[44px] min-w-[44px] px-4 py-2',
         'rounded-full',
         'border-2 transition-all duration-200 ease-out',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-circuit focus-visible:ring-offset-2 focus-visible:ring-offset-mahogany',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lumen focus-visible:ring-offset-2 focus-visible:ring-offset-mahogany',
 
         // Default state - subtle styling
         !isSelected && [
-          'bg-charcoal border-subtle',
-          'hover:border-steel hover:bg-hover',
+          'bg-charcoal border-line',
+          'hover:border-steel hover:bg-surface-300',
           'active:scale-[0.98]',
         ],
 
         // Selected state - Circuit Blue accent with LED glow
         isSelected && [
-          'bg-circuit/20 border-circuit',
+          'bg-lumen/20 border-lumen',
           'shadow-led',
           'scale-[1.02]',
         ]
@@ -185,7 +185,7 @@ const ServiceChip: React.FC<ServiceChipProps> = ({
           'text-sm font-bold uppercase tracking-wide',
           'leading-tight',
           'transition-colors duration-200',
-          isSelected ? 'text-circuit' : 'text-bone'
+          isSelected ? 'text-lumen-ink' : 'text-bone'
         )}
       >
         {service.name}
@@ -196,7 +196,7 @@ const ServiceChip: React.FC<ServiceChipProps> = ({
         className={clsx(
           'text-[10px] mt-0.5',
           'transition-colors duration-200',
-          isSelected ? 'text-circuit-300' : 'text-steel'
+          isSelected ? 'text-lumen-ink' : 'text-steel'
         )}
       >
         {getPriceRangeDisplay(service.basePriceMin, service.basePriceMax)}
@@ -241,18 +241,18 @@ export const ServiceChipLarge: React.FC<ServiceChipLargeProps> = ({
         'rounded-lg',
         'border-2 transition-all duration-200 ease-out',
         'text-left',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-circuit focus-visible:ring-offset-2 focus-visible:ring-offset-mahogany',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lumen focus-visible:ring-offset-2 focus-visible:ring-offset-mahogany',
 
         // Default state
         !isSelected && [
-          'bg-charcoal border-subtle',
-          'hover:border-steel hover:bg-hover',
+          'bg-charcoal border-line',
+          'hover:border-steel hover:bg-surface-300',
           'active:scale-[0.98]',
         ],
 
         // Selected state - Circuit Blue accent with LED glow
         isSelected && [
-          'bg-circuit/20 border-circuit',
+          'bg-lumen/20 border-lumen',
           'shadow-led',
           'scale-[1.02]',
         ]
@@ -265,7 +265,7 @@ export const ServiceChipLarge: React.FC<ServiceChipLargeProps> = ({
           'text-sm font-bold uppercase tracking-wide block',
           'leading-tight line-clamp-2',
           'transition-colors duration-200',
-          isSelected ? 'text-circuit' : 'text-bone'
+          isSelected ? 'text-lumen-ink' : 'text-bone'
         )}
       >
         {service.name}
@@ -276,7 +276,7 @@ export const ServiceChipLarge: React.FC<ServiceChipLargeProps> = ({
         className={clsx(
           'text-[10px] mt-1 block',
           'transition-colors duration-200',
-          isSelected ? 'text-circuit-300' : 'text-wrench'
+          isSelected ? 'text-lumen-ink' : 'text-wrench'
         )}
       >
         {service.estimatedDuration}
@@ -287,7 +287,7 @@ export const ServiceChipLarge: React.FC<ServiceChipLargeProps> = ({
         className={clsx(
           'text-xs mt-1 font-medium block',
           'transition-colors duration-200',
-          isSelected ? 'text-circuit-300' : 'text-steel'
+          isSelected ? 'text-lumen-ink' : 'text-steel'
         )}
       >
         {getPriceRangeDisplay(service.basePriceMin, service.basePriceMax)}

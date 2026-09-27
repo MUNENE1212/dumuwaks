@@ -1,8 +1,8 @@
 /**
- * Dumu Waks Global Styles
- * RICH DARK DESIGN SYSTEM - Dark-First Approach
- * Deep Mahogany (#261212) + Iron Charcoal (#1C1C1C) Base
- * Circuit Blue (#0090C5) + Wrench Purple (#7D4E9F) Accents
+ * Dumuwaks global styles.
+ * Emen order: night surfaces, one amber action colour, square-cut geometry,
+ * Archivo for display, IBM Plex Sans for text, IBM Plex Mono for every number.
+ * Tokens live in ./styles/tokens.css.
  */
 
 @import './styles/tokens.css';
@@ -12,524 +12,367 @@
 @tailwind utilities;
 
 @layer base {
-  /* ============================================
-     DARK-FIRST BASE STYLES
-     ============================================ */
-
-  * {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
   }
 
   html {
-    /* Smooth scrolling */
     scroll-behavior: smooth;
-
-    /* Dark theme as default */
     color-scheme: dark;
-
-    /* Prevent iOS text size adjust */
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    background-color: var(--surface-100);
   }
 
   body {
-    /* Rich dark theme colors */
-    background-color: var(--dw-bg-primary);
-    color: var(--dw-text-primary);
-
-    /* Typography */
-    font-family: var(--dw-font-family-base);
-    font-size: var(--dw-text-body-md);
-    line-height: var(--dw-leading-normal);
-    font-weight: var(--dw-weight-regular);
-    letter-spacing: var(--dw-tracking-normal);
-
-    /* Anti-aliasing */
+    margin: 0;
+    background-color: var(--surface-100);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 24px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-
-    /* Min height to fill viewport */
     min-height: 100vh;
   }
 
-  /* ============================================
-     TYPOGRAPHY BASE STYLES
-     ============================================ */
-
-  h1, h2, h3, h4, h5, h6 {
-    color: var(--dw-text-primary);
-    font-weight: var(--dw-weight-bold);
-    line-height: var(--dw-leading-tight);
-    letter-spacing: var(--dw-tracking-tight);
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    color: var(--ink);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
   }
 
   h1 {
-    font-size: var(--dw-text-display-md);
+    font-weight: 800;
+    letter-spacing: -0.02em;
   }
 
-  h2 {
-    font-size: var(--dw-text-heading-xl);
-  }
-
-  h3 {
-    font-size: var(--dw-text-heading-lg);
-  }
-
-  h4 {
-    font-size: var(--dw-text-heading-md);
-  }
-
-  h5 {
-    font-size: var(--dw-text-heading-sm);
-  }
-
+  h5,
   h6 {
-    font-size: var(--dw-text-body-lg);
-    font-weight: var(--dw-weight-semibold);
+    font-family: var(--font-sans);
+    color: var(--ink);
+    font-weight: 600;
   }
 
   p {
-    color: var(--dw-text-primary);
-    margin-bottom: var(--dw-spacing-4);
+    text-wrap: pretty;
   }
 
   a {
-    color: var(--dw-text-link);
+    color: inherit;
     text-decoration: none;
     transition: color var(--dw-duration-fast) var(--dw-ease-default);
   }
 
-  a:hover {
-    color: var(--dw-accent-secondary);
-    text-decoration: underline;
+  /* Every measured quantity is a fact: mono, tabular. */
+  code,
+  kbd,
+  samp,
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
   }
 
-  a:focus-visible {
-    outline: 2px solid var(--dw-accent-primary);
+  :focus-visible {
+    outline: 2px solid var(--lumen);
     outline-offset: 2px;
-    border-radius: var(--dw-radius-sm);
-    text-decoration: underline;
   }
-
-  /* ============================================
-     SELECTION STYLES
-     ============================================ */
 
   ::selection {
-    background-color: var(--dw-accent-primary);
-    color: white;
+    background: var(--lumen);
+    color: var(--on-lumen);
   }
 
-  ::-moz-selection {
-    background-color: var(--dw-accent-primary);
-    color: white;
-  }
-
-  /* ============================================
-     SCROLLBAR STYLES
-     ============================================ */
-
-  /* WebKit browsers (Chrome, Safari, Edge) */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
   }
-
   ::-webkit-scrollbar-track {
-    background: var(--dw-bg-secondary);
+    background: var(--surface-100);
   }
-
   ::-webkit-scrollbar-thumb {
-    background: var(--dw-steel-600);
-    border-radius: var(--dw-radius-full);
+    background: var(--line-strong);
+    border: 2px solid var(--surface-100);
   }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--dw-steel-500);
-  }
-
-  /* Firefox */
   * {
-    scrollbar-width: thin;
-    scrollbar-color: var(--dw-steel-600) var(--dw-bg-secondary);
+    scrollbar-color: var(--line-strong) var(--surface-100);
   }
 }
 
 @layer components {
-  /* ============================================
-     BUTTON COMPONENTS
-     Using Circuit Blue accent with LED glow
-     ============================================ */
+  /* ---------- Eyebrow / field label: mono caps ---------- */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 14px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
 
+  /* ---------- Buttons ---------- */
   .btn {
-    @apply inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200;
-    @apply disabled:pointer-events-none disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 font-semibold select-none;
     min-height: 44px;
-    padding: 0 var(--dw-spacing-6);
+    padding: 0 20px;
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    transition: background-color var(--dw-duration-fast), color var(--dw-duration-fast),
+      border-color var(--dw-duration-fast);
   }
-
-  .btn:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 2px var(--dw-accent-primary), 0 0 0 4px var(--dw-bg-primary);
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
-
   .btn-primary {
-    background: var(--dw-accent-primary);
-    color: white;
-    font-weight: var(--dw-weight-semibold);
-    box-shadow: var(--dw-shadow-led);
+    background: var(--lumen);
+    color: var(--on-lumen);
   }
-
-  .btn-primary:hover {
-    background: var(--dw-accent-hover);
-    box-shadow: var(--dw-shadow-led-lg);
+  .btn-primary:hover:not(:disabled) {
+    background: var(--lumen-hover);
   }
-
-  .btn-primary:active {
-    transform: scale(0.98);
-  }
-
-  .btn-secondary {
-    background: var(--dw-accent-secondary);
-    color: white;
-    font-weight: var(--dw-weight-semibold);
-  }
-
-  .btn-secondary:hover {
-    background: var(--dw-wrench-600);
-    box-shadow: var(--dw-shadow-led-purple);
-  }
-
+  .btn-secondary,
   .btn-outline {
     background: transparent;
-    color: var(--dw-text-primary);
-    border: 1px solid var(--dw-border-strong);
-    font-weight: var(--dw-weight-semibold);
+    color: var(--ink);
+    border: 1px solid var(--line-strong);
   }
-
-  .btn-outline:hover {
-    background: var(--dw-bg-hover);
-    border-color: var(--dw-accent-primary);
-    color: var(--dw-accent-primary);
+  .btn-secondary:hover:not(:disabled),
+  .btn-outline:hover:not(:disabled) {
+    border-color: var(--ink-muted);
+    background: var(--surface-200);
   }
-
   .btn-ghost {
     background: transparent;
-    color: var(--dw-accent-primary);
+    color: var(--ink-muted);
   }
-
-  .btn-ghost:hover {
-    background: var(--dw-bg-hover);
+  .btn-ghost:hover:not(:disabled) {
+    color: var(--ink);
+    background: var(--surface-200);
   }
-
   .btn-glass {
-    background: rgba(28, 28, 28, 0.6);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--dw-border-default);
-    color: var(--dw-text-primary);
+    background: var(--surface-200);
+    border: 1px solid var(--line);
+    color: var(--ink);
   }
-
-  .btn-glass:hover {
-    background: rgba(28, 28, 28, 0.8);
-    border-color: var(--dw-accent-primary);
+  .btn-whatsapp {
+    background: var(--whatsapp);
+    color: #0b0907;
   }
-
-  /* Button Sizes */
+  .btn-whatsapp:hover:not(:disabled) {
+    background: #3ee07c;
+  }
   .btn-sm {
     min-height: 36px;
-    padding: 0 var(--dw-spacing-4);
-    font-size: var(--dw-text-body-sm);
+    padding: 0 14px;
+    font-size: 13.5px;
   }
-
   .btn-lg {
     min-height: 52px;
-    padding: 0 var(--dw-spacing-8);
-    font-size: var(--dw-text-body-lg);
+    padding: 0 28px;
+    font-size: 16px;
   }
 
-  /* ============================================
-     INPUT COMPONENTS
-     ============================================ */
-
+  /* ---------- Inputs ---------- */
   .input {
-    @apply flex w-full rounded-lg text-sm transition-colors;
-    @apply disabled:cursor-not-allowed disabled:opacity-50;
-
-    background: var(--dw-bg-secondary);
-    border: 1px solid var(--dw-border-default);
-    color: var(--dw-text-primary);
+    width: 100%;
     min-height: 44px;
-    padding: 0 var(--dw-spacing-4);
+    padding: 0 14px;
+    background: var(--surface-300);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+    font-size: 15px;
+    transition: border-color var(--dw-duration-fast);
   }
-
-  .input:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 2px var(--dw-accent-primary), 0 0 0 4px var(--dw-bg-primary);
-  }
-
   .input::placeholder {
-    color: var(--dw-text-secondary);
+    color: var(--ink-faint);
   }
-
   .input:focus {
-    border-color: var(--dw-accent-primary);
+    outline: none;
+    border-color: var(--lumen);
+    box-shadow: 0 0 0 1px var(--lumen);
   }
-
-  .input-error {
-    border-color: var(--dw-color-error);
-  }
-
+  .input-error,
   .input-error:focus {
-    border-color: var(--dw-color-error);
-    box-shadow: 0 0 0 2px var(--dw-color-error), 0 0 0 4px var(--dw-bg-primary);
+    border-color: var(--fault);
+    box-shadow: 0 0 0 1px var(--fault);
   }
 
-  /* ============================================
-     CARD COMPONENTS
-     ============================================ */
-
+  /* ---------- Cards / panels ---------- */
   .card {
-    background: var(--dw-bg-secondary);
-    border: 1px solid var(--dw-border-default);
-    border-radius: var(--dw-radius-xl);
-    overflow: hidden;
-    transition: background-color var(--dw-duration-fast), border-color var(--dw-duration-fast), box-shadow var(--dw-duration-fast);
+    background: var(--surface-200);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    transition: border-color var(--dw-duration-fast);
   }
-
-  .card:hover {
-    background: var(--dw-bg-elevated);
-    border-color: var(--dw-border-strong);
-    box-shadow: var(--dw-shadow-mahogany);
+  .card-interactive:hover,
+  a.card:hover {
+    border-color: var(--line-strong);
   }
-
   .card-header {
-    padding: var(--dw-spacing-6);
-    border-bottom: 1px solid var(--dw-border-subtle);
+    padding: 20px;
+    border-bottom: 1px solid var(--line);
   }
-
   .card-title {
-    font-size: var(--dw-text-heading-lg);
-    font-weight: var(--dw-weight-semibold);
-    color: var(--dw-text-primary);
+    font-family: var(--font-display);
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: 700;
+    color: var(--ink);
   }
-
   .card-content {
-    padding: var(--dw-spacing-6);
+    padding: 20px;
   }
-
   .card-footer {
-    padding: var(--dw-spacing-6);
-    border-top: 1px solid var(--dw-border-subtle);
+    padding: 20px;
+    border-top: 1px solid var(--line);
   }
 
-  /* ============================================
-     UTILITY CLASSES
-     ============================================ */
-
-  /* Glassmorphism utilities */
+  /* Legacy "glass" surfaces → opaque raised panels. */
+  .glass-card {
+    background: var(--surface-200);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+  }
   .glass {
-    background: rgba(28, 28, 28, 0.6);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--dw-border-default);
+    background: var(--surface-200);
+    border: 1px solid var(--line);
   }
-
   .glass-nav {
-    background: rgba(38, 18, 18, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--dw-border-subtle);
+    background: var(--surface-100);
+    border-bottom: 1px solid var(--line);
   }
-
-  /* Text styles */
   .text-gradient {
-    background: linear-gradient(135deg, var(--dw-accent-primary), var(--dw-accent-secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--lumen-ink);
   }
-
-  /* LED glow utility */
   .led-glow {
-    box-shadow: var(--dw-shadow-led);
-    transition: box-shadow var(--dw-duration-normal) var(--dw-ease-out);
+    box-shadow: none;
   }
 
-  .led-glow:hover {
-    box-shadow: var(--dw-shadow-led-lg);
-  }
-
-  /* Shimmer loading effect */
-  .shimmer {
-    background: linear-gradient(
-      90deg,
-      var(--dw-bg-secondary) 0%,
-      var(--dw-steel-700) 50%,
-      var(--dw-bg-secondary) 100%
-    );
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-  }
-
-  @keyframes shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-  }
-
-  /* Loading spinner */
-  .spinner {
-    width: 24px;
+  /* Status chip — the only pill in the system. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     height: 24px;
-    border: 3px solid var(--dw-border-subtle);
-    border-top-color: var(--dw-accent-primary);
+    padding: 0 10px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Luminance ramp: the brand motif as a rule — filament → lumen → ember. */
+  .ramp {
+    display: grid;
+    grid-template-columns: 3fr 2fr 1fr;
+    gap: 4px;
+    height: 4px;
+  }
+  .ramp > i {
+    display: block;
+  }
+  .ramp > i:nth-child(1) {
+    background: var(--filament);
+  }
+  .ramp > i:nth-child(2) {
+    background: var(--lumen);
+  }
+  .ramp > i:nth-child(3) {
+    background: var(--ember);
+  }
+
+  .shimmer {
+    background: linear-gradient(90deg, var(--surface-200) 0%, var(--surface-400) 50%, var(--surface-200) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s linear infinite;
+  }
+
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--line-strong);
+    border-top-color: var(--lumen);
     border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-
-  @keyframes spin {
-    to { transform: rotate(360deg); }
+    animation: spin 700ms linear infinite;
   }
 }
 
-/* ============================================
-   ANIMATIONS
-   ============================================ */
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
   }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes spin {
   to {
-    opacity: 1;
+    transform: rotate(360deg);
   }
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 10px rgba(0, 144, 197, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(0, 144, 197, 0.8), 0 0 30px rgba(0, 144, 197, 0.4);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 300ms ease-out;
-}
-
-.animate-slide-up {
-  animation: slideUp 300ms ease-out;
-}
-
-.animate-scale-in {
-  animation: scaleIn 200ms ease-out;
-}
-
-.animate-pulse-glow {
-  animation: pulseGlow 2s ease-in-out infinite;
-}
-
-/* ============================================
-   RESPONSIVE UTILITIES
-   ============================================ */
-
-/* Mobile-first container */
+/* Mobile-first container: 16px gutter, 1200px measure */
 .container {
   width: 100%;
-  padding: 0 var(--dw-spacing-4);
+  max-width: 1200px;
+  padding: 0 16px;
   margin: 0 auto;
 }
 
 @media (min-width: 640px) {
   .container {
-    max-width: var(--dw-container-sm);
-    padding: 0 var(--dw-spacing-6);
+    padding: 0 24px;
   }
 }
-
-@media (min-width: 768px) {
-  .container {
-    max-width: var(--dw-container-md);
-  }
-}
-
-@media (min-width: 1024px) {
-  .container {
-    max-width: var(--dw-container-lg);
-  }
-}
-
-@media (min-width: 1280px) {
-  .container {
-    max-width: var(--dw-container-xl);
-  }
-}
-
-/* ============================================
-   SAFE AREA UTILITIES (for notched devices)
-   ============================================ */
 
 .safe-area-inset-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0);
 }
-
 .safe-area-inset-top {
   padding-top: env(safe-area-inset-top, 0);
 }
-
 .safe-area-inset-left {
   padding-left: env(safe-area-inset-left, 0);
 }
-
 .safe-area-inset-right {
   padding-right: env(safe-area-inset-right, 0);
 }
-
-/* ============================================
-   SCROLLBAR HIDE UTILITY
-   ============================================ */
 
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
 
-/* ============================================
-   BOTTOM NAV SPACING
-   ============================================ */
-
 @media (max-width: 767px) {
-  /* Ensure WhatsApp button clears bottom nav */
   .whatsapp-float {
     bottom: calc(4rem + env(safe-area-inset-bottom, 0px) + 1rem) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

@@ -20,6 +20,7 @@ import UserManagement from '@/components/admin/UserManagement';
 import FeeConfiguration from '@/pages/admin/FeeConfiguration';
 import { getDashboardStats, getEscrowStats } from '@/services/admin.service';
 import type { DashboardMetrics } from '@/types/admin';
+import FinancePanel from '@/components/admin/FinancePanel';
 
 /**
  * Admin Dashboard Page Component
@@ -45,7 +46,7 @@ const AdminDashboard: React.FC = () => {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-mahogany flex items-center justify-center p-4">
+      <div className="min-h-screen bg-surface-100 flex items-center justify-center p-4">
         <div className="glass-card rounded-xl p-8 max-w-md text-center">
           <svg
             className="w-16 h-16 mx-auto text-error"
@@ -67,7 +68,7 @@ const AdminDashboard: React.FC = () => {
           </p>
           <a
             href="/"
-            className="mt-6 inline-block px-6 py-3 bg-circuit text-white rounded-lg shadow-led hover:bg-circuit-600 transition-colors"
+            className="mt-6 inline-block px-6 py-3 bg-lumen text-on-lumen rounded-lg shadow-led hover:bg-lumen-hover transition-colors"
           >
             Go to Home
           </a>
@@ -142,6 +143,11 @@ const AdminDashboard: React.FC = () => {
       return <ServiceApprovalDashboard />;
     }
 
+    // Real escrow on IntaSend: wallet vs ledger, payout approvals, disputes
+    if (path === '/admin/finance') {
+      return <FinancePanel />;
+    }
+
     // Escrow management
     if (path === '/admin/escrow') {
       return <EscrowManagementPanel />;
@@ -194,7 +200,7 @@ const AdminDashboard: React.FC = () => {
       <title>Admin Dashboard | DumuWaks</title>
       <meta name="description" content="Admin dashboard for managing WORD BANK, escrow, and payments" />
 
-      <div className="flex min-h-screen bg-mahogany">
+      <div className="flex min-h-screen bg-surface-100">
         {/* Sidebar */}
         <AdminSidebar
           pendingApprovals={pendingApprovals}

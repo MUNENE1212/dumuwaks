@@ -47,14 +47,14 @@ END:VCARD`;
       {/* Front Side - Profile QR */}
       <Card className="p-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="bg-primary-100 dark:bg-primary-900 p-3 rounded-xl">
-            <User className="h-6 w-6 text-primary-600 dark:text-primary-400" />
+          <div className="bg-primary-900 p-3 rounded-xl">
+            <User className="h-6 w-6 text-primary-400" />
           </div>
           <div>
-            <h3 className="font-semibold text-lg text-neutral-900 dark:text-white">
+            <h3 className="font-semibold text-lg text-ink dark:text-ink">
               Professional Profile
             </h3>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">
+            <p className="text-sm text-ink-muted">
               Scan to view full profile
             </p>
           </div>
@@ -63,7 +63,7 @@ END:VCARD`;
         <QRCodeDisplay
           data={profileUrl}
           title={technicianName}
-          description={`${service} • Dumu Waks Technician`}
+          description={`${service} • Dumuwaks Technician`}
           showLogo={true}
           showActions={true}
         />
@@ -72,14 +72,14 @@ END:VCARD`;
       {/* Back Side - Contact QR */}
       <Card className="p-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="bg-green-100 dark:bg-green-900 p-3 rounded-xl">
-            <Mail className="h-6 w-6 text-green-600 dark:text-green-400" />
+          <div className="bg-green-900 p-3 rounded-xl">
+            <Mail className="h-6 w-6 text-green-400" />
           </div>
           <div>
-            <h3 className="font-semibold text-lg text-neutral-900 dark:text-white">
+            <h3 className="font-semibold text-lg text-ink dark:text-ink">
               Contact Card
             </h3>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">
+            <p className="text-sm text-ink-muted">
               Scan to save contact
             </p>
           </div>

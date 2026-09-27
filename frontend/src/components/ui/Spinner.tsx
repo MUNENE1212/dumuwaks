@@ -32,8 +32,8 @@ export const Spinner: React.FC<SpinnerProps> = ({
   const colorClasses = {
     primary: 'text-primary-500',
     secondary: 'text-secondary-500',
-    neutral: 'text-neutral-500',
-    white: 'text-white',
+    neutral: 'text-ink-muted',
+    white: 'text-ink',
   };
 
   return (

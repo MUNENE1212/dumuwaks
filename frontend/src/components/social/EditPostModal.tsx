@@ -114,17 +114,17 @@ const EditPostModal: React.FC<EditPostModalProps> = ({ post, isOpen, onClose }) 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="edit-post-title">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-surface-000 bg-opacity-50 p-4">
+      <div className="bg-surface-200 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="edit-post-title">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-          <h2 id="edit-post-title" className="text-xl font-semibold text-gray-900 dark:text-gray-100">Edit Post</h2>
+        <div className="flex items-center justify-between p-4 border-b border-line">
+          <h2 id="edit-post-title" className="text-xl font-semibold text-ink">Edit Post</h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            className="p-2 rounded-full hover:bg-surface-300 transition-colors"
             aria-label="Close"
           >
-            <X className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+            <X className="h-5 w-5 text-ink-muted" />
           </button>
         </div>
 
@@ -132,7 +132,7 @@ const EditPostModal: React.FC<EditPostModalProps> = ({ post, isOpen, onClose }) 
         <form onSubmit={handleSubmit} className="p-4">
           {/* Post Type Selector */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-ink-muted mb-2">
               Post Type
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -145,7 +145,7 @@ const EditPostModal: React.FC<EditPostModalProps> = ({ post, isOpen, onClose }) 
                     'p-3 rounded-lg text-sm font-medium transition-all border-2',
                     type === postType.value
                       ? `${postType.color} border-current`
-                      : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-transparent hover:bg-gray-100 dark:hover:bg-gray-600'
+                      : 'bg-surface-300 text-ink-muted border-transparent hover:bg-surface-400'
                   )}
                 >
                   <span className="text-lg mr-1">{postType.icon}</span>
@@ -161,7 +161,7 @@ const EditPostModal: React.FC<EditPostModalProps> = ({ post, isOpen, onClose }) 
               value={caption}
               onChange={setCaption}
               placeholder={`What's on your mind?`}
-              className="w-full resize-none rounded-lg border border-gray-200 dark:border-gray-700 p-3 text-sm placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 bg-white dark:bg-gray-800 dark:text-gray-100"
+              className="w-full resize-none rounded-lg border border-line p-3 text-sm placeholder-ink-faint focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 bg-surface-200 text-ink"
               rows={4}
               maxLength={2000}
             />
@@ -188,7 +188,7 @@ const EditPostModal: React.FC<EditPostModalProps> = ({ post, isOpen, onClose }) 
                   <button
                     type="button"
                     onClick={() => handleRemoveMedia(index)}
-                    className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute top-2 right-2 p-1.5 bg-red-500 text-on-lumen rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                     aria-label={`Remove media ${index + 1}`}
                   >
                     <Trash2 className="h-4 w-4" />
@@ -212,7 +212,7 @@ const EditPostModal: React.FC<EditPostModalProps> = ({ post, isOpen, onClose }) 
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={isUploadingMedia}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2 bg-blue-900/30 text-blue-400 rounded-lg hover:bg-blue-900/50 transition-colors disabled:opacity-50"
             >
               <Image className="h-5 w-5" />
               {isUploadingMedia ? 'Uploading...' : 'Add Photos'}
@@ -221,7 +221,7 @@ const EditPostModal: React.FC<EditPostModalProps> = ({ post, isOpen, onClose }) 
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={isUploadingMedia}
-              className="flex items-center gap-2 px-4 py-2 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2 bg-red-900/30 text-red-400 rounded-lg hover:bg-red-900/50 transition-colors disabled:opacity-50"
             >
               <Video className="h-5 w-5" />
               {isUploadingMedia ? 'Uploading...' : 'Add Videos'}

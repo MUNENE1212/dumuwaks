@@ -221,7 +221,7 @@ const LocationInput: React.FC<LocationInputProps> = ({
       {/* Header with Use My Location button */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div className="flex items-center gap-2 text-steel">
-          <MapPin className="h-5 w-5 text-circuit" />
+          <MapPin className="h-5 w-5 text-lumen-ink" />
           <span className="text-sm font-medium text-bone">Service Location</span>
         </div>
 
@@ -333,7 +333,7 @@ const LocationInput: React.FC<LocationInputProps> = ({
             rows={2}
             className={clsx(
               'flex w-full rounded-md border bg-charcoal px-3 py-2.5 text-sm text-bone',
-              'placeholder:text-steel/60 focus:outline-none focus:ring-2 focus:ring-circuit focus:border-transparent',
+              'placeholder:text-steel/60 focus:outline-none focus:ring-2 focus:ring-lumen focus:border-transparent',
               'disabled:cursor-not-allowed disabled:opacity-50 resize-none',
               'border-steel/40'
             )}

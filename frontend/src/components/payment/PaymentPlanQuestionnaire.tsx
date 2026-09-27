@@ -289,7 +289,7 @@ const PaymentPlanQuestionnaire: React.FC<PaymentPlanQuestionnaireProps> = ({
                   <div className="flex items-start gap-3">
                     <div className={`p-2 rounded-lg ${
                       selectedPlanType === type
-                        ? 'bg-[var(--dw-accent-primary)] text-white'
+                        ? 'bg-[var(--dw-accent-primary)] text-ink'
                         : 'bg-[var(--dw-bg-tertiary)] text-[var(--dw-text-secondary)]'
                     }`}>
                       {type === 'hourly' && <Clock className="w-5 h-5" />}

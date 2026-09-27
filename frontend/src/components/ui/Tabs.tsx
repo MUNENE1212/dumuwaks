@@ -45,23 +45,23 @@ export const Tabs: React.FC<TabsProps> = ({
 
   const variantClasses = {
     line: {
-      container: 'border-b border-neutral-200 dark:border-neutral-800',
+      container: 'border-b border-line',
       trigger: (isActive: boolean) =>
         cn(
           'px-4 py-3 font-medium transition-all duration-200 whitespace-nowrap min-h-[48px] flex items-center',
           isActive
             ? 'text-primary-500 border-b-2 border-primary-500'
-            : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-300'
+            : 'text-ink-muted hover:text-ink-muted'
         ),
     },
     enclosed: {
-      container: 'bg-neutral-100 dark:bg-neutral-800 p-1 rounded-xl inline-flex',
+      container: 'bg-surface-200 p-1 rounded-xl inline-flex',
       trigger: (isActive: boolean) =>
         cn(
           'px-6 py-2 font-medium transition-all duration-200 rounded-lg min-h-[44px] flex items-center',
           isActive
-            ? 'bg-white dark:bg-neutral-900 text-primary-500 shadow-sm'
-            : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-300'
+            ? 'bg-surface-100 text-primary-500 shadow-sm'
+            : 'text-ink-muted hover:text-ink-muted'
         ),
     },
     'soft-rounded': {
@@ -70,8 +70,8 @@ export const Tabs: React.FC<TabsProps> = ({
         cn(
           'px-6 py-2 font-medium transition-all duration-200 rounded-full min-h-[44px] flex items-center',
           isActive
-            ? 'bg-primary-500 text-white'
-            : 'text-neutral-500 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800'
+            ? 'bg-primary-500 text-on-lumen'
+            : 'text-ink-muted hover:bg-surface-200'
         ),
     },
   };

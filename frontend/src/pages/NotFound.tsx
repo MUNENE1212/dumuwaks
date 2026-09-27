@@ -5,16 +5,16 @@ import { Button } from '@/components/ui';
 
 const NotFound: React.FC = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900 px-4 py-12">
+    <div className="flex items-start justify-center py-6 sm:py-14 bg-surface-100 px-4 py-12">
       <div className="text-center">
         <div className="mb-8">
           <h1 className="text-9xl font-bold text-primary-600">404</h1>
           <div className="mt-4">
-            <h2 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
+            <h2 className="text-3xl font-semibold text-ink">
               Page Not Found
             </h2>
-            <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
-              Sorry, Dumu Waks couldn't find the page you're looking for.
+            <p className="mt-2 text-lg text-ink-muted">
+              Sorry, Dumuwaks couldn't find the page you're looking for.
             </p>
           </div>
         </div>
@@ -38,10 +38,10 @@ const NotFound: React.FC = () => {
         </div>
 
         <div className="mt-8">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-ink-muted">
             Need help?{' '}
             <Link to="/support" className="text-primary-600 hover:text-primary-700">
-              Contact Dumu Waks support
+              Contact Dumuwaks support
             </Link>
           </p>
         </div>

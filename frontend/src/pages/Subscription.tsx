@@ -26,12 +26,12 @@ const Subscription: React.FC = () => {
   if (user?.role !== 'technician') {
     return (
       <div className="mx-auto max-w-4xl py-12 text-center">
-        <Shield className="mx-auto h-16 w-16 text-gray-400" />
-        <h2 className="mt-4 text-2xl font-bold text-gray-900 dark:text-gray-100">
+        <Shield className="mx-auto h-16 w-16 text-ink-muted" />
+        <h2 className="mt-4 text-2xl font-bold text-ink">
           Technicians Only
         </h2>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">
-          Dumu Waks Pro features are only available for technicians.
+        <p className="mt-2 text-ink-muted">
+          Dumuwaks Pro features are only available for technicians.
         </p>
         <Button
           variant="primary"
@@ -55,9 +55,9 @@ const Subscription: React.FC = () => {
       period: 'forever',
       description: 'Get started with basic features',
       icon: Star,
-      color: 'text-gray-600',
-      bgColor: 'bg-gray-50',
-      borderColor: 'border-gray-200',
+      color: 'text-ink-muted',
+      bgColor: 'bg-surface-100',
+      borderColor: 'border-line',
       features: [
         { included: true, text: 'Basic profile listing' },
         { included: true, text: 'Receive job requests' },
@@ -99,7 +99,7 @@ const Subscription: React.FC = () => {
       description: 'Maximum visibility and features',
       icon: Crown,
       color: 'text-purple-600',
-      bgColor: 'bg-gradient-to-br from-purple-50 to-pink-50',
+      bgColor: ' bg-purple-50',
       borderColor: 'border-purple-500',
       features: [
         { included: true, text: 'Everything in Pro' },
@@ -123,10 +123,10 @@ const Subscription: React.FC = () => {
     <div className="mx-auto max-w-7xl">
       {/* Header */}
       <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
+        <h1 className="text-4xl font-bold text-ink">
           Upgrade Your Visibility
         </h1>
-        <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">
+        <p className="mt-4 text-lg text-ink-muted">
           Get more customers with Pro features and boosted visibility
         </p>
 
@@ -144,48 +144,48 @@ const Subscription: React.FC = () => {
 
       {/* Benefits Overview */}
       <div className="mb-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 text-center shadow-sm">
+        <div className="rounded-lg border border-line bg-surface-200 p-6 text-center shadow-sm">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
             <TrendingUp className="h-6 w-6 text-blue-600" />
           </div>
-          <h3 className="mt-4 font-semibold text-gray-900 dark:text-gray-100">
+          <h3 className="mt-4 font-semibold text-ink">
             Boosted Visibility
           </h3>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-sm text-ink-muted">
             Appear higher in search results and get more job requests
           </p>
         </div>
 
-        <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 text-center shadow-sm">
+        <div className="rounded-lg border border-line bg-surface-200 p-6 text-center shadow-sm">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
             <Star className="h-6 w-6 text-purple-600" />
           </div>
-          <h3 className="mt-4 font-semibold text-gray-900 dark:text-gray-100">Enhanced Posts</h3>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          <h3 className="mt-4 font-semibold text-ink">Enhanced Posts</h3>
+          <p className="mt-2 text-sm text-ink-muted">
             Your posts get priority placement in the community feed
           </p>
         </div>
 
-        <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 text-center shadow-sm">
+        <div className="rounded-lg border border-line bg-surface-200 p-6 text-center shadow-sm">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
             <BarChart3 className="h-6 w-6 text-green-600" />
           </div>
-          <h3 className="mt-4 font-semibold text-gray-900 dark:text-gray-100">
+          <h3 className="mt-4 font-semibold text-ink">
             Advanced Analytics
           </h3>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-sm text-ink-muted">
             Detailed insights into your profile views and customer behavior
           </p>
         </div>
 
-        <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 text-center shadow-sm">
+        <div className="rounded-lg border border-line bg-surface-200 p-6 text-center shadow-sm">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-orange-100">
             <Headphones className="h-6 w-6 text-orange-600" />
           </div>
-          <h3 className="mt-4 font-semibold text-gray-900 dark:text-gray-100">
+          <h3 className="mt-4 font-semibold text-ink">
             Priority Support
           </h3>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-sm text-ink-muted">
             Get faster responses from our support team when you need help
           </p>
         </div>
@@ -201,14 +201,14 @@ const Subscription: React.FC = () => {
             <div
               key={plan.id}
               className={cn(
-                'relative flex flex-col rounded-2xl border-2 bg-white p-8 shadow-lg transition-all hover:shadow-xl',
+                'relative flex flex-col rounded-2xl border-2 bg-surface-200 p-8 shadow-lg transition-all hover:shadow-xl',
                 plan.borderColor,
                 plan.popular && 'lg:scale-105'
               )}
             >
               {/* Popular Badge */}
               {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 px-4 py-1 text-sm font-semibold text-white shadow-lg">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-blue-600 px-4 py-1 text-sm font-semibold text-on-lumen shadow-lg">
                   Most Popular
                 </div>
               )}
@@ -223,21 +223,21 @@ const Subscription: React.FC = () => {
                 >
                   <Icon className={cn('h-8 w-8', plan.color)} />
                 </div>
-                <h3 className="mt-4 text-2xl font-bold text-gray-900 dark:text-gray-100">
+                <h3 className="mt-4 text-2xl font-bold text-ink">
                   {plan.name}
                 </h3>
-                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{plan.description}</p>
+                <p className="mt-2 text-sm text-ink-muted">{plan.description}</p>
               </div>
 
               {/* Price */}
               <div className="mb-6 text-center">
                 <div className="flex items-baseline justify-center">
-                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400">KES</span>
-                  <span className="ml-1 text-5xl font-bold text-gray-900 dark:text-gray-100">
+                  <span className="text-sm font-medium text-ink-muted">KES</span>
+                  <span className="ml-1 text-5xl font-bold text-ink">
                     {plan.price.toLocaleString()}
                   </span>
                   {plan.price > 0 && (
-                    <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">
+                    <span className="ml-2 text-sm text-ink-muted">
                       /{plan.period}
                     </span>
                   )}
@@ -251,12 +251,12 @@ const Subscription: React.FC = () => {
                     {feature.included ? (
                       <CheckCircle className="mr-3 h-5 w-5 flex-shrink-0 text-green-500" />
                     ) : (
-                      <X className="mr-3 h-5 w-5 flex-shrink-0 text-gray-300" />
+                      <X className="mr-3 h-5 w-5 flex-shrink-0 text-ink-muted" />
                     )}
                     <span
                       className={cn(
                         'text-sm',
-                        feature.included ? 'text-gray-700' : 'text-gray-400'
+                        feature.included ? 'text-ink' : 'text-ink-muted'
                       )}
                     >
                       {feature.text}
@@ -295,97 +295,52 @@ const Subscription: React.FC = () => {
       </div>
 
       {/* FAQ Section */}
-      <div className="mt-16 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-8 shadow-sm">
-        <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-gray-100">
+      <div className="mt-16 rounded-lg border border-line bg-surface-200 p-8 shadow-sm">
+        <h2 className="mb-6 text-2xl font-bold text-ink">
           Frequently Asked Questions
         </h2>
         <div className="space-y-6">
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+            <h3 className="font-semibold text-ink">
               How does boosted visibility work?
             </h3>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            <p className="mt-2 text-sm text-ink-muted">
               Pro and Premium members appear higher in customer searches. Your
               overall match score is multiplied by 1.25x (Pro) or 1.5x (Premium),
               significantly increasing your chances of being found by customers.
             </p>
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+            <h3 className="font-semibold text-ink">
               What about boosted posts?
             </h3>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            <p className="mt-2 text-sm text-ink-muted">
               Your posts in the community feed get higher engagement scores,
               appearing more prominently. Pro posts get a 50% boost, Premium posts
               get a 100% boost in the feed algorithm.
             </p>
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+            <h3 className="font-semibold text-ink">
               Can I cancel anytime?
             </h3>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            <p className="mt-2 text-sm text-ink-muted">
               Yes, you can cancel your subscription at any time. You'll continue
               to have access to Pro features until the end of your billing period.
             </p>
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+            <h3 className="font-semibold text-ink">
               Do you offer refunds?
             </h3>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-              We offer a 7-day money-back guarantee if you're not satisfied with
-              your Pro or Premium subscription. Contact support for a full refund.
+            <p className="mt-2 text-sm text-ink-muted">
+              Contact support within 7 days of paying if something isn't working, and we'll
+              look at your case.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Testimonials */}
-      <div className="mt-16">
-        <h2 className="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-gray-100">
-          What Pro Technicians Say
-        </h2>
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
-            <div className="mb-4 flex items-center">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-              ))}
-            </div>
-            <p className="text-gray-700 dark:text-gray-300">
-              "Since upgrading to Pro, I've seen a 3x increase in job requests. The
-              boosted visibility really works!"
-            </p>
-            <div className="mt-4 flex items-center">
-              <div className="h-10 w-10 rounded-full bg-gray-200" />
-              <div className="ml-3">
-                <p className="font-semibold text-gray-900 dark:text-gray-100">John Kamau</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Electrician, Nairobi</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
-            <div className="mb-4 flex items-center">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-              ))}
-            </div>
-            <p className="text-gray-700 dark:text-gray-300">
-              "The Premium badge gives customers confidence. I'm closing more deals
-              than ever before!"
-            </p>
-            <div className="mt-4 flex items-center">
-              <div className="h-10 w-10 rounded-full bg-gray-200" />
-              <div className="ml-3">
-                <p className="font-semibold text-gray-900 dark:text-gray-100">Mary Wanjiku</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Plumber, Mombasa</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

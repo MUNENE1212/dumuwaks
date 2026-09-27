@@ -66,12 +66,12 @@ const StickyButton: React.FC<StickyButtonProps> = ({
       <div
         className={clsx(
           'fixed bottom-0 left-0 right-0 z-sticky',
-          'bg-charcoal/95 backdrop-blur-md',
+          'bg-charcoal/95',
           'border-t border-steel/30',
           'p-4 safe-area-inset-bottom',
           'transition-all duration-300 ease-out',
           'md:hidden', // Hidden on desktop by default
-          showOnDesktop && 'md:relative md:border-0 md:p-0 md:bg-transparent md:backdrop-blur-none',
+          showOnDesktop && 'md:relative md:border-0 md:p-0 md:bg-transparent',
           containerClassName
         )}
       >

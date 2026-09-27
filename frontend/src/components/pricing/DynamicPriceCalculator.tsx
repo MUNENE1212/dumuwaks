@@ -74,15 +74,15 @@ const DynamicPriceCalculator: React.FC<DynamicPriceCalculatorProps> = ({
     };
 
     return (
-      <div className="flex items-center gap-2 px-3 py-1.5 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+      <div className="flex items-center gap-2 px-3 py-1.5 bg-red-900/20 border border-red-800 rounded-lg">
         <Zap className="h-4 w-4 text-red-500" />
-        <span className="text-sm font-medium text-red-700 dark:text-red-300">
+        <span className="text-sm font-medium text-red-300">
           Surge Pricing Active
         </span>
-        <span className={`px-2 py-0.5 text-xs font-semibold text-white rounded ${levelColors[surgeInfo.level]}`}>
+        <span className={`px-2 py-0.5 text-xs font-semibold text-ink rounded ${levelColors[surgeInfo.level]}`}>
           {surgeInfo.level.toUpperCase()}
         </span>
-        <span className="text-sm text-red-600 dark:text-red-400">
+        <span className="text-sm text-red-400">
           (+{surgeInfo.percentageIncrease}%)
         </span>
       </div>
@@ -94,12 +94,12 @@ const DynamicPriceCalculator: React.FC<DynamicPriceCalculatorProps> = ({
     if (!peakInfo.isPeak) return null;
 
     return (
-      <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+      <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-900/20 border border-amber-800 rounded-lg">
         <Clock className="h-4 w-4 text-amber-500" />
-        <span className="text-sm font-medium text-amber-700 dark:text-amber-300">
+        <span className="text-sm font-medium text-amber-300">
           Peak Hour ({peakInfo.peakType})
         </span>
-        <span className="text-sm text-amber-600 dark:text-amber-400">
+        <span className="text-sm text-amber-400">
           (+{((multipliers.peakHour - 1) * 100).toFixed(0)}%)
         </span>
       </div>
@@ -122,15 +122,15 @@ const DynamicPriceCalculator: React.FC<DynamicPriceCalculatorProps> = ({
     if (!percent || multiplier === 1) return null;
 
     return (
-      <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700 last:border-0">
+      <div className="flex items-center justify-between py-2 border-b border-line last:border-0">
         <div className="flex items-center gap-2">
-          <Icon className="h-4 w-4 text-gray-400" />
-          <span className="text-sm text-gray-600 dark:text-gray-400">{label}</span>
+          <Icon className="h-4 w-4 text-ink-muted" />
+          <span className="text-sm text-ink-muted">{label}</span>
           {description && (
-            <span className="text-xs text-gray-400 dark:text-gray-500">({description})</span>
+            <span className="text-xs text-ink-muted">({description})</span>
           )}
         </div>
-        <span className="text-sm font-medium text-red-600 dark:text-red-400">
+        <span className="text-sm font-medium text-red-400">
           {percent}
         </span>
       </div>
@@ -138,20 +138,20 @@ const DynamicPriceCalculator: React.FC<DynamicPriceCalculatorProps> = ({
   };
 
   return (
-    <div className={`bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 ${className}`}>
+    <div className={`bg-surface-200 rounded-xl shadow-sm border border-line ${className}`}>
       {/* Header with total price */}
-      <div className="p-4 border-b border-gray-100 dark:border-gray-700">
+      <div className="p-4 border-b border-line">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Estimated Price</p>
-            <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+            <p className="text-sm text-ink-muted">Estimated Price</p>
+            <p className="text-3xl font-bold text-ink">
               {formatCurrency(breakdown.totalAmount, breakdown.currency)}
             </p>
           </div>
           {hasActiveMultipliers && (
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="p-2 text-ink-muted hover:text-ink-muted rounded-lg hover:bg-surface-300"
             >
               {isExpanded ? (
                 <ChevronUp className="h-5 w-5" />
@@ -176,16 +176,16 @@ const DynamicPriceCalculator: React.FC<DynamicPriceCalculatorProps> = ({
         <div className="p-4 space-y-4">
           {/* Base price */}
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600 dark:text-gray-400">Base Price</span>
-            <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+            <span className="text-sm text-ink-muted">Base Price</span>
+            <span className="text-sm font-medium text-ink">
               {formatCurrency(breakdown.basePrice, breakdown.currency)}
             </span>
           </div>
 
           {/* Applied multipliers */}
           {hasActiveMultipliers && (
-            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
-              <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+            <div className="bg-surface-300/50 rounded-lg p-3">
+              <p className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-2">
                 Applied Multipliers
               </p>
               <div className="space-y-0">
@@ -224,35 +224,35 @@ const DynamicPriceCalculator: React.FC<DynamicPriceCalculatorProps> = ({
           {breakdown.fees.distance > 0 && (
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-gray-400" />
-                <span className="text-sm text-gray-600 dark:text-gray-400">Distance Fee</span>
+                <MapPin className="h-4 w-4 text-ink-muted" />
+                <span className="text-sm text-ink-muted">Distance Fee</span>
               </div>
-              <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+              <span className="text-sm font-medium text-ink">
                 {formatCurrency(breakdown.fees.distance, breakdown.currency)}
               </span>
             </div>
           )}
 
           {/* Subtotal */}
-          <div className="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-600">
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Subtotal</span>
-            <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+          <div className="flex items-center justify-between pt-2 border-t border-line-strong">
+            <span className="text-sm font-medium text-ink-muted">Subtotal</span>
+            <span className="text-sm font-semibold text-ink">
               {formatCurrency(breakdown.subtotal, breakdown.currency)}
             </span>
           </div>
 
           {/* Booking fee */}
           <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-500 dark:text-gray-400">
+            <span className="text-ink-muted">
               Booking Fee ({breakdown.bookingFee.percentage}% - {breakdown.bookingFee.tierLabel})
             </span>
-            <span className="text-gray-700 dark:text-gray-300">
+            <span className="text-ink-muted">
               {formatCurrency(breakdown.bookingFee.amount, breakdown.currency)}
             </span>
           </div>
 
           {/* Calculated timestamp */}
-          <p className="text-xs text-gray-400 dark:text-gray-500 text-center">
+          <p className="text-xs text-ink-muted text-center">
             Price calculated at {new Date(breakdown.calculatedAt).toLocaleTimeString()}
           </p>
         </div>

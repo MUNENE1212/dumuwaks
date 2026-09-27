@@ -49,12 +49,12 @@ export const Progress: React.FC<ProgressProps> = ({
       {(label || showLabel) && (
         <div className="flex items-center justify-between mb-2">
           {label && (
-            <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
+            <span className="text-sm font-medium text-ink-muted">
               {label}
             </span>
           )}
           {showLabel && (
-            <span className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
+            <span className="text-sm font-medium text-ink">
               {Math.round(percentage)}%
             </span>
           )}
@@ -63,7 +63,7 @@ export const Progress: React.FC<ProgressProps> = ({
 
       <div
         className={cn(
-          'w-full bg-neutral-200 dark:bg-neutral-800 rounded-full overflow-hidden',
+          'w-full bg-surface-200 rounded-full overflow-hidden',
           sizeClasses[size]
         )}
         role="progressbar"
@@ -116,9 +116,9 @@ export const StepProgress: React.FC<StepProgressProps> = ({ steps, className }) 
                 <div
                   className={cn(
                     'w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm transition-all duration-200',
-                    isComplete && 'bg-success-500 text-white',
-                    isCurrent && 'bg-primary-500 text-white',
-                    isPending && 'bg-neutral-200 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400'
+                    isComplete && 'bg-success-500 text-ink',
+                    isCurrent && 'bg-primary-500 text-on-lumen',
+                    isPending && 'bg-surface-200 text-ink-muted'
                   )}
                 >
                   {isComplete ? (
@@ -132,8 +132,8 @@ export const StepProgress: React.FC<StepProgressProps> = ({ steps, className }) 
                 <span
                   className={cn(
                     'mt-2 text-xs font-medium transition-colors duration-200',
-                    (isCurrent || isComplete) && 'text-neutral-900 dark:text-neutral-100',
-                    isPending && 'text-neutral-500 dark:text-neutral-400'
+                    (isCurrent || isComplete) && 'text-ink',
+                    isPending && 'text-ink-muted'
                   )}
                 >
                   {step.label}
@@ -146,7 +146,7 @@ export const StepProgress: React.FC<StepProgressProps> = ({ steps, className }) 
                   <div
                     className={cn(
                       'h-full transition-all duration-200',
-                      isComplete ? 'bg-success-500' : 'bg-neutral-200 dark:bg-neutral-800'
+                      isComplete ? 'bg-success-500' : 'bg-surface-200'
                     )}
                   />
                 </div>

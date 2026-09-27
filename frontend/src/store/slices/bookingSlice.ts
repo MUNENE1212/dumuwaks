@@ -81,6 +81,8 @@ export interface Booking {
   contactsHiddenReason?: string;
   createdAt: string;
   updatedAt: string;
+  /** `intasend`: full price held in escrow (EscrowPanel). `legacy`: 20% booking fee. */
+  paymentProvider?: 'legacy' | 'intasend';
 }
 
 export interface CreateBookingData {

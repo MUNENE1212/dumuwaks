@@ -116,7 +116,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
   };
 
   return (
-    <div className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
+    <div className="border-t border-line bg-surface-200 p-4">
       {/* Voice recorder modal */}
       {showVoiceRecorder && (
         <div className="mb-4">
@@ -134,7 +134,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
           <button
             type="button"
             disabled={disabled}
-            className="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="p-2 text-ink-muted hover:bg-surface-300 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             title="Add emoji"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -150,7 +150,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
           <button
             type="button"
             disabled={disabled}
-            className="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="p-2 text-ink-muted hover:bg-surface-300 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             title="Attach file"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,8 +170,8 @@ const MessageInput: React.FC<MessageInputProps> = ({
             onClick={() => setShowVoiceRecorder(!showVoiceRecorder)}
             className={`p-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
               showVoiceRecorder
-                ? 'bg-red-100 dark:bg-red-900/30 text-red-500'
-                : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                ? 'bg-red-900/30 text-red-500'
+                : 'text-ink-muted hover:bg-surface-300'
             }`}
             title={showVoiceRecorder ? 'Close voice recorder' : 'Record voice message'}
           >
@@ -192,7 +192,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
             placeholder={placeholder}
             disabled={disabled}
             rows={1}
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none max-h-[150px] disabled:bg-gray-100 dark:disabled:bg-gray-800 disabled:cursor-not-allowed"
+            className="w-full px-4 py-2 border border-line-strong bg-surface-300 text-ink placeholder-ink-faint rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none max-h-[150px] disabled:bg-surface-200 disabled:cursor-not-allowed"
             style={{
               minHeight: '42px',
               overflowY: 'auto',
@@ -205,7 +205,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
           type="button"
           onClick={handleSend}
           disabled={disabled || !message.trim()}
-          className="p-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+          className="p-2 bg-primary text-on-lumen rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
           title="Send message (Enter)"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -220,7 +220,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
       </div>
 
       {/* Helper text */}
-      <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+      <div className="mt-2 text-xs text-ink-muted">
         Press Enter to send, Shift + Enter for new line. Voice messages up to 60 seconds.
       </div>
     </div>

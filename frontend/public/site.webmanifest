@@ -1,6 +1,6 @@
 {
-  "name": "Dumu Waks - Professional Services",
-  "short_name": "Dumu Waks",
+  "name": "Dumuwaks \u2014 Book technicians",
+  "short_name": "Dumuwaks",
   "description": "Professional Maintenance & Repair Services Platform - Connect with skilled technicians for all your service needs",
   "icons": [
     {
@@ -20,27 +20,41 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#0090C5",
-  "background_color": "#261212",
+  "theme_color": "#14110c",
+  "background_color": "#14110c",
   "display": "standalone",
   "orientation": "portrait-primary",
   "start_url": "/",
   "scope": "/",
-  "categories": ["business", "productivity", "utilities"],
+  "categories": [
+    "business",
+    "productivity",
+    "utilities"
+  ],
   "shortcuts": [
     {
       "name": "Book a Service",
       "short_name": "Book",
       "description": "Create a new booking for maintenance or repair services",
       "url": "/bookings/create",
-      "icons": [{ "src": "/favicons/favicon-96x96.png", "sizes": "96x96" }]
+      "icons": [
+        {
+          "src": "/favicons/favicon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
       "name": "Find Technicians",
       "short_name": "Technicians",
       "description": "Browse and find skilled technicians near you",
       "url": "/technicians",
-      "icons": [{ "src": "/favicons/favicon-96x96.png", "sizes": "96x96" }]
+      "icons": [
+        {
+          "src": "/favicons/favicon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
     }
   ],
   "related_applications": [],

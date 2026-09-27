@@ -103,7 +103,7 @@ const ResumeBookingModal: React.FC<ResumeBookingModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-mahogany/80 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface-100/80"
       onClick={handleBackdropClick}
       onKeyDown={handleKeyDown}
       role="dialog"
@@ -114,14 +114,14 @@ const ResumeBookingModal: React.FC<ResumeBookingModalProps> = ({
     >
       <Card
         variant="glass"
-        className="w-full max-w-lg shadow-brand-lg border-circuit/30"
+        className="w-full max-w-lg shadow-brand-lg border-lumen/30"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="p-6 border-b border-subtle">
+        <div className="p-6 border-b border-line">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-circuit/20 flex items-center justify-center">
-              <RotateCcw className="w-6 h-6 text-circuit" />
+            <div className="w-12 h-12 rounded-full bg-lumen/20 flex items-center justify-center">
+              <RotateCcw className="w-6 h-6 text-lumen-ink" />
             </div>
             <div>
               <h2
@@ -144,8 +144,8 @@ const ResumeBookingModal: React.FC<ResumeBookingModalProps> = ({
         <div className="p-6 space-y-4">
           {/* Service Info */}
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-lg bg-circuit/10 flex items-center justify-center flex-shrink-0">
-              <FileText className="w-4 h-4 text-circuit" />
+            <div className="w-8 h-8 rounded-lg bg-lumen/10 flex items-center justify-center flex-shrink-0">
+              <FileText className="w-4 h-4 text-lumen-ink" />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-xs text-steel uppercase tracking-wider">
@@ -212,7 +212,7 @@ const ResumeBookingModal: React.FC<ResumeBookingModalProps> = ({
           )}
 
           {/* Current Step Info */}
-          <div className="pt-2 border-t border-subtle">
+          <div className="pt-2 border-t border-line">
             <p className="text-sm text-steel">
               You were on step {draft.currentStep} of 5
             </p>
@@ -220,7 +220,7 @@ const ResumeBookingModal: React.FC<ResumeBookingModalProps> = ({
 
           {/* Note about attachments */}
           {draft.attachmentFileNames.length > 0 && (
-            <div className="p-3 bg-charcoal rounded-lg border border-subtle">
+            <div className="p-3 bg-charcoal rounded-lg border border-line">
               <p className="text-xs text-steel">
                 <span className="font-medium text-bone">Note:</span>{' '}
                 {draft.attachmentFileNames.length} attachment
@@ -232,7 +232,7 @@ const ResumeBookingModal: React.FC<ResumeBookingModalProps> = ({
         </div>
 
         {/* Actions */}
-        <div className="p-6 border-t border-subtle flex flex-col sm:flex-row gap-3">
+        <div className="p-6 border-t border-line flex flex-col sm:flex-row gap-3">
           <Button
             type="button"
             variant="primary"

@@ -143,21 +143,21 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
   };
 
   return (
-    <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-indigo-50 dark:bg-gray-800 p-4 sm:p-6 shadow-sm">
+    <div className="rounded-lg border border-line bg-surface-200 p-4 sm:p-6 shadow-sm">
       <div className="mb-4 sm:mb-6 flex items-center space-x-2">
         <Search className="h-5 w-5 sm:h-6 sm:w-6 text-primary-600 flex-shrink-0" />
-        <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">Find a Technician</h2>
+        <h2 className="text-lg sm:text-xl font-bold text-ink">Find a Technician</h2>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* Service Category */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="mb-2 block text-sm font-medium text-ink-muted">
             What service do you need? *
           </label>
           <select
             {...register('serviceCategory')}
-            className="w-full rounded-lg border border-gray-300 dark:border-gray-600 px-3 sm:px-4 py-2.5 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 text-gray-700 dark:text-gray-200 bg-indigo-100 dark:bg-gray-700 text-sm"
+            className="w-full rounded-lg border border-line-strong px-3 sm:px-4 py-2.5 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 text-ink bg-surface-300 text-sm"
           >
             <option value="">Select a service...</option>
             {serviceCategories.map((category) => (
@@ -173,7 +173,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
 
         {/* Location */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="mb-2 block text-sm font-medium text-ink-muted">
             <MapPin className="mr-1 inline h-4 w-4" />
             Location *
           </label>
@@ -185,7 +185,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
                   onChange: () => setUseCurrentLocation(false),
                 })}
                 placeholder="Enter your city or area"
-                className="flex-1 rounded-lg border border-gray-300 px-3 sm:px-4 py-2.5 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 bg-indigo-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm"
+                className="flex-1 rounded-lg border border-line-strong px-3 sm:px-4 py-2.5 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 bg-surface-300 text-ink text-sm"
               />
               <Button
                 type="button"
@@ -231,14 +231,14 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
               Location set: {coordinates[0].toFixed(4)}, {coordinates[1].toFixed(4)}
             </p>
           )}
-          <p className="mt-1 text-xs text-gray-500">
+          <p className="mt-1 text-xs text-ink-muted">
             Enter your location or use GPS for accurate technician matching
           </p>
         </div>
 
         {/* Urgency */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="mb-2 block text-sm font-medium text-ink-muted">
             <Zap className="mr-1 inline h-4 w-4" />
             How urgent is this?
           </label>
@@ -250,8 +250,8 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
                 onClick={() => setValue('urgency', level.value)}
                 className={`rounded-lg border-2 px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all text-left sm:text-center ${
                   urgency === level.value
-                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300'
-                    : 'border-gray-200 dark:border-gray-600 bg-indigo-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:border-gray-300 dark:hover:border-gray-500'
+                    ? 'border-primary-500 bg-primary-900/20 text-primary-300'
+                    : 'border-line-strong bg-surface-300 text-ink hover:border-line-strong'
                 }`}
               >
                 {level.label}
@@ -262,29 +262,29 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
 
         {/* Budget */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="mb-2 block text-sm font-medium text-ink-muted">
             <DollarSign className="mr-1 inline h-4 w-4" />
             Budget (Optional)
           </label>
           <div className="relative">
-            <span className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 text-sm">KES</span>
+            <span className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-ink-muted text-sm">KES</span>
             <input
               type="number"
               {...register('budget')}
               placeholder="0"
               min="0"
               step="100"
-              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 py-2.5 pl-14 sm:pl-16 pr-3 sm:pr-4 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 bg-indigo-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm"
+              className="w-full rounded-lg border border-line-strong py-2.5 pl-14 sm:pl-16 pr-3 sm:pr-4 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 bg-surface-300 text-ink text-sm"
             />
           </div>
-          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-xs text-ink-muted">
             Enter your maximum budget to help us find technicians within your price range
           </p>
         </div>
 
         {/* Preferred Date */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="mb-2 block text-sm font-medium text-ink-muted">
             <Calendar className="mr-1 inline h-4 w-4" />
             Preferred Date (Optional)
           </label>
@@ -292,13 +292,13 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
             type="date"
             {...register('preferredDate')}
             min={new Date().toISOString().split('T')[0]}
-            className="w-full rounded-lg border border-gray-300 dark:border-gray-600 px-3 sm:px-4 py-2.5 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 bg-indigo-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm"
+            className="w-full rounded-lg border border-line-strong px-3 sm:px-4 py-2.5 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 bg-surface-300 text-ink text-sm"
           />
         </div>
 
         {/* Description */}
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="mb-2 block text-sm font-medium text-ink-muted">
             Description (Optional)
           </label>
           <textarea
@@ -306,12 +306,12 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch, isSearching = f
             placeholder="Describe the work you need done..."
             rows={3}
             maxLength={500}
-            className="w-full resize-none rounded-lg border border-gray-300 dark:border-gray-600 px-3 sm:px-4 py-2.5 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 bg-indigo-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm"
+            className="w-full resize-none rounded-lg border border-line-strong px-3 sm:px-4 py-2.5 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-20 bg-surface-300 text-ink text-sm"
           />
           {errors.description && (
             <p className="mt-1 text-sm text-red-600">{errors.description.message}</p>
           )}
-          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{(description || '').length}/500 characters</p>
+          <p className="mt-1 text-xs text-ink-muted">{(description || '').length}/500 characters</p>
         </div>
 
         {/* Submit Button */}

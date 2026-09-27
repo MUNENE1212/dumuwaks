@@ -27,6 +27,7 @@ import { formatRating } from '@/utils/rating';
 import { getErrorMessage } from '@/lib/errorUtils';
 import { WorkGalleryCarousel, WorkGalleryLightbox } from '@/components/workgallery';
 import type { WorkGalleryImage } from '@/types/workGallery';
+import VerifiedBadge from '@/components/common/VerifiedBadge';
 
 interface Technician {
   _id: string;
@@ -207,10 +208,10 @@ const TechnicianProfile: React.FC = () => {
             <img
               src={getProfilePicture()}
               alt={technician.firstName}
-              className="h-32 w-32 rounded-full object-cover ring-4 ring-circuit/30"
+              className="h-32 w-32 rounded-full object-cover ring-4 ring-lumen/30"
             />
             {technician.availability?.status === 'available' && (
-              <div className="absolute bottom-2 right-2 h-6 w-6 rounded-full border-4 border-charcoal bg-success" />
+              <div className="absolute bottom-2 right-2 h-6 w-6 rounded-full border-4 border-line bg-success" />
             )}
           </div>
 
@@ -250,29 +251,10 @@ const TechnicianProfile: React.FC = () => {
               )}
             </div>
 
-            {/* Verification Badges */}
-            {technician.verification && (
-              <div className="mt-4 flex flex-wrap gap-2">
-                {technician.verification.isVerified && (
-                  <div className="flex items-center space-x-1 rounded-full bg-info-bg px-3 py-1 text-sm font-medium text-circuit">
-                    <Shield className="h-4 w-4" />
-                    <span>Verified</span>
-                  </div>
-                )}
-                {technician.verification.backgroundCheck && (
-                  <div className="flex items-center space-x-1 rounded-full bg-wrench/20 px-3 py-1 text-sm font-medium text-wrench">
-                    <CheckCircle className="h-4 w-4" />
-                    <span>Background Check</span>
-                  </div>
-                )}
-                {technician.verification.insurance && (
-                  <div className="flex items-center space-x-1 rounded-full bg-circuit/20 px-3 py-1 text-sm font-medium text-circuit">
-                    <Shield className="h-4 w-4" />
-                    <span>Insured</span>
-                  </div>
-                )}
-              </div>
-            )}
+            {/* Verified by Dumuwaks (ID checked) or not yet — always shown */}
+            <div className="mt-4">
+              <VerifiedBadge user={technician} size="md" />
+            </div>
 
             {/* Bio */}
             {technician.bio && (
@@ -282,7 +264,7 @@ const TechnicianProfile: React.FC = () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="mt-6 flex space-x-3 border-t border-subtle pt-6">
+        <div className="mt-6 flex space-x-3 border-t border-line pt-6">
           <Button
             variant="primary"
             size="lg"
@@ -326,7 +308,7 @@ const TechnicianProfile: React.FC = () => {
         {/* Skills */}
         <div className="glass-card rounded-lg p-6">
           <h2 className="mb-4 flex items-center text-lg font-bold text-bone">
-            <Award className="mr-2 h-5 w-5 text-circuit" />
+            <Award className="mr-2 h-5 w-5 text-lumen-ink" />
             Skills & Expertise
           </h2>
           <div className="space-y-3">
@@ -339,9 +321,9 @@ const TechnicianProfile: React.FC = () => {
                   <span
                     className={cn('rounded-full px-3 py-1 text-xs font-semibold', {
                       'bg-success-bg text-success': skill.proficiency === 'expert',
-                      'bg-info-bg text-circuit': skill.proficiency === 'advanced',
+                      'bg-info-bg text-lumen-ink': skill.proficiency === 'advanced',
                       'bg-warning-bg text-warning': skill.proficiency === 'intermediate',
-                      'bg-hover text-steel': skill.proficiency === 'beginner',
+                      'bg-surface-300 text-steel': skill.proficiency === 'beginner',
                     })}
                   >
                     {skill.proficiency}
@@ -363,11 +345,11 @@ const TechnicianProfile: React.FC = () => {
           {technician.hourlyRate && (
             <div className="glass-card rounded-lg p-6">
               <h2 className="mb-4 flex items-center text-lg font-bold text-bone">
-                <DollarSign className="mr-2 h-5 w-5 text-circuit" />
+                <DollarSign className="mr-2 h-5 w-5 text-lumen-ink" />
                 Pricing
               </h2>
               <div className="glass rounded-lg p-4">
-                <div className="text-3xl font-bold text-circuit">
+                <div className="text-3xl font-bold text-lumen-ink">
                   KES {technician.hourlyRate}
                   <span className="text-lg text-steel">/hour</span>
                 </div>
@@ -381,7 +363,7 @@ const TechnicianProfile: React.FC = () => {
           {/* Contact Info */}
           <div className="glass-card rounded-lg p-6">
             <h2 className="mb-4 flex items-center text-lg font-bold text-bone">
-              <MapPin className="mr-2 h-5 w-5 text-circuit" />
+              <MapPin className="mr-2 h-5 w-5 text-lumen-ink" />
               Location
             </h2>
             <div className="space-y-3">
@@ -397,7 +379,7 @@ const TechnicianProfile: React.FC = () => {
               {/* Only show contact info if user has active booking */}
               {hasActiveBooking ? (
                 <>
-                  <div className="pt-3 border-t border-subtle">
+                  <div className="pt-3 border-t border-line">
                     <p className="text-xs text-steel mb-2">Contact information (visible due to active booking):</p>
                     <div className="flex items-center space-x-3 text-steel mb-2">
                       <Phone className="h-4 w-4 text-steel" />
@@ -410,7 +392,7 @@ const TechnicianProfile: React.FC = () => {
                   </div>
                 </>
               ) : (
-                <div className="pt-3 border-t border-subtle">
+                <div className="pt-3 border-t border-line">
                   <div className="glass rounded-lg p-3 text-sm text-steel">
                     <div className="flex items-start space-x-2">
                       <Shield className="h-4 w-4 mt-0.5 flex-shrink-0" />
@@ -429,7 +411,7 @@ const TechnicianProfile: React.FC = () => {
         {technician.certifications && technician.certifications.length > 0 && (
           <div className="glass-card rounded-lg p-6 md:col-span-2">
             <h2 className="mb-4 flex items-center text-lg font-bold text-bone">
-              <Award className="mr-2 h-5 w-5 text-circuit" />
+              <Award className="mr-2 h-5 w-5 text-lumen-ink" />
               Certifications
             </h2>
             <div className="grid gap-3 sm:grid-cols-2">

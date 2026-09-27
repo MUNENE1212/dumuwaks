@@ -99,14 +99,14 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
         isProcessing={isProcessing}
       >
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 bg-charcoal rounded-lg flex items-center justify-center text-circuit">
+          <div className="w-12 h-12 bg-charcoal rounded-lg flex items-center justify-center text-lumen-ink">
             <ServiceIcon />
           </div>
           <div className="flex-1">
             <h4 className="text-bone font-semibold uppercase">{service.name}</h4>
             <p className="text-sm text-steel mt-1">{service.description}</p>
             {quantity && quantity > 1 && (
-              <p className="text-sm text-circuit mt-1">Quantity: {quantity}</p>
+              <p className="text-sm text-lumen-ink mt-1">Quantity: {quantity}</p>
             )}
             <p className="text-xs text-steel mt-1">
               Est. duration: {service.estimatedDuration}
@@ -140,7 +140,7 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
               {technician.firstName} {technician.lastName}
             </h4>
             <div className="flex items-center gap-2 text-sm text-steel mt-1">
-              <span className="flex items-center text-circuit">
+              <span className="flex items-center text-lumen-ink">
                 <StarIcon className="w-4 h-4 mr-1" />
                 {formatRating(technician.rating.average)}
               </span>
@@ -182,7 +182,7 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
                       key={index}
                       className="flex items-center gap-2 text-xs text-steel"
                     >
-                      <span className="w-2 h-2 bg-circuit rounded-full" />
+                      <span className="w-2 h-2 bg-lumen rounded-full" />
                       {milestone.name} ({milestone.percentage}%)
                     </div>
                   ))}
@@ -190,7 +190,7 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
               )}
             </div>
             <div className="text-right">
-              <p className="text-circuit font-medium">
+              <p className="text-lumen-ink font-medium">
                 {paymentPlan.depositPercentage}% deposit
               </p>
             </div>
@@ -208,7 +208,7 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
         <div className="space-y-4">
           {/* Date & Time */}
           <div className="flex items-start gap-3">
-            <CalendarIcon className="w-5 h-5 text-circuit mt-0.5" />
+            <CalendarIcon className="w-5 h-5 text-lumen-ink mt-0.5" />
             <div>
               <p className="text-bone font-medium">{formatDate(scheduledDate)}</p>
               <p className="text-sm text-steel">at {formatTime(scheduledTime)}</p>
@@ -217,7 +217,7 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
 
           {/* Location */}
           <div className="flex items-start gap-3">
-            <LocationIcon className="w-5 h-5 text-circuit mt-0.5" />
+            <LocationIcon className="w-5 h-5 text-lumen-ink mt-0.5" />
             <div>
               <p className="text-bone font-medium">{location.address}</p>
               {location.landmarks && (
@@ -233,7 +233,7 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
 
           {/* Description */}
           {description && (
-            <div className="mt-3 pt-3 border-t border-subtle">
+            <div className="mt-3 pt-3 border-t border-line">
               <p className="text-sm text-steel">
                 <span className="font-medium text-bone">Job Details:</span> {description}
               </p>
@@ -263,7 +263,7 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
           </div>
 
           {/* Divider */}
-          <div className="border-t border-subtle pt-3">
+          <div className="border-t border-line pt-3">
             <div className="flex justify-between">
               <span className="text-bone font-medium">Total Amount</span>
               <span className="text-bone font-bold">
@@ -282,7 +282,7 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
                 </p>
               </div>
               <div className="text-right">
-                <p className="text-circuit font-bold text-lg">
+                <p className="text-lumen-ink font-bold text-lg">
                   {formatPrice(escrowDeposit)}
                 </p>
                 <p className="text-xs text-steel">Due now</p>
@@ -309,7 +309,7 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
           <li>Remaining balance is due after job verification</li>
           <li>
             By proceeding, you agree to our{' '}
-            <a href="/terms" className="text-circuit hover:underline">
+            <a href="/terms" className="text-lumen-ink hover:underline">
               Terms of Service
             </a>
           </li>
@@ -318,10 +318,10 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
 
       {/* SMS Confirmation Notice */}
       {phoneNumber && (
-        <Card variant="default" className="p-4 border-circuit/30 bg-circuit/5">
+        <Card variant="default" className="p-4 border-lumen/30 bg-lumen/5">
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-full bg-circuit/20 flex items-center justify-center flex-shrink-0">
-              <PhoneIcon className="w-5 h-5 text-circuit" />
+            <div className="w-10 h-10 rounded-full bg-lumen/20 flex items-center justify-center flex-shrink-0">
+              <PhoneIcon className="w-5 h-5 text-lumen-ink" />
             </div>
             <div className="flex-1">
               <p className="text-bone font-medium text-sm">
@@ -329,7 +329,7 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
               </p>
               <p className="text-steel text-xs mt-1">
                 You'll receive an SMS confirmation at{' '}
-                <span className="text-circuit font-medium">{phoneNumber}</span>
+                <span className="text-lumen-ink font-medium">{phoneNumber}</span>
               </p>
               {onEditPhoneNumber && (
                 <button
@@ -337,7 +337,7 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
                   onClick={onEditPhoneNumber}
                   disabled={isProcessing}
                   className={clsx(
-                    'mt-2 text-xs text-circuit hover:text-circuit-300',
+                    'mt-2 text-xs text-lumen-ink hover:text-lumen-ink',
                     'underline underline-offset-2',
                     'transition-colors duration-200',
                     'disabled:opacity-50 disabled:cursor-not-allowed'
@@ -377,7 +377,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({
     <Card variant="default" className="p-4">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <span className="w-6 h-6 rounded-full bg-circuit text-mahogany text-xs font-bold flex items-center justify-center">
+          <span className="w-6 h-6 rounded-full bg-lumen text-on-lumen text-xs font-bold flex items-center justify-center">
             {stepNumber}
           </span>
           <h3 className="text-bone font-medium">{title}</h3>
@@ -385,7 +385,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({
         {onEdit && !isProcessing && (
           <button
             onClick={onEdit}
-            className="text-sm text-circuit hover:text-circuit-300 transition-colors"
+            className="text-sm text-lumen-ink hover:text-lumen-ink transition-colors"
             aria-label={`Edit ${title.toLowerCase()}`}
           >
             Edit

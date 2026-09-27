@@ -27,7 +27,7 @@ const getStatusColor = (status: string): string => {
     cancelled: 'bg-red-500',
     disputed: 'bg-orange-500',
   };
-  return colors[status] || 'bg-gray-500';
+  return colors[status] || 'bg-ink-faint';
 };
 
 /**
@@ -75,13 +75,13 @@ const DistributionBar: React.FC<{ data: StatusDistributionType }> = ({ data }) =
                   getStatusColor(item.status)
                 )}
               />
-              <span className="text-xs text-gray-600 dark:text-gray-400 truncate">
+              <span className="text-xs text-ink-muted truncate">
                 {formatStatus(item.status)}
               </span>
             </div>
 
             {/* Bar container */}
-            <div className="flex-1 h-4 bg-gray-100 dark:bg-gray-700 rounded overflow-hidden">
+            <div className="flex-1 h-4 bg-surface-300 rounded overflow-hidden">
               <div
                 className={cn(
                   'h-full rounded transition-all duration-500',
@@ -93,10 +93,10 @@ const DistributionBar: React.FC<{ data: StatusDistributionType }> = ({ data }) =
 
             {/* Count and percentage */}
             <div className="w-20 text-right flex-shrink-0">
-              <span className="text-xs font-medium text-gray-900 dark:text-white">
+              <span className="text-xs font-medium text-ink dark:text-ink">
                 {item.count}
               </span>
-              <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">
+              <span className="text-xs text-ink-muted ml-1">
                 ({item.percentage}%)
               </span>
             </div>
@@ -125,7 +125,7 @@ const DonutChart: React.FC<{ data: StatusDistributionType }> = ({ data }) => {
       in_progress: '#6366f1',
       completed: '#22c55e',
       cancelled: '#ef4444',
-      disputed: '#f97316',
+      disputed: '#e8a317',
     };
 
     const color = colorMap[item.status] || '#6b7280';
@@ -144,12 +144,12 @@ const DonutChart: React.FC<{ data: StatusDistributionType }> = ({ data }) => {
         }}
       >
         {/* Center circle to create donut effect */}
-        <div className="absolute inset-4 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center">
+        <div className="absolute inset-4 rounded-full bg-surface-200 flex items-center justify-center">
           <div className="text-center">
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">
+            <p className="text-2xl font-bold text-ink dark:text-ink">
               {data.total}
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-xs text-ink-muted">
               Total
             </p>
           </div>
@@ -164,12 +164,12 @@ const DonutChart: React.FC<{ data: StatusDistributionType }> = ({ data }) => {
  */
 const LoadingSkeleton: React.FC = () => (
   <div className="space-y-4 animate-pulse">
-    <div className="h-8 w-full bg-gray-200 dark:bg-gray-700 rounded-lg" />
+    <div className="h-8 w-full bg-surface-300 rounded-lg" />
     {[1, 2, 3, 4, 5].map((i) => (
       <div key={i} className="flex items-center gap-3">
-        <div className="w-28 h-4 bg-gray-200 dark:bg-gray-700 rounded" />
-        <div className="flex-1 h-4 bg-gray-200 dark:bg-gray-700 rounded" />
-        <div className="w-20 h-4 bg-gray-200 dark:bg-gray-700 rounded" />
+        <div className="w-28 h-4 bg-surface-300 rounded" />
+        <div className="flex-1 h-4 bg-surface-300 rounded" />
+        <div className="w-20 h-4 bg-surface-300 rounded" />
       </div>
     ))}
   </div>
@@ -180,9 +180,9 @@ const LoadingSkeleton: React.FC = () => (
  */
 const EmptyState: React.FC = () => (
   <div className="flex flex-col items-center justify-center py-8 text-center">
-    <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-4">
+    <div className="w-12 h-12 rounded-full bg-surface-200 flex items-center justify-center mb-4">
       <svg
-        className="h-6 w-6 text-gray-400"
+        className="h-6 w-6 text-ink-muted"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -195,7 +195,7 @@ const EmptyState: React.FC = () => (
         />
       </svg>
     </div>
-    <p className="text-sm text-gray-500 dark:text-gray-400">
+    <p className="text-sm text-ink-muted">
       No booking data available
     </p>
   </div>
@@ -210,8 +210,8 @@ const StatusDistribution: React.FC<StatusDistributionProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+      <div className="bg-surface-200 rounded-xl p-6 shadow-sm border border-line">
+        <h3 className="text-lg font-semibold text-ink dark:text-ink mb-4">
           Booking Status Distribution
         </h3>
         <LoadingSkeleton />
@@ -221,8 +221,8 @@ const StatusDistribution: React.FC<StatusDistributionProps> = ({
 
   if (!data || data.distribution.length === 0) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+      <div className="bg-surface-200 rounded-xl p-6 shadow-sm border border-line">
+        <h3 className="text-lg font-semibold text-ink dark:text-ink mb-4">
           Booking Status Distribution
         </h3>
         <EmptyState />
@@ -231,13 +231,13 @@ const StatusDistribution: React.FC<StatusDistributionProps> = ({
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+    <div className="bg-surface-200 rounded-xl p-6 shadow-sm border border-line">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+        <h3 className="text-lg font-semibold text-ink dark:text-ink">
           Booking Status Distribution
         </h3>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
+        <span className="text-sm text-ink-muted">
           {data.total} total bookings
         </span>
       </div>
@@ -252,7 +252,7 @@ const StatusDistribution: React.FC<StatusDistributionProps> = ({
       </div>
 
       {/* Last updated */}
-      <p className="mt-4 text-xs text-gray-400 dark:text-gray-500 text-right">
+      <p className="mt-4 text-xs text-ink-muted text-right">
         Updates in real-time
       </p>
     </div>

@@ -156,7 +156,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ conversation }) => {
 
   if (!conversation) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400 p-4">
+      <div className="flex-1 flex flex-col items-center justify-center bg-surface-100 text-ink-muted p-4">
         <svg className="w-16 h-16 md:w-24 md:h-24 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
@@ -165,20 +165,20 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ conversation }) => {
             d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
           />
         </svg>
-        <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-700 dark:text-gray-300">Select a conversation</h3>
+        <h3 className="text-lg md:text-xl font-semibold mb-2 text-ink-muted">Select a conversation</h3>
         <p className="text-center text-sm md:text-base">Choose a conversation from the list to start messaging</p>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-white dark:bg-gray-800 h-full">
+    <div className="flex-1 flex flex-col bg-surface-200 h-full">
       {/* Header */}
-      <div className="p-3 md:p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm flex-shrink-0">
+      <div className="p-3 md:p-4 border-b border-line bg-surface-200 shadow-sm flex-shrink-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             {/* Conversation Avatar/Icon */}
-            <div className="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-semibold">
+            <div className="w-10 h-10 bg-primary text-on-lumen rounded-full flex items-center justify-center font-semibold">
               {conversation.type === 'booking' ? (
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
@@ -191,19 +191,19 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ conversation }) => {
 
             {/* Conversation Info */}
             <div className="min-w-0">
-              <h2 className="font-semibold text-sm md:text-base text-gray-900 dark:text-gray-100 truncate">{getOtherParticipantName()}</h2>
+              <h2 className="font-semibold text-sm md:text-base text-ink truncate">{getOtherParticipantName()}</h2>
               <div className="flex items-center gap-2 flex-wrap">
                 {conversation.type === 'booking' && (
-                  <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full">
+                  <span className="text-xs bg-blue-900 text-blue-300 px-2 py-0.5 rounded-full">
                     Booking
                   </span>
                 )}
                 {conversation.type === 'support' && (
-                  <span className="text-xs bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 px-2 py-0.5 rounded-full">
+                  <span className="text-xs bg-purple-900 text-purple-300 px-2 py-0.5 rounded-full">
                     Support
                   </span>
                 )}
-                <span className="text-xs text-gray-500 dark:text-gray-400">
+                <span className="text-xs text-ink-muted">
                   {conversation.participants.length} participant{conversation.participants.length !== 1 ? 's' : ''}
                 </span>
               </div>
@@ -214,12 +214,12 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ conversation }) => {
           <div className="flex items-center gap-1 md:gap-2">
             {conversation.settings.allowCalls && (
               <>
-                <button className="p-1.5 md:p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors" title="Voice call">
+                <button className="p-1.5 md:p-2 text-ink-muted hover:bg-surface-300 rounded-lg transition-colors" title="Voice call">
                   <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                   </svg>
                 </button>
-                <button className="p-1.5 md:p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors" title="Video call">
+                <button className="p-1.5 md:p-2 text-ink-muted hover:bg-surface-300 rounded-lg transition-colors" title="Video call">
                   <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                   </svg>
@@ -227,7 +227,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ conversation }) => {
               </>
             )}
 
-            <button className="p-1.5 md:p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors" title="More options">
+            <button className="p-1.5 md:p-2 text-ink-muted hover:bg-surface-300 rounded-lg transition-colors" title="More options">
               <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
               </svg>
@@ -239,14 +239,14 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ conversation }) => {
       {/* Messages Container */}
       <div
         ref={messagesContainerRef}
-        className="flex-1 overflow-y-auto p-3 md:p-4 bg-gray-50 dark:bg-gray-900"
+        className="flex-1 overflow-y-auto p-3 md:p-4 bg-surface-100"
       >
         {/* Load More Button */}
         {pagination.hasMore && !isLoadingMessages && (
           <div className="text-center mb-4">
             <button
               onClick={loadMoreMessages}
-              className="px-4 py-2 text-sm bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              className="px-4 py-2 text-sm bg-surface-200 text-ink-muted border border-line-strong rounded-lg hover:bg-surface-300 transition-colors"
             >
               Load older messages
             </button>
@@ -262,7 +262,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ conversation }) => {
 
         {/* Messages */}
         {!isLoadingMessages && messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-gray-500 dark:text-gray-400">
+          <div className="flex flex-col items-center justify-center h-full text-ink-muted">
             <svg className="w-12 h-12 md:w-16 md:h-16 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
             </svg>

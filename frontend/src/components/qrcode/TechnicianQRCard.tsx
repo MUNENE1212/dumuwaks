@@ -23,8 +23,8 @@ export const TechnicianQRCard = ({
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `${technicianName} - Dumu Waks`,
-          text: `Check out ${technicianName}'s ${service} services on Dumu Waks!`,
+          title: `${technicianName} - Dumuwaks`,
+          text: `Check out ${technicianName}'s ${service} services on Dumuwaks!`,
           url: profileUrl
         });
         toast({
@@ -38,10 +38,10 @@ export const TechnicianQRCard = ({
   };
 
   return (
-    <div className="bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-950 dark:to-secondary-950 rounded-2xl p-6">
+    <div className=" bg-primary-950 rounded-2xl p-6">
       <div className="flex items-center gap-3 mb-4">
-        <QrCode className="h-6 w-6 text-primary-600 dark:text-primary-400" />
-        <h3 className="font-semibold text-neutral-900 dark:text-white">
+        <QrCode className="h-6 w-6 text-primary-400" />
+        <h3 className="font-semibold text-ink dark:text-ink">
           Share {technicianName}'s Profile
         </h3>
       </div>
@@ -61,13 +61,13 @@ export const TechnicianQRCard = ({
         onShare={handleShare}
       />
 
-      <div className="mt-4 p-4 bg-white dark:bg-neutral-900 rounded-xl">
+      <div className="mt-4 p-4 bg-surface-100 rounded-xl">
         <div className="flex items-center justify-between">
           <div>
-            <p className="font-medium text-neutral-900 dark:text-white">
+            <p className="font-medium text-ink dark:text-ink">
               {technicianName}
             </p>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">
+            <p className="text-sm text-ink-muted">
               {service} • ★ {rating.toFixed(1)}
             </p>
           </div>

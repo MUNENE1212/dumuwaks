@@ -61,24 +61,24 @@ const CounterOfferModal: React.FC<CounterOfferModalProps> = ({ booking, isOpen, 
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-surface-000 bg-opacity-50"
       onClick={onClose}
     >
       <div
-        className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto"
+        className="bg-surface-200 rounded-lg shadow-xl w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-labelledby="counter-offer-title"
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-          <h2 id="counter-offer-title" className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+        <div className="flex items-center justify-between p-6 border-b border-line">
+          <h2 id="counter-offer-title" className="text-xl font-semibold text-ink">
             Submit Counter Offer
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+            className="text-ink-muted hover:text-ink"
             disabled={isSubmitting}
             aria-label="Close"
           >
@@ -89,20 +89,20 @@ const CounterOfferModal: React.FC<CounterOfferModalProps> = ({ booking, isOpen, 
         {/* Content */}
         <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-5">
           {/* Original Price */}
-          <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-            <p className="text-sm text-gray-600 dark:text-gray-400">Original Price</p>
-            <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+          <div className="bg-surface-300/50 rounded-lg p-4">
+            <p className="text-sm text-ink-muted">Original Price</p>
+            <p className="text-2xl font-bold text-ink">
               {booking.pricing.currency} {booking.pricing.totalAmount.toLocaleString()}
             </p>
           </div>
 
           {/* Proposed Amount */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-ink-muted mb-2">
               Your Proposed Price
             </label>
             <div className="relative">
-              <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-ink-muted" />
               <Input
                 type="number"
                 {...register('proposedAmount', { valueAsNumber: true })}
@@ -131,7 +131,7 @@ const CounterOfferModal: React.FC<CounterOfferModalProps> = ({ booking, isOpen, 
 
           {/* Reason */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-ink-muted mb-2">
               Reason for Counter Offer *
             </label>
             <Textarea
@@ -146,7 +146,7 @@ const CounterOfferModal: React.FC<CounterOfferModalProps> = ({ booking, isOpen, 
 
           {/* Additional Notes */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-ink-muted mb-2">
               Additional Notes (Optional)
             </label>
             <Textarea
@@ -157,8 +157,8 @@ const CounterOfferModal: React.FC<CounterOfferModalProps> = ({ booking, isOpen, 
           </div>
 
           {/* Info */}
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
-            <p className="text-sm text-blue-800 dark:text-blue-300">
+          <div className="bg-blue-900/20 border border-blue-800 rounded-lg p-3">
+            <p className="text-sm text-blue-300">
               The customer has 24 hours to accept or reject your counter offer.
             </p>
           </div>

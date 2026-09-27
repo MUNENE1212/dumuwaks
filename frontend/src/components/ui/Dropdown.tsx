@@ -141,7 +141,7 @@ const Dropdown = forwardRef<HTMLButtonElement, DropdownProps>(
     return (
       <div className="w-full" ref={dropdownRef}>
         {label && (
-          <label className="label mb-2 block text-sm font-medium text-neutral-700 dark:text-neutral-300">
+          <label className="label mb-2 block text-sm font-medium text-ink-muted">
             {label}
           </label>
         )}
@@ -161,9 +161,9 @@ const Dropdown = forwardRef<HTMLButtonElement, DropdownProps>(
               'disabled:cursor-not-allowed disabled:opacity-50',
               error
                 ? 'border-error-500 focus:border-error-500 focus:ring-error-500/20 dark:border-error-400'
-                : 'border-neutral-300 focus:border-primary-500 focus:ring-primary-500/20 dark:border-neutral-700 dark:focus:border-primary-400',
-              'bg-white dark:bg-neutral-900',
-              'text-neutral-900 dark:text-neutral-100',
+                : 'focus:ring-primary-500/20 border-line focus:border-primary-400',
+              'bg-surface-100',
+              'text-ink',
               isOpen && 'ring-2 ring-primary-500 ring-offset-2',
               triggerClassName
             )}
@@ -173,13 +173,13 @@ const Dropdown = forwardRef<HTMLButtonElement, DropdownProps>(
           >
             <span className="flex items-center gap-2 flex-1 truncate">
               {selectedOption?.icon && <span>{selectedOption.icon}</span>}
-              <span className={cn(!selectedOption && 'text-neutral-400 dark:text-neutral-500')}>
+              <span className={cn(!selectedOption && 'text-ink-muted')}>
                 {selectedOption?.label || placeholder}
               </span>
             </span>
             <ChevronDown
               className={cn(
-                'w-5 h-5 text-neutral-400 transition-transform duration-200 flex-shrink-0',
+                'w-5 h-5 text-ink-muted transition-transform duration-200 flex-shrink-0',
                 isOpen && 'transform rotate-180'
               )}
             />
@@ -188,7 +188,7 @@ const Dropdown = forwardRef<HTMLButtonElement, DropdownProps>(
           {/* Dropdown Menu */}
           {isOpen && (
             <div
-              className="absolute z-dropdown w-full mt-2 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl shadow-lg overflow-hidden"
+              className="absolute z-dropdown w-full mt-2 bg-surface-100 border border-line rounded-xl shadow-lg overflow-hidden"
               role="listbox"
               aria-activedescendant={value ? `option-${value}` : undefined}
             >
@@ -208,10 +208,10 @@ const Dropdown = forwardRef<HTMLButtonElement, DropdownProps>(
                     }}
                     className={cn(
                       'px-4 py-3 cursor-pointer transition-colors duration-150 min-h-[48px] flex items-center gap-2',
-                      'focus:outline-none focus:bg-neutral-100 dark:focus:bg-neutral-800',
+                      'focus:outline-none focus:bg-surface-200',
                       value === option.value
-                        ? 'bg-primary-50 text-primary-700 dark:bg-primary-950 dark:text-primary-300'
-                        : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800',
+                        ? 'bg-primary-950 text-primary-300'
+                        : 'text-ink-muted hover:bg-surface-200',
                       option.disabled && 'opacity-50 cursor-not-allowed'
                     )}
                     tabIndex={option.disabled ? -1 : 0}

@@ -1,9 +1,9 @@
 {
-  "name": "Dumu Waks - Professional Maintenance & Repair Services",
-  "short_name": "Dumu Waks",
-  "description": "Connect with verified, skilled technicians for plumbing, electrical, carpentry, and more across Kenya",
-  "theme_color": "#f97316",
-  "background_color": "#ffffff",
+  "name": "Dumuwaks \u2014 Book technicians",
+  "short_name": "Dumuwaks",
+  "description": "Book technicians across Kenya. Pay by M-Pesa, held until the job is done.",
+  "theme_color": "#14110c",
+  "background_color": "#14110c",
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
@@ -58,28 +58,47 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["services", "business", "lifestyle"],
+  "categories": [
+    "services",
+    "business",
+    "lifestyle"
+  ],
   "shortcuts": [
     {
       "name": "Find Technician",
       "short_name": "Find",
       "description": "Find a technician near you",
       "url": "/find-technicians",
-      "icons": [{ "src": "/pwa-icons/icon-96x96.png", "sizes": "96x96" }]
+      "icons": [
+        {
+          "src": "/pwa-icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
       "name": "My Bookings",
       "short_name": "Bookings",
       "description": "View your bookings",
       "url": "/bookings",
-      "icons": [{ "src": "/pwa-icons/icon-96x96.png", "sizes": "96x96" }]
+      "icons": [
+        {
+          "src": "/pwa-icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
       "name": "Messages",
       "short_name": "Chat",
       "description": "View your messages",
       "url": "/messages",
-      "icons": [{ "src": "/pwa-icons/icon-96x96.png", "sizes": "96x96" }]
+      "icons": [
+        {
+          "src": "/pwa-icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
     }
   ]
 }

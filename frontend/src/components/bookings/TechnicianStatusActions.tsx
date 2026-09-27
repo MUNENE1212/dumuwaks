@@ -211,11 +211,11 @@ const TechnicianStatusActions: React.FC<TechnicianStatusActionsProps> = ({ booki
 
       case 'completed':
         return (
-          <div className="rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 p-4">
-            <p className="text-sm text-yellow-800 dark:text-yellow-300 font-medium">
+          <div className="rounded-lg bg-yellow-900/20 border border-yellow-800 p-4">
+            <p className="text-sm text-yellow-300 font-medium">
               ⏳ Awaiting customer confirmation
             </p>
-            <p className="text-xs text-yellow-600 dark:text-yellow-400 mt-1">
+            <p className="text-xs text-yellow-400 mt-1">
               The customer has 48 hours to confirm or report issues
             </p>
           </div>
@@ -227,8 +227,8 @@ const TechnicianStatusActions: React.FC<TechnicianStatusActionsProps> = ({ booki
   };
 
   return (
-    <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+    <div className="rounded-lg border border-line bg-surface-200 p-4">
+      <h3 className="text-lg font-semibold text-ink mb-4">
         Update Status
       </h3>
       {renderActions()}

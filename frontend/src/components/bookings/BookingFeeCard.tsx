@@ -37,9 +37,9 @@ const BookingFeeCard: React.FC<BookingFeeCardProps> = ({
       case 'held':
         return {
           icon: Shield,
-          color: 'text-circuit',
+          color: 'text-lumen-ink',
           bg: 'bg-info-bg',
-          border: 'border-circuit/30',
+          border: 'border-lumen/30',
           label: 'Held in Escrow',
           description: 'Your booking fee is safely held and will be released to the technician after job completion',
         };
@@ -56,8 +56,8 @@ const BookingFeeCard: React.FC<BookingFeeCardProps> = ({
         return {
           icon: RefreshCw,
           color: 'text-steel',
-          bg: 'bg-hover',
-          border: 'border-subtle',
+          bg: 'bg-surface-300',
+          border: 'border-line',
           label: 'Refunded',
           description: 'Booking fee has been refunded to your account',
         };
@@ -65,8 +65,8 @@ const BookingFeeCard: React.FC<BookingFeeCardProps> = ({
         return {
           icon: AlertCircle,
           color: 'text-steel',
-          bg: 'bg-hover',
-          border: 'border-subtle',
+          bg: 'bg-surface-300',
+          border: 'border-line',
           label: 'Unknown Status',
           description: '',
         };
@@ -98,7 +98,7 @@ const BookingFeeCard: React.FC<BookingFeeCardProps> = ({
             </div>
             <div className="text-sm text-steel">{bookingFee.percentage}% of total</div>
             {bookingFee.tierLabel && (
-              <div className="mt-1 inline-block px-2 py-0.5 bg-circuit/20 rounded text-xs font-medium text-circuit">
+              <div className="mt-1 inline-block px-2 py-0.5 bg-lumen/20 rounded text-xs font-medium text-lumen-ink">
                 {bookingFee.tierLabel} Tier
               </div>
             )}
@@ -120,11 +120,11 @@ const BookingFeeCard: React.FC<BookingFeeCardProps> = ({
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-steel">Booking Fee ({bookingFee.percentage}%):</span>
-            <span className="font-semibold text-circuit">
+            <span className="font-semibold text-lumen-ink">
               {bookingFee.amount.toLocaleString()} {currency}
             </span>
           </div>
-          <div className="border-t border-subtle pt-2 flex justify-between">
+          <div className="border-t border-line pt-2 flex justify-between">
             <span className="text-steel">Remaining Balance:</span>
             <span className="font-bold text-lg text-bone">
               {remainingAmount.toLocaleString()} {currency}
@@ -139,7 +139,7 @@ const BookingFeeCard: React.FC<BookingFeeCardProps> = ({
             <span className="text-steel">100% Refundable</span>
           </div>
           <div className="flex items-center gap-2 text-sm">
-            <Shield className="w-4 h-4 text-circuit flex-shrink-0" />
+            <Shield className="w-4 h-4 text-lumen-ink flex-shrink-0" />
             <span className="text-steel">Escrow Protected</span>
           </div>
           <div className="flex items-center gap-2 text-sm">
@@ -150,7 +150,7 @@ const BookingFeeCard: React.FC<BookingFeeCardProps> = ({
 
         {/* Timestamps */}
         {(bookingFee.paidAt || bookingFee.releasedAt || bookingFee.refundedAt) && (
-          <div className="border-t border-subtle pt-4 space-y-1">
+          <div className="border-t border-line pt-4 space-y-1">
             {bookingFee.paidAt && (
               <div className="text-xs text-steel">
                 Paid: {new Date(bookingFee.paidAt).toLocaleString()}
@@ -179,7 +179,7 @@ const BookingFeeCard: React.FC<BookingFeeCardProps> = ({
             >
               {isPaymentPending ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-line mr-2" />
                   Processing Payment...
                 </>
               ) : (

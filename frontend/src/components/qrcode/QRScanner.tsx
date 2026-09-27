@@ -125,16 +125,16 @@ export const QRScanner = ({ onScan, onClose }: QRScannerProps) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black z-50 flex flex-col">
+    <div className="fixed inset-0 bg-surface-000 z-50 flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 bg-gradient-to-r from-primary-500 to-secondary-500">
-        <div className="flex items-center gap-3 text-white">
+      <div className="flex items-center justify-between p-4 bg-primary-500">
+        <div className="flex items-center gap-3 text-ink">
           <Camera className="h-6 w-6" />
           <span className="font-semibold">QR Scanner</span>
         </div>
         <button
           onClick={onClose}
-          className="text-white p-2 hover:bg-white/20 rounded-full transition-colors"
+          className="text-ink p-2 hover:bg-ink/20 rounded-full transition-colors"
         >
           <X className="h-6 w-6" />
         </button>
@@ -159,7 +159,7 @@ export const QRScanner = ({ onScan, onClose }: QRScannerProps) => {
             <div className="absolute inset-0 flex items-center justify-center">
               <motion.div
                 animate={{
-                  borderColor: ['#f97316', '#14b8a6', '#f97316'],
+                  borderColor: ['#e8a317', '#14b8a6', '#e8a317'],
                   boxShadow: [
                     '0 0 0 0 rgba(249, 115, 22, 0.7)',
                     '0 0 0 20px rgba(249, 115, 22, 0)',
@@ -174,10 +174,10 @@ export const QRScanner = ({ onScan, onClose }: QRScannerProps) => {
                 className="w-64 h-64 border-4 rounded-3xl relative"
               >
                 {/* Corner Brackets */}
-                <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-white rounded-tl-xl" />
-                <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-white rounded-tr-xl" />
-                <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-white rounded-bl-xl" />
-                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-white rounded-br-xl" />
+                <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-line rounded-tl-xl" />
+                <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-line rounded-tr-xl" />
+                <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-line rounded-bl-xl" />
+                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-line rounded-br-xl" />
               </motion.div>
             </div>
 
@@ -189,15 +189,15 @@ export const QRScanner = ({ onScan, onClose }: QRScannerProps) => {
                 repeat: Infinity,
                 ease: 'linear'
               }}
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 w-64 h-1 bg-gradient-to-r from-transparent via-primary-500 to-transparent"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 w-64 h-1 bg-transparent"
             />
 
             {/* Instructions */}
             <div className="absolute bottom-32 left-0 right-0 text-center">
-              <p className="text-white text-lg font-medium mb-2">
+              <p className="text-ink text-lg font-medium mb-2">
                 Align QR code within frame
               </p>
-              <p className="text-white/70 text-sm">
+              <p className="text-ink/70 text-sm">
                 It will scan automatically
               </p>
             </div>
@@ -206,15 +206,15 @@ export const QRScanner = ({ onScan, onClose }: QRScannerProps) => {
             {hasFlash && (
               <button
                 onClick={toggleFlash}
-                className="absolute bottom-40 left-1/2 -translate-x-1/2 bg-white/20 backdrop-blur-sm p-4 rounded-full text-white"
+                className="absolute bottom-40 left-1/2 -translate-x-1/2 bg-ink/20 p-4 rounded-full text-ink"
               >
-                {flashOn ? <Flashlight className="h-6 w-6 fill-white" /> : <Flashlight className="h-6 w-6" />}
+                {flashOn ? <Flashlight className="h-6 w-6 fill-ink" /> : <Flashlight className="h-6 w-6" />}
               </button>
             )}
           </>
         ) : (
           <div className="flex items-center justify-center h-full">
-            <div className="text-center text-white">
+            <div className="text-center text-ink">
               <Camera className="h-16 w-16 mx-auto mb-4 opacity-50" />
               <p className="text-lg">{error || 'Starting camera...'}</p>
             </div>
@@ -223,10 +223,10 @@ export const QRScanner = ({ onScan, onClose }: QRScannerProps) => {
       </div>
 
       {/* Footer Actions */}
-      <div className="p-4 bg-neutral-900 flex justify-center gap-4">
+      <div className="p-4 bg-surface-100 flex justify-center gap-4">
         <Button
           variant="ghost"
-          className="text-white"
+          className="text-ink"
           onClick={() => {
             const code = prompt('Enter QR code manually:');
             if (code) onScan(code);
@@ -236,7 +236,7 @@ export const QRScanner = ({ onScan, onClose }: QRScannerProps) => {
         </Button>
         <Button
           variant="ghost"
-          className="text-white"
+          className="text-ink"
           onClick={onClose}
         >
           Cancel

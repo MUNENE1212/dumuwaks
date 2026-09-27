@@ -219,18 +219,18 @@ const TechnicianTracker: React.FC<TechnicianTrackerProps> = ({
   if (trackingState.status === 'completed') {
     return (
       <div className={cn(
-        'rounded-xl border-2 border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20 p-6',
+        'rounded-xl border-2 border-green-800 bg-green-900/20 p-6',
         className
       )}>
         <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-800">
-            <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-800">
+            <CheckCircle className="h-6 w-6 text-green-400" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-green-800 dark:text-green-300">
+            <h3 className="text-lg font-semibold text-green-300">
               Technician Arrived!
             </h3>
-            <p className="text-sm text-green-700 dark:text-green-400">
+            <p className="text-sm text-green-400">
               {technicianName} has arrived at your location
             </p>
           </div>
@@ -243,14 +243,14 @@ const TechnicianTracker: React.FC<TechnicianTrackerProps> = ({
   if (error && !trackingState.position) {
     return (
       <div className={cn(
-        'rounded-xl border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20 p-4',
+        'rounded-xl border border-red-800 bg-red-900/20 p-4',
         className
       )}>
-        <div className="flex items-center gap-2 text-red-700 dark:text-red-400">
+        <div className="flex items-center gap-2 text-red-400">
           <AlertCircle className="h-5 w-5" />
           <span className="font-medium">Tracking Error</span>
         </div>
-        <p className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>
+        <p className="mt-2 text-sm text-red-400">{error}</p>
       </div>
     );
   }
@@ -259,7 +259,7 @@ const TechnicianTracker: React.FC<TechnicianTrackerProps> = ({
 
   return (
     <div className={cn(
-      'rounded-xl border border-blue-200 dark:border-blue-800 bg-gradient-to-br from-blue-50 to-white dark:from-blue-900/20 dark:to-gray-900 p-6 shadow-sm',
+      'rounded-xl border border-blue-800 bg-blue-900/20 p-6 shadow-sm',
       className
     )}>
       {/* Header */}
@@ -267,18 +267,18 @@ const TechnicianTracker: React.FC<TechnicianTrackerProps> = ({
         <div className="flex items-center gap-2">
           <div className={cn(
             'flex h-10 w-10 items-center justify-center rounded-full',
-            isPaused ? 'bg-yellow-100 dark:bg-yellow-900' : 'bg-blue-100 dark:bg-blue-900'
+            isPaused ? 'bg-yellow-900' : 'bg-blue-900'
           )}>
             <Navigation className={cn(
               'h-5 w-5',
-              isPaused ? 'text-yellow-600 dark:text-yellow-400' : 'text-blue-600 dark:text-blue-400 animate-pulse'
+              isPaused ? 'text-yellow-400' : 'text-blue-400 animate-pulse'
             )} />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <h3 className="text-lg font-semibold text-ink">
               {technicianName} is on the way
             </h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-ink-muted">
               {isPaused ? 'Location sharing paused' : 'Tracking in progress'}
             </p>
           </div>
@@ -286,12 +286,12 @@ const TechnicianTracker: React.FC<TechnicianTrackerProps> = ({
 
         {/* Status Badge */}
         {isPaused ? (
-          <span className="flex items-center gap-1 rounded-full bg-yellow-100 dark:bg-yellow-900 px-3 py-1 text-xs font-medium text-yellow-700 dark:text-yellow-300">
+          <span className="flex items-center gap-1 rounded-full bg-yellow-900 px-3 py-1 text-xs font-medium text-yellow-300">
             <Pause className="h-3 w-3" />
             Paused
           </span>
         ) : (
-          <span className="flex items-center gap-1 rounded-full bg-green-100 dark:bg-green-900 px-3 py-1 text-xs font-medium text-green-700 dark:text-green-300">
+          <span className="flex items-center gap-1 rounded-full bg-green-900 px-3 py-1 text-xs font-medium text-green-300">
             <Play className="h-3 w-3" />
             Live
           </span>
@@ -299,15 +299,15 @@ const TechnicianTracker: React.FC<TechnicianTrackerProps> = ({
       </div>
 
       {/* ETA Card */}
-      <div className="mb-4 rounded-lg bg-white dark:bg-gray-800 p-4 shadow-sm border border-gray-100 dark:border-gray-700">
+      <div className="mb-4 rounded-lg bg-surface-200 p-4 shadow-sm border border-line">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900">
-              <Clock className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-900">
+              <Clock className="h-6 w-6 text-blue-400" />
             </div>
             <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Estimated Arrival</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+              <p className="text-sm text-ink-muted">Estimated Arrival</p>
+              <p className="text-2xl font-bold text-ink">
                 {eta.text || 'Calculating...'}
               </p>
             </div>
@@ -315,8 +315,8 @@ const TechnicianTracker: React.FC<TechnicianTrackerProps> = ({
 
           {eta.distanceText && (
             <div className="text-right">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Distance</p>
-              <p className="text-lg font-semibold text-gray-700 dark:text-gray-300">
+              <p className="text-sm text-ink-muted">Distance</p>
+              <p className="text-lg font-semibold text-ink-muted">
                 {eta.distanceText}
               </p>
             </div>
@@ -328,10 +328,10 @@ const TechnicianTracker: React.FC<TechnicianTrackerProps> = ({
       <div className="space-y-3">
         {/* Technician Position */}
         <div className="flex items-start gap-3">
-          <MapPin className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5" />
+          <MapPin className="h-5 w-5 text-blue-400 mt-0.5" />
           <div>
-            <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Technician Location</p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 font-mono">
+            <p className="text-sm font-medium text-ink-muted">Technician Location</p>
+            <p className="text-sm text-ink-muted font-mono">
               {position ? formatCoordinates(position.coordinates) : 'Waiting for location...'}
             </p>
           </div>
@@ -339,10 +339,10 @@ const TechnicianTracker: React.FC<TechnicianTrackerProps> = ({
 
         {/* Destination */}
         <div className="flex items-start gap-3">
-          <MapPin className="h-5 w-5 text-green-600 dark:text-green-400 mt-0.5" />
+          <MapPin className="h-5 w-5 text-green-400 mt-0.5" />
           <div>
-            <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Your Location</p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm font-medium text-ink-muted">Your Location</p>
+            <p className="text-sm text-ink-muted">
               {destination.address}
             </p>
           </div>
@@ -351,8 +351,8 @@ const TechnicianTracker: React.FC<TechnicianTrackerProps> = ({
 
       {/* Last Update */}
       {lastUpdate && (
-        <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
-          <p className="text-xs text-gray-400 dark:text-gray-500">
+        <div className="mt-4 pt-4 border-t border-line">
+          <p className="text-xs text-ink-muted">
             Last updated: {formatTimeAgo(lastUpdate)}
           </p>
         </div>
@@ -360,8 +360,8 @@ const TechnicianTracker: React.FC<TechnicianTrackerProps> = ({
 
       {/* Paused Notice */}
       {isPaused && (
-        <div className="mt-4 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 p-3">
-          <p className="text-sm text-yellow-700 dark:text-yellow-300">
+        <div className="mt-4 rounded-lg bg-yellow-900/20 border border-yellow-800 p-3">
+          <p className="text-sm text-yellow-300">
             The technician has temporarily paused location sharing. You will be notified when tracking resumes.
           </p>
         </div>

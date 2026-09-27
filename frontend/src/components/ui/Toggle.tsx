@@ -75,7 +75,7 @@ const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(
           onClick={handleToggle}
           className={cn(
             'relative inline-flex flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2',
-            checked ? 'bg-primary-500' : 'bg-neutral-300 dark:bg-neutral-600',
+            checked ? '' : 'bg-surface-400',
             disabled && 'opacity-50 cursor-not-allowed',
             sizeClasses[size],
             className
@@ -84,7 +84,7 @@ const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(
         >
           <span
             className={cn(
-              'pointer-events-none inline-block rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
+              'pointer-events-none inline-block rounded-full bg-surface-200 shadow ring-0 transition duration-200 ease-in-out',
               thumbSizeClasses[size],
               thumbTranslateClasses[size]
             )}
@@ -93,7 +93,7 @@ const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(
         </button>
 
         {label && (
-          <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
+          <span className="text-sm font-medium text-ink-muted">
             {label}
           </span>
         )}
@@ -122,8 +122,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             ref={ref}
             type="checkbox"
             className={cn(
-              'h-5 w-5 rounded border-neutral-300 text-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              'dark:border-neutral-700 dark:bg-neutral-900 dark:focus:ring-primary-400 dark:focus:ring-offset-neutral-900',
+              'h-5 w-5 rounded border-line-strong text-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
+              'border-line bg-surface-100 focus:ring-primary-400 focus:ring-offset-line',
               'disabled:cursor-not-allowed disabled:opacity-50',
               error && 'border-error-500 focus:border-error-500 focus:ring-error-500',
               className
@@ -136,7 +136,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           <div className="flex-1">
             <label
               htmlFor={props.id}
-              className="text-sm font-medium text-neutral-700 dark:text-neutral-300 cursor-pointer"
+              className="text-sm font-medium text-ink-muted cursor-pointer"
             >
               {label}
             </label>
@@ -170,8 +170,8 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
             ref={ref}
             type="radio"
             className={cn(
-              'h-5 w-5 border-neutral-300 text-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              'dark:border-neutral-700 dark:bg-neutral-900 dark:focus:ring-primary-400 dark:focus:ring-offset-neutral-900',
+              'h-5 w-5 border-line-strong text-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
+              'border-line bg-surface-100 focus:ring-primary-400 focus:ring-offset-line',
               'disabled:cursor-not-allowed disabled:opacity-50',
               error && 'border-error-500 focus:border-error-500 focus:ring-error-500',
               className
@@ -184,7 +184,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
           <div className="flex-1">
             <label
               htmlFor={props.id}
-              className="text-sm font-medium text-neutral-700 dark:text-neutral-300 cursor-pointer"
+              className="text-sm font-medium text-ink-muted cursor-pointer"
             >
               {label}
             </label>

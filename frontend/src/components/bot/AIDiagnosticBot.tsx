@@ -464,7 +464,7 @@ export const AIDiagnosticBot: React.FC = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={action.action}
-              className="bg-white dark:bg-gray-800 shadow-lg rounded-full p-4 text-2xl border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all"
+              className="bg-surface-200 shadow-lg rounded-full p-4 text-2xl border border-line hover:shadow-xl transition-all"
               title={action.label}
             >
               {action.icon}
@@ -486,10 +486,11 @@ export const AIDiagnosticBot: React.FC = () => {
           }}
           onHoverStart={() => setShowQuickActions(true)}
           onHoverEnd={() => setShowQuickActions(false)}
-          className="fixed bottom-24 md:bottom-8 right-4 md:right-8 z-40 bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 rounded-full shadow-2xl"
+          className="fixed bottom-24 md:bottom-8 right-4 md:right-8 z-40 inline-flex h-12 items-center gap-2 rounded-md border border-line-strong bg-surface-200 px-4 text-ink shadow-float hover:border-ink-muted"
           aria-label="Open AI Assistant"
         >
-          <Bot className="h-6 w-6" />
+          <Bot className="h-5 w-5 text-lumen-ink" />
+          <span className="hidden text-body-sm font-semibold sm:inline">Assistant</span>
         </motion.button>
       )}
 
@@ -502,25 +503,25 @@ export const AIDiagnosticBot: React.FC = () => {
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             className={cn(
               "fixed bottom-24 md:bottom-8 right-4 md:right-8 z-40",
-              "bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700",
+              "bg-surface-200 rounded-lg shadow-float border border-line-strong",
               isMinimized ? "w-80" : "w-[calc(100vw-2rem)] md:w-[450px] h-[600px]"
             )}
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 rounded-t-2xl flex items-center justify-between">
+            <div className="bg-surface-300 text-ink p-4 rounded-t-lg border-b border-line flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="bg-white/20 p-2 rounded-full">
+                <div className="bg-ink/20 p-2 rounded-full">
                   <Bot className="h-5 w-5" />
                 </div>
                 <div>
                   <h3 className="font-semibold">Dumu Bot</h3>
-                  <p className="text-xs text-white/80">AI Assistant • Online</p>
+                  <p className="text-xs text-ink/80">AI Assistant • Online</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setIsMinimized(!isMinimized)}
-                  className="p-2 hover:bg-white/20 rounded-full transition-colors"
+                  className="p-2 hover:bg-ink/20 rounded-full transition-colors"
                   aria-label={isMinimized ? 'Maximize' : 'Minimize'}
                 >
                   {isMinimized ? <Maximize2 className="h-4 w-4" /> : <Minimize2 className="h-4 w-4" />}
@@ -531,7 +532,7 @@ export const AIDiagnosticBot: React.FC = () => {
                     setDiagnosticMode(false);
                     setBookingFlow({ active: false, step: 0, data: { service: '', problem: '', date: '', time: '', location: '', description: '' } });
                   }}
-                  className="p-2 hover:bg-white/20 rounded-full transition-colors"
+                  className="p-2 hover:bg-ink/20 rounded-full transition-colors"
                   aria-label="Close"
                 >
                   <X className="h-4 w-4" />
@@ -573,16 +574,16 @@ export const AIDiagnosticBot: React.FC = () => {
                       )}
                     >
                       {message.role === 'bot' && (
-                        <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded-full flex-shrink-0">
-                          <Bot className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                        <div className="bg-blue-900 p-2 rounded-full flex-shrink-0">
+                          <Bot className="h-4 w-4 text-blue-400" />
                         </div>
                       )}
                       <div
                         className={cn(
                           "max-w-[80%] p-3 rounded-2xl",
                           message.role === 'user'
-                            ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
-                            : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+                            ? "bg-lumen text-on-lumen"
+                            : "bg-surface-300 text-ink text-ink"
                         )}
                       >
                         <p className="text-sm whitespace-pre-wrap">{message.content}</p>
@@ -594,7 +595,7 @@ export const AIDiagnosticBot: React.FC = () => {
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={() => handleOptionClick(option, message)}
-                                className="w-full text-left px-3 py-2 bg-white dark:bg-gray-600 rounded-lg text-sm font-medium hover:shadow-md transition-all flex items-center justify-between group"
+                                className="w-full text-left px-3 py-2 bg-surface-400 rounded-lg text-sm font-medium hover:shadow-md transition-all flex items-center justify-between group"
                               >
                                 <span>{option}</span>
                                 <ChevronRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -604,8 +605,8 @@ export const AIDiagnosticBot: React.FC = () => {
                         )}
                       </div>
                       {message.role === 'user' && (
-                        <div className="bg-gray-200 dark:bg-gray-600 p-2 rounded-full flex-shrink-0">
-                          <User className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                        <div className="bg-surface-400 p-2 rounded-full flex-shrink-0">
+                          <User className="h-4 w-4 text-ink-muted" />
                         </div>
                       )}
                     </motion.div>
@@ -617,25 +618,25 @@ export const AIDiagnosticBot: React.FC = () => {
                       animate={{ opacity: 1, y: 0 }}
                       className="flex gap-3 justify-start"
                     >
-                      <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded-full">
-                        <Bot className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                      <div className="bg-blue-900 p-2 rounded-full">
+                        <Bot className="h-4 w-4 text-blue-400" />
                       </div>
-                      <div className="bg-gray-100 dark:bg-gray-700 px-4 py-3 rounded-2xl">
+                      <div className="bg-surface-300 px-4 py-3 rounded-2xl">
                         <div className="flex gap-1">
                           <motion.div
                             animate={{ scale: [1, 1.2, 1] }}
                             transition={{ repeat: Infinity, duration: 0.8 }}
-                            className="w-2 h-2 bg-gray-400 rounded-full"
+                            className="w-2 h-2 bg-ink-faint rounded-full"
                           />
                           <motion.div
                             animate={{ scale: [1, 1.2, 1] }}
                             transition={{ repeat: Infinity, duration: 0.8, delay: 0.2 }}
-                            className="w-2 h-2 bg-gray-400 rounded-full"
+                            className="w-2 h-2 bg-ink-faint rounded-full"
                           />
                           <motion.div
                             animate={{ scale: [1, 1.2, 1] }}
                             transition={{ repeat: Infinity, duration: 0.8, delay: 0.4 }}
-                            className="w-2 h-2 bg-gray-400 rounded-full"
+                            className="w-2 h-2 bg-ink-faint rounded-full"
                           />
                         </div>
                       </div>
@@ -646,7 +647,7 @@ export const AIDiagnosticBot: React.FC = () => {
                 )}
                 {/* Input Area - hide during diagnostic or booking flow */}
                 {!diagnosticMode && !bookingFlow.active && (
-                  <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-b-2xl">
+                  <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-line bg-surface-200 rounded-b-2xl">
                   <div className="flex gap-2">
                     <input
                       type="text"
@@ -654,7 +655,7 @@ export const AIDiagnosticBot: React.FC = () => {
                       onChange={(e) => setInputValue(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                       placeholder="Describe your problem or ask a question..."
-                      className="flex-1 px-4 py-3 bg-gray-100 dark:bg-gray-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white"
+                      className="flex-1 px-4 py-3 bg-surface-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-lumen text-ink"
                       aria-label="Message input"
                     />
                     <motion.button
@@ -662,7 +663,7 @@ export const AIDiagnosticBot: React.FC = () => {
                       whileTap={{ scale: 0.95 }}
                       onClick={() => handleSendMessage()}
                       disabled={!inputValue.trim()}
-                      className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-3 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="bg-lumen text-on-lumen p-3 rounded-md hover:bg-lumen-hover disabled:opacity-50 disabled:cursor-not-allowed"
                       aria-label="Send message"
                     >
                       <Send className="h-5 w-5" />

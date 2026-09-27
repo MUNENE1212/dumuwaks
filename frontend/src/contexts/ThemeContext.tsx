@@ -14,15 +14,8 @@ interface ThemeProviderProps {
 }
 
 /**
- * ThemeProvider for Rich Dark Design System
- *
- * This design system is dark-only, featuring:
- * - Deep Mahogany (#261212) primary background
- * - Iron Charcoal (#1C1C1C) secondary background
- * - Circuit Blue (#0090C5) primary accent
- * - Wrench Purple (#7D4E9F) secondary accent
- * - Soft Bone (#E0E0E0) primary text
- * - Steel Grey (#9BA4B0) secondary text and borders
+ * ThemeProvider — Dumuwaks is night-only (Emen order: light is seen against dark).
+ * Tokens: src/styles/tokens.css. Design notes: docs/design/DESIGN_SYSTEM.md.
  */
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   // Always use dark theme

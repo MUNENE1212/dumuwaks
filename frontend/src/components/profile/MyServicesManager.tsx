@@ -154,7 +154,7 @@ const MyServicesManager: React.FC<MyServicesManagerProps> = ({
       <div className="py-8" data-testid="my-services-loading">
         <div className="flex items-center justify-center">
           <svg
-            className="animate-spin h-8 w-8 text-circuit"
+            className="animate-spin h-8 w-8 text-lumen-ink"
             fill="none"
             viewBox="0 0 24 24"
           >
@@ -229,7 +229,7 @@ const MyServicesManager: React.FC<MyServicesManagerProps> = ({
 
       {/* Services List */}
       {services.length === 0 ? (
-        <div className="text-center py-12 border border-dashed border-subtle rounded-lg" data-testid="empty-services">
+        <div className="text-center py-12 border border-dashed border-line rounded-lg" data-testid="empty-services">
           <svg className="w-12 h-12 text-steel mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
           </svg>
@@ -251,8 +251,8 @@ const MyServicesManager: React.FC<MyServicesManagerProps> = ({
               className={clsx(
                 'p-4 rounded-lg border transition-all duration-200',
                 techService.availability.isActive
-                  ? 'bg-charcoal border-subtle'
-                  : 'bg-charcoal/50 border-subtle opacity-75'
+                  ? 'bg-charcoal border-line'
+                  : 'bg-charcoal/50 border-line opacity-75'
               )}
               data-testid={`service-item-${techService._id}`}
             >
@@ -280,7 +280,7 @@ const MyServicesManager: React.FC<MyServicesManagerProps> = ({
                   )}
 
                   {/* Price */}
-                  <p className="text-circuit font-medium mt-2">
+                  <p className="text-lumen-ink font-medium mt-2">
                     {getEffectivePriceRange(techService)}
                   </p>
 
@@ -385,16 +385,16 @@ const MyServicesManager: React.FC<MyServicesManagerProps> = ({
           data-testid="edit-service-modal"
         >
           <div
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            className="absolute inset-0 bg-surface-000/70"
             onClick={() => setEditingService(null)}
           />
-          <div className="relative w-full max-w-2xl max-h-[90vh] bg-charcoal rounded-xl shadow-2xl border border-subtle flex flex-col overflow-hidden">
-            <div className="flex items-center justify-between p-6 border-b border-subtle">
+          <div className="relative w-full max-w-2xl max-h-[90vh] bg-charcoal rounded-xl shadow-2xl border border-line flex flex-col overflow-hidden">
+            <div className="flex items-center justify-between p-6 border-b border-line">
               <h2 className="text-xl font-bold text-bone">Edit Service Pricing</h2>
               <button
                 type="button"
                 onClick={() => setEditingService(null)}
-                className="p-2 rounded-lg hover:bg-mahogany transition-colors"
+                className="p-2 rounded-lg hover:bg-surface-100 transition-colors"
               >
                 <svg className="w-5 h-5 text-steel" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -426,10 +426,10 @@ const MyServicesManager: React.FC<MyServicesManagerProps> = ({
           data-testid="delete-confirm-modal"
         >
           <div
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            className="absolute inset-0 bg-surface-000/70"
             onClick={cancelDelete}
           />
-          <div className="relative w-full max-w-md bg-charcoal rounded-xl shadow-2xl border border-subtle p-6">
+          <div className="relative w-full max-w-md bg-charcoal rounded-xl shadow-2xl border border-line p-6">
             <div className="text-center">
               <div className="w-12 h-12 rounded-full bg-error/10 flex items-center justify-center mx-auto mb-4">
                 <svg className="w-6 h-6 text-error" fill="none" viewBox="0 0 24 24" stroke="currentColor">

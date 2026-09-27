@@ -74,15 +74,15 @@ function getStatusIcon(status: BookingStatus): React.ReactNode {
 function getNotificationTypeIcon(type: BookingNotificationType): React.ReactNode {
   switch (type) {
     case BOOKING_NOTIFICATION_EVENTS.STATUS_CHANGED:
-      return <AlertCircle className="w-5 h-5 text-circuit" />;
+      return <AlertCircle className="w-5 h-5 text-lumen-ink" />;
     case BOOKING_NOTIFICATION_EVENTS.ASSIGNED:
-      return <User className="w-5 h-5 text-circuit" />;
+      return <User className="w-5 h-5 text-lumen-ink" />;
     case BOOKING_NOTIFICATION_EVENTS.COUNTER_OFFER:
-      return <DollarSign className="w-5 h-5 text-circuit" />;
+      return <DollarSign className="w-5 h-5 text-lumen-ink" />;
     case BOOKING_NOTIFICATION_EVENTS.PAYMENT_UPDATE:
-      return <DollarSign className="w-5 h-5 text-circuit" />;
+      return <DollarSign className="w-5 h-5 text-lumen-ink" />;
     default:
-      return <Bell className="w-5 h-5 text-circuit" />;
+      return <Bell className="w-5 h-5 text-lumen-ink" />;
   }
 }
 
@@ -111,7 +111,7 @@ function getNotificationBgClass(
       case 'rejected':
         return 'bg-red-900/30 border-red-500/30';
       default:
-        return 'bg-charcoal border-subtle';
+        return 'bg-charcoal border-line';
     }
   }
 
@@ -129,7 +129,7 @@ function getNotificationBgClass(
     }
   }
 
-  return 'bg-charcoal border-subtle';
+  return 'bg-charcoal border-line';
 }
 
 /**
@@ -175,8 +175,8 @@ function AssignedContent({ payload }: { payload: BookingAssignedPayload }) {
       <p className="text-sm text-bone font-medium">{payload.message}</p>
       {payload.technician && (
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-circuit/20 flex items-center justify-center">
-            <User className="w-4 h-4 text-circuit" />
+          <div className="w-8 h-8 rounded-full bg-lumen/20 flex items-center justify-center">
+            <User className="w-4 h-4 text-lumen-ink" />
           </div>
           <div>
             <p className="text-sm text-bone font-medium">{payload.technician.name}</p>
@@ -210,7 +210,7 @@ function CounterOfferContent({ payload }: { payload: BookingCounterOfferPayload 
       <div className="bg-charcoal rounded-md p-3 space-y-2">
         <div className="flex items-center justify-between">
           <span className="text-xs text-steel">Proposed Amount</span>
-          <span className="text-sm font-bold text-circuit">
+          <span className="text-sm font-bold text-lumen-ink">
             KES {offer.amount.toLocaleString()}
           </span>
         </div>
@@ -231,7 +231,7 @@ function CounterOfferContent({ payload }: { payload: BookingCounterOfferPayload 
           </div>
         )}
         {offer.reason && (
-          <div className="pt-2 border-t border-subtle">
+          <div className="pt-2 border-t border-line">
             <p className="text-xs text-steel">Reason: {offer.reason}</p>
           </div>
         )}
@@ -314,7 +314,7 @@ const BookingNotificationToast: React.FC<BookingNotificationToastProps> = ({
   return (
     <div
       className={`relative rounded-lg border shadow-lg overflow-hidden transition-all duration-300 ${bgClass} ${
-        !read ? 'ring-2 ring-circuit/50' : ''
+        !read ? 'ring-2 ring-lumen/50' : ''
       }`}
     >
       {bookingId ? (
@@ -338,7 +338,7 @@ const BookingNotificationToast: React.FC<BookingNotificationToastProps> = ({
             </div>
             <div className="flex items-center gap-1">
               {!read && (
-                <span className="w-2 h-2 bg-circuit rounded-full animate-pulse" />
+                <span className="w-2 h-2 bg-lumen rounded-full animate-pulse" />
               )}
               {onClose && (
                 <button
@@ -347,7 +347,7 @@ const BookingNotificationToast: React.FC<BookingNotificationToastProps> = ({
                     e.stopPropagation();
                     onClose();
                   }}
-                  className="p-1 hover:bg-hover rounded transition-colors"
+                  className="p-1 hover:bg-surface-300 rounded transition-colors"
                 >
                   <X className="w-4 h-4 text-steel" />
                 </button>
@@ -359,10 +359,10 @@ const BookingNotificationToast: React.FC<BookingNotificationToastProps> = ({
           {renderContent()}
 
           {/* Footer */}
-          <div className="flex items-center justify-between mt-3 pt-2 border-t border-subtle">
+          <div className="flex items-center justify-between mt-3 pt-2 border-t border-line">
             <span className="text-xs text-steel">{formatTimeAgo(createdAt)}</span>
             {showActions && bookingId && (
-              <span className="text-xs text-circuit flex items-center gap-1">
+              <span className="text-xs text-lumen-ink flex items-center gap-1">
                 View details
                 <ChevronRight className="w-3 h-3" />
               </span>
@@ -391,7 +391,7 @@ const BookingNotificationToast: React.FC<BookingNotificationToastProps> = ({
               </div>
               <div className="flex items-center gap-1">
                 {!read && (
-                  <span className="w-2 h-2 bg-circuit rounded-full animate-pulse" />
+                  <span className="w-2 h-2 bg-lumen rounded-full animate-pulse" />
                 )}
                 {onClose && (
                   <button
@@ -400,7 +400,7 @@ const BookingNotificationToast: React.FC<BookingNotificationToastProps> = ({
                       e.stopPropagation();
                       onClose();
                     }}
-                    className="p-1 hover:bg-hover rounded transition-colors"
+                    className="p-1 hover:bg-surface-300 rounded transition-colors"
                   >
                     <X className="w-4 h-4 text-steel" />
                   </button>
@@ -412,7 +412,7 @@ const BookingNotificationToast: React.FC<BookingNotificationToastProps> = ({
             {renderContent()}
 
             {/* Footer */}
-            <div className="flex items-center justify-between mt-3 pt-2 border-t border-subtle">
+            <div className="flex items-center justify-between mt-3 pt-2 border-t border-line">
               <span className="text-xs text-steel">{formatTimeAgo(createdAt)}</span>
             </div>
           </div>
@@ -482,7 +482,7 @@ export const BookingNotificationBadge: React.FC<BookingNotificationBadgeProps> =
   const displayCount = count > maxCount ? `${maxCount}+` : count;
 
   return (
-    <span className="absolute -top-1 -right-1 flex items-center justify-center min-w-[18px] h-[18px] px-1 text-xs font-bold text-white bg-circuit rounded-full animate-pulse-glow">
+    <span className="absolute -top-1 -right-1 flex items-center justify-center min-w-[18px] h-[18px] px-1 text-xs font-bold text-on-lumen bg-lumen rounded-full animate-pulse-glow">
       {displayCount}
     </span>
   );

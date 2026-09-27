@@ -82,24 +82,24 @@ const TicketDetailModal: React.FC<TicketDetailModalProps> = ({ ticketId, isOpen,
 
   const getPriorityColor = (priority: string) => {
     const colors = {
-      low: 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300',
-      medium: 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300',
-      high: 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300',
-      urgent: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300',
+      low: 'bg-surface-200 text-ink-muted',
+      medium: 'bg-blue-900/30 text-blue-300',
+      high: 'bg-orange-900/30 text-orange-300',
+      urgent: 'bg-red-900/30 text-red-300',
     };
     return colors[priority as keyof typeof colors] || colors.medium;
   };
 
   const getStatusColor = (status: string) => {
     const colors = {
-      open: 'text-orange-600 dark:text-orange-400',
-      assigned: 'text-blue-600 dark:text-blue-400',
-      in_progress: 'text-blue-600 dark:text-blue-400',
-      resolved: 'text-green-600 dark:text-green-400',
-      closed: 'text-gray-600 dark:text-gray-400',
-      waiting_customer: 'text-yellow-600 dark:text-yellow-400',
-      waiting_internal: 'text-purple-600 dark:text-purple-400',
-      reopened: 'text-red-600 dark:text-red-400',
+      open: 'text-orange-400',
+      assigned: 'text-blue-400',
+      in_progress: 'text-blue-400',
+      resolved: 'text-green-400',
+      closed: 'text-ink-muted',
+      waiting_customer: 'text-yellow-400',
+      waiting_internal: 'text-purple-400',
+      reopened: 'text-red-400',
     };
     return colors[status as keyof typeof colors] || colors.open;
   };
@@ -109,21 +109,21 @@ const TicketDetailModal: React.FC<TicketDetailModalProps> = ({ ticketId, isOpen,
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/50" onClick={onClose}></div>
+      <div className="absolute inset-0 bg-surface-000/50" onClick={onClose}></div>
 
       {/* Modal */}
-      <div className="absolute inset-4 md:inset-8 bg-white dark:bg-gray-900 rounded-lg shadow-xl flex flex-col" role="dialog" aria-modal="true" aria-labelledby="ticket-detail-title">
+      <div className="absolute inset-4 md:inset-8 bg-surface-100 rounded-lg shadow-xl flex flex-col" role="dialog" aria-modal="true" aria-labelledby="ticket-detail-title">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-line">
           <div className="flex-1">
             {isLoading ? (
-              <div className="h-6 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+              <div className="h-6 w-48 bg-surface-300 rounded animate-pulse"></div>
             ) : (
               <>
-                <h2 id="ticket-detail-title" className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                <h2 id="ticket-detail-title" className="text-xl font-semibold text-ink">
                   {ticket?.subject}
                 </h2>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                <p className="text-sm text-ink-muted mt-1">
                   Ticket #{ticket?.ticketNumber || ticket?._id}
                 </p>
               </>
@@ -131,7 +131,7 @@ const TicketDetailModal: React.FC<TicketDetailModalProps> = ({ ticketId, isOpen,
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+            className="p-2 hover:bg-surface-200 rounded-lg transition-colors"
             aria-label="Close"
           >
             <X className="h-5 w-5" />
@@ -162,13 +162,13 @@ const TicketDetailModal: React.FC<TicketDetailModalProps> = ({ ticketId, isOpen,
                         <div className={`max-w-[70%] ${isOwnMessage ? 'order-2' : 'order-1'}`}>
                           {/* Sender info */}
                           <div className={`flex items-center gap-2 mb-1 ${isOwnMessage ? 'flex-row-reverse' : 'flex-row'}`}>
-                            <div className="h-6 w-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xs font-semibold">
+                            <div className="h-6 w-6 rounded-full bg-blue-400 flex items-center justify-center text-ink text-xs font-semibold">
                               {msg.sender?.firstName?.charAt(0) || '?'}
                             </div>
-                            <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                            <span className="text-sm font-medium text-ink">
                               {msg.sender?.firstName} {msg.sender?.lastName}
                               {isSupport && (
-                                <span className="ml-2 text-xs px-2 py-0.5 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded">
+                                <span className="ml-2 text-xs px-2 py-0.5 bg-purple-900/30 text-purple-300 rounded">
                                   Support
                                 </span>
                               )}
@@ -179,8 +179,8 @@ const TicketDetailModal: React.FC<TicketDetailModalProps> = ({ ticketId, isOpen,
                           <div
                             className={`px-4 py-3 rounded-lg ${
                               isOwnMessage
-                                ? 'bg-cyan-600 text-white'
-                                : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100'
+                                ? 'bg-cyan-600 text-on-lumen'
+                                : 'bg-surface-200 text-ink'
                             }`}
                           >
                             <p className="text-sm whitespace-pre-wrap">{msg.message}</p>
@@ -188,7 +188,7 @@ const TicketDetailModal: React.FC<TicketDetailModalProps> = ({ ticketId, isOpen,
 
                           {/* Timestamp */}
                           <div className={`mt-1 ${isOwnMessage ? 'text-right' : 'text-left'}`}>
-                            <span className="text-xs text-gray-500 dark:text-gray-400">
+                            <span className="text-xs text-ink-muted">
                               {format(new Date(msg.timestamp), 'MMM d, h:mm a')}
                             </span>
                           </div>
@@ -197,7 +197,7 @@ const TicketDetailModal: React.FC<TicketDetailModalProps> = ({ ticketId, isOpen,
                     );
                   })
                 ) : (
-                  <div className="flex flex-col items-center justify-center h-full text-gray-500">
+                  <div className="flex flex-col items-center justify-center h-full text-ink-muted">
                     <FileText className="h-12 w-12 mb-2" />
                     <p>No messages yet</p>
                   </div>
@@ -206,20 +206,20 @@ const TicketDetailModal: React.FC<TicketDetailModalProps> = ({ ticketId, isOpen,
               </div>
 
               {/* Message Input */}
-              <form onSubmit={handleSendMessage} className="px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+              <form onSubmit={handleSendMessage} className="px-6 py-4 border-t border-line">
                 <div className="flex gap-2">
                   <input
                     type="text"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Type your message..."
-                    className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                    className="flex-1 px-4 py-2 border border-line-strong rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-surface-200 text-ink"
                     disabled={isSending || ticket.status === 'closed'}
                   />
                   <button
                     type="submit"
                     disabled={!message.trim() || isSending || ticket.status === 'closed'}
-                    className="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                    className="px-4 py-2 bg-cyan-600 text-on-lumen rounded-lg hover:bg-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                   >
                     <Send className="h-4 w-4" />
                     {isSending ? 'Sending...' : 'Send'}
@@ -229,37 +229,37 @@ const TicketDetailModal: React.FC<TicketDetailModalProps> = ({ ticketId, isOpen,
             </div>
 
             {/* Sidebar - Ticket Info */}
-            <div className="w-full md:w-80 border-t md:border-t-0 md:border-l border-gray-200 dark:border-gray-700 overflow-y-auto p-6 space-y-6">
+            <div className="w-full md:w-80 border-t md:border-t-0 md:border-l border-line overflow-y-auto p-6 space-y-6">
               {/* Customer Info */}
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
+                <h3 className="text-sm font-semibold text-ink mb-3 flex items-center gap-2">
                   <User className="h-4 w-4" />
                   Customer
                 </h3>
                 <div className="space-y-2">
-                  <p className="text-sm text-gray-900 dark:text-gray-100 font-medium">
+                  <p className="text-sm text-ink font-medium">
                     {typeof ticket.customer === 'object' ? `${ticket.customer.firstName} ${ticket.customer.lastName}` : ticket.customerDetails ? `${ticket.customerDetails.firstName} ${ticket.customerDetails.lastName}` : 'Unknown'}
                   </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">{typeof ticket.customer === 'object' ? ticket.customer.email : ticket.customerDetails?.email || 'N/A'}</p>
+                  <p className="text-sm text-ink-muted">{typeof ticket.customer === 'object' ? ticket.customer.email : ticket.customerDetails?.email || 'N/A'}</p>
                   {(typeof ticket.customer === 'object' && ticket.customer.phoneNumber) || (ticket.customerDetails?.phoneNumber) ? (
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{typeof ticket.customer === 'object' ? ticket.customer.phoneNumber : ticket.customerDetails?.phoneNumber}</p>
+                    <p className="text-sm text-ink-muted">{typeof ticket.customer === 'object' ? ticket.customer.phoneNumber : ticket.customerDetails?.phoneNumber}</p>
                   ) : null}
                 </div>
               </div>
 
               {/* Status & Priority */}
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
+                <h3 className="text-sm font-semibold text-ink mb-3 flex items-center gap-2">
                   <Tag className="h-4 w-4" />
                   Details
                 </h3>
                 <div className="space-y-3">
                   <div>
-                    <label className="text-xs text-gray-500 dark:text-gray-400">Status</label>
+                    <label className="text-xs text-ink-muted">Status</label>
                     <select
                       value={ticket.status}
                       onChange={(e) => handleStatusChange(e.target.value)}
-                      className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                      className="mt-1 w-full px-3 py-2 border border-line-strong rounded-lg text-sm bg-surface-200 text-ink"
                       disabled={ticket.status === 'closed'}
                     >
                       <option value="open">Open</option>
@@ -271,14 +271,14 @@ const TicketDetailModal: React.FC<TicketDetailModalProps> = ({ ticketId, isOpen,
                     </select>
                   </div>
                   <div>
-                    <label className="text-xs text-gray-500 dark:text-gray-400">Priority</label>
+                    <label className="text-xs text-ink-muted">Priority</label>
                     <div className={`mt-1 px-3 py-2 rounded-lg text-sm font-medium ${getPriorityColor(ticket.priority)}`}>
                       {ticket.priority.charAt(0).toUpperCase() + ticket.priority.slice(1)}
                     </div>
                   </div>
                   <div>
-                    <label className="text-xs text-gray-500 dark:text-gray-400">Category</label>
-                    <p className="mt-1 text-sm text-gray-900 dark:text-gray-100">
+                    <label className="text-xs text-ink-muted">Category</label>
+                    <p className="mt-1 text-sm text-ink">
                       {ticket.category.replace('_', ' ').charAt(0).toUpperCase() + ticket.category.slice(1)}
                     </p>
                   </div>
@@ -287,29 +287,29 @@ const TicketDetailModal: React.FC<TicketDetailModalProps> = ({ ticketId, isOpen,
 
               {/* Timestamps */}
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
+                <h3 className="text-sm font-semibold text-ink mb-3 flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
                   Timeline
                 </h3>
                 <div className="space-y-2 text-xs">
                   <div className="flex justify-between">
-                    <span className="text-gray-500 dark:text-gray-400">Created:</span>
-                    <span className="text-gray-900 dark:text-gray-100">
+                    <span className="text-ink-muted">Created:</span>
+                    <span className="text-ink">
                       {format(new Date(ticket.createdAt), 'MMM d, h:mm a')}
                     </span>
                   </div>
                   {ticket.assignedAt && (
                     <div className="flex justify-between">
-                      <span className="text-gray-500 dark:text-gray-400">Assigned:</span>
-                      <span className="text-gray-900 dark:text-gray-100">
+                      <span className="text-ink-muted">Assigned:</span>
+                      <span className="text-ink">
                         {format(new Date(ticket.assignedAt), 'MMM d, h:mm a')}
                       </span>
                     </div>
                   )}
                   {ticket.resolvedAt && (
                     <div className="flex justify-between">
-                      <span className="text-gray-500 dark:text-gray-400">Resolved:</span>
-                      <span className="text-gray-900 dark:text-gray-100">
+                      <span className="text-ink-muted">Resolved:</span>
+                      <span className="text-ink">
                         {format(new Date(ticket.resolvedAt), 'MMM d, h:mm a')}
                       </span>
                     </div>
@@ -320,26 +320,26 @@ const TicketDetailModal: React.FC<TicketDetailModalProps> = ({ ticketId, isOpen,
               {/* Related Booking */}
               {ticket.relatedBooking && (
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
+                  <h3 className="text-sm font-semibold text-ink mb-3 flex items-center gap-2">
                     <Package className="h-4 w-4" />
                     Related Booking
                   </h3>
-                  <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg space-y-2 text-sm">
+                  <div className="p-3 bg-surface-200 rounded-lg space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-500 dark:text-gray-400">Service:</span>
-                      <span className="text-gray-900 dark:text-gray-100 font-medium">
+                      <span className="text-ink-muted">Service:</span>
+                      <span className="text-ink font-medium">
                         {(ticket.relatedBooking as any)?.service?.name || 'N/A'}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500 dark:text-gray-400">Technician:</span>
-                      <span className="text-gray-900 dark:text-gray-100">
+                      <span className="text-ink-muted">Technician:</span>
+                      <span className="text-ink">
                         {(ticket.relatedBooking as any)?.technician?.firstName} {(ticket.relatedBooking as any)?.technician?.lastName}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500 dark:text-gray-400">Status:</span>
-                      <span className="text-gray-900 dark:text-gray-100">
+                      <span className="text-ink-muted">Status:</span>
+                      <span className="text-ink">
                         {(ticket.relatedBooking as any)?.status}
                       </span>
                     </div>
@@ -351,8 +351,8 @@ const TicketDetailModal: React.FC<TicketDetailModalProps> = ({ ticketId, isOpen,
         ) : (
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center">
-              <AlertCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 dark:text-gray-400">Failed to load ticket details</p>
+              <AlertCircle className="h-12 w-12 text-ink-muted mx-auto mb-4" />
+              <p className="text-ink-muted">Failed to load ticket details</p>
             </div>
           </div>
         )}

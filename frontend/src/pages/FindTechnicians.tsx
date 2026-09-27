@@ -92,15 +92,14 @@ const FindTechnicians: React.FC = () => {
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="mb-6 sm:mb-8">
-        <h1 className="flex flex-col sm:flex-row sm:items-center text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 gap-2">
+        <h1 className="flex flex-col sm:flex-row sm:items-center text-2xl sm:text-3xl font-bold text-ink gap-2">
           <div className="flex items-center">
             <Sparkles className="mr-2 h-6 w-6 sm:h-8 sm:w-8 text-primary-600 flex-shrink-0" />
             <span>Find the Perfect Technician</span>
           </div>
         </h1>
-        <p className="mt-2 text-sm sm:text-base text-gray-600 dark:text-gray-400">
-          Our AI-powered matching system finds the best technicians based on skills, location, ratings,
-          and availability.
+        <p className="mt-2 text-sm sm:text-base text-ink-muted">
+          Technicians ranked by skills, distance, ratings and availability.
         </p>
       </div>
 
@@ -127,37 +126,37 @@ const FindTechnicians: React.FC = () => {
         {/* Right Column - Results */}
         <div className="lg:col-span-8">
           {isSearching ? (
-            <div className="flex min-h-[400px] items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+            <div className="flex min-h-[400px] items-center justify-center rounded-lg border border-line bg-surface-200">
               <div className="text-center">
                 <Loading size="lg" />
-                <p className="mt-4 text-gray-600 dark:text-gray-400">Searching for the best technicians...</p>
-                <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                <p className="mt-4 text-ink-muted">Searching for the best technicians...</p>
+                <p className="mt-2 text-sm text-ink-muted">
                   Analyzing skills, ratings, location, and availability
                 </p>
               </div>
             </div>
           ) : !hasSearched ? (
-            <div className="flex min-h-[300px] sm:min-h-[400px] items-center justify-center rounded-lg border border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 p-6">
+            <div className="flex min-h-[300px] sm:min-h-[400px] items-center justify-center rounded-lg border border-dashed border-line-strong bg-surface-100 p-6">
               <div className="text-center">
-                <Users className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-gray-400" />
-                <h3 className="mt-4 text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100">
+                <Users className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-ink-muted" />
+                <h3 className="mt-4 text-base sm:text-lg font-semibold text-ink">
                   Start Your Search
                 </h3>
-                <p className="mt-2 max-w-md mx-auto text-xs sm:text-sm text-gray-600 dark:text-gray-400 px-4">
+                <p className="mt-2 max-w-md mx-auto text-xs sm:text-sm text-ink-muted px-4">
                   Fill in the search criteria on the left to find technicians matched to your needs.
                   Our AI will rank them based on multiple factors.
                 </p>
               </div>
             </div>
           ) : matches.length === 0 ? (
-            <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 sm:p-12">
+            <div className="rounded-lg border border-line bg-surface-200 p-6 sm:p-12">
               <div className="text-center">
-                <AlertCircle className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-gray-400" />
-                <h3 className="mt-4 text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100">No Matches Found</h3>
-                <p className="mt-2 max-w-md mx-auto text-xs sm:text-sm text-gray-600 dark:text-gray-400 px-4">
+                <AlertCircle className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-ink-muted" />
+                <h3 className="mt-4 text-base sm:text-lg font-semibold text-ink">No Matches Found</h3>
+                <p className="mt-2 max-w-md mx-auto text-xs sm:text-sm text-ink-muted px-4">
                   We couldn't find any technicians matching your criteria. Try:
                 </p>
-                <ul className="mt-4 space-y-2 text-left text-xs sm:text-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+                <ul className="mt-4 space-y-2 text-left text-xs sm:text-sm text-ink-muted max-w-md mx-auto">
                   <li className="flex items-start gap-2">
                     <span className="flex-shrink-0">•</span>
                     <span>Increasing your maximum distance</span>
@@ -180,17 +179,17 @@ const FindTechnicians: React.FC = () => {
           ) : (
             <div className="space-y-4 sm:space-y-6">
               {/* Results Header */}
-              <div className="rounded-lg border border-primary-200 dark:border-primary-800 bg-primary-50 dark:bg-primary-900/20 p-4">
+              <div className="rounded-lg border border-primary-800 bg-primary-900/20 p-4">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex-1 min-w-0">
-                    <h2 className="text-base sm:text-lg font-semibold text-primary-900 dark:text-primary-100">
+                    <h2 className="text-base sm:text-lg font-semibold text-primary-100">
                       {matches.length} Technician{matches.length > 1 ? 's' : ''} Found
                     </h2>
-                    <p className="text-xs sm:text-sm text-primary-700 dark:text-primary-300">
+                    <p className="text-xs sm:text-sm text-primary-300">
                       Sorted by match quality - best matches first
                     </p>
                   </div>
-                  <Sparkles className="h-6 w-6 sm:h-8 sm:w-8 text-primary-600 dark:text-primary-400 flex-shrink-0" />
+                  <Sparkles className="h-6 w-6 sm:h-8 sm:w-8 text-primary-400 flex-shrink-0" />
                 </div>
               </div>
 
@@ -206,9 +205,9 @@ const FindTechnicians: React.FC = () => {
               ))}
 
               {/* Tips */}
-              <div className="rounded-lg border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20 p-4">
-                <h3 className="mb-3 text-sm sm:text-base font-semibold text-blue-900 dark:text-blue-100">Tips for choosing:</h3>
-                <ul className="space-y-2 text-xs sm:text-sm text-blue-800 dark:text-blue-200">
+              <div className="rounded-lg border border-blue-800 bg-blue-900/20 p-4">
+                <h3 className="mb-3 text-sm sm:text-base font-semibold text-blue-100">Tips for choosing:</h3>
+                <ul className="space-y-2 text-xs sm:text-sm text-blue-200">
                   <li className="flex items-start gap-2">
                     <span className="flex-shrink-0 text-base">💡</span>
                     <span>
@@ -234,23 +233,23 @@ const FindTechnicians: React.FC = () => {
 
       {/* Accept Match Modal */}
       {showAcceptModal && selectedMatchId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-          <div className="w-full max-w-md rounded-lg bg-white dark:bg-gray-800 p-6 shadow-xl">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">Proceed to Booking?</h3>
-            <p className="mt-2 text-gray-600 dark:text-gray-400">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-surface-000 bg-opacity-50 p-4">
+          <div className="w-full max-w-md rounded-lg bg-surface-200 p-6 shadow-xl">
+            <h3 className="text-xl font-bold text-ink">Proceed to Booking?</h3>
+            <p className="mt-2 text-ink-muted">
               You'll be taken to the booking page where you can schedule the service and provide
               additional details.
             </p>
             <div className="mt-6 flex space-x-3">
               <button
                 onClick={() => setShowAcceptModal(false)}
-                className="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-gray-900"
+                className="flex-1 rounded-lg border border-line-strong px-4 py-2 text-ink-muted hover:bg-surface-100 bg-surface-100"
               >
                 Cancel
               </button>
               <button
                 onClick={proceedToBooking}
-                className="flex-1 rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700"
+                className="flex-1 rounded-lg bg-primary-600 px-4 py-2 text-on-lumen hover:bg-primary-700"
               >
                 Continue
               </button>

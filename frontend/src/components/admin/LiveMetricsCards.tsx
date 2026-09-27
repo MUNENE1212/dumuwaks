@@ -76,16 +76,16 @@ const MetricCard: React.FC<MetricCardProps> = ({
         ? 'text-green-500'
         : 'text-red-500';
     }
-    return 'text-gray-500';
+    return 'text-ink-muted';
   };
 
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-xl bg-white dark:bg-gray-800 p-6 shadow-sm',
-        'border border-gray-100 dark:border-gray-700',
+        'relative overflow-hidden rounded-xl bg-surface-200 p-6 shadow-sm',
+        'border border-line',
         'transition-all duration-300 hover:shadow-md',
-        isAnimating && 'ring-2 ring-purple-200 dark:ring-purple-800'
+        isAnimating && 'ring-2 ring-purple-800'
       )}
     >
       {/* Pulse indicator for live data */}
@@ -102,18 +102,18 @@ const MetricCard: React.FC<MetricCardProps> = ({
       </div>
 
       {/* Title */}
-      <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+      <p className="text-sm font-medium text-ink-muted mb-1">
         {title}
       </p>
 
       {/* Value */}
-      <p className="text-2xl font-bold text-gray-900 dark:text-white">
+      <p className="text-2xl font-bold text-ink dark:text-ink">
         {value}
       </p>
 
       {/* Subtitle */}
       {subtitle && (
-        <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+        <p className="text-xs text-ink-muted mt-1">
           {subtitle}
         </p>
       )}
@@ -126,7 +126,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
             {formatPercentage(change)}
           </span>
           {changeLabel && (
-            <span className="text-xs text-gray-500 dark:text-gray-400">
+            <span className="text-xs text-ink-muted">
               {changeLabel}
             </span>
           )}
@@ -140,10 +140,10 @@ const MetricCard: React.FC<MetricCardProps> = ({
  * Loading skeleton for metric cards
  */
 const MetricCardSkeleton: React.FC = () => (
-  <div className="rounded-xl bg-white dark:bg-gray-800 p-6 shadow-sm border border-gray-100 dark:border-gray-700 animate-pulse">
-    <div className="h-12 w-12 rounded-lg bg-gray-200 dark:bg-gray-700 mb-4" />
-    <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded mb-2" />
-    <div className="h-8 w-32 bg-gray-200 dark:bg-gray-700 rounded" />
+  <div className="rounded-xl bg-surface-200 p-6 shadow-sm border border-line animate-pulse">
+    <div className="h-12 w-12 rounded-lg bg-surface-300 mb-4" />
+    <div className="h-4 w-24 bg-surface-300 rounded mb-2" />
+    <div className="h-8 w-32 bg-surface-300 rounded" />
   </div>
 );
 
@@ -182,7 +182,7 @@ const LiveMetricsCards: React.FC<LiveMetricsCardsProps> = ({
       title: 'Active Bookings',
       value: formatNumber(activeBookingsTotal),
       subtitle: `${metrics.activeBookingsByStatus?.en_route || 0} en route`,
-      icon: <Activity className="h-6 w-6 text-white" />,
+      icon: <Activity className="h-6 w-6 text-ink" />,
       color: 'bg-purple-500',
     },
     {
@@ -190,7 +190,7 @@ const LiveMetricsCards: React.FC<LiveMetricsCardsProps> = ({
       value: formatCurrency(metrics.revenueToday),
       change: metrics.revenueChangePercent,
       changeLabel: 'vs yesterday',
-      icon: <DollarSign className="h-6 w-6 text-white" />,
+      icon: <DollarSign className="h-6 w-6 text-ink" />,
       color: 'bg-green-500',
       trend: getTrendDirection(metrics.revenueChangePercent),
     },
@@ -198,28 +198,28 @@ const LiveMetricsCards: React.FC<LiveMetricsCardsProps> = ({
       title: 'Technicians Online',
       value: metrics.techniciansOnline,
       subtitle: 'Available for bookings',
-      icon: <Wrench className="h-6 w-6 text-white" />,
+      icon: <Wrench className="h-6 w-6 text-ink" />,
       color: 'bg-blue-500',
     },
     {
       title: 'Customers Online',
       value: formatNumber(metrics.customersOnline),
       subtitle: 'Active on platform',
-      icon: <Users className="h-6 w-6 text-white" />,
+      icon: <Users className="h-6 w-6 text-ink" />,
       color: 'bg-orange-500',
     },
     {
       title: 'Bookings Last Hour',
       value: metrics.bookingsLastHour,
       subtitle: 'New requests',
-      icon: <Zap className="h-6 w-6 text-white" />,
+      icon: <Zap className="h-6 w-6 text-ink" />,
       color: 'bg-yellow-500',
     },
     {
       title: 'Avg Response Time',
       value: `${metrics.averageResponseTime}m`,
       subtitle: 'Technician acceptance',
-      icon: <Clock className="h-6 w-6 text-white" />,
+      icon: <Clock className="h-6 w-6 text-ink" />,
       color: 'bg-indigo-500',
     },
   ];
@@ -227,7 +227,7 @@ const LiveMetricsCards: React.FC<LiveMetricsCardsProps> = ({
   return (
     <div className="space-y-4">
       {/* Live indicator */}
-      <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+      <div className="flex items-center gap-2 text-sm text-ink-muted">
         <span className="flex h-2 w-2">
           <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-green-400 opacity-75" />
           <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />

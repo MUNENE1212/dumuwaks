@@ -81,13 +81,13 @@ const getActivityColor = (type: ActivityType): string => {
     case 'technician_online':
       return 'bg-green-400';
     case 'technician_offline':
-      return 'bg-gray-400';
+      return 'bg-ink-faint';
     case 'user_registered':
       return 'bg-purple-500';
     case 'review_submitted':
       return 'bg-orange-500';
     default:
-      return 'bg-gray-500';
+      return 'bg-ink-faint';
   }
 };
 
@@ -171,34 +171,34 @@ const ActivityItem: React.FC<{
     <div
       className={cn(
         'flex items-start gap-3 p-3 rounded-lg transition-all cursor-pointer',
-        'hover:bg-gray-50 dark:hover:bg-gray-700/50',
-        isNew && 'bg-purple-50 dark:bg-purple-900/20 animate-pulse'
+        'hover:bg-surface-300/50',
+        isNew && 'bg-purple-900/20 animate-pulse'
       )}
       onClick={() => onClick?.(activity)}
     >
       {/* Icon */}
-      <div className={cn('flex-shrink-0 p-2 rounded-full text-white', color)}>
+      <div className={cn('flex-shrink-0 p-2 rounded-full text-ink', color)}>
         {icon}
       </div>
 
       {/* Content */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-2">
-          <p className="text-sm font-medium text-gray-900 dark:text-white">
+          <p className="text-sm font-medium text-ink dark:text-ink">
             {label}
           </p>
-          <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
+          <span className="text-xs text-ink-muted whitespace-nowrap">
             {relativeTime}
           </span>
         </div>
-        <p className="text-sm text-gray-600 dark:text-gray-300 truncate">
+        <p className="text-sm text-ink-muted truncate">
           {description}
         </p>
       </div>
 
       {/* New indicator */}
       {isNew && (
-        <span className="flex-shrink-0 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
+        <span className="flex-shrink-0 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-900 text-purple-200">
           New
         </span>
       )}
@@ -211,10 +211,10 @@ const ActivityItem: React.FC<{
  */
 const ActivityItemSkeleton: React.FC = () => (
   <div className="flex items-start gap-3 p-3">
-    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse" />
+    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-surface-300 animate-pulse" />
     <div className="flex-1 space-y-2">
-      <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
-      <div className="h-3 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+      <div className="h-4 w-24 bg-surface-300 rounded animate-pulse" />
+      <div className="h-3 w-48 bg-surface-300 rounded animate-pulse" />
     </div>
   </div>
 );
@@ -224,13 +224,13 @@ const ActivityItemSkeleton: React.FC = () => (
  */
 const EmptyState: React.FC = () => (
   <div className="flex flex-col items-center justify-center py-12 text-center">
-    <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-4">
-      <MessageSquare className="h-6 w-6 text-gray-400" />
+    <div className="w-12 h-12 rounded-full bg-surface-200 flex items-center justify-center mb-4">
+      <MessageSquare className="h-6 w-6 text-ink-muted" />
     </div>
-    <p className="text-sm text-gray-500 dark:text-gray-400">
+    <p className="text-sm text-ink-muted">
       No recent activity
     </p>
-    <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+    <p className="text-xs text-ink-muted mt-1">
       Activity will appear here as it happens
     </p>
   </div>
@@ -293,10 +293,10 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
     <div className="space-y-3">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+        <h3 className="text-sm font-medium text-ink-muted">
           Live Activity
         </h3>
-        <span className="text-xs text-gray-500 dark:text-gray-400">
+        <span className="text-xs text-ink-muted">
           {activities.length} events
         </span>
       </div>
@@ -304,7 +304,7 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
       {/* Activity list */}
       <div
         ref={feedRef}
-        className="max-h-[400px] overflow-y-auto space-y-1 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50"
+        className="max-h-[400px] overflow-y-auto space-y-1 rounded-lg border border-line bg-surface-200/50"
       >
         {displayedActivities.map((activity) => (
           <ActivityItem
@@ -318,7 +318,7 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
 
       {/* Show more indicator */}
       {activities.length > maxItems && (
-        <p className="text-xs text-center text-gray-500 dark:text-gray-400">
+        <p className="text-xs text-center text-ink-muted">
           Showing {maxItems} of {activities.length} activities
         </p>
       )}

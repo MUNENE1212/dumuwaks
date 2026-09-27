@@ -99,27 +99,27 @@ export const ReviewRequestModal: React.FC<ReviewRequestModalProps> = ({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface-000/50">
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
           transition={{ duration: 0.2 }}
-          className="bg-white dark:bg-neutral-800 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden"
+          className="bg-surface-200 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden"
           role="dialog"
           aria-modal="true"
           aria-labelledby="review-request-title"
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-primary-500 to-secondary-500 p-6 text-white">
+          <div className=" bg-primary-500 p-6 text-on-lumen">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
-                <div className="bg-white/20 rounded-full p-2">
+                <div className="bg-ink/20 rounded-full p-2">
                   <Sparkles className="w-6 h-6" />
                 </div>
                 <div>
                   <h2 id="review-request-title" className="text-xl font-bold">How was your experience?</h2>
-                  <p className="text-sm text-white/90 mt-1">
+                  <p className="text-sm text-ink/90 mt-1">
                     {step === 'rating' && 'Rate your recent service'}
                     {step === 'written' && 'Share your thoughts (optional)'}
                     {step === 'celebration' && 'Thank you! 🎉'}
@@ -128,7 +128,7 @@ export const ReviewRequestModal: React.FC<ReviewRequestModalProps> = ({
               </div>
               <button
                 onClick={skipReview}
-                className="text-white/80 hover:text-white transition-colors"
+                className="text-ink/80 hover:text-ink transition-colors"
                 aria-label="Close"
               >
                 <X className="w-5 h-5" />
@@ -143,7 +143,7 @@ export const ReviewRequestModal: React.FC<ReviewRequestModalProps> = ({
                 step === 'rating' ? 'bg-primary-500' : 'bg-primary-500'
               }`} />
               <div className={`flex-1 h-1 rounded-full transition-colors ${
-                step === 'written' || step === 'celebration' ? 'bg-primary-500' : 'bg-neutral-200 dark:bg-neutral-700'
+                step === 'written' || step === 'celebration' ? '' : 'bg-surface-300'
               }`} />
             </div>
           </div>
@@ -157,7 +157,7 @@ export const ReviewRequestModal: React.FC<ReviewRequestModalProps> = ({
                 className="text-center"
               >
                 <div className="mb-6">
-                  <p className="text-neutral-600 dark:text-neutral-400 mb-4">
+                  <p className="text-ink-muted mb-4">
                     Your {serviceCategory} service with <strong>{technicianName}</strong>
                   </p>
 
@@ -178,7 +178,7 @@ export const ReviewRequestModal: React.FC<ReviewRequestModalProps> = ({
                           className={`w-12 h-12 transition-colors ${
                             (hoveredRating || rating) >= star
                               ? 'fill-yellow-400 text-yellow-400'
-                              : 'text-neutral-300 dark:text-neutral-600'
+                              : 'text-ink-muted'
                           }`}
                         />
                       </motion.button>
@@ -190,7 +190,7 @@ export const ReviewRequestModal: React.FC<ReviewRequestModalProps> = ({
                     <motion.p
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="text-lg font-semibold text-primary-600 dark:text-primary-400"
+                      className="text-lg font-semibold text-primary-400"
                     >
                       {rating === 5 && 'Excellent! 👏'}
                       {rating === 4 && 'Very Good!'}
@@ -206,17 +206,17 @@ export const ReviewRequestModal: React.FC<ReviewRequestModalProps> = ({
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-xl p-4 border border-primary-200 dark:border-primary-800"
+                    className=" bg-primary-900/20 rounded-xl p-4 border border-primary-800"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="bg-primary-100 dark:bg-primary-900/50 rounded-full p-2">
-                        <Gift className="w-5 h-5 text-primary-600 dark:text-primary-400" />
+                      <div className="bg-primary-900/50 rounded-full p-2">
+                        <Gift className="w-5 h-5 text-primary-400" />
                       </div>
                       <div className="flex-1 text-left">
-                        <p className="text-sm font-semibold text-primary-900 dark:text-primary-100">
+                        <p className="text-sm font-semibold text-primary-100">
                           Your review helps {technicianName} grow!
                         </p>
-                        <p className="text-xs text-primary-700 dark:text-primary-300 mt-1">
+                        <p className="text-xs text-primary-300 mt-1">
                           Reviews improve technician rankings and visibility
                         </p>
                       </div>
@@ -232,7 +232,7 @@ export const ReviewRequestModal: React.FC<ReviewRequestModalProps> = ({
                 animate={{ opacity: 1 }}
               >
                 <div className="mb-4">
-                  <p className="text-neutral-600 dark:text-neutral-400 text-sm mb-3">
+                  <p className="text-ink-muted text-sm mb-3">
                     Tell others about your experience (optional)
                   </p>
 
@@ -240,17 +240,17 @@ export const ReviewRequestModal: React.FC<ReviewRequestModalProps> = ({
                     value={reviewText}
                     onChange={(e) => setReviewText(e.target.value)}
                     placeholder="What did you like? Was the technician professional? Was the pricing fair?"
-                    className="w-full h-32 px-4 py-3 border border-neutral-300 dark:border-neutral-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white resize-none"
+                    className="w-full h-32 px-4 py-3 border border-line-strong rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-surface-300 text-ink text-ink resize-none"
                     maxLength={500}
                   />
 
                   <div className="flex justify-between mt-2">
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                    <p className="text-xs text-ink-muted">
                       {reviewText.length}/500 characters
                     </p>
                     <button
                       onClick={() => setReviewText('')}
-                      className="text-xs text-primary-600 dark:text-primary-400 hover:underline"
+                      className="text-xs text-primary-400 hover:underline"
                     >
                       Clear
                     </button>
@@ -259,7 +259,7 @@ export const ReviewRequestModal: React.FC<ReviewRequestModalProps> = ({
 
                 {/* Quick Tags - Make it Easy */}
                 <div className="mb-6">
-                  <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-2">
+                  <p className="text-xs text-ink-muted mb-2">
                     Quick tap to add:
                   </p>
                   <div className="flex flex-wrap gap-2">
@@ -271,7 +271,7 @@ export const ReviewRequestModal: React.FC<ReviewRequestModalProps> = ({
                             setReviewText(reviewText ? `${reviewText} ${tag}` : tag);
                           }
                         }}
-                        className="px-3 py-1.5 bg-neutral-100 dark:bg-neutral-700 rounded-full text-sm text-neutral-700 dark:text-neutral-300 hover:bg-primary-100 dark:hover:bg-primary-900/30 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+                        className="px-3 py-1.5 bg-surface-300 rounded-full text-sm text-ink-muted hover:bg-primary-900/30 hover:text-primary-300 transition-colors"
                       >
                         {tag}
                       </button>
@@ -294,17 +294,17 @@ export const ReviewRequestModal: React.FC<ReviewRequestModalProps> = ({
                     transition={{ duration: 0.6, ease: "easeInOut" }}
                     className="inline-block"
                   >
-                    <div className="bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full p-4">
-                      <Trophy className="w-12 h-12 text-white" />
+                    <div className=" bg-primary-500 rounded-full p-4">
+                      <Trophy className="w-12 h-12 text-ink" />
                     </div>
                   </motion.div>
                 </div>
 
-                <h3 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">
+                <h3 className="text-2xl font-bold text-ink dark:text-ink mb-2">
                   Review Submitted!
                 </h3>
 
-                <p className="text-neutral-600 dark:text-neutral-400 mb-6">
+                <p className="text-ink-muted mb-6">
                   You're helping build trust in our community
                 </p>
 
@@ -313,21 +313,21 @@ export const ReviewRequestModal: React.FC<ReviewRequestModalProps> = ({
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-xl p-4 border border-yellow-200 dark:border-yellow-800"
+                  className=" bg-yellow-900/20 rounded-xl p-4 border border-yellow-800"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="bg-yellow-100 dark:bg-yellow-900/50 rounded-full p-2">
-                      <Zap className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />
+                    <div className="bg-yellow-900/50 rounded-full p-2">
+                      <Zap className="w-5 h-5 text-yellow-400" />
                     </div>
                     <div className="flex-1 text-left">
-                      <p className="text-sm font-semibold text-yellow-900 dark:text-yellow-100">
+                      <p className="text-sm font-semibold text-yellow-100">
                         Achievement Unlocked: First Review!
                       </p>
-                      <p className="text-xs text-yellow-700 dark:text-yellow-300 mt-1">
+                      <p className="text-xs text-yellow-300 mt-1">
                         You've earned the "Community Pioneer" badge
                       </p>
                     </div>
-                    <CheckCircle className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />
+                    <CheckCircle className="w-5 h-5 text-yellow-400" />
                   </div>
                 </motion.div>
               </motion.div>
@@ -340,7 +340,7 @@ export const ReviewRequestModal: React.FC<ReviewRequestModalProps> = ({
               {step === 'rating' && (
                 <button
                   onClick={skipReview}
-                  className="w-full text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-300 transition-colors py-2"
+                  className="w-full text-sm text-ink-muted hover:text-ink-muted transition-colors py-2"
                 >
                   Maybe later
                 </button>
@@ -350,18 +350,18 @@ export const ReviewRequestModal: React.FC<ReviewRequestModalProps> = ({
                 <div className="flex gap-3">
                   <button
                     onClick={() => setStep('rating')}
-                    className="flex-1 px-4 py-3 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded-xl transition-colors font-medium"
+                    className="flex-1 px-4 py-3 text-ink-muted hover:bg-surface-300 rounded-xl transition-colors font-medium"
                   >
                     Back
                   </button>
                   <button
                     onClick={handleSubmitReview}
                     disabled={isSubmitting}
-                    className="flex-1 px-4 py-3 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-xl font-medium hover:from-primary-600 hover:to-secondary-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="flex-1 px-4 py-3 bg-primary-500 text-on-lumen rounded-xl font-medium hover:bg-primary-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {isSubmitting ? (
                       <>
-                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <div className="w-4 h-4 border-2 border-ink/30 border-t-line rounded-full animate-spin" />
                         Submitting...
                       </>
                     ) : (

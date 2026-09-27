@@ -3,7 +3,7 @@ export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/ap
 export const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
 
 // App Configuration
-export const APP_NAME = import.meta.env.VITE_APP_NAME || 'Dumu Waks';
+export const APP_NAME = import.meta.env.VITE_APP_NAME || 'Dumuwaks';
 export const APP_DESCRIPTION = import.meta.env.VITE_APP_DESCRIPTION || 'Professional Maintenance & Repair Services Platform';
 
 // Feature Flags

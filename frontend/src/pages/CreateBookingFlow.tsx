@@ -12,6 +12,7 @@ import BookingSummary from '@/components/booking/BookingSummary';
 import BookingConfirmation from '@/components/booking/BookingConfirmation';
 import ServiceDiscovery from '@/components/services/ServiceDiscovery';
 import BookingFeePaymentModal from '@/components/bookings/BookingFeePaymentModal';
+import paymentsService from '@/services/payments.service';
 import LocationInput, { LocationData } from '@/components/booking/LocationInput';
 import PriceEstimate from '@/components/bookings/PriceEstimate';
 import ResumeBookingModal from '@/components/booking/ResumeBookingModal';
@@ -129,6 +130,11 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
   // Local state
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  // Real escrow: the full price is paid after the technician accepts, not at booking time
+  const [escrowMode, setEscrowMode] = useState(false);
+  useEffect(() => {
+    paymentsService.config().then((c) => setEscrowMode(c.escrow));
+  }, []);
   const [confirmationData, setConfirmationData] =
     useState<BookingConfirmationData | null>(null);
   const [isLoadingTechnicians, setIsLoadingTechnicians] = useState(false);
@@ -789,8 +795,13 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
         const booking = result.data.booking;
 
         dispatch(setCreatedBooking(booking));
-        setShowPaymentModal(true);
-        toast.success('Booking created! Please complete payment.');
+        if (booking.paymentProvider === 'intasend') {
+          toast.success("Request sent. You'll pay into escrow once the technician accepts.");
+          navigate(`/bookings/${booking._id}`);
+        } else {
+          setShowPaymentModal(true);
+          toast.success('Booking created! Please complete payment.');
+        }
       } else {
         // Direct booking creation
         const bookingData: NewCreateBookingData = {
@@ -822,8 +833,13 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
         const booking = result.booking;
 
         dispatch(setCreatedBooking(booking));
-        setShowPaymentModal(true);
-        toast.success('Booking created! Please complete payment.');
+        if (booking.paymentProvider === 'intasend') {
+          toast.success("Request sent. You'll pay into escrow once the technician accepts.");
+          navigate(`/bookings/${booking._id}`);
+        } else {
+          setShowPaymentModal(true);
+          toast.success('Booking created! Please complete payment.');
+        }
       }
     } catch (error: unknown) {
       console.error('Failed to create booking:', error);
@@ -831,7 +847,7 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
     } finally {
       dispatch(setBookingSubmitting(false));
     }
-  }, [dispatch, bookingFlow]);
+  }, [dispatch, bookingFlow, navigate]);
 
   /**
    * Handle payment success
@@ -928,11 +944,11 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
           <div data-testid="step-technician-selection" className="space-y-4">
             {/* Pre-selected technician badge */}
             {bookingFlow.isFromMatching && bookingFlow.preSelectedTechnicianId && (
-              <Card variant="glass" className="p-4 border-circuit/50 bg-circuit/10">
+              <Card variant="glass" className="p-4 border-lumen/50 bg-lumen/10">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Sparkles className="h-5 w-5 text-circuit" />
-                    <span className="text-circuit font-medium">Technician Selected for You</span>
+                    <Sparkles className="h-5 w-5 text-lumen-ink" />
+                    <span className="text-lumen-ink font-medium">Technician Selected for You</span>
                   </div>
                   <Button
                     type="button"
@@ -963,7 +979,7 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
           <div data-testid="step-payment-plan" className="space-y-4">
             {/* Quick Book Badge */}
             {bookingFlow.isFromMatching && (
-              <div className="flex items-center gap-2 text-circuit">
+              <div className="flex items-center gap-2 text-lumen-ink">
                 <Sparkles className="h-4 w-4" />
                 <span className="text-sm font-medium">Quick Book - Steps 1 & 2 skipped</span>
               </div>
@@ -985,7 +1001,7 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
                     className={clsx(
                       'p-4 cursor-pointer transition-all duration-200',
                       bookingFlow.selectedPaymentPlan?._id === plan._id &&
-                        'border-circuit shadow-led'
+                        'border-lumen shadow-led'
                     )}
                     onClick={() => handlePaymentPlanSelect(plan)}
                   >
@@ -1002,7 +1018,7 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
                         )}
                       </div>
                       <div className="text-right">
-                        <p className="text-circuit font-bold">
+                        <p className="text-lumen-ink font-bold">
                           {plan.depositPercentage}% deposit
                         </p>
                         <p className="text-xs text-steel">
@@ -1019,10 +1035,12 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
                   This technician uses the standard payment plan.
                 </p>
                 <p className="text-bone font-medium mt-2">
-                  20% deposit required upfront
+                  {escrowMode ? 'Full price held in escrow' : '20% deposit required upfront'}
                 </p>
                 <p className="text-sm text-steel mt-1">
-                  Remaining balance due after job completion
+                  {escrowMode
+                    ? 'You pay by M-Pesa after the technician accepts. They are paid when you confirm the work.'
+                    : 'Remaining balance due after job completion'}
                 </p>
               </Card>
             )}
@@ -1035,13 +1053,13 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
             {/* Scheduling */}
             <Card variant="default" className="p-6">
               <h3 className="flex items-center text-lg font-semibold text-bone mb-4">
-                <Calendar className="mr-2 h-5 w-5 text-circuit" />
+                <Calendar className="mr-2 h-5 w-5 text-lumen-ink" />
                 Scheduling
               </h3>
 
               <div className="grid gap-4 md:grid-cols-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label className="block text-sm font-medium text-ink-muted mb-1">
                     Date <span className="text-red-500">*</span>
                   </label>
                   <Input
@@ -1056,7 +1074,7 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label className="block text-sm font-medium text-ink-muted mb-1">
                     Time <span className="text-red-500">*</span>
                   </label>
                   <Input
@@ -1070,7 +1088,7 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label className="block text-sm font-medium text-ink-muted mb-1">
                     Quantity / Units
                   </label>
                   <Input
@@ -1086,9 +1104,9 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
               </div>
 
               {/* Urgency Display */}
-              <div className="mt-4 bg-circuit/10 rounded-lg p-4 border border-circuit/30">
+              <div className="mt-4 bg-lumen/10 rounded-lg p-4 border border-lumen/30">
                 <p className="text-sm text-bone">
-                  <span className="font-semibold text-circuit">Pricing Tip:</span> Urgency level is automatically calculated based on your scheduled date and time:
+                  <span className="font-semibold text-lumen-ink">Pricing Tip:</span> Urgency level is automatically calculated based on your scheduled date and time:
                 </p>
                 <ul className="mt-2 text-xs text-steel space-y-1 ml-4">
                   <li>Within 4 hours = Emergency (2.0x base price)</li>
@@ -1097,8 +1115,8 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
                   <li>3+ days ahead = Low urgency (standard price)</li>
                 </ul>
                 {bookingFlow.priceEstimate?.details?.urgency && (
-                  <div className="mt-2 pt-2 border-t border-circuit/20">
-                    <p className="text-xs text-circuit">
+                  <div className="mt-2 pt-2 border-t border-lumen/20">
+                    <p className="text-xs text-lumen-ink">
                       Current: {bookingFlow.priceEstimate.details.urgency.level.toUpperCase()} urgency
                       ({bookingFlow.priceEstimate.details.urgency.multiplier}x)
                       - {bookingFlow.priceEstimate.details.urgency.reason}
@@ -1111,7 +1129,7 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
             {/* Location - Enhanced with LocationInput and Saved Address Toggle */}
             <Card variant="default" className="p-6">
               <h3 className="flex items-center text-lg font-semibold text-bone mb-4">
-                <MapPin className="mr-2 h-5 w-5 text-circuit" />
+                <MapPin className="mr-2 h-5 w-5 text-lumen-ink" />
                 Service Location
               </h3>
 
@@ -1126,18 +1144,18 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
                       'flex items-center gap-2 px-3 py-2 rounded-lg border transition-all duration-200',
                       'text-sm font-medium',
                       useSavedAddress
-                        ? 'bg-circuit/20 border-circuit text-circuit'
-                        : 'bg-transparent border-steel/40 text-steel hover:border-circuit hover:text-circuit',
+                        ? 'bg-lumen/20 border-lumen text-lumen-ink'
+                        : 'bg-transparent border-steel/40 text-steel hover:border-lumen hover:text-lumen-ink',
                       isCreating && 'opacity-50 cursor-not-allowed'
                     )}
                   >
                     <div className={clsx(
                       'w-4 h-4 rounded border flex items-center justify-center transition-colors',
                       useSavedAddress
-                        ? 'bg-circuit border-circuit'
+                        ? 'bg-lumen border-lumen'
                         : 'border-steel/60 bg-transparent'
                     )}>
-                      {useSavedAddress && <Check className="w-3 h-3 text-white" />}
+                      {useSavedAddress && <Check className="w-3 h-3 text-ink" />}
                     </div>
                     <span>Use my saved address</span>
                   </button>
@@ -1162,7 +1180,7 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
             {/* Job Description */}
             <Card variant="default" className="p-6">
               <h3 className="flex items-center text-lg font-semibold text-bone mb-4">
-                <FileText className="mr-2 h-5 w-5 text-circuit" />
+                <FileText className="mr-2 h-5 w-5 text-lumen-ink" />
                 Job Description
               </h3>
 
@@ -1216,7 +1234,7 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
             {bookingFlow.isLoadingEstimate && (
               <Card variant="default" className="p-6">
                 <div className="flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-circuit"></div>
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-lumen"></div>
                   <span className="ml-3 text-steel">Calculating price estimate...</span>
                 </div>
               </Card>
@@ -1245,10 +1263,10 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
           <div data-testid="step-confirm-pay" className="space-y-4">
             {/* Quick Book Badge */}
             {bookingFlow.isFromMatching && (
-              <Card variant="glass" className="p-3 border-circuit/50 bg-circuit/10">
+              <Card variant="glass" className="p-3 border-lumen/50 bg-lumen/10">
                 <div className="flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-circuit" />
-                  <span className="text-sm text-circuit font-medium">
+                  <Sparkles className="h-4 w-4 text-lumen-ink" />
+                  <span className="text-sm text-lumen-ink font-medium">
                     Quick Book - Booked from AI matching
                   </span>
                 </div>
@@ -1286,9 +1304,9 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
                     <span className="text-steel">Platform Fee</span>
                     <span className="text-bone">KES {bookingFlow.priceEstimate.platformFee.toLocaleString()}</span>
                   </div>
-                  <div className="border-t border-subtle pt-2 flex justify-between font-medium">
+                  <div className="border-t border-line pt-2 flex justify-between font-medium">
                     <span className="text-bone">Total</span>
-                    <span className="text-circuit">KES {bookingFlow.priceEstimate.totalAmount.toLocaleString()}</span>
+                    <span className="text-lumen-ink">KES {bookingFlow.priceEstimate.totalAmount.toLocaleString()}</span>
                   </div>
                 </div>
               </Card>
@@ -1319,19 +1337,19 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
       <div className="mb-8">
         <button
           onClick={handleBack}
-          className="mb-4 flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-gray-100"
+          className="mb-4 flex items-center text-ink-muted hover:text-ink text-ink"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           {bookingFlow.currentStep > 1 ? 'Previous Step' : 'Back'}
         </button>
 
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+        <h1 className="text-3xl font-bold text-ink">
           {bookingFlow.isFromMatching ? 'Complete Your Booking' : 'Book a Service'}
         </h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">
+        <p className="mt-2 text-ink-muted">
           {bookingFlow.isFromMatching ? (
             <>
-              Booking with <span className="text-circuit font-medium">
+              Booking with <span className="text-lumen-ink font-medium">
                 {bookingFlow.selectedTechnician?.firstName} {bookingFlow.selectedTechnician?.lastName}
               </span>
             </>
@@ -1385,7 +1403,9 @@ const CreateBookingFlow: React.FC<CreateBookingFlowProps> = () => {
           >
             {bookingFlow.isSubmitting
               ? 'Processing...'
-              : `Pay Deposit (KES ${bookingFlow.escrowDeposit.toLocaleString()})`}
+              : escrowMode
+                ? 'Send booking request'
+                : `Pay Deposit (KES ${bookingFlow.escrowDeposit.toLocaleString()})`}
           </Button>
         )}
       </div>

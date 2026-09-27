@@ -63,12 +63,12 @@ const AdminDashboard: React.FC = () => {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
         <AlertCircle className="h-12 w-12 text-red-500" />
-        <p className="text-lg text-gray-700 dark:text-gray-300">
+        <p className="text-lg text-ink-muted">
           {error || 'Failed to load dashboard data'}
         </p>
         <button
           onClick={() => window.location.reload()}
-          className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+          className="px-4 py-2 bg-purple-600 text-on-lumen rounded-lg hover:bg-purple-700"
         >
           Retry
         </button>
@@ -81,11 +81,11 @@ const AdminDashboard: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-ink flex items-center gap-2">
             <Shield className="h-8 w-8 text-purple-600" />
             Admin Dashboard
           </h1>
-          <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-1 text-sm text-ink-muted">
             Platform overview and management
           </p>
         </div>
@@ -99,8 +99,8 @@ const AdminDashboard: React.FC = () => {
               className={cn(
                 'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
                 timeRange === range
-                  ? 'bg-purple-600 text-white'
-                  : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                  ? 'bg-purple-600 text-on-lumen'
+                  : 'bg-surface-200 text-ink-muted hover:bg-surface-300'
               )}
             >
               {range.charAt(0).toUpperCase() + range.slice(1)}
@@ -117,8 +117,8 @@ const AdminDashboard: React.FC = () => {
             <Users className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold dark:text-gray-100">{stats.users.total.toLocaleString()}</div>
-            <p className="text-xs text-green-600 dark:text-green-400 mt-1">
+            <div className="text-2xl font-bold text-ink">{stats.users.total.toLocaleString()}</div>
+            <p className="text-xs text-green-400 mt-1">
               +{stats.users.newToday} today
             </p>
           </CardContent>
@@ -130,8 +130,8 @@ const AdminDashboard: React.FC = () => {
             <Wrench className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold dark:text-gray-100">{stats.users.technicians.toLocaleString()}</div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+            <div className="text-2xl font-bold text-ink">{stats.users.technicians.toLocaleString()}</div>
+            <p className="text-xs text-ink-muted mt-1">
               {stats.users.activeTechnicians} active
             </p>
           </CardContent>
@@ -143,8 +143,8 @@ const AdminDashboard: React.FC = () => {
             <Calendar className="h-4 w-4 text-orange-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold dark:text-gray-100">{stats.bookings.active.toLocaleString()}</div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+            <div className="text-2xl font-bold text-ink">{stats.bookings.active.toLocaleString()}</div>
+            <p className="text-xs text-ink-muted mt-1">
               {stats.bookings.completed.toLocaleString()} completed
             </p>
           </CardContent>
@@ -156,10 +156,10 @@ const AdminDashboard: React.FC = () => {
             <DollarSign className="h-4 w-4 text-purple-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold dark:text-gray-100">
+            <div className="text-2xl font-bold text-ink">
               KES {(stats.revenue.total / 1000).toFixed(0)}K
             </div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+            <p className="text-xs text-ink-muted mt-1">
               KES {(stats.revenue.pendingPayouts / 1000).toFixed(0)}K pending
             </p>
           </CardContent>
@@ -181,23 +181,23 @@ const AdminDashboard: React.FC = () => {
             <CardContent>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Status</p>
+                  <p className="text-sm text-ink-muted">Status</p>
                   <div className="flex items-center gap-2 mt-1">
                     <div className="h-2 w-2 rounded-full bg-green-500"></div>
                     <p className="font-semibold text-green-600">Healthy</p>
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Uptime</p>
-                  <p className="font-semibold dark:text-gray-100 mt-1">{stats.platform.uptime}</p>
+                  <p className="text-sm text-ink-muted">Uptime</p>
+                  <p className="font-semibold text-ink mt-1">{stats.platform.uptime}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Avg Response</p>
-                  <p className="font-semibold dark:text-gray-100 mt-1">{stats.platform.avgResponseTime}</p>
+                  <p className="text-sm text-ink-muted">Avg Response</p>
+                  <p className="font-semibold text-ink mt-1">{stats.platform.avgResponseTime}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Error Rate</p>
-                  <p className="font-semibold dark:text-gray-100 mt-1">{stats.platform.errorRate}</p>
+                  <p className="text-sm text-ink-muted">Error Rate</p>
+                  <p className="font-semibold text-ink mt-1">{stats.platform.errorRate}</p>
                 </div>
               </div>
             </CardContent>
@@ -211,7 +211,7 @@ const AdminDashboard: React.FC = () => {
             <CardContent>
               <div className="space-y-4">
                 {recentActivity.length === 0 ? (
-                  <p className="text-center text-sm text-gray-500 dark:text-gray-400 py-8">
+                  <p className="text-center text-sm text-ink-muted py-8">
                     No recent activity
                   </p>
                 ) : (
@@ -219,11 +219,11 @@ const AdminDashboard: React.FC = () => {
                     <div key={activity._id} className="flex items-start gap-3">
                       <div className={cn(
                         'h-8 w-8 rounded-full flex items-center justify-center',
-                        activity.type === 'user' && 'bg-blue-100 dark:bg-blue-900/30',
-                        activity.type === 'booking' && 'bg-green-100 dark:bg-green-900/30',
-                        activity.type === 'payment' && 'bg-purple-100 dark:bg-purple-900/30',
-                        activity.type === 'support' && 'bg-orange-100 dark:bg-orange-900/30',
-                        activity.type === 'post' && 'bg-cyan-100 dark:bg-cyan-900/30'
+                        activity.type === 'user' && 'bg-blue-900/30',
+                        activity.type === 'booking' && 'bg-green-900/30',
+                        activity.type === 'payment' && 'bg-purple-900/30',
+                        activity.type === 'support' && 'bg-orange-900/30',
+                        activity.type === 'post' && 'bg-cyan-900/30'
                       )}>
                         {activity.type === 'user' && <Users className="h-4 w-4 text-blue-600" />}
                         {activity.type === 'booking' && <Calendar className="h-4 w-4 text-green-600" />}
@@ -232,9 +232,9 @@ const AdminDashboard: React.FC = () => {
                         {activity.type === 'post' && <Activity className="h-4 w-4 text-cyan-600" />}
                       </div>
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{activity.title}</p>
-                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">{activity.description}</p>
-                        <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+                        <p className="text-sm font-medium text-ink">{activity.title}</p>
+                        <p className="text-xs text-ink-muted mt-0.5">{activity.description}</p>
+                        <p className="text-xs text-ink-muted mt-1">
                           {formatDistanceToNow(new Date(activity.timestamp), { addSuffix: true })}
                         </p>
                       </div>
@@ -258,21 +258,21 @@ const AdminDashboard: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Users className="h-4 w-4 text-blue-600" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">Customers</span>
+                    <span className="text-sm text-ink-muted">Customers</span>
                   </div>
                   <span className="font-semibold text-blue-600">{stats.users.customers.toLocaleString()}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Activity className="h-4 w-4 text-yellow-600" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">Avg Rating</span>
+                    <span className="text-sm text-ink-muted">Avg Rating</span>
                   </div>
                   <span className="font-semibold text-yellow-600">{stats.platform.averageRating}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-600" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">Completion Rate</span>
+                    <span className="text-sm text-ink-muted">Completion Rate</span>
                   </div>
                   <span className="font-semibold text-green-600">{stats.bookings.completionRate}%</span>
                 </div>
@@ -288,27 +288,27 @@ const AdminDashboard: React.FC = () => {
             <CardContent>
               <div className="space-y-4">
                 {topTechnicians.length === 0 ? (
-                  <p className="text-center text-sm text-gray-500 dark:text-gray-400 py-4">
+                  <p className="text-center text-sm text-ink-muted py-4">
                     No technician data available
                   </p>
                 ) : (
                   topTechnicians.map((tech, index) => (
                     <div key={tech._id} className="flex items-center gap-3">
-                      <div className="h-8 w-8 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white font-semibold text-sm">
+                      <div className="h-8 w-8 rounded-full bg-green-400 flex items-center justify-center text-ink font-semibold text-sm">
                         #{index + 1}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+                        <p className="text-sm font-medium text-ink truncate">
                           {tech.name}
                         </p>
                         <div className="flex items-center gap-3 mt-0.5">
-                          <span className="text-xs text-gray-600 dark:text-gray-400">
+                          <span className="text-xs text-ink-muted">
                             {tech.bookings} bookings
                           </span>
                           <span className="text-xs text-yellow-600">⭐ {tech.rating.toFixed(1)}</span>
                         </div>
                       </div>
-                      <div className="text-xs font-semibold text-green-600 dark:text-green-400">
+                      <div className="text-xs font-semibold text-green-400">
                         KES {tech.earnings.toLocaleString()}
                       </div>
                     </div>
@@ -327,25 +327,25 @@ const AdminDashboard: React.FC = () => {
               <div className="space-y-2">
                 <button
                   onClick={() => navigate('/admin/users')}
-                  className="w-full px-3 py-2 text-sm bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                  className="w-full px-3 py-2 text-sm bg-purple-600 text-on-lumen rounded-lg hover:bg-purple-700 transition-colors"
                 >
                   View All Users
                 </button>
                 <button
                   onClick={() => navigate('/admin/users?role=technician')}
-                  className="w-full px-3 py-2 text-sm bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                  className="w-full px-3 py-2 text-sm bg-surface-200 text-ink rounded-lg hover:bg-surface-300 transition-colors"
                 >
                   Manage Technicians
                 </button>
                 <button
                   onClick={() => navigate('/admin/reports')}
-                  className="w-full px-3 py-2 text-sm bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                  className="w-full px-3 py-2 text-sm bg-surface-200 text-ink rounded-lg hover:bg-surface-300 transition-colors"
                 >
                   View Reports
                 </button>
                 <button
                   onClick={() => navigate('/admin/settings')}
-                  className="w-full px-3 py-2 text-sm bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                  className="w-full px-3 py-2 text-sm bg-surface-200 text-ink rounded-lg hover:bg-surface-300 transition-colors"
                 >
                   System Settings
                 </button>

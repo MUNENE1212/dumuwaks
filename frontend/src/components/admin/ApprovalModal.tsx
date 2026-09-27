@@ -174,7 +174,7 @@ const ApprovalModal: React.FC<ApprovalModalProps> = ({
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-surface-000/70"
         onClick={isLoading ? undefined : onClose}
         aria-hidden="true"
       />
@@ -184,17 +184,17 @@ const ApprovalModal: React.FC<ApprovalModalProps> = ({
         ref={modalRef}
         className={clsx(
           'relative w-full max-w-lg rounded-xl shadow-glass-lg',
-          'bg-charcoal border border-subtle',
+          'bg-charcoal border border-line',
           'animate-scale-in'
         )}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-subtle">
+        <div className="flex items-center justify-between p-6 border-b border-line">
           <h2
             id="modal-title"
             className={clsx(
               'text-xl font-semibold',
-              isApprove ? 'text-circuit' : 'text-error'
+              isApprove ? 'text-lumen-ink' : 'text-error'
             )}
           >
             {title}
@@ -204,8 +204,8 @@ const ApprovalModal: React.FC<ApprovalModalProps> = ({
             disabled={isLoading}
             className={clsx(
               'p-2 rounded-lg transition-colors',
-              'text-steel hover:text-bone hover:bg-hover',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-circuit',
+              'text-steel hover:text-bone hover:bg-surface-300',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lumen',
               'disabled:opacity-50 disabled:cursor-not-allowed'
             )}
             aria-label="Close modal"
@@ -247,7 +247,7 @@ const ApprovalModal: React.FC<ApprovalModalProps> = ({
               </div>
               <div className="col-span-2">
                 <span className="text-steel">Price Range:</span>
-                <span className="ml-2 text-circuit font-medium">
+                <span className="ml-2 text-lumen-ink font-medium">
                   {getPriceRangeDisplay(service.basePriceMin, service.basePriceMax)}
                 </span>
               </div>
@@ -256,7 +256,7 @@ const ApprovalModal: React.FC<ApprovalModalProps> = ({
               {service.description}
             </p>
             {service.requestedBy && (
-              <div className="pt-3 border-t border-subtle">
+              <div className="pt-3 border-t border-line">
                 <span className="text-steel text-sm">Requested by:</span>
                 <span className="ml-2 text-bone text-sm">
                   {service.requestedBy.firstName} {service.requestedBy.lastName}
@@ -297,12 +297,12 @@ const ApprovalModal: React.FC<ApprovalModalProps> = ({
               disabled={isLoading}
               className={clsx(
                 'w-full px-4 py-3 rounded-lg',
-                'bg-mahogany border transition-colors',
+                'bg-surface-100 border transition-colors',
                 'text-bone placeholder:text-steel/60',
                 'focus:outline-none focus:ring-2',
                 error
                   ? 'border-error focus:ring-error/50'
-                  : 'border-subtle focus:ring-circuit/50',
+                  : 'border-line focus:ring-lumen/50',
                 'disabled:opacity-50 disabled:cursor-not-allowed'
               )}
               aria-describedby={error ? 'textarea-error' : undefined}
@@ -320,7 +320,7 @@ const ApprovalModal: React.FC<ApprovalModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-end gap-3 p-6 border-t border-subtle">
+        <div className="flex items-center justify-end gap-3 p-6 border-t border-line">
           <Button
             variant="ghost"
             onClick={onClose}

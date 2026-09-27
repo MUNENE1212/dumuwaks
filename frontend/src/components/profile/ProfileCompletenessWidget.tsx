@@ -8,7 +8,7 @@
  * - Top 3 suggestions with action links
  * - "Improve Profile" CTA button
  *
- * Design uses Circuit Blue (#0090C5) and Wrench Purple (#7D4E9F)
+ * Design uses Circuit Blue (#e8a317) and Wrench Purple (#1fa3d6)
  */
 
 import React, { useEffect, useState } from 'react';
@@ -42,7 +42,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
   percentage,
   size = 120,
   strokeWidth = 8,
-  color = '#0090C5'
+  color = '#e8a317'
 }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
@@ -103,7 +103,7 @@ const SectionBadge: React.FC<SectionBadgeProps> = ({
   if (!config) return null;
 
   return (
-    <div className="flex items-center justify-between py-2 border-b border-subtle last:border-b-0">
+    <div className="flex items-center justify-between py-2 border-b border-line last:border-b-0">
       <div className="flex items-center space-x-3">
         {completed ? (
           <svg
@@ -175,7 +175,7 @@ const SuggestionItem: React.FC<SuggestionItemProps> = ({
   const priorityColors = {
     high: 'text-red-400 bg-red-500/10',
     medium: 'text-yellow-400 bg-yellow-500/10',
-    low: 'text-steel bg-subtle'
+    low: 'text-steel bg-surface-300'
   };
 
   const priorityLevel = priority >= 8 ? 'high' : priority >= 5 ? 'medium' : 'low';
@@ -194,7 +194,7 @@ const SuggestionItem: React.FC<SuggestionItemProps> = ({
       {actionUrl && (
         <button
           onClick={() => onNavigate(actionUrl)}
-          className="text-xs text-circuit hover:text-circuit-600 transition-colors"
+          className="text-xs text-lumen-ink hover:text-lumen-ink transition-colors"
         >
           {actionLabel || 'Add'}
         </button>

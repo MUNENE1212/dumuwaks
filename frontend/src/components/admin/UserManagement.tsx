@@ -16,6 +16,9 @@ import { clsx } from 'clsx';
 import { getUsers, getUserById, updateUserStatus } from '@/services/admin.service';
 import type { AdminUser } from '@/types/admin';
 import Button from '@/components/ui/Button';
+import toast from 'react-hot-toast';
+import VerifiedBadge, { isVerifiedTechnician } from '@/components/common/VerifiedBadge';
+import { setTechnicianVerification } from '@/services/admin.service';
 
 /**
  * User role options
@@ -56,7 +59,7 @@ const getStatusColor = (status: string): string => {
  */
 const getRoleColor = (role: string): string => {
   const colors: Record<string, string> = {
-    customer: 'bg-circuit/20 text-circuit',
+    customer: 'bg-lumen/20 text-lumen-ink',
     technician: 'bg-wrench/20 text-wrench',
     admin: 'bg-error/20 text-error',
   };
@@ -95,6 +98,23 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({
   onStatusChange,
   isLoading,
 }) => {
+  const [verifiedState, setVerifiedState] = useState<{ verification: { isVerified: boolean } } | null>(null);
+  const [verifying, setVerifying] = useState(false);
+  useEffect(() => setVerifiedState(null), [user?._id]);
+  const toggleVerification = async () => {
+    if (!user) return;
+    const next = !isVerifiedTechnician(verifiedState ?? user);
+    setVerifying(true);
+    try {
+      const res = await setTechnicianVerification(user._id, next);
+      setVerifiedState({ verification: res.verification });
+      toast.success(next ? 'Technician marked ID verified' : 'Verification removed');
+    } catch {
+      toast.error('Could not update verification');
+    } finally {
+      setVerifying(false);
+    }
+  };
   const [statusAction, setStatusAction] = useState<string | null>(null);
   const [reason, setReason] = useState('');
 
@@ -116,7 +136,7 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-overlay-medium">
       <div className="glass-modal rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="p-6 border-b border-subtle">
+        <div className="p-6 border-b border-line">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               {user.profilePicture ? (
@@ -126,8 +146,8 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({
                   className="w-12 h-12 rounded-full object-cover"
                 />
               ) : (
-                <div className="w-12 h-12 rounded-full bg-circuit/20 flex items-center justify-center">
-                  <span className="text-circuit font-bold text-lg">
+                <div className="w-12 h-12 rounded-full bg-lumen/20 flex items-center justify-center">
+                  <span className="text-lumen-ink font-bold text-lg">
                     {user.firstName.charAt(0)}{user.lastName.charAt(0)}
                   </span>
                 </div>
@@ -141,7 +161,7 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({
             </div>
             <button
               onClick={onClose}
-              className="p-2 rounded-lg hover:bg-hover text-steel hover:text-bone transition-colors"
+              className="p-2 rounded-lg hover:bg-surface-300 text-steel hover:text-bone transition-colors"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -160,19 +180,32 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({
             <span className={clsx('px-3 py-1 rounded-full text-sm font-medium capitalize', getStatusColor(user.status))}>
               {user.status}
             </span>
-            {user.isVerified && (
-              <span className="px-3 py-1 rounded-full text-sm font-medium bg-success/20 text-success">
-                Verified
-              </span>
-            )}
+            {user.role === 'technician' && <VerifiedBadge user={verifiedState ?? user} size="md" />}
             {user.isOnline && (
-              <span className="px-3 py-1 rounded-full text-sm font-medium bg-circuit/20 text-circuit">
+              <span className="px-3 py-1 rounded-full text-sm font-medium bg-lumen/20 text-lumen-ink">
                 Online
               </span>
             )}
           </div>
 
-          {/* Contact Info */}
+          {user.role === 'technician' && (
+            <div className="rounded-md border border-line bg-surface-300 p-4">
+              <p className="text-sm text-ink">
+                Mark this technician ID-verified only after you have checked their national ID or passport against
+                their name. Customers see the badge on every listing.
+              </p>
+              <button
+                type="button"
+                disabled={verifying}
+                onClick={toggleVerification}
+                className={clsx('btn btn-sm mt-3', isVerifiedTechnician(verifiedState ?? user) ? 'btn-outline' : 'btn-primary')}
+              >
+                {isVerifiedTechnician(verifiedState ?? user) ? 'Remove verification' : 'Mark ID verified'}
+              </button>
+            </div>
+          )}
+
+                    {/* Contact Info */}
           <div className="glass-card rounded-lg p-4 space-y-3">
             <h3 className="text-sm font-semibold text-bone">Contact Information</h3>
             <div className="grid grid-cols-2 gap-4">
@@ -202,7 +235,7 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({
               <p className="text-xs text-steel">Bookings</p>
             </div>
             <div className="glass-card rounded-lg p-4 text-center">
-              <p className="text-2xl font-bold text-circuit">{user.stats?.averageRating?.toFixed(1) ?? '0.0'}</p>
+              <p className="text-2xl font-bold text-lumen-ink">{user.stats?.averageRating?.toFixed(1) ?? '0.0'}</p>
               <p className="text-xs text-steel">Rating</p>
             </div>
             <div className="glass-card rounded-lg p-4 text-center">
@@ -227,7 +260,7 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({
                 <textarea
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
-                  className="w-full px-4 py-2 bg-charcoal border border-subtle rounded-lg text-bone focus:border-circuit focus:outline-none"
+                  className="w-full px-4 py-2 bg-charcoal border border-line rounded-lg text-bone focus:border-lumen focus:outline-none"
                   rows={3}
                   placeholder={`Enter the reason for ${statusAction} this account...`}
                 />
@@ -428,7 +461,7 @@ const UserManagement: React.FC = () => {
                   setPage(1);
                 }}
                 placeholder="Search by name, email, phone..."
-                className="w-full pl-9 pr-4 py-2 bg-charcoal border border-subtle rounded-lg text-bone text-sm placeholder:text-steel/50 focus:border-circuit focus:outline-none"
+                className="w-full pl-9 pr-4 py-2 bg-charcoal border border-line rounded-lg text-bone text-sm placeholder:text-steel/50 focus:border-lumen focus:outline-none"
               />
             </div>
           </div>
@@ -442,7 +475,7 @@ const UserManagement: React.FC = () => {
                 setRoleFilter(e.target.value);
                 setPage(1);
               }}
-              className="w-full px-3 py-2 bg-charcoal border border-subtle rounded-lg text-bone text-sm focus:border-circuit focus:outline-none"
+              className="w-full px-3 py-2 bg-charcoal border border-line rounded-lg text-bone text-sm focus:border-lumen focus:outline-none"
             >
               {userRoles.map((role) => (
                 <option key={role.value} value={role.value}>
@@ -461,7 +494,7 @@ const UserManagement: React.FC = () => {
                 setStatusFilter(e.target.value);
                 setPage(1);
               }}
-              className="w-full px-3 py-2 bg-charcoal border border-subtle rounded-lg text-bone text-sm focus:border-circuit focus:outline-none"
+              className="w-full px-3 py-2 bg-charcoal border border-line rounded-lg text-bone text-sm focus:border-lumen focus:outline-none"
             >
               {userStatuses.map((status) => (
                 <option key={status.value} value={status.value}>
@@ -479,10 +512,10 @@ const UserManagement: React.FC = () => {
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="glass-card rounded-xl p-4 animate-pulse">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-subtle" />
+                <div className="w-12 h-12 rounded-full bg-surface-300" />
                 <div className="flex-1 space-y-2">
-                  <div className="h-4 bg-subtle rounded w-24" />
-                  <div className="h-3 bg-subtle rounded w-32" />
+                  <div className="h-4 bg-surface-300 rounded w-24" />
+                  <div className="h-3 bg-surface-300 rounded w-32" />
                 </div>
               </div>
             </div>
@@ -517,8 +550,8 @@ const UserManagement: React.FC = () => {
                       className="w-12 h-12 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="w-12 h-12 rounded-full bg-circuit/20 flex items-center justify-center">
-                      <span className="text-circuit font-bold">
+                    <div className="w-12 h-12 rounded-full bg-lumen/20 flex items-center justify-center">
+                      <span className="text-lumen-ink font-bold">
                         {user.firstName.charAt(0)}{user.lastName.charAt(0)}
                       </span>
                     </div>

@@ -153,11 +153,11 @@ export const CATEGORY_COLORS: Record<ServiceCategory, string> = {
   plumbing: 'bg-blue-100 text-blue-800',
   electrical: 'bg-yellow-100 text-yellow-800',
   carpentry: 'bg-amber-100 text-amber-800',
-  masonry: 'bg-stone-100 text-stone-800',
+  masonry: 'bg-surface-300 text-ink',
   painting: 'bg-purple-100 text-purple-800',
   hvac: 'bg-cyan-100 text-cyan-800',
   welding: 'bg-orange-100 text-orange-800',
-  other: 'bg-gray-100 text-gray-800'
+  other: 'bg-surface-300 text-ink'
 };
 
 /**

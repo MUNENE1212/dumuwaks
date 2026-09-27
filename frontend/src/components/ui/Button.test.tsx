@@ -46,26 +46,28 @@ describe('Button Component', () => {
     it('should render primary variant by default', () => {
       render(<Button>Primary</Button>);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('bg-circuit');
+      expect(button).toHaveClass('bg-lumen');
     });
 
     it('should render primary variant when specified', () => {
       render(<Button variant="primary">Primary</Button>);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('bg-circuit');
+      expect(button).toHaveClass('bg-lumen');
     });
 
     it('should render secondary variant', () => {
       render(<Button variant="secondary">Secondary</Button>);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('bg-wrench');
+      expect(button).toHaveClass('bg-surface-200');
+      expect(button).toHaveClass('border-line-strong');
     });
 
     it('should render outline variant', () => {
       render(<Button variant="outline">Outline</Button>);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('border-2');
-      expect(button).toHaveClass('border-steel');
+      expect(button).toHaveClass('border');
+      expect(button).toHaveClass('border-line-strong');
+      expect(button).toHaveClass('bg-transparent');
     });
 
     it('should render ghost variant', () => {
@@ -77,7 +79,8 @@ describe('Button Component', () => {
     it('should render danger variant', () => {
       render(<Button variant="danger">Danger</Button>);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('bg-error');
+      expect(button).toHaveClass('bg-fault');
+      expect(button).toHaveClass('text-on-lumen');
     });
   });
 
@@ -90,7 +93,7 @@ describe('Button Component', () => {
       const button = screen.getByRole('button');
       expect(button).toHaveClass('h-12'); // 48px for accessibility
       expect(button).toHaveClass('min-w-[48px]'); // Minimum touch target width
-      expect(button).toHaveClass('px-4');
+      expect(button).toHaveClass('px-5');
     });
 
     it('should render small size (44px minimum for WCAG AA compliance)', () => {
@@ -98,8 +101,8 @@ describe('Button Component', () => {
       const button = screen.getByRole('button');
       expect(button).toHaveClass('h-11'); // 44px for accessibility
       expect(button).toHaveClass('min-w-[44px]'); // Minimum touch target width
-      expect(button).toHaveClass('px-3');
-      expect(button).toHaveClass('text-sm');
+      expect(button).toHaveClass('px-3.5');
+      expect(button).toHaveClass('text-body-sm');
     });
 
     it('should render large size (56px for enhanced touch targets)', () => {
@@ -107,8 +110,8 @@ describe('Button Component', () => {
       const button = screen.getByRole('button');
       expect(button).toHaveClass('h-14'); // 56px for accessibility
       expect(button).toHaveClass('min-w-[56px]'); // Minimum touch target width
-      expect(button).toHaveClass('px-6');
-      expect(button).toHaveClass('text-lg');
+      expect(button).toHaveClass('px-7');
+      expect(button).toHaveClass('text-lead');
     });
   });
 

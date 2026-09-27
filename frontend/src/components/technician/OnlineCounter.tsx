@@ -97,8 +97,8 @@ export function OnlineCounter({
     <div
       className={`
         inline-flex items-center space-x-2
-        bg-green-50 dark:bg-green-900/20
-        border border-green-200 dark:border-green-800
+        bg-green-900/20
+        border border-green-800
         rounded-full ${classes.padding}
         ${className}
       `}
@@ -122,11 +122,11 @@ export function OnlineCounter({
 
       {/* Count and label */}
       <div className="flex items-center space-x-1">
-        <span className={`font-semibold text-green-700 dark:text-green-300 ${classes.text}`}>
+        <span className={`font-semibold text-green-300 ${classes.text}`}>
           {count}
         </span>
         {showLabel && (
-          <span className={`text-green-600 dark:text-green-400 ${classes.text}`}>
+          <span className={`text-green-400 ${classes.text}`}>
             {getCategoryName(category)} online
           </span>
         )}

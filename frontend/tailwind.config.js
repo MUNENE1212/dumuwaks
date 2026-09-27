@@ -1,268 +1,292 @@
 /** @type {import('tailwindcss').Config} */
+
+/*
+ * Dumuwaks — Tailwind theme.
+ * Values mirror src/styles/tokens.css (hex here so opacity modifiers like
+ * `bg-lumen/10` work). Change a value in both places.
+ *
+ * Semantic names are the API: surface-*, line, ink*, lumen*, circuit, ok, warn, fault.
+ * Legacy palette names (primary, circuit-500, gray, green…) are re-pointed to
+ * those roles so older components render in the new system; new code should
+ * not use them. See docs/design/DESIGN_SYSTEM.md.
+ */
+
+const surface = {
+  '000': '#0b0907',
+  100: '#14110c',
+  200: '#1d1811',
+  300: '#262017',
+  400: '#2f271c',
+};
+
+const ink = { DEFAULT: '#f5eee1', muted: '#b8ab95', faint: '#8a7f6d' };
+
+// Warm neutral ramp, lightest → darkest. Used by legacy gray/neutral/slate classes.
+const neutral = {
+  50: '#f5eee1',
+  100: '#e8dfcf',
+  200: '#d3c7b2',
+  300: '#b8ab95',
+  400: '#8a7f6d',
+  500: '#6b6152',
+  600: '#453a29',
+  700: '#332b1f',
+  800: '#1d1811',
+  900: '#14110c',
+  950: '#0b0907',
+};
+
+// Amber ramp: 500/600 = lumen (the action colour).
+const amber = {
+  50: '#2a2010',
+  100: '#3a2b12',
+  200: '#5a4115',
+  300: '#f6c45c',
+  400: '#f6c45c',
+  500: '#e8a317',
+  600: '#e8a317',
+  700: '#f0b43a',
+  800: '#b4740f',
+  900: '#2a2010',
+  950: '#1a1203',
+  DEFAULT: '#e8a317',
+};
+
+const status = (hex, ink, tintDark, tintMid) => ({
+  50: tintDark,
+  100: tintDark,
+  200: tintMid,
+  300: ink,
+  400: ink,
+  500: hex,
+  600: hex,
+  700: ink,
+  800: ink,
+  900: tintDark,
+  950: tintDark,
+  DEFAULT: hex,
+});
+
+const circuit = status('#1fa3d6', '#6cc4ea', '#0f2029', '#15384a');
+const ok = status('#5cb860', '#8fd592', '#132214', '#1e3a20');
+const warn = status('#d9a040', '#e8bd70', '#261d0d', '#3d2e12');
+const fault = status('#e0705c', '#f0a092', '#2a1410', '#46201a');
+
 export default {
   darkMode: 'class',
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        // ============================================
-        // RICH DARK DESIGN SYSTEM - DUMU WAKS
-        // ============================================
-
-        // Primary Background Colors (Mahogany-based)
+        // ---- Semantic (use these) ----
+        surface,
+        line: { DEFAULT: '#332b1f', strong: '#453a29' },
+        ink,
+        lumen: {
+          DEFAULT: '#e8a317',
+          hover: '#f0b43a',
+          ink: '#f6c45c',
+          tint: 'rgba(232, 163, 23, 0.12)',
+        },
+        filament: '#ffc94a',
+        ember: '#b4740f',
+        core: '#fff6e2',
+        'on-lumen': '#14110c',
+        circuit: { ...circuit, ink: '#6cc4ea' },
+        ok: { ...ok, ink: '#8fd592' },
+        warn: { ...warn, ink: '#e8bd70' },
+        fault: { ...fault, ink: '#f0a092' },
         mahogany: {
-          50: '#f5e6e6',
-          100: '#e6cccc',
-          200: '#c29999',
-          300: '#9e6666',
-          400: '#7a3333',
-          DEFAULT: '#261212',  // Deep Mahogany - main page sections
-          600: '#1d0e0e',
-          700: '#140a0a',
-          800: '#0b0505',
-          900: '#030000',
+          DEFAULT: '#261212',
+          50: '#261212',
+          100: '#261212',
+          500: '#261212',
+          600: surface[200],
+          700: surface[100],
+          800: surface['000'],
+          900: surface['000'],
         },
+        whatsapp: { DEFAULT: '#25d366', dark: '#128c7e' },
 
-        // Secondary Background Colors (Iron Charcoal)
+        // ---- Legacy names, re-pointed ----
+        primary: amber,
+        brand: { DEFAULT: '#e8a317', hover: '#f0b43a', light: '#ffc94a' },
+        orange: amber,
+        amber: warn,
+        yellow: warn,
+        blue: circuit,
+        sky: circuit,
+        cyan: circuit,
+        indigo: circuit,
+        purple: circuit,
+        violet: circuit,
+        wrench: circuit,
+        secondary: circuit,
+        green: ok,
+        emerald: ok,
+        teal: ok,
+        lime: ok,
+        success: ok,
+        red: fault,
+        rose: fault,
+        pink: fault,
+        error: fault,
+        warning: warn,
+        info: circuit,
+        gray: neutral,
+        neutral,
+        slate: neutral,
+        zinc: neutral,
+        stone: neutral,
         charcoal: {
-          50: '#f5f5f5',
-          100: '#e0e0e0',
-          200: '#b3b3b3',
-          300: '#858585',
-          400: '#585858',
-          DEFAULT: '#1C1C1C',  // Iron Charcoal - cards, nav, footers
-          600: '#141414',
-          700: '#0d0d0d',
-          800: '#060606',
-          900: '#000000',
+          ...neutral,
+          DEFAULT: surface[200],
+          500: surface[200],
+          600: surface[100],
+          700: surface['000'],
+          800: surface['000'],
+          900: surface['000'],
         },
-
-        // Accent 1 - Circuit Blue (Primary)
-        circuit: {
-          50: '#e6f7fc',
-          100: '#cceff9',
-          200: '#99dff3',
-          300: '#66cfed',
-          400: '#33bfe7',
-          DEFAULT: '#0090C5',  // Circuit Blue - buttons, links, active states
-          600: '#00739e',
-          700: '#005677',
-          800: '#003950',
-          900: '#001c28',
-        },
-
-        // Accent 2 - Wrench Purple (Secondary)
-        wrench: {
-          50: '#f3edf8',
-          100: '#e7dbf1',
-          200: '#cfb7e3',
-          300: '#b793d5',
-          400: '#9f6fc7',
-          DEFAULT: '#7D4E9F',  // Wrench Purple - hover effects, secondary icons
-          600: '#643f7f',
-          700: '#4a305f',
-          800: '#31203f',
-          900: '#18101f',
-        },
-
-        // Text Colors
-        'bone': {
-          DEFAULT: '#E0E0E0',  // Soft Bone - primary text
-          50: '#fafafa',
-          100: '#f5f5f5',
-          200: '#e0e0e0',
-          300: '#cccccc',
-          400: '#b2b2b2',
-          500: '#999999',
-          600: '#808080',
-          700: '#666666',
-          800: '#4d4d4d',
-          900: '#262626',
-        },
-
-        'steel': {
-          DEFAULT: '#9BA4B0',  // Steel Grey - meta text, borders
-          50: '#f5f6f7',
-          100: '#ebedef',
-          200: '#d7dade',
-          300: '#c3c7cc',
-          400: '#aeb3b9',
-          500: '#9ba4b0',
-          600: '#7d858f',
-          700: '#5f666e',
-          800: '#41474d',
-          900: '#23282c',
-        },
-
-        // Semantic Colors (updated with rich dark theme)
-        primary: '#0090C5',      // Circuit Blue
-        secondary: '#7D4E9F',    // Wrench Purple
-        success: '#00ba7c',
-        warning: '#f9c74f',
-        error: '#f4212e',
-        info: '#0090C5',
-
-        // Background hierarchy
+        bone: { ...neutral, DEFAULT: ink.DEFAULT, 200: ink.DEFAULT },
+        steel: { ...neutral, DEFAULT: ink.muted, 500: ink.muted, 600: ink.faint },
         background: {
-          DEFAULT: '#261212',  // Deep Mahogany
-          primary: '#261212',
-          secondary: '#1C1C1C',  // Iron Charcoal
-          tertiary: '#161616',
-          elevated: '#2a2a2a',
+          DEFAULT: surface[100],
+          primary: surface[100],
+          secondary: surface[200],
+          tertiary: surface[300],
+          elevated: surface[400],
         },
-
-        // Text hierarchy
         text: {
-          DEFAULT: '#E0E0E0',  // Soft Bone
-          primary: '#E0E0E0',
-          secondary: '#9BA4B0',  // Steel Grey
-          tertiary: '#7a7a7a',
-          muted: '#666666',
+          DEFAULT: ink.DEFAULT,
+          primary: ink.DEFAULT,
+          secondary: ink.muted,
+          tertiary: ink.faint,
+          muted: ink.faint,
         },
-
-        // Border colors
         border: {
-          DEFAULT: '#9BA4B0',  // Steel Grey
-          subtle: 'rgba(155, 164, 176, 0.3)',
-          medium: 'rgba(155, 164, 176, 0.5)',
-          strong: '#9BA4B0',
+          DEFAULT: '#332b1f',
+          subtle: '#332b1f',
+          medium: '#453a29',
+          strong: '#453a29',
         },
-
-        // Gradient center color
-        'mahogany-light': '#3D1E1E',  // For radial gradient centers
-
-        // Legacy colors (for backward compatibility during transition)
-        brand: {
-          DEFAULT: '#0090C5',  // Changed to Circuit Blue
-          hover: '#00739e',
-          light: '#66cfed',
-        },
-
-        // X/Twitter gray scale (legacy)
-        'dw-black': '#261212',
-        'dw-dark': '#1C1C1C',
-        'dw-medium': '#2f3336',
-        'dw-light': '#9BA4B0',
-        'dw-white': '#E0E0E0',
+        'mahogany-light': surface[300],
+        'dw-black': surface[100],
+        'dw-dark': surface[200],
+        'dw-medium': surface[400],
+        'dw-light': ink.muted,
+        'dw-white': ink.DEFAULT,
       },
 
       fontFamily: {
-        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'sans-serif'],
-        mono: ['JetBrains Mono', 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', 'Consolas', 'monospace'],
-        display: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        display: ['Archivo', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+        sans: ['"IBM Plex Sans"', 'system-ui', '-apple-system', '"Segoe UI"', 'Roboto', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
 
       fontSize: {
-        // Display
-        'display-xl': ['48px', { lineHeight: '1.2', fontWeight: '700' }],
-        'display-lg': ['40px', { lineHeight: '1.2', fontWeight: '700' }],
-        'display-md': ['32px', { lineHeight: '1.2', fontWeight: '700' }],
-
-        // Headings
-        'heading-xl': ['24px', { lineHeight: '1.3', fontWeight: '700' }],
-        'heading-lg': ['20px', { lineHeight: '1.4', fontWeight: '600' }],
-        'heading-md': ['18px', { lineHeight: '1.4', fontWeight: '600' }],
-        'heading-sm': ['16px', { lineHeight: '1.4', fontWeight: '600' }],
-
-        // Body
-        'body-lg': ['16px', { lineHeight: '1.5', fontWeight: '400' }],
-        'body-md': ['15px', { lineHeight: '1.5', fontWeight: '400' }],
-        'body-sm': ['14px', { lineHeight: '1.5', fontWeight: '400' }],
-
-        // Meta
-        'meta': ['13px', { lineHeight: '1.4', fontWeight: '500' }],
-        'caption': ['12px', { lineHeight: '1.4', fontWeight: '500' }],
-        'tiny': ['11px', { lineHeight: '1.4', fontWeight: '500' }],
+        // Emen scale
+        hero: ['64px', { lineHeight: '60px', letterSpacing: '-0.025em', fontWeight: '800' }],
+        display: ['44px', { lineHeight: '46px', letterSpacing: '-0.02em', fontWeight: '800' }],
+        title: ['30px', { lineHeight: '34px', letterSpacing: '-0.015em', fontWeight: '700' }],
+        heading: ['20px', { lineHeight: '26px', fontWeight: '700' }],
+        lead: ['17px', { lineHeight: '27px' }],
+        body: ['15px', { lineHeight: '24px' }],
+        'body-sm': ['13.5px', { lineHeight: '20px' }],
+        caption: ['12px', { lineHeight: '17px' }],
+        spec: ['13.5px', { lineHeight: '21px' }],
+        label: ['11px', { lineHeight: '14px', letterSpacing: '0.1em', fontWeight: '500' }],
+        // Legacy names
+        'display-xl': ['64px', { lineHeight: '60px', letterSpacing: '-0.025em', fontWeight: '800' }],
+        'display-lg': ['44px', { lineHeight: '46px', letterSpacing: '-0.02em', fontWeight: '800' }],
+        'display-md': ['30px', { lineHeight: '34px', letterSpacing: '-0.015em', fontWeight: '700' }],
+        'heading-xl': ['24px', { lineHeight: '30px', fontWeight: '700' }],
+        'heading-lg': ['20px', { lineHeight: '26px', fontWeight: '700' }],
+        'heading-md': ['18px', { lineHeight: '24px', fontWeight: '600' }],
+        'heading-sm': ['16px', { lineHeight: '22px', fontWeight: '600' }],
+        'body-lg': ['17px', { lineHeight: '27px' }],
+        'body-md': ['15px', { lineHeight: '24px' }],
+        meta: ['13px', { lineHeight: '18px', fontWeight: '500' }],
+        tiny: ['11px', { lineHeight: '14px', fontWeight: '500' }],
       },
 
       spacing: {
-        '18': '4.5rem',
-        '72': '18rem',
-        '84': '21rem',
-        '96': '24rem',
+        18: '4.5rem',
+        72: '18rem',
+        84: '21rem',
+        96: '24rem',
       },
 
-      // WCAG 2.1 AA Accessibility - Minimum touch targets
-      minHeight: {
-        'touch': '44px',     // WCAG AA minimum
-        'touch-lg': '48px',  // Enhanced touch target
-      },
-      minWidth: {
-        'touch': '44px',     // WCAG AA minimum
-        'touch-lg': '48px',  // Enhanced touch target
-      },
+      minHeight: { touch: '44px', 'touch-lg': '48px' },
+      minWidth: { touch: '44px', 'touch-lg': '48px' },
 
+      // Square-cut: nothing rounder than 8px except status pills.
       borderRadius: {
-        '4xl': '2rem',
+        none: '0',
+        sm: '2px',
+        DEFAULT: '4px',
+        md: '4px',
+        lg: '4px',
+        xl: '8px',
+        '2xl': '8px',
+        '3xl': '8px',
+        '4xl': '8px',
+        full: '9999px',
       },
 
-      backdropBlur: {
-        xs: '2px',
-      },
+      // No blur in this system: surfaces are opaque.
+      backdropBlur: { xs: '0', sm: '0', DEFAULT: '0', md: '0', lg: '0', xl: '0', '2xl': '0', '3xl': '0' },
 
       boxShadow: {
-        // Glassmorphism shadows
-        'glass': '0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
-        'glass-lg': '0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-
-        // LED Glow effects (Circuit Blue)
-        'led': '0 0 10px rgba(0, 144, 197, 0.5), 0 0 20px rgba(0, 144, 197, 0.3)',
-        'led-lg': '0 0 15px rgba(0, 144, 197, 0.6), 0 0 30px rgba(0, 144, 197, 0.4)',
-        'led-purple': '0 0 10px rgba(125, 78, 159, 0.5), 0 0 20px rgba(125, 78, 159, 0.3)',
-
-        // Brand shadows (Circuit Blue)
-        'brand': '0 4px 16px rgba(0, 144, 197, 0.3)',
-        'brand-lg': '0 6px 24px rgba(0, 144, 197, 0.4)',
-
-        // Mahogany-tinted shadows
-        'mahogany': '0 4px 16px rgba(38, 18, 18, 0.5)',
-        'mahogany-lg': '0 8px 32px rgba(38, 18, 18, 0.6)',
+        sm: '0 1px 2px rgba(0,0,0,0.6)',
+        DEFAULT: '0 1px 2px rgba(0,0,0,0.6)',
+        md: '0 1px 2px rgba(0,0,0,0.6)',
+        lg: '0 12px 32px -18px rgba(0,0,0,0.9)',
+        xl: '0 12px 32px -18px rgba(0,0,0,0.9)',
+        '2xl': '0 12px 32px -18px rgba(0,0,0,0.9)',
+        raised: '0 1px 2px rgba(0,0,0,0.6)',
+        float: '0 12px 32px -18px rgba(0,0,0,0.9)',
+        glass: '0 1px 2px rgba(0,0,0,0.6)',
+        'glass-lg': '0 12px 32px -18px rgba(0,0,0,0.9)',
+        led: 'none',
+        'led-lg': 'none',
+        'led-purple': 'none',
+        brand: 'none',
+        'brand-lg': 'none',
+        mahogany: '0 1px 2px rgba(0,0,0,0.6)',
+        'mahogany-lg': '0 12px 32px -18px rgba(0,0,0,0.9)',
       },
 
       animation: {
-        'fade-in': 'fadeIn 300ms ease-out',
-        'slide-up': 'slideUp 300ms ease-out',
-        'scale-in': 'scaleIn 200ms ease-out',
-        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
-        'led-flicker': 'ledFlicker 3s ease-in-out infinite',
+        'fade-in': 'fadeIn 200ms ease-out',
+        'slide-up': 'slideUp 200ms ease-out',
+        'scale-in': 'scaleIn 150ms ease-out',
+        'pulse-glow': 'none',
+        'led-flicker': 'none',
       },
 
       keyframes: {
-        fadeIn: {
-          'from': { opacity: '0' },
-          'to': { opacity: '1' },
-        },
+        fadeIn: { from: { opacity: '0' }, to: { opacity: '1' } },
         slideUp: {
-          'from': { opacity: '0', transform: 'translateY(16px)' },
-          'to': { opacity: '1', transform: 'translateY(0)' },
+          from: { opacity: '0', transform: 'translateY(8px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
         },
         scaleIn: {
-          'from': { opacity: '0', transform: 'scale(0.95)' },
-          'to': { opacity: '1', transform: 'scale(1)' },
-        },
-        pulseGlow: {
-          '0%, 100%': { boxShadow: '0 0 10px rgba(0, 144, 197, 0.5)' },
-          '50%': { boxShadow: '0 0 20px rgba(0, 144, 197, 0.8), 0 0 30px rgba(0, 144, 197, 0.4)' },
-        },
-        ledFlicker: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.8' },
+          from: { opacity: '0', transform: 'scale(0.98)' },
+          to: { opacity: '1', transform: 'scale(1)' },
         },
       },
 
+      // Gradients are retired; legacy names resolve to flat grounds.
       backgroundImage: {
-        'hero-gradient': 'radial-gradient(circle at center, #3D1E1E 0%, #261212 70%)',
-        'mahogany-gradient': 'linear-gradient(135deg, #261212 0%, #1C1C1C 100%)',
-        'circuit-gradient': 'linear-gradient(90deg, #0090C5 0%, #7D4E9F 100%)',
+        'hero-gradient': 'none',
+        'mahogany-gradient': 'none',
+        'circuit-gradient': 'none',
       },
 
       transitionTimingFunction: {
-        'ease-out-back': 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+        'ease-out-back': 'cubic-bezier(0.2, 0, 0, 1)',
       },
     },
   },
   plugins: [],
-}
+};

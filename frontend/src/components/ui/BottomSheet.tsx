@@ -76,7 +76,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
             animate="visible"
             exit="exit"
             onClick={closeOnOverlayClick ? onClose : undefined}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-modal lg:hidden"
+            className="fixed inset-0 bg-surface-000/50 z-modal lg:hidden"
             aria-hidden="true"
           />
 
@@ -88,7 +88,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
               animate="visible"
               exit="exit"
               className={cn(
-                'bg-white dark:bg-neutral-900 rounded-t-3xl shadow-2xl',
+                'bg-surface-100 rounded-t-3xl shadow-2xl',
                 'safe-bottom',
                 heightClasses[height]
               )}
@@ -98,16 +98,16 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
             >
               {/* Handle bar */}
               <div className="flex justify-center pt-3 pb-1">
-                <div className="w-12 h-1.5 bg-neutral-300 dark:bg-neutral-700 rounded-full" />
+                <div className="w-12 h-1.5 bg-surface-300 rounded-full" />
               </div>
 
               {/* Header */}
               {(title || showCloseButton) && (
-                <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-200 dark:border-neutral-800">
+                <div className="flex items-center justify-between px-6 py-4 border-b border-line">
                   {title && (
                     <h2
                       id="sheet-title"
-                      className="text-lg font-semibold text-neutral-900 dark:text-neutral-100"
+                      className="text-lg font-semibold text-ink"
                     >
                       {title}
                     </h2>
@@ -116,10 +116,10 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
                   {showCloseButton && (
                     <button
                       onClick={onClose}
-                      className="p-2 -mr-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                      className="p-2 -mr-2 rounded-lg hover:bg-surface-200 transition-colors"
                       aria-label="Close sheet"
                     >
-                      <X className="w-5 h-5 text-neutral-600 dark:text-neutral-400" />
+                      <X className="w-5 h-5 text-ink-muted" />
                     </button>
                   )}
                 </div>

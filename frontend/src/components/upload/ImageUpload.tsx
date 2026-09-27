@@ -159,24 +159,24 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           <img
             src={preview}
             alt="Preview"
-            className="w-full h-48 object-cover rounded-lg border-2 border-gray-200 dark:border-gray-700"
+            className="w-full h-48 object-cover rounded-lg border-2 border-line"
           />
 
           {/* Overlay with actions */}
-          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all rounded-lg flex items-center justify-center">
+          <div className="absolute inset-0 bg-surface-000 bg-opacity-0 group-hover:bg-opacity-40 transition-all rounded-lg flex items-center justify-center">
             <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
               <button
                 onClick={handleButtonClick}
                 disabled={uploading}
-                className="bg-white dark:bg-gray-800 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                className="bg-surface-200 p-2 rounded-full hover:bg-surface-300 transition-colors"
                 title="Change image"
               >
-                <Upload className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                <Upload className="h-5 w-5 text-ink-muted" />
               </button>
               <button
                 onClick={handleRemoveImage}
                 disabled={uploading}
-                className="bg-white dark:bg-gray-800 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                className="bg-surface-200 p-2 rounded-full hover:bg-surface-300 transition-colors"
                 title="Remove image"
               >
                 <X className="h-5 w-5 text-red-600" />
@@ -186,13 +186,13 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
           {/* Upload status indicators */}
           {uploading && (
-            <div className="absolute top-2 right-2 bg-white dark:bg-gray-800 rounded-full p-2 shadow-lg">
+            <div className="absolute top-2 right-2 bg-surface-200 rounded-full p-2 shadow-lg">
               <Loader2 className="h-5 w-5 text-primary-600 animate-spin" />
             </div>
           )}
           {uploadSuccess && (
             <div className="absolute top-2 right-2 bg-green-500 rounded-full p-2 shadow-lg">
-              <Check className="h-5 w-5 text-white" />
+              <Check className="h-5 w-5 text-ink" />
             </div>
           )}
         </div>
@@ -202,24 +202,24 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           disabled={uploading}
           className={cn(
             'w-full h-48 border-2 border-dashed rounded-lg transition-colors flex flex-col items-center justify-center gap-3',
-            'border-gray-300 dark:border-gray-600 hover:border-primary-500 dark:hover:border-primary-500',
-            'bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-750',
+            'border-line-strong hover:border-primary-500',
+            'bg-surface-200 hover:bg-surface-300 hover:bg-gray-750',
             uploading && 'opacity-50 cursor-not-allowed'
           )}
         >
           {uploading ? (
             <>
               <Loader2 className="h-10 w-10 text-primary-600 animate-spin" />
-              <p className="text-sm text-gray-600 dark:text-gray-400">Uploading...</p>
+              <p className="text-sm text-ink-muted">Uploading...</p>
             </>
           ) : (
             <>
-              <ImageIcon className="h-10 w-10 text-gray-400 dark:text-gray-500" />
+              <ImageIcon className="h-10 w-10 text-ink-muted" />
               <div className="text-center">
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                <p className="text-sm font-medium text-ink-muted">
                   {buttonText}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                <p className="text-xs text-ink-muted mt-1">
                   Max size: {maxSizeMB}MB
                 </p>
               </div>

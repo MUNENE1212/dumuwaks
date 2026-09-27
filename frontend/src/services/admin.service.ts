@@ -162,6 +162,14 @@ export const getUsers = async (params: {
 };
 
 /**
+ * Mark a technician ID-verified (or remove it) after checking their ID
+ */
+export const setTechnicianVerification = async (userId: string, verified: boolean) => {
+  const response = await axios.patch(`/admin/users/${userId}/verification`, { verified });
+  return response.data.data as { verification: { isVerified: boolean; verifiedAt: string | null } };
+};
+
+/**
  * Update user status (activate/suspend/ban)
  */
 export const updateUserStatus = async (

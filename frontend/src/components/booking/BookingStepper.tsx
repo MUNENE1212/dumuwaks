@@ -82,9 +82,9 @@ const BookingStepper: React.FC<BookingStepperProps> = ({
                     'w-10 h-10 rounded-full flex items-center justify-center',
                     'font-bold text-sm transition-all duration-200',
                     {
-                      'bg-circuit text-mahogany': status === 'active',
+                      'bg-lumen text-on-lumen': status === 'active',
                       'bg-success text-bone': status === 'completed',
-                      'bg-charcoal border-2 border-subtle text-steel': status === 'pending',
+                      'bg-charcoal border-2 border-line text-steel': status === 'pending',
                     }
                   )}
                 >
@@ -120,7 +120,7 @@ const BookingStepper: React.FC<BookingStepperProps> = ({
                     'transition-colors duration-200',
                     {
                       'bg-success': getStepStatus(step.id) === 'completed',
-                      'bg-subtle': getStepStatus(step.id) !== 'completed',
+                      'bg-surface-300': getStepStatus(step.id) !== 'completed',
                     }
                   )}
                   aria-hidden="true"
@@ -145,7 +145,7 @@ const BookingStepper: React.FC<BookingStepperProps> = ({
         {/* Progress Bar */}
         <div className="w-full h-2 bg-charcoal rounded-full overflow-hidden">
           <div
-            className="h-full bg-circuit transition-all duration-300 ease-out"
+            className="h-full bg-lumen transition-all duration-300 ease-out"
             style={{ width: `${(currentStep / steps.length) * 100}%` }}
             role="progressbar"
             aria-valuenow={currentStep}
@@ -168,9 +168,9 @@ const BookingStepper: React.FC<BookingStepperProps> = ({
                 className={clsx(
                   'w-3 h-3 rounded-full transition-all duration-200',
                   {
-                    'bg-circuit': status === 'active',
+                    'bg-lumen': status === 'active',
                     'bg-success': status === 'completed',
-                    'bg-subtle': status === 'pending',
+                    'bg-surface-300': status === 'pending',
                     'cursor-pointer': allowNavigation && status === 'completed',
                     'cursor-default': !allowNavigation || status !== 'completed',
                   }

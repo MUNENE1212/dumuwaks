@@ -86,7 +86,7 @@ const Alert: React.FC<AlertProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="inline-flex rounded-md p-1.5 hover:bg-opacity-20 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2"
+              className="inline-flex rounded-md p-1.5 hover:bg-opacity-20 hover:bg-surface-100 focus:outline-none focus:ring-2 focus:ring-offset-2"
             >
               <span className="sr-only">Dismiss</span>
               <X className="h-4 w-4" />

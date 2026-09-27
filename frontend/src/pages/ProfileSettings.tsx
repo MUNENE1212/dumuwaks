@@ -33,6 +33,8 @@ import {
 import { cn } from '@/lib/utils';
 import { geocodeAddress, getCurrentCoordinates } from '@/services/geocoding.service';
 import toast from 'react-hot-toast';
+import WhatsAppUpdatesCard from '@/components/profile/WhatsAppUpdatesCard';
+import PayoutDetailsCard from '@/components/profile/PayoutDetailsCard';
 
 interface Skill {
   name: string;
@@ -329,7 +331,7 @@ const ProfileSettings: React.FC = () => {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="flex items-center text-3xl font-bold text-bone">
-              <Settings className="mr-3 h-8 w-8 text-circuit" />
+              <Settings className="mr-3 h-8 w-8 text-lumen-ink" />
               Profile Settings
             </h1>
             <p className="mt-2 text-steel">
@@ -369,7 +371,7 @@ const ProfileSettings: React.FC = () => {
         {/* Profile Picture Section */}
         <div className="glass-card rounded-lg p-6">
           <h2 className="mb-4 flex items-center text-xl font-semibold text-bone">
-            <Camera className="mr-2 h-5 w-5 text-circuit" />
+            <Camera className="mr-2 h-5 w-5 text-lumen-ink" />
             Profile Picture
           </h2>
           <div className="space-y-4">
@@ -377,7 +379,7 @@ const ProfileSettings: React.FC = () => {
               <img
                 src={profilePictureUrl || user.profilePicture || `https://ui-avatars.com/api/?name=${user.firstName}+${user.lastName}&background=random`}
                 alt="Profile"
-                className="h-20 w-20 rounded-full object-cover ring-4 ring-circuit/30"
+                className="h-20 w-20 rounded-full object-cover ring-4 ring-lumen/30"
               />
               <div>
                 <p className="text-sm font-medium text-bone">
@@ -402,7 +404,7 @@ const ProfileSettings: React.FC = () => {
         {/* Basic Information */}
         <div className="glass-card rounded-lg p-6">
           <h2 className="mb-4 flex items-center text-xl font-semibold text-bone">
-            <User className="mr-2 h-5 w-5 text-circuit" />
+            <User className="mr-2 h-5 w-5 text-lumen-ink" />
             Basic Information
           </h2>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -419,7 +421,7 @@ const ProfileSettings: React.FC = () => {
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleInputChange}
-                className="mt-1 w-full rounded-lg border border-subtle bg-charcoal text-bone px-4 py-2 focus:border-circuit focus:outline-none focus:ring-2 focus:ring-circuit/20"
+                className="mt-1 w-full rounded-lg border border-line bg-charcoal text-bone px-4 py-2 focus:border-lumen focus:outline-none focus:ring-2 focus:ring-lumen/20"
                 required
               />
             </div>
@@ -437,7 +439,7 @@ const ProfileSettings: React.FC = () => {
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleInputChange}
-                className="mt-1 w-full rounded-lg border border-subtle bg-charcoal text-bone px-4 py-2 focus:border-circuit focus:outline-none focus:ring-2 focus:ring-circuit/20"
+                className="mt-1 w-full rounded-lg border border-line bg-charcoal text-bone px-4 py-2 focus:border-lumen focus:outline-none focus:ring-2 focus:ring-lumen/20"
                 required
               />
             </div>
@@ -456,7 +458,7 @@ const ProfileSettings: React.FC = () => {
                   id="email"
                   value={user.email}
                   disabled
-                  className="w-full rounded-lg border border-subtle bg-mahogany py-2 pl-10 pr-4 text-steel"
+                  className="w-full rounded-lg border border-line bg-surface-100 py-2 pl-10 pr-4 text-steel"
                 />
               </div>
               <p className="mt-1 text-xs text-steel">
@@ -479,7 +481,7 @@ const ProfileSettings: React.FC = () => {
                   name="phoneNumber"
                   value={formData.phoneNumber}
                   onChange={handleInputChange}
-                  className="w-full rounded-lg border border-subtle bg-charcoal text-bone py-2 pl-10 pr-4 focus:border-circuit focus:outline-none focus:ring-2 focus:ring-circuit/20"
+                  className="w-full rounded-lg border border-line bg-charcoal text-bone py-2 pl-10 pr-4 focus:border-lumen focus:outline-none focus:ring-2 focus:ring-lumen/20"
                 />
               </div>
             </div>
@@ -497,7 +499,7 @@ const ProfileSettings: React.FC = () => {
                 value={formData.bio}
                 onChange={handleInputChange}
                 rows={4}
-                className="mt-1 w-full rounded-lg border border-subtle bg-charcoal text-bone px-4 py-2 focus:border-circuit focus:outline-none focus:ring-2 focus:ring-circuit/20 placeholder:text-steel"
+                className="mt-1 w-full rounded-lg border border-line bg-charcoal text-bone px-4 py-2 focus:border-lumen focus:outline-none focus:ring-2 focus:ring-lumen/20 placeholder:text-steel"
                 placeholder="Tell us about yourself..."
               />
               <p className="mt-1 text-xs text-steel">
@@ -510,7 +512,7 @@ const ProfileSettings: React.FC = () => {
         {/* Location Information */}
         <div className="glass-card rounded-lg p-6">
           <h2 className="mb-4 flex items-center text-xl font-semibold text-bone">
-            <MapPin className="mr-2 h-5 w-5 text-circuit" />
+            <MapPin className="mr-2 h-5 w-5 text-lumen-ink" />
             Location Information
           </h2>
           <p className="mb-4 text-sm text-steel">
@@ -532,7 +534,7 @@ const ProfileSettings: React.FC = () => {
                 name="location.address"
                 value={formData.location.address}
                 onChange={handleInputChange}
-                className="mt-1 w-full rounded-lg border border-subtle bg-charcoal text-bone px-4 py-2 focus:border-circuit focus:outline-none focus:ring-2 focus:ring-circuit/20 placeholder:text-steel"
+                className="mt-1 w-full rounded-lg border border-line bg-charcoal text-bone px-4 py-2 focus:border-lumen focus:outline-none focus:ring-2 focus:ring-lumen/20 placeholder:text-steel"
                 placeholder="Street address"
               />
             </div>
@@ -550,7 +552,7 @@ const ProfileSettings: React.FC = () => {
                 name="location.city"
                 value={formData.location.city}
                 onChange={handleInputChange}
-                className="mt-1 w-full rounded-lg border border-subtle bg-charcoal text-bone px-4 py-2 focus:border-circuit focus:outline-none focus:ring-2 focus:ring-circuit/20 placeholder:text-steel"
+                className="mt-1 w-full rounded-lg border border-line bg-charcoal text-bone px-4 py-2 focus:border-lumen focus:outline-none focus:ring-2 focus:ring-lumen/20 placeholder:text-steel"
                 placeholder="e.g., Nairobi"
                 required
               />
@@ -569,7 +571,7 @@ const ProfileSettings: React.FC = () => {
                 name="location.county"
                 value={formData.location.county}
                 onChange={handleInputChange}
-                className="mt-1 w-full rounded-lg border border-subtle bg-charcoal text-bone px-4 py-2 focus:border-circuit focus:outline-none focus:ring-2 focus:ring-circuit/20 placeholder:text-steel"
+                className="mt-1 w-full rounded-lg border border-line bg-charcoal text-bone px-4 py-2 focus:border-lumen focus:outline-none focus:ring-2 focus:ring-lumen/20 placeholder:text-steel"
                 placeholder="e.g., Nairobi County"
               />
             </div>
@@ -587,7 +589,7 @@ const ProfileSettings: React.FC = () => {
                 name="location.country"
                 value={formData.location.country}
                 onChange={handleInputChange}
-                className="mt-1 w-full rounded-lg border border-subtle bg-charcoal text-bone px-4 py-2 focus:border-circuit focus:outline-none focus:ring-2 focus:ring-circuit/20 placeholder:text-steel"
+                className="mt-1 w-full rounded-lg border border-line bg-charcoal text-bone px-4 py-2 focus:border-lumen focus:outline-none focus:ring-2 focus:ring-lumen/20 placeholder:text-steel"
                 placeholder="Kenya"
               />
             </div>
@@ -660,13 +662,17 @@ const ProfileSettings: React.FC = () => {
           </div>
         </div>
 
+        <WhatsAppUpdatesCard phoneNumber={user.phoneNumber} />
+
+        {user.role === 'technician' && <PayoutDetailsCard />}
+
         {/* Technician-specific sections */}
         {user.role === 'technician' && (
           <>
             {/* Availability Toggle */}
             <div className="glass-card rounded-lg p-6">
               <h2 className="mb-4 flex items-center text-xl font-semibold text-bone">
-                <CheckCircle className="mr-2 h-5 w-5 text-circuit" />
+                <CheckCircle className="mr-2 h-5 w-5 text-lumen-ink" />
                 Availability Status
               </h2>
               <div className="flex items-center justify-between">
@@ -714,7 +720,7 @@ const ProfileSettings: React.FC = () => {
             {/* My Services - WORD BANK Integration */}
             <div className="glass-card rounded-lg p-6">
               <div className="flex items-center gap-2 mb-4">
-                <Briefcase className="h-5 w-5 text-circuit" />
+                <Briefcase className="h-5 w-5 text-lumen-ink" />
                 <h2 className="text-xl font-semibold text-bone">
                   My Services
                 </h2>

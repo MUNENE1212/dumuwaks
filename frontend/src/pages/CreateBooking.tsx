@@ -456,7 +456,7 @@ const CreateBooking: React.FC = () => {
 
       {/* Technician Info (if from matching) */}
       {locationState?.technician && (
-        <div className="mb-6 rounded-lg border border-circuit/30 bg-circuit/10 p-4">
+        <div className="mb-6 rounded-lg border border-lumen/30 bg-lumen/10 p-4">
           <div className="flex items-center space-x-4">
             {locationState.technician.profilePicture ? (
               <img
@@ -465,7 +465,7 @@ const CreateBooking: React.FC = () => {
                 className="h-16 w-16 rounded-full object-cover"
               />
             ) : (
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-circuit/30 text-2xl font-bold text-circuit">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-lumen/30 text-2xl font-bold text-lumen-ink">
                 {locationState.technician.firstName[0]}
                 {locationState.technician.lastName[0]}
               </div>
@@ -495,7 +495,7 @@ const CreateBooking: React.FC = () => {
         {/* Service Details */}
         <div className="rounded-lg border border-steel/30 bg-charcoal p-6 shadow-glass">
           <h2 className="mb-4 flex items-center text-lg font-semibold text-bone">
-            <FileText className="mr-2 h-5 w-5 text-circuit" />
+            <FileText className="mr-2 h-5 w-5 text-lumen-ink" />
             Service Details
           </h2>
 
@@ -538,8 +538,8 @@ const CreateBooking: React.FC = () => {
 
             {/* Show error if category not selected */}
             {!formData.serviceCategory && (
-              <div className="rounded-lg border border-circuit/30 bg-circuit/10 p-4">
-                <p className="text-sm text-circuit">
+              <div className="rounded-lg border border-lumen/30 bg-lumen/10 p-4">
+                <p className="text-sm text-lumen-ink">
                   Please select a service category first to see available service types.
                 </p>
               </div>
@@ -560,7 +560,7 @@ const CreateBooking: React.FC = () => {
                 maxLength={maxDescriptionLength}
                 className={clsx(
                   'flex w-full rounded-md border bg-charcoal px-3 py-2.5 text-sm text-bone',
-                  'placeholder:text-steel/60 focus:outline-none focus:ring-2 focus:ring-circuit focus:border-transparent',
+                  'placeholder:text-steel/60 focus:outline-none focus:ring-2 focus:ring-lumen focus:border-transparent',
                   'disabled:cursor-not-allowed disabled:opacity-50 resize-none',
                   errors.description ? 'border-error' : 'border-steel/40'
                 )}
@@ -597,9 +597,9 @@ const CreateBooking: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-circuit/10 rounded-lg p-4 border border-circuit/30">
+            <div className="bg-lumen/10 rounded-lg p-4 border border-lumen/30">
               <p className="text-sm text-bone">
-                <span className="font-semibold text-circuit">Pricing Tip:</span> Urgency level is automatically calculated based on your scheduled date and time:
+                <span className="font-semibold text-lumen-ink">Pricing Tip:</span> Urgency level is automatically calculated based on your scheduled date and time:
               </p>
               <ul className="mt-2 text-xs text-steel space-y-1 ml-4">
                 <li>• Within 4 hours = Emergency (2.0× base price)</li>
@@ -614,7 +614,7 @@ const CreateBooking: React.FC = () => {
         {/* Scheduling */}
         <div className="rounded-lg border border-steel/30 bg-charcoal p-6 shadow-glass">
           <h2 className="mb-4 flex items-center text-lg font-semibold text-bone">
-            <Calendar className="mr-2 h-5 w-5 text-circuit" />
+            <Calendar className="mr-2 h-5 w-5 text-lumen-ink" />
             Scheduling
           </h2>
 
@@ -686,18 +686,18 @@ const CreateBooking: React.FC = () => {
                   'flex items-center gap-2 px-3 py-2 rounded-lg border transition-all duration-200',
                   'text-sm font-medium',
                   useSavedAddress
-                    ? 'bg-circuit/20 border-circuit text-circuit'
-                    : 'bg-transparent border-steel/40 text-steel hover:border-circuit hover:text-circuit',
+                    ? 'bg-lumen/20 border-lumen text-lumen-ink'
+                    : 'bg-transparent border-steel/40 text-steel hover:border-lumen hover:text-lumen-ink',
                   isCreating && 'opacity-50 cursor-not-allowed'
                 )}
               >
                 <div className={clsx(
                   'w-4 h-4 rounded border flex items-center justify-center transition-colors',
                   useSavedAddress
-                    ? 'bg-circuit border-circuit'
+                    ? 'bg-lumen border-lumen'
                     : 'border-steel/60 bg-transparent'
                 )}>
-                  {useSavedAddress && <Check className="w-3 h-3 text-white" />}
+                  {useSavedAddress && <Check className="w-3 h-3 text-ink" />}
                 </div>
                 <span>Use my saved address</span>
               </button>
@@ -737,7 +737,7 @@ const CreateBooking: React.FC = () => {
         {isLoadingEstimate && (
           <div className="mt-6 rounded-lg border border-steel/30 bg-charcoal p-6 shadow-glass">
             <div className="flex items-center justify-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-circuit"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-lumen"></div>
               <span className="ml-3 text-steel">Calculating price estimate...</span>
             </div>
           </div>

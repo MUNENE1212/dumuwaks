@@ -144,7 +144,7 @@ const PaymentStatusTracker: React.FC<PaymentStatusTrackerProps> = ({
       case 'timeout':
         return <XCircle className="w-8 h-8 text-red-500" />;
       default:
-        return <Clock className="w-8 h-8 text-gray-400" />;
+        return <Clock className="w-8 h-8 text-ink-muted" />;
     }
   };
 
@@ -168,14 +168,14 @@ const PaymentStatusTracker: React.FC<PaymentStatusTrackerProps> = ({
   const getStatusColor = () => {
     switch (trackerStatus) {
       case 'polling':
-        return 'text-blue-600 dark:text-blue-400';
+        return 'text-blue-400';
       case 'success':
-        return 'text-green-600 dark:text-green-400';
+        return 'text-green-400';
       case 'failed':
       case 'timeout':
-        return 'text-red-600 dark:text-red-400';
+        return 'text-red-400';
       default:
-        return 'text-gray-600 dark:text-gray-400';
+        return 'text-ink-muted';
     }
   };
 
@@ -194,7 +194,7 @@ const PaymentStatusTracker: React.FC<PaymentStatusTrackerProps> = ({
         onContinue={onContinue ?? (() => setShowCelebrationModal(false))}
       />
 
-      <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+      <div className="bg-surface-200 rounded-xl p-6 shadow-lg">
         {/* Status Icon */}
         <div className="flex flex-col items-center mb-4">
           {getStatusIcon()}
@@ -203,13 +203,13 @@ const PaymentStatusTracker: React.FC<PaymentStatusTrackerProps> = ({
       {/* Progress Bar */}
       {trackerStatus === 'polling' && (
         <div className="mb-4">
-          <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+          <div className="h-2 bg-surface-300 rounded-full overflow-hidden">
             <div
               className="h-full bg-blue-500 transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 text-center">
+          <p className="text-xs text-ink-muted mt-1 text-center">
             Attempt {attempts + 1} of {maxPollingAttempts}
           </p>
         </div>
@@ -222,16 +222,16 @@ const PaymentStatusTracker: React.FC<PaymentStatusTrackerProps> = ({
 
       {/* Payment Status Details */}
       {paymentStatus && (
-        <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 mb-4">
+        <div className="bg-surface-300 rounded-lg p-3 mb-4">
           <div className="flex justify-between items-center text-sm">
-            <span className="text-gray-500 dark:text-gray-400">Status:</span>
+            <span className="text-ink-muted">Status:</span>
             <span className={`font-medium ${getStatusColor()}`}>
               {paymentStatus.charAt(0).toUpperCase() + paymentStatus.slice(1)}
             </span>
           </div>
           <div className="flex justify-between items-center text-sm mt-1">
-            <span className="text-gray-500 dark:text-gray-400">Transaction ID:</span>
-            <span className="font-mono text-xs text-gray-700 dark:text-gray-300">
+            <span className="text-ink-muted">Transaction ID:</span>
+            <span className="font-mono text-xs text-ink-muted">
               {transactionId.substring(0, 12)}...
             </span>
           </div>
@@ -240,10 +240,10 @@ const PaymentStatusTracker: React.FC<PaymentStatusTrackerProps> = ({
 
       {/* Error Message */}
       {errorMessage && (trackerStatus === 'failed' || trackerStatus === 'timeout') && (
-        <div className="bg-red-50 dark:bg-red-900/20 rounded-lg p-3 mb-4 border border-red-200 dark:border-red-800">
+        <div className="bg-red-900/20 rounded-lg p-3 mb-4 border border-red-800">
           <div className="flex items-start gap-2">
             <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-red-700 dark:text-red-300">{errorMessage}</p>
+            <p className="text-sm text-red-300">{errorMessage}</p>
           </div>
         </div>
       )}
@@ -264,7 +264,7 @@ const PaymentStatusTracker: React.FC<PaymentStatusTrackerProps> = ({
         )}
 
         {trackerStatus === 'success' && (
-          <div className="text-center text-green-600 dark:text-green-400">
+          <div className="text-center text-green-400">
             <CheckCircle className="w-6 h-6 inline-block mr-2" />
             Payment Complete
           </div>
@@ -273,7 +273,7 @@ const PaymentStatusTracker: React.FC<PaymentStatusTrackerProps> = ({
 
       {/* Help Text */}
       {trackerStatus === 'polling' && (
-        <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
+        <p className="text-xs text-ink-muted text-center mt-4">
           Please check your phone for M-Pesa confirmation. This may take up to{' '}
           {Math.ceil((maxPollingAttempts * pollingInterval) / 1000 / 60)} minutes.
         </p>

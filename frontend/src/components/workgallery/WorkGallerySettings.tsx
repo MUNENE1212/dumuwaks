@@ -105,12 +105,12 @@ const WorkGallerySettings: React.FC<WorkGallerySettingsProps> = ({
 
   if (isLoading) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
+      <div className="bg-surface-200 rounded-xl shadow-sm p-6">
         <div className="animate-pulse space-y-4">
-          <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/3" />
+          <div className="h-6 bg-surface-300 rounded w-1/3" />
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="aspect-square bg-gray-200 dark:bg-gray-700 rounded-lg" />
+              <div key={i} className="aspect-square bg-surface-300 rounded-lg" />
             ))}
           </div>
         </div>
@@ -119,14 +119,14 @@ const WorkGallerySettings: React.FC<WorkGallerySettingsProps> = ({
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden">
+    <div className="bg-surface-200 rounded-xl shadow-sm overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-700">
+      <div className="flex items-center justify-between p-4 border-b border-line">
         <div>
-          <h3 className="font-semibold text-gray-900 dark:text-white">
+          <h3 className="font-semibold text-ink dark:text-ink">
             Work Gallery
           </h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-sm text-ink-muted mt-1">
             Showcase your best work to attract customers ({images.length}/{IMAGE_CONSTRAINTS.MAX_IMAGES})
           </p>
         </div>
@@ -136,8 +136,8 @@ const WorkGallerySettings: React.FC<WorkGallerySettingsProps> = ({
           className={cn(
             'inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors',
             remainingSlots > 0 && !isUploading
-              ? 'bg-primary-600 text-white hover:bg-primary-700'
-              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              ? 'bg-primary-600 text-on-lumen hover:bg-primary-700'
+              : 'bg-line-strong text-ink-muted cursor-not-allowed'
           )}
         >
           <Plus className="h-4 w-4" />
@@ -147,8 +147,8 @@ const WorkGallerySettings: React.FC<WorkGallerySettingsProps> = ({
 
       {/* Full Warning */}
       {remainingSlots === 0 && (
-        <div className="mx-4 mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-          <p className="text-sm text-yellow-800 dark:text-yellow-200">
+        <div className="mx-4 mt-4 p-3 bg-yellow-900/20 border border-yellow-800 rounded-lg">
+          <p className="text-sm text-yellow-200">
             You have reached the maximum of {IMAGE_CONSTRAINTS.MAX_IMAGES} images. Delete an existing image to add a new one.
           </p>
         </div>
@@ -157,9 +157,9 @@ const WorkGallerySettings: React.FC<WorkGallerySettingsProps> = ({
       {/* Images Grid */}
       <div className="p-4">
         {reorderedImages.length === 0 ? (
-          <div className="text-center py-12 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-lg">
+          <div className="text-center py-12 border-2 border-dashed border-line rounded-lg">
             <svg
-              className="mx-auto h-12 w-12 text-gray-400"
+              className="mx-auto h-12 w-12 text-ink-muted"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -171,10 +171,10 @@ const WorkGallerySettings: React.FC<WorkGallerySettingsProps> = ({
                 d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
-            <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">
+            <h3 className="mt-2 text-sm font-medium text-ink dark:text-ink">
               No images yet
             </h3>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-sm text-ink-muted">
               Add up to {IMAGE_CONSTRAINTS.MAX_IMAGES} images to showcase your work
             </p>
           </div>
@@ -191,11 +191,11 @@ const WorkGallerySettings: React.FC<WorkGallerySettingsProps> = ({
                   'relative group rounded-lg overflow-hidden border-2 transition-all',
                   draggedItem === index
                     ? 'border-primary-500 scale-105'
-                    : 'border-gray-200 dark:border-gray-700'
+                    : 'border-line'
                 )}
               >
                 {/* Drag Handle */}
-                <div className="absolute top-2 left-2 bg-black/50 text-white p-1.5 rounded cursor-grab opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                <div className="absolute top-2 left-2 bg-surface-000/50 text-ink p-1.5 rounded cursor-grab opacity-0 group-hover:opacity-100 transition-opacity z-10">
                   <GripVertical className="h-4 w-4" />
                 </div>
 
@@ -207,19 +207,19 @@ const WorkGallerySettings: React.FC<WorkGallerySettingsProps> = ({
                 />
 
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute inset-0 bg-surface-000/60 opacity-0 group-hover:opacity-100 transition-opacity">
                   {/* Actions */}
                   <div className="absolute bottom-0 left-0 right-0 p-3 flex gap-2">
                     <button
                       onClick={() => handleEdit(image)}
-                      className="flex-1 bg-white/90 hover:bg-white text-gray-900 py-2 rounded-lg flex items-center justify-center gap-1.5 transition-colors"
+                      className="flex-1 bg-ink/90 hover:bg-surface-200 text-ink py-2 rounded-lg flex items-center justify-center gap-1.5 transition-colors"
                     >
                       <Pencil className="h-4 w-4" />
                       Edit
                     </button>
                     <button
                       onClick={() => handleDelete(image._id)}
-                      className="bg-red-500/90 hover:bg-red-500 text-white py-2 px-3 rounded-lg transition-colors"
+                      className="bg-red-500/90 hover:bg-red-500 text-on-lumen py-2 px-3 rounded-lg transition-colors"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -239,19 +239,19 @@ const WorkGallerySettings: React.FC<WorkGallerySettingsProps> = ({
                 </div>
 
                 {/* Order Badge */}
-                <div className="absolute top-2 left-2 bg-white/90 dark:bg-gray-800/90 text-gray-900 dark:text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">
+                <div className="absolute top-2 left-2 bg-surface-200/90 text-ink text-ink text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">
                   {index + 1}
                 </div>
 
                 {/* Edit Mode Overlay */}
                 {editingImage?._id === image._id && (
-                  <div className="absolute inset-0 bg-white dark:bg-gray-800 p-3 flex flex-col">
+                  <div className="absolute inset-0 bg-surface-200 p-3 flex flex-col">
                     <div className="flex-1 space-y-2">
                       <textarea
                         value={editCaption}
                         onChange={(e) => setEditCaption(e.target.value)}
                         placeholder="Add a caption..."
-                        className="w-full h-20 px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md resize-none dark:bg-gray-700 dark:text-white"
+                        className="w-full h-20 px-2 py-1.5 text-sm border border-line-strong rounded-md resize-none bg-surface-300 text-ink"
                         maxLength={500}
                       />
                       <input
@@ -259,21 +259,21 @@ const WorkGallerySettings: React.FC<WorkGallerySettingsProps> = ({
                         value={editLocation}
                         onChange={(e) => setEditLocation(e.target.value)}
                         placeholder="Location"
-                        className="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white"
+                        className="w-full px-2 py-1.5 text-sm border border-line-strong rounded-md bg-surface-300 text-ink"
                         maxLength={200}
                       />
                     </div>
                     <div className="flex gap-2 mt-2">
                       <button
                         onClick={handleSaveEdit}
-                        className="flex-1 bg-primary-600 text-white py-1.5 rounded-md flex items-center justify-center gap-1"
+                        className="flex-1 bg-primary-600 text-on-lumen py-1.5 rounded-md flex items-center justify-center gap-1"
                       >
                         <Check className="h-4 w-4" />
                         Save
                       </button>
                       <button
                         onClick={handleCancelEdit}
-                        className="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 py-1.5 px-3 rounded-md"
+                        className="bg-surface-300 text-ink-muted py-1.5 px-3 rounded-md"
                       >
                         <X className="h-4 w-4" />
                       </button>

@@ -122,7 +122,7 @@ export const EscrowStatusCard: React.FC<EscrowStatusCardProps> = ({
                 {ESCROW_STATUS_LABELS[escrow.status]}
               </h3>
               {booking?.bookingNumber && (
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-ink-muted">
                   Booking: {booking.bookingNumber}
                 </p>
               )}
@@ -139,23 +139,23 @@ export const EscrowStatusCard: React.FC<EscrowStatusCardProps> = ({
       <CardContent className="pt-6">
         {/* Amount Breakdown */}
         <div className="space-y-4">
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+          <h4 className="text-sm font-medium text-ink-muted uppercase tracking-wider">
             Payment Summary
           </h4>
 
           <div className="space-y-3">
             {/* Total Amount */}
-            <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
-              <span className="text-gray-600 dark:text-gray-300">Total Amount</span>
-              <span className="text-xl font-bold text-gray-900 dark:text-white">
+            <div className="flex justify-between items-center py-2 border-b border-line">
+              <span className="text-ink-muted">Total Amount</span>
+              <span className="text-xl font-bold text-ink dark:text-ink">
                 {formatKES(escrow.totalAmount)}
               </span>
             </div>
 
             {/* Platform Fee */}
             <div className="flex justify-between items-center text-sm">
-              <span className="text-gray-500 dark:text-gray-400">Platform Fee</span>
-              <span className="text-gray-600 dark:text-gray-300">
+              <span className="text-ink-muted">Platform Fee</span>
+              <span className="text-ink-muted">
                 - {formatKES(escrow.platformFee)}
               </span>
             </div>
@@ -163,19 +163,19 @@ export const EscrowStatusCard: React.FC<EscrowStatusCardProps> = ({
             {/* Tax */}
             {escrow.tax > 0 && (
               <div className="flex justify-between items-center text-sm">
-                <span className="text-gray-500 dark:text-gray-400">VAT</span>
-                <span className="text-gray-600 dark:text-gray-300">
+                <span className="text-ink-muted">VAT</span>
+                <span className="text-ink-muted">
                   - {formatKES(escrow.tax)}
                 </span>
               </div>
             )}
 
             {/* Technician Payout */}
-            <div className="flex justify-between items-center py-2 border-t border-gray-100 dark:border-gray-700">
-              <span className="font-medium text-gray-700 dark:text-gray-200">
+            <div className="flex justify-between items-center py-2 border-t border-line">
+              <span className="font-medium text-ink">
                 Technician Receives
               </span>
-              <span className="text-lg font-semibold text-green-600 dark:text-green-400">
+              <span className="text-lg font-semibold text-green-400">
                 {formatKES(escrow.technicianPayout)}
               </span>
             </div>
@@ -185,7 +185,7 @@ export const EscrowStatusCard: React.FC<EscrowStatusCardProps> = ({
         {/* Milestones */}
         {escrow.milestones && escrow.milestones.length > 0 && (
           <div className="mt-6">
-            <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
+            <h4 className="text-sm font-medium text-ink-muted uppercase tracking-wider mb-3">
               Milestones
             </h4>
             <div className="space-y-2">
@@ -194,18 +194,18 @@ export const EscrowStatusCard: React.FC<EscrowStatusCardProps> = ({
                   key={milestone._id || index}
                   className={clsx(
                     'flex items-center justify-between p-3 rounded-lg',
-                    'bg-gray-50 dark:bg-gray-800/50',
-                    milestone.status === 'released' && 'bg-green-50 dark:bg-green-900/20',
-                    milestone.status === 'refunded' && 'bg-purple-50 dark:bg-purple-900/20'
+                    'bg-surface-200/50',
+                    milestone.status === 'released' && 'bg-green-900/20',
+                    milestone.status === 'refunded' && 'bg-purple-900/20'
                   )}
                 >
                   <div className="flex items-center gap-2">
                     <MilestoneStatusBadge status={milestone.status} />
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
+                    <span className="text-sm font-medium text-ink">
                       {milestone.name}
                     </span>
                   </div>
-                  <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                  <span className="text-sm font-semibold text-ink dark:text-ink">
                     {formatKES(milestone.amount)}
                   </span>
                 </div>
@@ -217,39 +217,39 @@ export const EscrowStatusCard: React.FC<EscrowStatusCardProps> = ({
         {/* Participants */}
         <div className="mt-6 grid grid-cols-2 gap-4">
           <div>
-            <h5 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">
+            <h5 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-2">
               Customer
             </h5>
-            <p className="text-sm font-medium text-gray-700 dark:text-gray-200">
+            <p className="text-sm font-medium text-ink">
               {customer?.firstName} {customer?.lastName}
             </p>
             {customer?.phoneNumber && (
-              <p className="text-xs text-gray-500">{customer.phoneNumber}</p>
+              <p className="text-xs text-ink-muted">{customer.phoneNumber}</p>
             )}
           </div>
           <div>
-            <h5 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">
+            <h5 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-2">
               Technician
             </h5>
-            <p className="text-sm font-medium text-gray-700 dark:text-gray-200">
+            <p className="text-sm font-medium text-ink">
               {technician?.firstName} {technician?.lastName}
             </p>
             {technician?.phoneNumber && (
-              <p className="text-xs text-gray-500">{technician.phoneNumber}</p>
+              <p className="text-xs text-ink-muted">{technician.phoneNumber}</p>
             )}
           </div>
         </div>
 
         {/* Latest Activity */}
         {latestHistory && (
-          <div className="mt-6 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-            <h5 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">
+          <div className="mt-6 p-3 bg-surface-200/50 rounded-lg">
+            <h5 className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-2">
               Latest Activity
             </h5>
-            <p className="text-sm text-gray-600 dark:text-gray-300">
+            <p className="text-sm text-ink-muted">
               {latestHistory.notes || latestHistory.action}
             </p>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-ink-muted mt-1">
               {new Date(latestHistory.timestamp).toLocaleString()}
             </p>
           </div>
@@ -257,11 +257,11 @@ export const EscrowStatusCard: React.FC<EscrowStatusCardProps> = ({
 
         {/* Dispute Info */}
         {escrow.dispute && escrow.dispute.openedAt && (
-          <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
-            <h5 className="text-sm font-medium text-red-700 dark:text-red-400 mb-1">
+          <div className="mt-4 p-3 bg-red-900/20 rounded-lg border border-red-800">
+            <h5 className="text-sm font-medium text-red-400 mb-1">
               Dispute Opened
             </h5>
-            <p className="text-sm text-red-600 dark:text-red-300">
+            <p className="text-sm text-red-300">
               {escrow.dispute.reason}
             </p>
             {escrow.dispute.resolution && (
@@ -292,7 +292,7 @@ export const EscrowStatusCard: React.FC<EscrowStatusCardProps> = ({
               size="sm"
               onClick={onDispute}
               disabled={isUpdating}
-              className="text-red-600 border-red-300 hover:bg-red-50 dark:text-red-400 dark:border-red-700 dark:hover:bg-red-900/20"
+              className="text-red-400 border-red-700 hover:bg-red-900/20"
             >
               Open Dispute
             </Button>
@@ -332,9 +332,9 @@ export const EscrowStatusCard: React.FC<EscrowStatusCardProps> = ({
  */
 const MilestoneStatusBadge: React.FC<{ status: string }> = ({ status }) => {
   const styles = {
-    pending: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
-    released: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
-    refunded: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
+    pending: 'bg-yellow-900/30 text-yellow-400',
+    released: 'bg-green-900/30 text-green-400',
+    refunded: 'bg-purple-900/30 text-purple-400'
   };
 
   return (

@@ -133,6 +133,8 @@ export interface Booking {
     status: string;
     amount: number;
   };
+  /** `intasend`: full price held in escrow (EscrowPanel). `legacy`: 20% booking fee. */
+  paymentProvider?: 'legacy' | 'intasend';
 }
 
 // Pagination Types

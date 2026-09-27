@@ -40,7 +40,7 @@ export const OfflineIndicator = () => {
             isOnline
               ? 'bg-success-500 dark:bg-success-600'
               : 'bg-error-500 dark:bg-error-600'
-          } text-white px-4 py-3 shadow-lg`}
+          } text-ink px-4 py-3 shadow-lg`}
         >
           <div className="container mx-auto flex items-center justify-center gap-2">
             {isOnline ? (

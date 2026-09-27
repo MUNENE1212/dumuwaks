@@ -29,28 +29,28 @@ const STATUS_CONFIG: Record<
   }
 > = {
   online: {
-    color: 'text-green-700 dark:text-green-300',
+    color: 'text-green-300',
     bgColor: 'bg-green-500',
-    borderColor: 'border-green-200 dark:border-green-800',
+    borderColor: 'border-green-800',
     label: 'Online',
     animate: true,
   },
   busy: {
-    color: 'text-yellow-700 dark:text-yellow-300',
+    color: 'text-yellow-300',
     bgColor: 'bg-yellow-500',
-    borderColor: 'border-yellow-200 dark:border-yellow-800',
+    borderColor: 'border-yellow-800',
     label: 'Busy',
   },
   away: {
-    color: 'text-orange-700 dark:text-orange-300',
+    color: 'text-orange-300',
     bgColor: 'bg-orange-500',
-    borderColor: 'border-orange-200 dark:border-orange-800',
+    borderColor: 'border-orange-800',
     label: 'Away',
   },
   offline: {
-    color: 'text-gray-700 dark:text-gray-300',
-    bgColor: 'bg-gray-400',
-    borderColor: 'border-gray-200 dark:border-gray-700',
+    color: 'text-ink-muted',
+    bgColor: 'bg-ink-faint',
+    borderColor: 'border-line',
     label: 'Offline',
   },
 };

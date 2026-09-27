@@ -79,15 +79,15 @@ export const QRConnectionCard = ({ type, data, onConnect }: QRConnectionCardProp
     <div className="space-y-4">
       {!selectedAction ? (
         /* Action Selection Grid */
-        <Card className="p-6 bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-950 dark:to-secondary-950">
+        <Card className="p-6 bg-primary-950">
           <div className="flex items-center gap-3 mb-4">
-            <QrCode className="h-6 w-6 text-primary-600 dark:text-primary-400" />
-            <h3 className="font-semibold text-lg text-neutral-900 dark:text-white">
+            <QrCode className="h-6 w-6 text-primary-400" />
+            <h3 className="font-semibold text-lg text-ink dark:text-ink">
               Connect with {data.name}
             </h3>
           </div>
 
-          <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-6">
+          <p className="text-sm text-ink-muted mb-6">
             Choose how you want to connect. We'll generate a QR code instantly.
           </p>
 
@@ -102,20 +102,20 @@ export const QRConnectionCard = ({ type, data, onConnect }: QRConnectionCardProp
                   onClick={() => handleActionSelect(connection.type, connection.generateUrl())}
                   className={cn(
                     "relative p-4 rounded-xl border-2 transition-all",
-                    "border-neutral-200 dark:border-neutral-800 hover:border-primary-500 dark:hover:border-primary-500",
-                    "bg-white dark:bg-neutral-900 hover:shadow-lg"
+                    "border-line hover:border-primary-500",
+                    "bg-surface-100 hover:shadow-lg"
                   )}
                 >
-                  <div className={cn("absolute inset-0 bg-gradient-to-br opacity-0 hover:opacity-10 transition-opacity", connection.color)} />
+                  <div className={cn("absolute inset-0 opacity-0 hover:opacity-10 transition-opacity", connection.color)} />
 
-                  <div className={cn("w-12 h-12 rounded-xl bg-gradient-to-br flex items-center justify-center mb-3", connection.color)}>
-                    <Icon className="h-6 w-6 text-white" />
+                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center mb-3", connection.color)}>
+                    <Icon className="h-6 w-6 text-ink" />
                   </div>
 
-                  <p className="font-medium text-sm text-neutral-900 dark:text-white mb-1">
+                  <p className="font-medium text-sm text-ink dark:text-ink mb-1">
                     {connection.label}
                   </p>
-                  <p className="text-xs text-neutral-500 line-clamp-2">
+                  <p className="text-xs text-ink-muted line-clamp-2">
                     {connection.description}
                   </p>
                 </motion.button>
@@ -134,18 +134,18 @@ export const QRConnectionCard = ({ type, data, onConnect }: QRConnectionCardProp
               <div className="flex items-center gap-3">
                 {(() => {
                   const Icon = getActionConfig(selectedAction)?.icon || Link;
-                  const color = getActionConfig(selectedAction)?.color || 'from-neutral-500 to-neutral-600';
+                  const color = getActionConfig(selectedAction)?.color || 'from-ink-faint to-surface-400';
                   return (
-                    <div className={cn("w-10 h-10 rounded-lg bg-gradient-to-br flex items-center justify-center", color)}>
-                      <Icon className="h-5 w-5 text-white" />
+                    <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center", color)}>
+                      <Icon className="h-5 w-5 text-ink" />
                     </div>
                   );
                 })()}
                 <div>
-                  <h3 className="font-semibold text-neutral-900 dark:text-white">
+                  <h3 className="font-semibold text-ink dark:text-ink">
                     {getActionConfig(selectedAction)?.label}
                   </h3>
-                  <p className="text-xs text-neutral-500">
+                  <p className="text-xs text-ink-muted">
                     Scan to {getActionConfig(selectedAction)?.label.toLowerCase()}
                   </p>
                 </div>
@@ -177,11 +177,11 @@ export const QRConnectionCard = ({ type, data, onConnect }: QRConnectionCardProp
               }}
             />
 
-            <div className="mt-6 p-4 bg-neutral-50 dark:bg-neutral-800 rounded-xl">
-              <h4 className="font-medium text-sm text-neutral-900 dark:text-white mb-2">
+            <div className="mt-6 p-4 bg-surface-200 rounded-xl">
+              <h4 className="font-medium text-sm text-ink dark:text-ink mb-2">
                 How to use:
               </h4>
-              <ol className="text-xs text-neutral-600 dark:text-neutral-400 space-y-1">
+              <ol className="text-xs text-ink-muted space-y-1">
                 <li>1. Download or screenshot this QR code</li>
                 <li>2. Share with others or print it</li>
                 <li>3. Scan to {getActionConfig(selectedAction)?.label.toLowerCase()}</li>

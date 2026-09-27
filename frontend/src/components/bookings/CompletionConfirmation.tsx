@@ -71,14 +71,14 @@ const CompletionConfirmation: React.FC<CompletionConfirmationProps> = ({ booking
   };
 
   return (
-    <div className="rounded-lg border border-yellow-200 dark:border-yellow-800 bg-yellow-50 dark:bg-yellow-900/20 p-4 sm:p-6">
+    <div className="rounded-lg border border-yellow-800 bg-yellow-900/20 p-4 sm:p-6">
       <div className="flex items-start gap-3">
-        <AlertCircle className="h-6 w-6 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+        <AlertCircle className="h-6 w-6 text-yellow-400 flex-shrink-0 mt-0.5" />
         <div className="flex-1">
-          <h3 className="text-lg font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
+          <h3 className="text-lg font-semibold text-yellow-100 mb-2">
             Job Completion Confirmation Required
           </h3>
-          <p className="text-sm text-yellow-800 dark:text-yellow-300 mb-4">
+          <p className="text-sm text-yellow-300 mb-4">
             The technician has marked this job as completed. Please review the work and confirm whether it meets your expectations.
           </p>
 
@@ -86,7 +86,7 @@ const CompletionConfirmation: React.FC<CompletionConfirmationProps> = ({ booking
             <>
               {/* Optional feedback */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-yellow-900 dark:text-yellow-100 mb-2">
+                <label className="block text-sm font-medium text-yellow-100 mb-2">
                   Additional Feedback (Optional)
                 </label>
                 <textarea
@@ -94,7 +94,7 @@ const CompletionConfirmation: React.FC<CompletionConfirmationProps> = ({ booking
                   onChange={(e) => setFeedback(e.target.value)}
                   placeholder="Share your experience with the service..."
                   rows={3}
-                  className="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-yellow-700 rounded-lg bg-surface-200 text-ink placeholder-ink-faint focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                 />
               </div>
 
@@ -113,7 +113,7 @@ const CompletionConfirmation: React.FC<CompletionConfirmationProps> = ({ booking
                   variant="outline"
                   onClick={() => setShowRejectForm(true)}
                   disabled={isProcessing}
-                  className="flex-1 text-red-600 border-red-300 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center justify-center"
+                  className="flex-1 text-red-600 border-red-300 hover:bg-red-900/20 flex items-center justify-center"
                 >
                   <XCircle className="mr-2 h-4 w-4" />
                   Report Issues
@@ -125,7 +125,7 @@ const CompletionConfirmation: React.FC<CompletionConfirmationProps> = ({ booking
               {/* Rejection Form */}
               <div className="space-y-4 mb-4">
                 <div>
-                  <label className="block text-sm font-medium text-yellow-900 dark:text-yellow-100 mb-2">
+                  <label className="block text-sm font-medium text-yellow-100 mb-2">
                     What issues did you find? <span className="text-red-600">*</span>
                   </label>
                   <textarea
@@ -134,11 +134,11 @@ const CompletionConfirmation: React.FC<CompletionConfirmationProps> = ({ booking
                     placeholder="Please describe the issues with the completed work..."
                     rows={4}
                     required
-                    className="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-yellow-700 rounded-lg bg-surface-200 text-ink placeholder-ink-faint focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-yellow-900 dark:text-yellow-100 mb-2">
+                  <label className="block text-sm font-medium text-yellow-100 mb-2">
                     Additional Comments (Optional)
                   </label>
                   <textarea
@@ -146,7 +146,7 @@ const CompletionConfirmation: React.FC<CompletionConfirmationProps> = ({ booking
                     onChange={(e) => setFeedback(e.target.value)}
                     placeholder="Any additional feedback..."
                     rows={2}
-                    className="w-full px-3 py-2 border border-yellow-300 dark:border-yellow-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-yellow-700 rounded-lg bg-surface-200 text-ink placeholder-ink-faint focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                   />
                 </div>
               </div>
@@ -176,8 +176,8 @@ const CompletionConfirmation: React.FC<CompletionConfirmationProps> = ({ booking
             </>
           )}
 
-          <p className="text-xs text-yellow-600 dark:text-yellow-400 mt-4">
-            <strong>Note:</strong> If you don't respond within 48 hours, our support team will follow up with you. Approving the completion will release payment to the technician.
+          <p className="text-xs text-yellow-400 mt-4">
+            <strong>Note:</strong> Approving releases the held payment to the technician. If you don't respond within 3 days of the technician marking the job done, it is released automatically — report a problem before then if something is wrong.
           </p>
         </div>
       </div>

@@ -82,24 +82,24 @@ const SupportDashboard: React.FC = () => {
 
   const getPriorityColor = (priority: string) => {
     const colors = {
-      low: 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300',
-      medium: 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300',
-      high: 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300',
-      urgent: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300',
+      low: 'bg-surface-200 text-ink-muted',
+      medium: 'bg-blue-900/30 text-blue-300',
+      high: 'bg-orange-900/30 text-orange-300',
+      urgent: 'bg-red-900/30 text-red-300',
     };
     return colors[priority as keyof typeof colors] || colors.low;
   };
 
   const getStatusColor = (status: string) => {
     const colors = {
-      open: 'text-orange-600 dark:text-orange-400',
-      assigned: 'text-blue-600 dark:text-blue-400',
-      in_progress: 'text-blue-600 dark:text-blue-400',
-      resolved: 'text-green-600 dark:text-green-400',
-      closed: 'text-gray-600 dark:text-gray-400',
-      waiting_customer: 'text-yellow-600 dark:text-yellow-400',
-      waiting_internal: 'text-purple-600 dark:text-purple-400',
-      reopened: 'text-red-600 dark:text-red-400',
+      open: 'text-orange-400',
+      assigned: 'text-blue-400',
+      in_progress: 'text-blue-400',
+      resolved: 'text-green-400',
+      closed: 'text-ink-muted',
+      waiting_customer: 'text-yellow-400',
+      waiting_internal: 'text-purple-400',
+      reopened: 'text-red-400',
     };
     return colors[status as keyof typeof colors] || colors.open;
   };
@@ -118,12 +118,12 @@ const SupportDashboard: React.FC = () => {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
         <AlertCircle className="h-12 w-12 text-red-500" />
-        <p className="text-lg text-gray-700 dark:text-gray-300">
+        <p className="text-lg text-ink-muted">
           {error || 'Failed to load dashboard data'}
         </p>
         <button
           onClick={() => window.location.reload()}
-          className="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700"
+          className="px-4 py-2 bg-cyan-600 text-on-lumen rounded-lg hover:bg-cyan-700"
         >
           Retry
         </button>
@@ -136,19 +136,19 @@ const SupportDashboard: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-ink flex items-center gap-2">
             <MessageCircle className="h-8 w-8 text-cyan-600" />
             Support Dashboard
           </h1>
-          <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-1 text-sm text-ink-muted">
             Welcome back, {user?.firstName}! Let's help some customers today.
           </p>
         </div>
 
         {/* Status Indicator */}
-        <div className="flex items-center gap-2 px-4 py-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+        <div className="flex items-center gap-2 px-4 py-2 bg-green-900/20 border border-green-800 rounded-lg">
           <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse"></div>
-          <span className="text-sm font-medium text-green-700 dark:text-green-300">Active</span>
+          <span className="text-sm font-medium text-green-300">Active</span>
         </div>
       </div>
 
@@ -160,8 +160,8 @@ const SupportDashboard: React.FC = () => {
             <AlertCircle className="h-4 w-4 text-orange-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold dark:text-gray-100">{stats.openTickets}</div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+            <div className="text-2xl font-bold text-ink">{stats.openTickets}</div>
+            <p className="text-xs text-ink-muted mt-1">
               {stats.inProgressTickets} in progress
             </p>
           </CardContent>
@@ -173,8 +173,8 @@ const SupportDashboard: React.FC = () => {
             <CheckCircle className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold dark:text-gray-100">{stats.resolvedToday}</div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+            <div className="text-2xl font-bold text-ink">{stats.resolvedToday}</div>
+            <p className="text-xs text-ink-muted mt-1">
               {stats.totalResolved} total
             </p>
           </CardContent>
@@ -186,8 +186,8 @@ const SupportDashboard: React.FC = () => {
             <Clock className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold dark:text-gray-100">{stats.avgResponseTime}m</div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+            <div className="text-2xl font-bold text-ink">{stats.avgResponseTime}m</div>
+            <p className="text-xs text-ink-muted mt-1">
               {stats.agentStats.averageResponseTime}m agent avg
             </p>
           </CardContent>
@@ -199,8 +199,8 @@ const SupportDashboard: React.FC = () => {
             <Star className="h-4 w-4 text-yellow-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold dark:text-gray-100">{stats.satisfactionRating.toFixed(1)}</div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+            <div className="text-2xl font-bold text-ink">{stats.satisfactionRating.toFixed(1)}</div>
+            <p className="text-xs text-ink-muted mt-1">
               Based on {stats.totalRatings} ratings
             </p>
           </CardContent>
@@ -215,8 +215,8 @@ const SupportDashboard: React.FC = () => {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Support Tickets</CardTitle>
-                <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
-                  <RefreshCw className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                <button className="p-2 hover:bg-surface-200 rounded-lg transition-colors">
+                  <RefreshCw className="h-4 w-4 text-ink-muted" />
                 </button>
               </div>
 
@@ -229,8 +229,8 @@ const SupportDashboard: React.FC = () => {
                     className={cn(
                       'px-3 py-1.5 rounded-lg text-sm font-medium whitespace-nowrap transition-colors',
                       filter === f
-                        ? 'bg-cyan-600 text-white'
-                        : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                        ? 'bg-cyan-600 text-on-lumen'
+                        : 'bg-surface-200 text-ink-muted hover:bg-surface-300'
                     )}
                   >
                     {f.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
@@ -242,35 +242,35 @@ const SupportDashboard: React.FC = () => {
               <div className="space-y-3">
                 {tickets.length === 0 ? (
                   <div className="text-center py-12">
-                    <CheckCircle className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-                    <p className="text-gray-600 dark:text-gray-400">No tickets in this category</p>
+                    <CheckCircle className="h-12 w-12 text-ink-muted mx-auto mb-3" />
+                    <p className="text-ink-muted">No tickets in this category</p>
                   </div>
                 ) : (
                   tickets.map((ticket) => (
                     <div
                       key={ticket._id}
                       onClick={() => handleTicketClick(ticket._id)}
-                      className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md dark:hover:shadow-gray-800 transition-all cursor-pointer"
+                      className="p-4 border border-line rounded-lg hover:shadow-md hover:shadow-gray-800 transition-all cursor-pointer"
                     >
                       <div className="flex items-start justify-between gap-3 mb-2">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                            <span className="text-xs font-medium text-ink-muted">
                               {ticket.ticketNumber || ticket._id}
                             </span>
                             <span className={cn('text-xs px-2 py-0.5 rounded-full font-medium', getPriorityColor(ticket.priority))}>
                               {ticket.priority.toUpperCase()}
                             </span>
                             {ticket.isEscalated && (
-                              <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300">
+                              <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-red-900/30 text-red-300">
                                 ESCALATED
                               </span>
                             )}
                           </div>
-                          <h4 className="font-semibold text-gray-900 dark:text-gray-100 truncate">
+                          <h4 className="font-semibold text-ink truncate">
                             {ticket.subject}
                           </h4>
-                          <div className="flex items-center gap-3 mt-2 text-xs text-gray-600 dark:text-gray-400">
+                          <div className="flex items-center gap-3 mt-2 text-xs text-ink-muted">
                             <span className="flex items-center gap-1">
                               <Users className="h-3 w-3" />
                               {typeof ticket.customer === 'object' ? `${ticket.customer.firstName} ${ticket.customer.lastName}` : ticket.customerDetails ? `${ticket.customerDetails.firstName} ${ticket.customerDetails.lastName}` : 'Unknown'}
@@ -292,7 +292,7 @@ const SupportDashboard: React.FC = () => {
                           <div className={cn('text-sm font-medium capitalize', getStatusColor(ticket.status))}>
                             {ticket.status.replace('_', ' ')}
                           </div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                          <div className="text-xs text-ink-muted mt-1">
                             {formatDistanceToNow(new Date(ticket.createdAt), { addSuffix: true })}
                           </div>
                         </div>
@@ -316,12 +316,12 @@ const SupportDashboard: React.FC = () => {
               <div className="space-y-4">
                 <div>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Tickets Handled</span>
-                    <span className="font-semibold dark:text-gray-100">
+                    <span className="text-sm text-ink-muted">Tickets Handled</span>
+                    <span className="font-semibold text-ink">
                       {stats.agentStats.ticketsHandled}
                     </span>
                   </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                  <div className="w-full bg-surface-300 rounded-full h-2">
                     <div
                       className="bg-cyan-600 h-2 rounded-full"
                       style={{
@@ -332,14 +332,14 @@ const SupportDashboard: React.FC = () => {
                 </div>
                 <div>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Resolution Rate</span>
-                    <span className="font-semibold text-green-600 dark:text-green-400">
+                    <span className="text-sm text-ink-muted">Resolution Rate</span>
+                    <span className="font-semibold text-green-400">
                       {stats.agentStats.ticketsHandled > 0
                         ? ((stats.agentStats.ticketsClosed / stats.agentStats.ticketsHandled) * 100).toFixed(1)
                         : 0}%
                     </span>
                   </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                  <div className="w-full bg-surface-300 rounded-full h-2">
                     <div
                       className="bg-green-600 h-2 rounded-full"
                       style={{
@@ -352,12 +352,12 @@ const SupportDashboard: React.FC = () => {
                 </div>
                 <div>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Customer Satisfaction</span>
-                    <span className="font-semibold text-yellow-600 dark:text-yellow-400">
+                    <span className="text-sm text-ink-muted">Customer Satisfaction</span>
+                    <span className="font-semibold text-yellow-400">
                       {stats.agentStats.satisfactionRating.toFixed(1)} / 5.0
                     </span>
                   </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                  <div className="w-full bg-surface-300 rounded-full h-2">
                     <div
                       className="bg-yellow-500 h-2 rounded-full"
                       style={{ width: `${(stats.agentStats.satisfactionRating / 5) * 100}%` }}
@@ -377,21 +377,21 @@ const SupportDashboard: React.FC = () => {
               <div className="space-y-2">
                 <button
                   onClick={() => setIsWhatsAppModalOpen(true)}
-                  className="w-full px-3 py-2 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
+                  className="w-full px-3 py-2 text-sm bg-green-600 text-on-lumen rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
                 >
                   <Phone className="h-4 w-4" />
                   WhatsApp Onboarding
                 </button>
-                <button className="w-full px-3 py-2 text-sm bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors">
+                <button className="w-full px-3 py-2 text-sm bg-cyan-600 text-on-lumen rounded-lg hover:bg-cyan-700 transition-colors">
                   View All Tickets
                 </button>
-                <button className="w-full px-3 py-2 text-sm bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                <button className="w-full px-3 py-2 text-sm bg-surface-200 text-ink rounded-lg hover:bg-surface-300 transition-colors">
                   Knowledge Base
                 </button>
-                <button className="w-full px-3 py-2 text-sm bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                <button className="w-full px-3 py-2 text-sm bg-surface-200 text-ink rounded-lg hover:bg-surface-300 transition-colors">
                   View Reports
                 </button>
-                <button className="w-full px-3 py-2 text-sm bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                <button className="w-full px-3 py-2 text-sm bg-surface-200 text-ink rounded-lg hover:bg-surface-300 transition-colors">
                   Set Status
                 </button>
               </div>
@@ -406,16 +406,16 @@ const SupportDashboard: React.FC = () => {
             <CardContent>
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">Shift Start</span>
-                  <span className="font-medium dark:text-gray-100">08:00 AM</span>
+                  <span className="text-ink-muted">Shift Start</span>
+                  <span className="font-medium text-ink">08:00 AM</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">Shift End</span>
-                  <span className="font-medium dark:text-gray-100">05:00 PM</span>
+                  <span className="text-ink-muted">Shift End</span>
+                  <span className="font-medium text-ink">05:00 PM</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">Lunch Break</span>
-                  <span className="font-medium dark:text-gray-100">12:00 - 01:00 PM</span>
+                  <span className="text-ink-muted">Lunch Break</span>
+                  <span className="font-medium text-ink">12:00 - 01:00 PM</span>
                 </div>
               </div>
             </CardContent>

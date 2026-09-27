@@ -9,19 +9,19 @@ import { Moon } from 'lucide-react';
  * It no longer toggles between light and dark modes.
  *
  * The design system uses:
- * - Deep Mahogany (#261212) as primary background
- * - Iron Charcoal (#1C1C1C) as secondary background
- * - Circuit Blue (#0090C5) as primary accent
- * - Wrench Purple (#7D4E9F) as secondary accent
+ * - Deep Mahogany (#14110c) as primary background
+ * - Iron Charcoal (#1d1811) as secondary background
+ * - Circuit Blue (#e8a317) as primary accent
+ * - Wrench Purple (#1fa3d6) as secondary accent
  */
 const ThemeToggle: React.FC = () => {
   return (
     <button
-      className="p-2 rounded-lg bg-charcoal border border-subtle hover:bg-hover transition-colors duration-200"
+      className="p-2 rounded-lg bg-charcoal border border-line hover:bg-surface-300 transition-colors duration-200"
       aria-label="Dark theme enabled"
       title="Dark theme (always on)"
     >
-      <Moon className="w-5 h-5 text-circuit" />
+      <Moon className="w-5 h-5 text-lumen-ink" />
     </button>
   );
 };

@@ -171,18 +171,18 @@ const SystemSettings: React.FC = () => {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+        <h1 className="text-2xl sm:text-3xl font-bold text-ink flex items-center gap-2">
           <Settings className="h-8 w-8 text-purple-600" />
           System Settings
         </h1>
-        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        <p className="mt-1 text-sm text-ink-muted">
           Configure platform pricing, fees, taxes, and discounts
         </p>
       </div>
 
       {/* Success Message */}
       {successMessage && (
-        <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 flex items-center gap-2 text-green-800 dark:text-green-200">
+        <div className="bg-green-900/20 border border-green-800 rounded-lg p-4 flex items-center gap-2 text-green-200">
           <AlertCircle className="h-5 w-5" />
           {successMessage}
         </div>
@@ -190,7 +190,7 @@ const SystemSettings: React.FC = () => {
 
       {/* Error Message */}
       {error && (
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 flex items-center gap-2 text-red-800 dark:text-red-200">
+        <div className="bg-red-900/20 border border-red-800 rounded-lg p-4 flex items-center gap-2 text-red-200">
           <AlertCircle className="h-5 w-5" />
           {error}
         </div>
@@ -208,7 +208,7 @@ const SystemSettings: React.FC = () => {
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Fee Type
                 </label>
                 <select
@@ -216,21 +216,21 @@ const SystemSettings: React.FC = () => {
                   onChange={(e) =>
                     setPlatformFee({ ...platformFee, type: e.target.value as 'percentage' | 'fixed' })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                  className="w-full px-3 py-2 border border-line rounded-lg bg-surface-200 text-ink"
                 >
                   <option value="percentage">Percentage</option>
                   <option value="fixed">Fixed Amount (KES)</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Value
                 </label>
                 <input
                   type="number"
                   value={platformFee.value}
                   onChange={(e) => setPlatformFee({ ...platformFee, value: parseFloat(e.target.value) })}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                  className="w-full px-3 py-2 border border-line rounded-lg bg-surface-200 text-ink"
                   min="0"
                   max={platformFee.type === 'percentage' ? 100 : undefined}
                 />
@@ -239,7 +239,7 @@ const SystemSettings: React.FC = () => {
             <button
               onClick={handleUpdatePlatformFee}
               disabled={isSaving}
-              className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 flex items-center gap-2"
+              className="px-4 py-2 bg-purple-600 text-on-lumen rounded-lg hover:bg-purple-700 disabled:opacity-50 flex items-center gap-2"
             >
               <Save className="h-4 w-4" />
               {isSaving ? 'Saving...' : 'Save Platform Fee'}
@@ -266,31 +266,31 @@ const SystemSettings: React.FC = () => {
                 onChange={(e) => setTax({ ...tax, enabled: e.target.checked })}
                 className="h-4 w-4"
               />
-              <label htmlFor="tax-enabled" className="text-sm text-gray-700 dark:text-gray-300">
+              <label htmlFor="tax-enabled" className="text-sm text-ink-muted">
                 Enable Tax
               </label>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Tax Name
                 </label>
                 <input
                   type="text"
                   value={tax.name}
                   onChange={(e) => setTax({ ...tax, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                  className="w-full px-3 py-2 border border-line rounded-lg bg-surface-200 text-ink"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Tax Rate (%)
                 </label>
                 <input
                   type="number"
                   value={tax.rate}
                   onChange={(e) => setTax({ ...tax, rate: parseFloat(e.target.value) })}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                  className="w-full px-3 py-2 border border-line rounded-lg bg-surface-200 text-ink"
                   min="0"
                   max="100"
                 />
@@ -299,7 +299,7 @@ const SystemSettings: React.FC = () => {
             <button
               onClick={handleUpdateTax}
               disabled={isSaving}
-              className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 flex items-center gap-2"
+              className="px-4 py-2 bg-purple-600 text-on-lumen rounded-lg hover:bg-purple-700 disabled:opacity-50 flex items-center gap-2"
             >
               <Save className="h-4 w-4" />
               {isSaving ? 'Saving...' : 'Save Tax Configuration'}
@@ -320,7 +320,7 @@ const SystemSettings: React.FC = () => {
           <div className="space-y-6">
             {/* First Time Customer Discount */}
             <div>
-              <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-3">
+              <h3 className="font-medium text-ink mb-3">
                 First Time Customer Discount
               </h3>
               <div className="flex items-center gap-2 mb-3">
@@ -339,7 +339,7 @@ const SystemSettings: React.FC = () => {
                   }
                   className="h-4 w-4"
                 />
-                <label htmlFor="first-time-enabled" className="text-sm text-gray-700 dark:text-gray-300">
+                <label htmlFor="first-time-enabled" className="text-sm text-ink-muted">
                   Enable First Time Customer Discount
                 </label>
               </div>
@@ -355,7 +355,7 @@ const SystemSettings: React.FC = () => {
                       },
                     })
                   }
-                  className="px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                  className="px-3 py-2 border border-line rounded-lg bg-surface-200 text-ink"
                 >
                   <option value="percentage">Percentage</option>
                   <option value="fixed">Fixed Amount (KES)</option>
@@ -372,7 +372,7 @@ const SystemSettings: React.FC = () => {
                       },
                     })
                   }
-                  className="px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                  className="px-3 py-2 border border-line rounded-lg bg-surface-200 text-ink"
                   min="0"
                 />
               </div>
@@ -380,7 +380,7 @@ const SystemSettings: React.FC = () => {
 
             {/* Loyalty Discount */}
             <div>
-              <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Loyalty Discount</h3>
+              <h3 className="font-medium text-ink mb-3">Loyalty Discount</h3>
               <div className="flex items-center gap-2 mb-3">
                 <input
                   type="checkbox"
@@ -397,14 +397,14 @@ const SystemSettings: React.FC = () => {
                   }
                   className="h-4 w-4"
                 />
-                <label htmlFor="loyalty-enabled" className="text-sm text-gray-700 dark:text-gray-300">
+                <label htmlFor="loyalty-enabled" className="text-sm text-ink-muted">
                   Enable Loyalty Discount
                 </label>
               </div>
               <div className="space-y-2">
                 {discounts.loyaltyDiscount.thresholds.map((threshold, index) => (
                   <div key={index} className="flex items-center gap-2 text-sm">
-                    <span className="text-gray-600 dark:text-gray-400">
+                    <span className="text-ink-muted">
                       {threshold.minBookings}+ bookings:
                     </span>
                     <span className="font-medium text-purple-600">{threshold.discount}% off</span>
@@ -416,7 +416,7 @@ const SystemSettings: React.FC = () => {
             <button
               onClick={handleUpdateDiscounts}
               disabled={isSaving}
-              className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 flex items-center gap-2"
+              className="px-4 py-2 bg-purple-600 text-on-lumen rounded-lg hover:bg-purple-700 disabled:opacity-50 flex items-center gap-2"
             >
               <Save className="h-4 w-4" />
               {isSaving ? 'Saving...' : 'Save Discount Configuration'}
@@ -434,7 +434,7 @@ const SystemSettings: React.FC = () => {
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Service Category
                 </label>
                 <select
@@ -442,7 +442,7 @@ const SystemSettings: React.FC = () => {
                   onChange={(e) =>
                     setNewServiceRate({ ...newServiceRate, serviceCategory: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                  className="w-full px-3 py-2 border border-line rounded-lg bg-surface-200 text-ink"
                 >
                   <option value="plumbing">Plumbing</option>
                   <option value="electrical">Electrical</option>
@@ -455,7 +455,7 @@ const SystemSettings: React.FC = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Service Type
                 </label>
                 <input
@@ -463,11 +463,11 @@ const SystemSettings: React.FC = () => {
                   value={newServiceRate.serviceType}
                   onChange={(e) => setNewServiceRate({ ...newServiceRate, serviceType: e.target.value })}
                   placeholder="e.g., Pipe Repair"
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                  className="w-full px-3 py-2 border border-line rounded-lg bg-surface-200 text-ink"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Base Price (KES)
                 </label>
                 <input
@@ -476,18 +476,18 @@ const SystemSettings: React.FC = () => {
                   onChange={(e) =>
                     setNewServiceRate({ ...newServiceRate, basePrice: parseFloat(e.target.value) })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                  className="w-full px-3 py-2 border border-line rounded-lg bg-surface-200 text-ink"
                   min="0"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Price Unit
                 </label>
                 <select
                   value={newServiceRate.priceUnit}
                   onChange={(e) => setNewServiceRate({ ...newServiceRate, priceUnit: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                  className="w-full px-3 py-2 border border-line rounded-lg bg-surface-200 text-ink"
                 >
                   <option value="fixed">Fixed</option>
                   <option value="per_hour">Per Hour</option>
@@ -499,7 +499,7 @@ const SystemSettings: React.FC = () => {
             <button
               onClick={handleAddServiceRate}
               disabled={isSaving || !newServiceRate.serviceType || newServiceRate.basePrice <= 0}
-              className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 flex items-center gap-2"
+              className="px-4 py-2 bg-purple-600 text-on-lumen rounded-lg hover:bg-purple-700 disabled:opacity-50 flex items-center gap-2"
             >
               <Save className="h-4 w-4" />
               {isSaving ? 'Saving...' : 'Add/Update Service Rate'}
@@ -517,37 +517,37 @@ const SystemSettings: React.FC = () => {
           <CardContent>
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
+                <thead className="bg-surface-200/50 border-b border-line">
                   <tr>
-                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
+                    <th className="px-4 py-2 text-left text-xs font-medium text-ink-muted uppercase">
                       Category
                     </th>
-                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
+                    <th className="px-4 py-2 text-left text-xs font-medium text-ink-muted uppercase">
                       Service Type
                     </th>
-                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
+                    <th className="px-4 py-2 text-left text-xs font-medium text-ink-muted uppercase">
                       Base Price
                     </th>
-                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
+                    <th className="px-4 py-2 text-left text-xs font-medium text-ink-muted uppercase">
                       Unit
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                <tbody className="divide-y divide-line">
                   {pricingConfig.servicePrices
                     .filter((sp: any) => sp.isActive)
                     .map((servicePrice: any, index: number) => (
                       <tr key={index}>
-                        <td className="px-4 py-2 text-sm text-gray-900 dark:text-gray-100">
+                        <td className="px-4 py-2 text-sm text-ink">
                           {servicePrice.serviceCategory}
                         </td>
-                        <td className="px-4 py-2 text-sm text-gray-900 dark:text-gray-100">
+                        <td className="px-4 py-2 text-sm text-ink">
                           {servicePrice.serviceType}
                         </td>
-                        <td className="px-4 py-2 text-sm text-gray-900 dark:text-gray-100">
+                        <td className="px-4 py-2 text-sm text-ink">
                           KES {servicePrice.basePrice.toLocaleString()}
                         </td>
-                        <td className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400">
+                        <td className="px-4 py-2 text-sm text-ink-muted">
                           {servicePrice.priceUnit.replace('_', ' ')}
                         </td>
                       </tr>

@@ -6,7 +6,7 @@
  * - Section grouping
  * - Action buttons (Go to Settings, Add Service, etc.)
  *
- * Design uses Circuit Blue (#0090C5) and Wrench Purple (#7D4E9F)
+ * Design uses Circuit Blue (#e8a317) and Wrench Purple (#1fa3d6)
  */
 
 import React, { useEffect, useMemo } from 'react';
@@ -75,7 +75,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
   const isComplete = completedCount === itemCount;
 
   return (
-    <div className="flex items-center justify-between mb-3 pb-2 border-b border-subtle">
+    <div className="flex items-center justify-between mb-3 pb-2 border-b border-line">
       <div className="flex items-center space-x-3">
         <div className={clsx(
           'w-8 h-8 rounded-full flex items-center justify-center',
@@ -132,7 +132,7 @@ const SuggestionCard: React.FC<SuggestionCardProps> = ({ suggestion, onNavigate 
           variant="ghost"
           size="sm"
           onClick={() => onNavigate(suggestion.actionUrl!)}
-          className="text-circuit hover:text-circuit-600"
+          className="text-lumen-ink hover:text-lumen-ink"
         >
           {suggestion.actionLabel || 'Go'}
         </Button>
@@ -296,7 +296,7 @@ const ProfileSuggestionsList: React.FC<ProfileSuggestionsListProps> = ({
         </div>
 
         {/* Quick Actions */}
-        <div className="mt-6 pt-4 border-t border-subtle">
+        <div className="mt-6 pt-4 border-t border-line">
           <h4 className="text-sm font-medium text-bone mb-3">Quick Actions</h4>
           <div className="flex flex-wrap gap-2">
             <Button

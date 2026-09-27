@@ -247,7 +247,7 @@ describe('Utility Functions', () => {
     });
 
     it('should handle different color formats', () => {
-      const ratio = getContrastRatio('#0090C5', '#261212');
+      const ratio = getContrastRatio('#e8a317', '#14110c');
       expect(ratio).toBeGreaterThan(1);
     });
   });

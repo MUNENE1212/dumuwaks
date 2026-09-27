@@ -39,7 +39,7 @@ const Feed: React.FC = () => {
       <CreatePost />
 
       {/* Filters */}
-      <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-sky-200 dark:bg-gray-800 p-2 shadow-sm">
+      <div className="rounded-lg border border-line bg-surface-200 p-2 shadow-sm">
         <div className="flex space-x-1 overflow-x-auto">
           {filters.map((filter) => {
             const Icon = filter.icon;
@@ -51,7 +51,7 @@ const Feed: React.FC = () => {
                   'flex flex-1 items-center justify-center space-x-2 whitespace-nowrap rounded-lg px-4 py-2.5 text-sm font-medium transition-all',
                   activeFilter === filter.value
                     ? 'bg-primary-50 text-primary-700 shadow-sm'
-                    : 'text-gray-600 hover:bg-gray-50'
+                    : 'text-ink-muted hover:bg-surface-100'
                 )}
               >
                 <Icon className={cn('h-4 w-4', activeFilter === filter.value && filter.color)} />
@@ -68,13 +68,13 @@ const Feed: React.FC = () => {
           <Loading size="lg" text="Loading your feed..." />
         </div>
       ) : posts.length === 0 ? (
-        <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-12 text-center shadow-sm">
+        <div className="rounded-lg border border-line bg-surface-200 p-12 text-center shadow-sm">
           <div className="mx-auto max-w-sm">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
-              <TrendingUp className="h-8 w-8 text-gray-400" />
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-surface-300">
+              <TrendingUp className="h-8 w-8 text-ink-muted" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">No posts yet</h3>
-            <p className="mt-2 text-sm text-gray-500">
+            <h3 className="text-lg font-semibold text-ink">No posts yet</h3>
+            <p className="mt-2 text-sm text-ink-muted">
               {activeFilter === 'following'
                 ? "Follow other users to see their posts here, or switch to 'For You' to see all public posts."
                 : "Be the first to share something! Create a post to get started."}
@@ -95,7 +95,7 @@ const Feed: React.FC = () => {
                   const type = activeFilter === 'all' || activeFilter === 'following' ? undefined : activeFilter;
                   dispatch(fetchFeed({ page: pagination.page + 1, limit: 20, type }));
                 }}
-                className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-6 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 shadow-sm transition-colors hover:bg-gray-50 dark:bg-gray-900"
+                className="rounded-lg border border-line bg-surface-200 px-6 py-2.5 text-sm font-medium text-ink-muted shadow-sm transition-colors hover:bg-surface-100 bg-surface-100"
               >
                 Load More
               </button>

@@ -6,17 +6,17 @@ const About = () => {
     {
       icon: Shield,
       title: 'Quality',
-      description: 'We maintain the highest standards by thoroughly vetting every technician on Dumu Waks.',
+      description: 'Every technician has a profile with ratings and finished jobs, so you can check before you book.',
     },
     {
       icon: Zap,
       title: 'Transparency',
-      description: 'See exact pricing before booking. No hidden fees with Dumu Waks.',
+      description: 'You pay the price agreed with the technician. The platform fee comes out of their share.',
     },
     {
       icon: Heart,
-      title: 'Reliability',
-      description: 'We show up when you need us. Fast response times, 24/7 emergency support.',
+      title: 'Protection',
+      description: 'Your M-Pesa payment is held until you confirm the work. Report a problem and it stays frozen.',
     },
     {
       icon: Award,
@@ -25,22 +25,16 @@ const About = () => {
     },
   ];
 
-  const stats = [
-    { number: '10,000+', label: 'Happy Customers in Kenya' },
-    { number: '500+', label: 'Verified Technicians' },
-    { number: '47', label: 'Counties Covered' },
-    { number: '24/7', label: 'Emergency Support' },
-  ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-surface-100">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-primary-600 to-primary-800 text-white py-16">
+      <div className="border-b border-line bg-surface-000 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">About Dumu Waks</h1>
-          <p className="text-xl text-primary-100 max-w-3xl">
-            Your trusted platform for professional maintenance and repair services in Kenya.
-            Connecting skilled technicians with quality-conscious customers across all 47 counties.
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">About Dumuwaks</h1>
+          <p className="text-xl text-ink-muted max-w-3xl">
+            Book technicians for home and business repairs in Kenya, on the web or WhatsApp.
+            Pay by M-Pesa — the money is held until you confirm the job is done.
           </p>
         </div>
       </div>
@@ -51,56 +45,37 @@ const About = () => {
           <div>
             <div className="flex items-center space-x-3 mb-4">
               <Target className="h-8 w-8 text-primary-600" />
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Our Mission</h2>
+              <h2 className="text-3xl font-bold text-ink">Our Mission</h2>
             </div>
-            <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
+            <p className="text-lg text-ink-muted mb-4">
               To connect Kenyans with reliable, skilled technicians for quality home and business maintenance services.
               We're making professional repairs accessible, affordable, and stress-free for everyone.
             </p>
-            <p className="text-lg text-gray-700 dark:text-gray-300">
-              Whether you need emergency plumbing at midnight or routine appliance maintenance, Dumu Waks ensures
-              you get the right technician, at the right price, exactly when you need them.
+            <p className="text-lg text-ink-muted">
+              Whether it's an urgent leak or routine appliance maintenance, you see who is coming and what
+              it costs before anyone arrives.
             </p>
           </div>
-          <Card className="p-8 bg-gradient-to-br from-primary-50 to-blue-50 dark:from-gray-800 dark:to-gray-700">
+          <Card className="p-8 bg-surface-200">
             <Users className="h-12 w-12 text-primary-600 mb-4" />
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            <h3 className="text-2xl font-bold text-ink mb-4">
               Our Vision
             </h3>
-            <p className="text-gray-700 dark:text-gray-300">
-              To be Kenya's most trusted platform for maintenance and repair services, where every technician
-              is verified, every price is transparent, and every customer is satisfied. We're building a future
-              where finding quality help is never a hassle.
+            <p className="text-ink-muted">
+              A place where finding good help is never a gamble: the price agreed upfront, the money safe until
+              the work is done, and every technician building a public record job by job.
             </p>
           </Card>
-        </div>
-      </div>
-
-      {/* Stats Section */}
-      <div className="bg-primary-600 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-white mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-primary-100 text-sm md:text-base">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
       {/* Values Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+          <h2 className="text-3xl font-bold text-ink mb-4">
             Our Core Values
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-ink-muted max-w-2xl mx-auto">
             These principles guide everything we do and shape how we serve our community.
           </p>
         </div>
@@ -109,13 +84,13 @@ const About = () => {
             const Icon = value.icon;
             return (
               <Card key={index} className="p-6 text-center hover:shadow-lg transition-shadow">
-                <div className="bg-primary-100 dark:bg-primary-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="bg-primary-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Icon className="h-8 w-8 text-primary-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                <h3 className="text-xl font-semibold text-ink mb-2">
                   {value.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-ink-muted">
                   {value.description}
                 </p>
               </Card>
@@ -125,33 +100,32 @@ const About = () => {
       </div>
 
       {/* Story Section */}
-      <div className="bg-gray-100 dark:bg-gray-800 py-16">
+      <div className="bg-surface-200 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">
-              The Dumu Waks Story
+            <h2 className="text-3xl font-bold text-ink mb-6 text-center">
+              The Dumuwaks Story
             </h2>
-            <div className="space-y-4 text-gray-700 dark:text-gray-300">
+            <div className="space-y-4 text-ink-muted">
               <p>
-                Dumu Waks was born from a simple frustration: finding a reliable technician in Kenya
+                Dumuwaks was born from a simple frustration: finding a reliable technician in Kenya
                 shouldn't be this hard. Whether it's a burst pipe at 2 AM or a faulty appliance
                 before a big family gathering, we've all experienced the stress of emergency repairs.
               </p>
               <p>
                 We asked ourselves: why can't finding a trustworthy technician be as simple as
-                ordering a ride? Why do Kenyans have to rely on word-of-mouth or gamble with
-                unverified contacts?
+                ordering a ride? Why do Kenyans have to rely on word-of-mouth or gamble on
+                a stranger's number?
               </p>
               <p>
-                So we built Dumu Waks - a platform that connects you with verified, skilled technicians
-                in under 60 seconds. With AI-powered matching, transparent M-Pesa payments, and a
-                quality guarantee, we're making home maintenance stress-free.
+                So we built Dumuwaks: you describe the job, choose a technician by their ratings and
+                finished work, and pay by M-Pesa into escrow. The technician is paid only when you
+                confirm the work is done.
               </p>
               <p>
-                Today, Dumu Waks serves customers across all 47 Kenyan counties, offering everything
-                from plumbing and electrical work to carpentry and appliance repair. Every technician
-                on our platform is background-checked, every price is upfront, and every job is
-                backed by our satisfaction guarantee.
+                We cover plumbing, electrical work, carpentry, masonry, painting, AC and fridge repair
+                and welding. Every price is agreed before the job, and if something goes wrong the
+                payment stays frozen until the Dumuwaks team has spoken to you both.
               </p>
               <p className="font-semibold">
                 We're not just fixing things - we're building trust, one repair at a time.
@@ -163,23 +137,23 @@ const About = () => {
 
       {/* CTA Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <Card className="p-8 md:p-12 bg-gradient-to-r from-primary-600 to-primary-800 text-white text-center">
+        <Card className="p-8 md:p-12 bg-surface-000 text-center">
           <h2 className="text-3xl font-bold mb-4">
-            Ready to experience the Dumu Waks difference?
+            Something needs fixing?
           </h2>
-          <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of satisfied customers across Kenya who trust Dumu Waks for their maintenance and repair needs.
+          <p className="text-xl text-ink-muted mb-8 max-w-2xl mx-auto">
+            Book on the web, or send BOOK on WhatsApp to +254 799 954 672.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/register?role=customer"
-              className="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+              className="btn btn-primary btn-lg"
             >
               Find a Technician
             </a>
             <a
               href="/register?role=technician"
-              className="bg-primary-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-600 transition-colors border-2 border-white"
+              className="btn btn-outline btn-lg"
             >
               Join as Technician
             </a>

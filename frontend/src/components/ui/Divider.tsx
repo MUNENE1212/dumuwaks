@@ -26,7 +26,7 @@ export const Divider: React.FC<DividerProps> = ({
   label,
   className,
 }) => {
-  const baseClasses = 'border-neutral-200 dark:border-neutral-800';
+  const baseClasses = 'border-line';
 
   const orientationClasses = {
     horizontal: 'w-full border-t',
@@ -55,11 +55,11 @@ export const Divider: React.FC<DividerProps> = ({
   if (label) {
     return (
       <div className="relative flex items-center w-full py-4">
-        <div className="flex-1 border-t border-neutral-200 dark:border-neutral-800" />
-        <span className="flex-shrink-0 mx-4 text-sm font-medium text-neutral-500 dark:text-neutral-400">
+        <div className="flex-1 border-t border-line" />
+        <span className="flex-shrink-0 mx-4 text-sm font-medium text-ink-muted">
           {label}
         </span>
-        <div className="flex-1 border-t border-neutral-200 dark:border-neutral-800" />
+        <div className="flex-1 border-t border-line" />
       </div>
     );
   }

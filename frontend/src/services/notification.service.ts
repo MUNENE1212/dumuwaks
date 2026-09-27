@@ -70,6 +70,7 @@ export const updateNotificationPreferences = async (preferences: {
   emailNotifications?: boolean;
   pushNotifications?: boolean;
   smsNotifications?: boolean;
+  whatsappNotifications?: boolean;
 }) => {
   const response = await axios.put('/notifications/preferences', preferences);
   return response.data;

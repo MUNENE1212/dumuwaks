@@ -50,7 +50,7 @@ const Avatar = forwardRef<HTMLImageElement, AvatarProps>(
 
     const statusColors = {
       online: 'bg-success-500',
-      offline: 'bg-neutral-400 dark:bg-neutral-600',
+      offline: 'bg-surface-400',
       away: 'bg-warning-500',
       busy: 'bg-error-500',
     };
@@ -86,7 +86,7 @@ const Avatar = forwardRef<HTMLImageElement, AvatarProps>(
       <div className="relative inline-block">
         <div
           className={cn(
-            'rounded-full overflow-hidden bg-gradient-primary flex items-center justify-center text-white font-semibold',
+            'rounded-full overflow-hidden bg-gradient-primary flex items-center justify-center text-ink font-semibold',
             containerSize[size],
             className
           )}
@@ -112,7 +112,7 @@ const Avatar = forwardRef<HTMLImageElement, AvatarProps>(
         {status && (
           <span
             className={cn(
-              'absolute bottom-0 right-0 rounded-full border-2 border-white dark:border-neutral-900',
+              'absolute bottom-0 right-0 rounded-full border-2 border-line',
               statusColors[status],
               statusSize[size]
             )}

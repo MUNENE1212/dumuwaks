@@ -46,7 +46,7 @@ describe('Card Component', () => {
     it('should apply base card styles', () => {
       render(<Card data-testid="test-card">Styled Card</Card>);
       const card = screen.getByTestId('test-card');
-      expect(card).toHaveClass('rounded-lg');
+      expect(card).toHaveClass('rounded-md');
       expect(card).toHaveClass('border');
     });
   });
@@ -58,32 +58,32 @@ describe('Card Component', () => {
     it('should render default variant by default', () => {
       render(<Card data-testid="test-card">Default</Card>);
       const card = screen.getByTestId('test-card');
-      expect(card).toHaveClass('bg-charcoal');
+      expect(card).toHaveClass('bg-surface-200');
     });
 
     it('should render default variant when specified', () => {
       render(<Card variant="default" data-testid="test-card">Default</Card>);
       const card = screen.getByTestId('test-card');
-      expect(card).toHaveClass('bg-charcoal');
+      expect(card).toHaveClass('bg-surface-200');
     });
 
     it('should render glass variant', () => {
       render(<Card variant="glass" data-testid="test-card">Glass</Card>);
       const card = screen.getByTestId('test-card');
-      expect(card).toHaveClass('glass-card');
+      expect(card).toHaveClass('bg-surface-200');
     });
 
     it('should render elevated variant', () => {
       render(<Card variant="elevated" data-testid="test-card">Elevated</Card>);
       const card = screen.getByTestId('test-card');
-      expect(card).toHaveClass('bg-elevated');
+      expect(card).toHaveClass('bg-surface-300');
     });
 
     it('should apply transition styles', () => {
       render(<Card data-testid="test-card">Transition</Card>);
       const card = screen.getByTestId('test-card');
-      expect(card).toHaveClass('transition-all');
-      expect(card).toHaveClass('duration-200');
+      expect(card).toHaveClass('transition-colors');
+      expect(card).toHaveClass('duration-150');
     });
   });
 
@@ -105,7 +105,7 @@ describe('Card Component', () => {
       );
       const card = screen.getByTestId('test-card');
       expect(card).toHaveClass('custom-card');
-      expect(card).toHaveClass('rounded-lg'); // Still has base styles
+      expect(card).toHaveClass('rounded-md'); // Still has base styles
     });
   });
 
@@ -207,8 +207,8 @@ describe('Card Sub-Components', () => {
     it('should apply title styles', () => {
       render(<CardTitle data-testid="title">Title</CardTitle>);
       const title = screen.getByTestId('title');
-      expect(title).toHaveClass('text-xl');
-      expect(title).toHaveClass('font-semibold');
+      expect(title).toHaveClass('font-display');
+      expect(title).toHaveClass('text-heading');
     });
 
     it('should accept custom className', () => {
@@ -233,7 +233,7 @@ describe('Card Sub-Components', () => {
     it('should apply description styles', () => {
       render(<CardDescription data-testid="desc">Description</CardDescription>);
       const desc = screen.getByTestId('desc');
-      expect(desc).toHaveClass('text-sm');
+      expect(desc).toHaveClass('text-body-sm');
     });
 
     it('should accept custom className', () => {

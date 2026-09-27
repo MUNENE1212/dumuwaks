@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import type { AvailableTechnician, PaymentPlan } from '@/types/booking';
 import { formatRating } from '@/utils/rating';
+import VerifiedBadge from '@/components/common/VerifiedBadge';
 
 /**
  * Props for TechnicianSelector component
@@ -153,8 +154,8 @@ const TechnicianSelector: React.FC<TechnicianSelectorProps> = ({
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
             className={clsx(
-              'text-sm bg-charcoal border border-subtle rounded px-2 py-1',
-              'text-bone focus:outline-none focus:border-circuit'
+              'text-sm bg-charcoal border border-line rounded px-2 py-1',
+              'text-bone focus:outline-none focus:border-lumen'
             )}
             aria-label="Sort technicians by"
           >
@@ -224,8 +225,8 @@ const TechnicianCard: React.FC<TechnicianCardProps> = ({
       variant={isSelected ? 'glass' : 'default'}
       className={clsx(
         'p-4 transition-all duration-200',
-        isSelected && 'border-circuit shadow-led',
-        'hover:border-circuit/50'
+        isSelected && 'border-lumen shadow-led',
+        'hover:border-lumen/50'
       )}
       data-testid={`technician-card-${technician._id}`}
     >
@@ -233,7 +234,7 @@ const TechnicianCard: React.FC<TechnicianCardProps> = ({
         {/* Avatar */}
         <button
           onClick={onPreview}
-          className="flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-circuit rounded-full"
+          className="flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-lumen rounded-full"
           aria-label={`View ${technician.firstName}'s profile`}
         >
           {technician.profilePicture ? (
@@ -257,8 +258,9 @@ const TechnicianCard: React.FC<TechnicianCardProps> = ({
               <h3 className="text-bone font-semibold truncate">
                 {technician.firstName} {technician.lastName}
               </h3>
+              <VerifiedBadge user={technician} className="mt-1" />
               <div className="flex items-center gap-2 mt-1">
-                <span className="flex items-center text-sm text-circuit">
+                <span className="flex items-center text-sm text-lumen-ink">
                   <StarIcon className="w-4 h-4 mr-1" />
                   {formatRating(technician.rating.average)} ({technician.rating.count})
                 </span>
@@ -351,7 +353,7 @@ const TechnicianPreviewModal: React.FC<TechnicianPreviewModalProps> = ({
 }) => {
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-mahogany/80"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface-100/80"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -364,7 +366,7 @@ const TechnicianPreviewModal: React.FC<TechnicianPreviewModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="p-6 border-b border-subtle">
+        <div className="p-6 border-b border-line">
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-4">
               {technician.profilePicture ? (
@@ -386,8 +388,9 @@ const TechnicianPreviewModal: React.FC<TechnicianPreviewModalProps> = ({
                 >
                   {technician.firstName} {technician.lastName}
                 </h2>
+                <VerifiedBadge user={technician} size="md" className="mt-1" />
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="flex items-center text-circuit">
+                  <span className="flex items-center text-lumen-ink">
                     <StarIcon className="w-5 h-5 mr-1" />
                     {formatRating(technician.rating.average)} ({technician.rating.count} reviews)
                   </span>
@@ -447,19 +450,19 @@ const TechnicianPreviewModal: React.FC<TechnicianPreviewModalProps> = ({
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <p className="text-2xl font-bold text-circuit">
+              <p className="text-2xl font-bold text-lumen-ink">
                 {technician.completedJobs}
               </p>
               <p className="text-xs text-steel">Jobs Done</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-circuit">
+              <p className="text-2xl font-bold text-lumen-ink">
                 {formatResponseTime(technician.responseTime).replace('~', '')}
               </p>
               <p className="text-xs text-steel">Response</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-circuit">
+              <p className="text-2xl font-bold text-lumen-ink">
                 {formatRating(technician.rating.average)}
               </p>
               <p className="text-xs text-steel">Rating</p>
@@ -482,7 +485,7 @@ const TechnicianPreviewModal: React.FC<TechnicianPreviewModalProps> = ({
                       <p className="text-bone font-medium">{plan.name}</p>
                       <p className="text-xs text-steel">{plan.description}</p>
                     </div>
-                    <span className="text-circuit text-sm">
+                    <span className="text-lumen-ink text-sm">
                       {plan.depositPercentage}% deposit
                     </span>
                   </div>
@@ -493,7 +496,7 @@ const TechnicianPreviewModal: React.FC<TechnicianPreviewModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-subtle flex items-center gap-3">
+        <div className="p-6 border-t border-line flex items-center gap-3">
           <Button variant="outline" onClick={onClose} className="flex-1">
             Close
           </Button>

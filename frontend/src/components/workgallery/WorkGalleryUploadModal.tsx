@@ -169,16 +169,16 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="work-gallery-upload-title">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface-000/50">
+      <div className="bg-surface-200 rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="work-gallery-upload-title">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-700">
-          <h2 id="work-gallery-upload-title" className="text-xl font-semibold text-gray-900 dark:text-white">
+        <div className="flex items-center justify-between p-4 border-b border-line">
+          <h2 id="work-gallery-upload-title" className="text-xl font-semibold text-ink dark:text-ink">
             Add Work Image
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            className="text-ink-muted hover:text-ink-muted transition-colors"
             aria-label="Close modal"
           >
             <X className="h-5 w-5" />
@@ -187,9 +187,9 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
 
         {/* Slots Warning */}
         {!canUpload && (
-          <div className="mx-4 mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg flex items-start gap-2">
-            <AlertCircle className="h-5 w-5 text-yellow-600 dark:text-yellow-500 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-yellow-800 dark:text-yellow-200">
+          <div className="mx-4 mt-4 p-3 bg-yellow-900/20 border border-yellow-800 rounded-lg flex items-start gap-2">
+            <AlertCircle className="h-5 w-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-yellow-200">
               You have reached the maximum of {IMAGE_CONSTRAINTS.MAX_IMAGES} work gallery images. Delete an
               existing image to add a new one.
             </p>
@@ -198,8 +198,8 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
 
         {/* Remaining Slots Indicator */}
         {canUpload && (
-          <div className="mx-4 mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-            <p className="text-sm text-blue-800 dark:text-blue-200">
+          <div className="mx-4 mt-4 p-3 bg-blue-900/20 border border-blue-800 rounded-lg">
+            <p className="text-sm text-blue-200">
               {remainingSlots === 1
                 ? 'This is your last available slot'
                 : `${remainingSlots} image slot${remainingSlots > 1 ? 's' : ''} remaining`}
@@ -211,7 +211,7 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
         <form onSubmit={handleSubmit} className="p-4 space-y-4">
           {/* Image Upload Area */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-ink-muted mb-2">
               Image <span className="text-red-500">*</span>
             </label>
             <div
@@ -220,8 +220,8 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
               className={clsx(
                 'relative border-2 border-dashed rounded-lg p-6 text-center transition-colors',
                 previewUrl
-                  ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                  : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
+                  ? 'border-primary-500 bg-primary-900/20'
+                  : 'border-line-strong hover:border-line-strong'
               )}
             >
               {previewUrl ? (
@@ -231,7 +231,7 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
                     alt="Preview"
                     className="max-h-48 mx-auto rounded-lg object-cover"
                   />
-                  <div className="flex items-center justify-center gap-2 text-sm text-green-600 dark:text-green-400">
+                  <div className="flex items-center justify-center gap-2 text-sm text-green-400">
                     <Check className="h-4 w-4" />
                     <span>Image selected</span>
                   </div>
@@ -251,14 +251,14 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
                 </div>
               ) : (
                 <div className="space-y-2">
-                  <div className="mx-auto h-12 w-12 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                  <div className="mx-auto h-12 w-12 rounded-full bg-surface-300 flex items-center justify-center">
                     {selectedFile ? (
                       <ImageIcon className="h-6 w-6 text-primary-600" />
                     ) : (
-                      <Upload className="h-6 w-6 text-gray-400" />
+                      <Upload className="h-6 w-6 text-ink-muted" />
                     )}
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                  <div className="text-sm text-ink-muted">
                     <label
                       htmlFor="file-upload"
                       className="cursor-pointer text-primary-600 hover:text-primary-700 font-medium"
@@ -267,7 +267,7 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
                     </label>
                     {' or drag and drop'}
                   </div>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-ink-muted">
                     JPG, PNG, or WebP up to 2MB
                   </p>
                   <input
@@ -288,7 +288,7 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
           <div>
             <label
               htmlFor="caption"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              className="block text-sm font-medium text-ink-muted mb-2"
             >
               Caption <span className="text-red-500">*</span>
             </label>
@@ -298,13 +298,13 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
               onChange={(e) => setCaption(e.target.value)}
               maxLength={500}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white resize-none"
+              className="w-full px-3 py-2 border border-line-strong rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-surface-300 text-ink resize-none"
               placeholder="Describe the work you did..."
               disabled={!canUpload || isUploading}
               required
             />
             <div className="flex justify-end mt-1">
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-ink-muted">
                 {caption.length}/500
               </span>
             </div>
@@ -314,7 +314,7 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
           <div>
             <label
               htmlFor="category"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              className="block text-sm font-medium text-ink-muted mb-2"
             >
               Category <span className="text-red-500">*</span>
             </label>
@@ -322,7 +322,7 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
               id="category"
               value={category}
               onChange={(e) => setCategory(e.target.value as ServiceCategory)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white"
+              className="w-full px-3 py-2 border border-line-strong rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-surface-300 text-ink"
               disabled={!canUpload || isUploading}
               required
             >
@@ -338,7 +338,7 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
           <div>
             <label
               htmlFor="location"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              className="block text-sm font-medium text-ink-muted mb-2"
             >
               Location
             </label>
@@ -348,7 +348,7 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               maxLength={200}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white"
+              className="w-full px-3 py-2 border border-line-strong rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-surface-300 text-ink"
               placeholder="e.g., Westlands, Nairobi"
               disabled={!canUpload || isUploading}
             />
@@ -358,7 +358,7 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
           <div>
             <label
               htmlFor="date"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              className="block text-sm font-medium text-ink-muted mb-2"
             >
               Date Work Was Done
             </label>
@@ -367,7 +367,7 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white"
+              className="w-full px-3 py-2 border border-line-strong rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-surface-300 text-ink"
               disabled={!canUpload || isUploading}
             />
           </div>
@@ -379,12 +379,12 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
               type="checkbox"
               checked={isBeforeAfter}
               onChange={(e) => setIsBeforeAfter(e.target.checked)}
-              className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+              className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-line-strong rounded"
               disabled={!canUpload || isUploading}
             />
             <label
               htmlFor="isBeforeAfter"
-              className="text-sm text-gray-700 dark:text-gray-300"
+              className="text-sm text-ink-muted"
             >
               This is part of a before/after pair
             </label>
@@ -392,9 +392,9 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
 
           {/* Error Display */}
           {error && (
-            <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-start gap-2">
-              <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-500 flex-shrink-0 mt-0.5" />
-              <p className="text-sm text-red-800 dark:text-red-200">{error}</p>
+            <div className="p-3 bg-red-900/20 border border-red-800 rounded-lg flex items-start gap-2">
+              <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-red-200">{error}</p>
             </div>
           )}
 
@@ -403,7 +403,7 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              className="flex-1 px-4 py-2 border border-line-strong text-ink-muted rounded-lg hover:bg-surface-300 transition-colors"
               disabled={isUploading || isCompressing}
             >
               Cancel
@@ -414,8 +414,8 @@ const WorkGalleryUploadModal: React.FC<WorkGalleryUploadModalProps> = ({
               className={clsx(
                 'flex-1 px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center gap-2',
                 canUpload && selectedFile
-                  ? 'bg-primary-600 text-white hover:bg-primary-700'
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  ? 'bg-primary-600 text-on-lumen hover:bg-primary-700'
+                  : 'bg-line-strong text-ink-muted cursor-not-allowed'
               )}
             >
               {isCompressing ? (

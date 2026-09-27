@@ -74,7 +74,7 @@ export const generateQRCodeSVG = async (
 };
 
 /**
- * Generate QR code with Dumu Waks branding (gradient effect)
+ * Generate QR code with Dumuwaks branding (gradient effect)
  */
 export const generateBrandedQRCode = async (
   data: string,
@@ -84,7 +84,7 @@ export const generateBrandedQRCode = async (
     width = 400,
     margin = 2,
     color = {
-      dark: '#f97316', // Dumu Waks orange
+      dark: '#14110c', // night ink: QR needs dark-on-light to scan
       light: '#ffffff'
     },
     errorCorrectionLevel = 'H' // High for logo embedding

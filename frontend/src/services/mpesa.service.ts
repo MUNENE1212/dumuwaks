@@ -251,16 +251,16 @@ export const getPaymentTypeLabel = (type: MPesaPaymentType): string => {
  */
 export const getStatusColor = (status: string): string => {
   const colors: Record<string, string> = {
-    initiated: 'text-yellow-600 dark:text-yellow-400',
-    pending: 'text-yellow-600 dark:text-yellow-400',
-    processing: 'text-blue-600 dark:text-blue-400',
-    completed: 'text-green-600 dark:text-green-400',
-    failed: 'text-red-600 dark:text-red-400',
-    cancelled: 'text-gray-600 dark:text-gray-400',
-    expired: 'text-orange-600 dark:text-orange-400',
-    refunded: 'text-purple-600 dark:text-purple-400',
+    initiated: 'text-yellow-400',
+    pending: 'text-yellow-400',
+    processing: 'text-blue-400',
+    completed: 'text-green-400',
+    failed: 'text-red-400',
+    cancelled: 'text-ink-muted',
+    expired: 'text-orange-400',
+    refunded: 'text-purple-400',
   };
-  return colors[status] || 'text-gray-600 dark:text-gray-400';
+  return colors[status] || 'text-ink-muted';
 };
 
 const mpesaService = {

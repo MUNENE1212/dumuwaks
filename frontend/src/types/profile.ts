@@ -184,7 +184,7 @@ export const LEVEL_CONFIGS: LevelConfig[] = [
   {
     level: 'needsWork',
     label: 'Needs Work',
-    color: '#f97316',
+    color: '#e8a317',
     bgColor: 'bg-orange-500/10',
     textColor: 'text-orange-500',
     minScore: 30,
@@ -214,7 +214,7 @@ export const LEVEL_CONFIGS: LevelConfig[] = [
   {
     level: 'excellent',
     label: 'Excellent',
-    color: '#0090C5',
+    color: '#e8a317',
     bgColor: 'bg-circuit-blue/10',
     textColor: 'text-circuit-blue',
     minScore: 90,

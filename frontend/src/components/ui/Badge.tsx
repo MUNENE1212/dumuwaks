@@ -29,21 +29,21 @@ const Badge = forwardRef<HTMLDivElement, BadgeProps>(
     },
     ref
   ) => {
-    const baseClasses = 'inline-flex items-center justify-center rounded-full font-medium';
+    const baseClasses = 'inline-flex items-center justify-center rounded-full font-mono uppercase tracking-[0.06em]';
 
     const variantClasses = {
-      primary: 'bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300',
-      secondary: 'bg-secondary-100 text-secondary-700 dark:bg-secondary-900 dark:text-secondary-300',
-      success: 'bg-success-100 text-success-700 dark:bg-success-900 dark:text-success-300',
-      warning: 'bg-warning-100 text-warning-700 dark:bg-warning-900 dark:text-warning-300',
-      error: 'bg-error-100 text-error-700 dark:bg-error-900 dark:text-error-300',
-      info: 'bg-info-100 text-info-700 dark:bg-info-900 dark:text-info-300',
+      primary: 'bg-lumen/10 text-lumen-ink',
+      secondary: 'bg-surface-300 text-ink-muted',
+      success: 'bg-ok/10 text-ok-ink',
+      warning: 'bg-warn/10 text-warn-ink',
+      error: 'bg-fault/10 text-fault-ink',
+      info: 'bg-circuit/10 text-circuit-ink',
     };
 
     const sizeClasses = {
-      sm: 'px-2 py-0.5 text-xs',
-      md: 'px-3 py-1 text-sm',
-      lg: 'px-4 py-1.5 text-base',
+      sm: 'px-2 h-5 text-[10.5px]',
+      md: 'px-2.5 h-6 text-[11px]',
+      lg: 'px-3 h-7 text-xs',
     };
 
     const dotClasses = dot ? 'pl-1.5' : '';

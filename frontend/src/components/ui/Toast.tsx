@@ -61,7 +61,7 @@ export const Toast: React.FC<ToastProps> = ({
       animate="visible"
       exit="exit"
       className={cn(
-        'pointer-events-auto w-full max-w-sm bg-white dark:bg-neutral-900 rounded-xl shadow-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden'
+        'pointer-events-auto w-full max-w-sm bg-surface-100 rounded-xl shadow-lg border border-line overflow-hidden'
       )}
       role="alert"
       aria-live="polite"
@@ -70,17 +70,17 @@ export const Toast: React.FC<ToastProps> = ({
         <div className="flex items-start gap-3">
           {/* Icon */}
           <div className={cn('flex-shrink-0 w-6 h-6 rounded-full', colors[type], 'flex items-center justify-center')}>
-            <Icon className="w-4 h-4 text-white" />
+            <Icon className="w-4 h-4 text-ink" />
           </div>
 
           {/* Content */}
           <div className="flex-1 min-w-0">
             {title && (
-              <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+              <p className="text-sm font-semibold text-ink">
                 {title}
               </p>
             )}
-            <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-0.5">
+            <p className="text-sm text-ink-muted mt-0.5">
               {message}
             </p>
 
@@ -88,7 +88,7 @@ export const Toast: React.FC<ToastProps> = ({
             {action && (
               <button
                 onClick={action.onClick}
-                className="mt-2 text-sm font-medium text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                className="mt-2 text-sm font-medium text-primary-500 hover:text-primary-400"
               >
                 {action.label}
               </button>
@@ -98,10 +98,10 @@ export const Toast: React.FC<ToastProps> = ({
           {/* Close Button */}
           <button
             onClick={() => onClose(id)}
-            className="flex-shrink-0 p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+            className="flex-shrink-0 p-1 rounded-lg hover:bg-surface-200 transition-colors"
             aria-label="Close toast"
           >
-            <X className="w-4 h-4 text-neutral-400" />
+            <X className="w-4 h-4 text-ink-muted" />
           </button>
         </div>
       </div>

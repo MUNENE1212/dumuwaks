@@ -163,15 +163,15 @@ const FeeTierModal: React.FC<FeeTierModalProps> = ({
     >
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-surface-000/50 transition-opacity"
         onClick={handleClose}
       />
 
       {/* Modal */}
       <div className="flex min-h-full items-center justify-center p-4">
-        <div className="relative w-full max-w-lg transform overflow-hidden rounded-xl bg-mahogany border border-subtle shadow-xl transition-all">
+        <div className="relative w-full max-w-lg transform overflow-hidden rounded-xl bg-surface-100 border border-line shadow-xl transition-all">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-subtle px-6 py-4">
+          <div className="flex items-center justify-between border-b border-line px-6 py-4">
             <h2
               id="modal-title"
               className="text-lg font-semibold text-bone"
@@ -181,7 +181,7 @@ const FeeTierModal: React.FC<FeeTierModalProps> = ({
             <button
               type="button"
               onClick={handleClose}
-              className="rounded-lg p-2 text-steel hover:text-bone hover:bg-hover transition-colors"
+              className="rounded-lg p-2 text-steel hover:text-bone hover:bg-surface-300 transition-colors"
               disabled={isSubmitting}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -222,7 +222,7 @@ const FeeTierModal: React.FC<FeeTierModalProps> = ({
                 value={formData.label}
                 onChange={(e) => handleChange('label', e.target.value)}
                 placeholder="e.g., Standard, Premium, Large Jobs"
-                className="w-full px-4 py-2.5 bg-charcoal border border-subtle rounded-lg text-bone placeholder-steel/50 focus:outline-none focus:ring-2 focus:ring-circuit focus:border-transparent"
+                className="w-full px-4 py-2.5 bg-charcoal border border-line rounded-lg text-bone placeholder-steel/50 focus:outline-none focus:ring-2 focus:ring-lumen focus:border-transparent"
                 required
               />
             </div>
@@ -239,7 +239,7 @@ const FeeTierModal: React.FC<FeeTierModalProps> = ({
                   value={formData.minAmount}
                   onChange={(e) => handleChange('minAmount', parseFloat(e.target.value) || 0)}
                   min="0"
-                  className="w-full px-4 py-2.5 bg-charcoal border border-subtle rounded-lg text-bone focus:outline-none focus:ring-2 focus:ring-circuit focus:border-transparent"
+                  className="w-full px-4 py-2.5 bg-charcoal border border-line rounded-lg text-bone focus:outline-none focus:ring-2 focus:ring-lumen focus:border-transparent"
                   required
                 />
               </div>
@@ -257,7 +257,7 @@ const FeeTierModal: React.FC<FeeTierModalProps> = ({
                   }}
                   placeholder="Leave empty for no limit"
                   min="0"
-                  className="w-full px-4 py-2.5 bg-charcoal border border-subtle rounded-lg text-bone placeholder-steel/50 focus:outline-none focus:ring-2 focus:ring-circuit focus:border-transparent"
+                  className="w-full px-4 py-2.5 bg-charcoal border border-line rounded-lg text-bone placeholder-steel/50 focus:outline-none focus:ring-2 focus:ring-lumen focus:border-transparent"
                 />
                 <p className="mt-1 text-xs text-steel">Leave empty for unlimited</p>
               </div>
@@ -277,7 +277,7 @@ const FeeTierModal: React.FC<FeeTierModalProps> = ({
                   min="0"
                   max="100"
                   step="0.5"
-                  className="w-full px-4 py-2.5 pr-12 bg-charcoal border border-subtle rounded-lg text-bone focus:outline-none focus:ring-2 focus:ring-circuit focus:border-transparent"
+                  className="w-full px-4 py-2.5 pr-12 bg-charcoal border border-line rounded-lg text-bone focus:outline-none focus:ring-2 focus:ring-lumen focus:border-transparent"
                   required
                 />
                 <span className="absolute right-4 top-1/2 -translate-y-1/2 text-steel">%</span>
@@ -294,7 +294,7 @@ const FeeTierModal: React.FC<FeeTierModalProps> = ({
                 id="isActive"
                 checked={formData.isActive}
                 onChange={(e) => handleChange('isActive', e.target.checked)}
-                className="w-4 h-4 rounded border-subtle bg-charcoal text-circuit focus:ring-circuit focus:ring-offset-0"
+                className="w-4 h-4 rounded border-line bg-charcoal text-lumen-ink focus:ring-lumen focus:ring-offset-0"
               />
               <label htmlFor="isActive" className="text-sm text-steel">
                 Tier is active
@@ -302,7 +302,7 @@ const FeeTierModal: React.FC<FeeTierModalProps> = ({
             </div>
 
             {/* Preview */}
-            <div className="bg-charcoal/50 rounded-lg p-4 border border-subtle">
+            <div className="bg-charcoal/50 rounded-lg p-4 border border-line">
               <h4 className="text-sm font-medium text-steel mb-2">Preview</h4>
               <div className="text-sm text-bone">
                 <p>
@@ -315,18 +315,18 @@ const FeeTierModal: React.FC<FeeTierModalProps> = ({
                 </p>
                 <p>
                   <span className="text-steel">Fee:</span>{' '}
-                  <span className="font-medium text-circuit">{formData.percentage}%</span>
+                  <span className="font-medium text-lumen-ink">{formData.percentage}%</span>
                 </p>
               </div>
             </div>
 
             {/* Actions */}
-            <div className="flex items-center justify-end gap-3 pt-4 border-t border-subtle">
+            <div className="flex items-center justify-end gap-3 pt-4 border-t border-line">
               <button
                 type="button"
                 onClick={handleClose}
                 disabled={isSubmitting}
-                className="px-4 py-2 text-sm font-medium text-steel hover:text-bone hover:bg-hover rounded-lg transition-colors"
+                className="px-4 py-2 text-sm font-medium text-steel hover:text-bone hover:bg-surface-300 rounded-lg transition-colors"
               >
                 Cancel
               </button>
@@ -334,8 +334,8 @@ const FeeTierModal: React.FC<FeeTierModalProps> = ({
                 type="submit"
                 disabled={isSubmitting}
                 className={clsx(
-                  'px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors',
-                  'bg-circuit hover:bg-circuit-600',
+                  'px-4 py-2 text-sm font-medium text-ink rounded-lg transition-colors',
+                  'bg-lumen hover:bg-lumen-hover',
                   isSubmitting && 'opacity-50 cursor-not-allowed'
                 )}
               >

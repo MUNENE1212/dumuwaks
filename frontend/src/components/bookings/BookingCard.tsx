@@ -130,7 +130,7 @@ const BookingCard: React.FC<BookingCardProps> = ({ booking, userRole }) => {
       },
       cancelled: {
         label: 'Cancelled',
-        color: 'bg-gray-100 text-gray-800 border-gray-300',
+        color: 'bg-surface-300 text-ink border-line-strong',
         icon: <XCircle className="h-4 w-4" />,
       },
       disputed: {
@@ -186,33 +186,33 @@ const BookingCard: React.FC<BookingCardProps> = ({ booking, userRole }) => {
 
   return (
     <div
-      className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 sm:p-6 shadow-sm transition-all hover:shadow-md cursor-pointer"
+      className="rounded-lg border border-line bg-surface-200 p-4 sm:p-6 shadow-sm transition-all hover:shadow-md cursor-pointer"
       onClick={() => navigate(`/bookings/${booking._id}`)}
     >
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-            <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100 truncate">
+            <h3 className="text-base sm:text-lg font-semibold text-ink truncate">
               {booking.serviceType}
             </h3>
             {getStatusBadge(booking.status)}
           </div>
-          <p className="mt-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400">#{booking.bookingNumber}</p>
+          <p className="mt-1 text-xs sm:text-sm text-ink-muted">#{booking.bookingNumber}</p>
         </div>
 
         {booking.pricing && (
           <div className="text-left sm:text-right">
-            <div className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100">
+            <div className="text-xl sm:text-2xl font-bold text-ink">
               {booking.pricing.currency} {booking.pricing.totalAmount.toLocaleString()}
             </div>
-            <p className="text-xs text-gray-500">Total Amount</p>
+            <p className="text-xs text-ink-muted">Total Amount</p>
           </div>
         )}
       </div>
 
       {/* Description */}
-      <p className="mt-3 line-clamp-2 text-sm text-gray-700 dark:text-gray-300">
+      <p className="mt-3 line-clamp-2 text-sm text-ink-muted">
         {booking.description}
       </p>
 
@@ -220,12 +220,12 @@ const BookingCard: React.FC<BookingCardProps> = ({ booking, userRole }) => {
       <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         {/* Date & Time */}
         <div className="flex items-start space-x-2">
-          <Calendar className="mt-0.5 h-4 w-4 text-gray-400" />
+          <Calendar className="mt-0.5 h-4 w-4 text-ink-muted" />
           <div>
-            <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+            <p className="text-sm font-medium text-ink">
               {formatDate(booking.timeSlot.date)}
             </p>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-ink-muted">
               {formatTime(booking.timeSlot.startTime)}
               {booking.timeSlot.endTime && ` - ${formatTime(booking.timeSlot.endTime)}`}
             </p>
@@ -234,12 +234,12 @@ const BookingCard: React.FC<BookingCardProps> = ({ booking, userRole }) => {
 
         {/* Location */}
         <div className="flex items-start space-x-2">
-          <MapPin className="mt-0.5 h-4 w-4 text-gray-400" />
+          <MapPin className="mt-0.5 h-4 w-4 text-ink-muted" />
           <div>
-            <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+            <p className="text-sm font-medium text-ink">
               {booking.serviceLocation.city || 'Service Location'}
             </p>
-            <p className="line-clamp-1 text-xs text-gray-500">
+            <p className="line-clamp-1 text-xs text-ink-muted">
               {booking.serviceLocation.address}
             </p>
           </div>
@@ -255,12 +255,12 @@ const BookingCard: React.FC<BookingCardProps> = ({ booking, userRole }) => {
             }}
             title={`View ${otherParty.firstName} ${otherParty.lastName}'s profile`}
           >
-            <User className="mt-0.5 h-4 w-4 text-gray-400" />
+            <User className="mt-0.5 h-4 w-4 text-ink-muted" />
             <div>
-              <p className="text-sm font-medium text-gray-900 dark:text-gray-100 hover:text-primary-600 transition-colors">
+              <p className="text-sm font-medium text-ink hover:text-primary-600 transition-colors">
                 {otherParty.firstName} {otherParty.lastName}
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-ink-muted">
                 {userRole === 'customer' ? 'Technician' : 'Customer'}
               </p>
             </div>
@@ -269,22 +269,22 @@ const BookingCard: React.FC<BookingCardProps> = ({ booking, userRole }) => {
 
         {/* Urgency */}
         <div className="flex items-start space-x-2">
-          <AlertCircle className="mt-0.5 h-4 w-4 text-gray-400" />
+          <AlertCircle className="mt-0.5 h-4 w-4 text-ink-muted" />
           <div>
-            <p className="text-sm font-medium text-gray-900 dark:text-gray-100 capitalize">
+            <p className="text-sm font-medium text-ink capitalize">
               {booking.urgency} Priority
             </p>
-            <p className="text-xs text-gray-500">Urgency Level</p>
+            <p className="text-xs text-ink-muted">Urgency Level</p>
           </div>
         </div>
       </div>
 
       {/* Actions */}
-      <div className="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-3 border-t border-gray-100 dark:border-gray-700 pt-3 sm:pt-4">
+      <div className="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-3 border-t border-line pt-3 sm:pt-4">
         {/* Payment Required Banner - Show for any booking with pending payment */}
         {userRole === 'customer' && booking.bookingFee?.status === 'pending' && (
-          <div className="flex-1 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-3 mr-2">
-            <p className="text-sm text-red-800 dark:text-red-300 font-medium">
+          <div className="flex-1 rounded-lg bg-red-900/20 border border-red-800 p-3 mr-2">
+            <p className="text-sm text-red-300 font-medium">
               🚨 Payment Required: Complete booking fee payment to proceed
             </p>
           </div>

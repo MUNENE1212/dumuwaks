@@ -143,7 +143,7 @@ const ServiceTypeSelector: React.FC<ServiceTypeSelectorProps> = ({
 
   return (
     <div className={className}>
-      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+      <label className="block text-sm font-medium text-ink-muted mb-2">
         Service Type
       </label>
 
@@ -191,7 +191,7 @@ const ServiceTypeSelector: React.FC<ServiceTypeSelectorProps> = ({
         <>
           {/* Search Bar */}
           <div className="relative mb-4">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-ink-muted w-5 h-5" />
             <Input
               type="text"
               placeholder="Search service types..."
@@ -203,14 +203,14 @@ const ServiceTypeSelector: React.FC<ServiceTypeSelectorProps> = ({
 
           {/* Service Types List */}
           {loading ? (
-            <div className="text-center py-8 text-gray-500">Loading services...</div>
+            <div className="text-center py-8 text-ink-muted">Loading services...</div>
           ) : (
             <div className="space-y-2 max-h-80 overflow-y-auto">
               {filteredTypes.map((st) => (
                 <div
                   key={st.serviceType}
                   onClick={() => handleSelectServiceType(st)}
-                  className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 cursor-pointer transition-all duration-200 hover:border-blue-500 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
+                  className="rounded-lg border border-line bg-surface-200 p-4 cursor-pointer transition-all duration-200 hover:border-blue-500 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
                   role="button"
                   tabIndex={0}
                   onKeyDown={(e) => {
@@ -222,16 +222,16 @@ const ServiceTypeSelector: React.FC<ServiceTypeSelectorProps> = ({
                 >
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
-                      <h4 className="font-medium text-gray-900 dark:text-white">
+                      <h4 className="font-medium text-ink dark:text-ink">
                         {st.description || st.serviceType}
                       </h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                      <p className="text-sm text-ink-muted mt-1">
                         {formatPrice(st.basePrice, st.priceUnit)}
                         {' • '}
                         ~{st.estimatedDuration}hrs estimated
                       </p>
                       {st.isGeneral && (
-                        <p className="text-xs text-blue-600 dark:text-blue-400 mt-1 flex items-center gap-1">
+                        <p className="text-xs text-blue-400 mt-1 flex items-center gap-1">
                           <HelpCircle className="w-3 h-3" />
                           Fallback option for unlisted services
                         </p>
@@ -242,7 +242,7 @@ const ServiceTypeSelector: React.FC<ServiceTypeSelectorProps> = ({
               ))}
 
               {filteredTypes.length === 0 && (
-                <div className="text-center py-8 text-gray-500">
+                <div className="text-center py-8 text-ink-muted">
                   No services found matching your search.
                 </div>
               )}
@@ -263,7 +263,7 @@ const ServiceTypeSelector: React.FC<ServiceTypeSelectorProps> = ({
             ) : (
               <Card>
                 <div className="p-4">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-ink-muted mb-2">
                     Enter Service Description
                   </label>
                   <div className="flex gap-2">
@@ -312,7 +312,7 @@ const ServiceTypeSelector: React.FC<ServiceTypeSelectorProps> = ({
 
                 {suggestions.length > 0 && (
                   <>
-                    <h5 className="font-medium text-gray-900 dark:text-white mb-2">
+                    <h5 className="font-medium text-ink dark:text-ink mb-2">
                       Did you mean:
                     </h5>
                     <div className="space-y-2">
@@ -320,7 +320,7 @@ const ServiceTypeSelector: React.FC<ServiceTypeSelectorProps> = ({
                         <div
                           key={index}
                           onClick={() => handleSelectServiceType(suggestion)}
-                          className="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 cursor-pointer transition-all duration-200 hover:border-blue-500 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
+                          className="p-3 bg-surface-200 rounded-lg border border-line cursor-pointer transition-all duration-200 hover:border-blue-500 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
                           role="button"
                           tabIndex={0}
                           onKeyDown={(e) => {
@@ -330,13 +330,13 @@ const ServiceTypeSelector: React.FC<ServiceTypeSelectorProps> = ({
                             }
                           }}
                         >
-                          <p className="font-medium text-gray-900 dark:text-white">
+                          <p className="font-medium text-ink dark:text-ink">
                             {suggestion.description}
                           </p>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                          <p className="text-sm text-ink-muted">
                             {formatPrice(suggestion.basePrice, suggestion.priceUnit)}
                             {suggestion.similarity && (
-                              <span className="ml-2 text-xs text-blue-600 dark:text-blue-400 font-semibold">
+                              <span className="ml-2 text-xs text-blue-400 font-semibold">
                                 {Math.round(suggestion.similarity * 100)}% match
                               </span>
                             )}
@@ -355,7 +355,7 @@ const ServiceTypeSelector: React.FC<ServiceTypeSelectorProps> = ({
                   >
                     Use General {serviceCategory.charAt(0).toUpperCase() + serviceCategory.slice(1)} Service
                   </Button>
-                  <p className="text-xs text-gray-500 text-center mt-2">
+                  <p className="text-xs text-ink-muted text-center mt-2">
                     We'll provide a custom quote based on your specific needs
                   </p>
                 </div>

@@ -131,6 +131,12 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({
           badge: pendingApprovals,
         },
         {
+          id: 'finance',
+          label: 'Finance',
+          icon: Icons.Escrow,
+          path: '/admin/finance',
+        },
+        {
           id: 'escrow',
           label: 'Escrow Management',
           icon: Icons.Escrow,
@@ -213,17 +219,17 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({
       )}
     >
       {/* Logo / Header */}
-      <div className="p-4 border-b border-subtle">
+      <div className="p-4 border-b border-line">
         <div className="flex items-center justify-between">
           {!collapsed && (
             <div>
               <h1 className="text-lg font-bold text-bone">Admin Panel</h1>
-              <p className="text-xs text-steel">DumuWaks Management</p>
+              <p className="text-xs text-steel">Dumuwaks management</p>
             </div>
           )}
           <button
             onClick={onToggleCollapse}
-            className="p-2 rounded-lg hover:bg-hover text-steel hover:text-bone transition-colors"
+            className="p-2 rounded-lg hover:bg-surface-300 text-steel hover:text-bone transition-colors"
             aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             <svg
@@ -261,10 +267,10 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({
                       to={item.path}
                       className={clsx(
                         'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200',
-                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-circuit',
+                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lumen',
                         isActive
-                          ? 'glass-card text-circuit led-glow'
-                          : 'text-steel hover:text-bone hover:bg-hover',
+                          ? 'glass-card text-lumen-ink led-glow'
+                          : 'text-steel hover:text-bone hover:bg-surface-300',
                         collapsed && 'justify-center'
                       )}
                       title={collapsed ? item.label : undefined}
@@ -278,7 +284,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({
                               className={clsx(
                                 'px-2 py-0.5 text-xs font-bold rounded-full',
                                 isActive
-                                  ? 'bg-circuit text-white'
+                                  ? 'bg-lumen text-on-lumen'
                                   : 'bg-warning/20 text-warning'
                               )}
                             >
@@ -300,12 +306,12 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({
       </nav>
 
       {/* Back to Site Link */}
-      <div className="p-4 border-t border-subtle">
+      <div className="p-4 border-t border-line">
         <NavLink
           to="/"
           className={clsx(
             'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200',
-            'text-steel hover:text-bone hover:bg-hover',
+            'text-steel hover:text-bone hover:bg-surface-300',
             collapsed && 'justify-center'
           )}
           title={collapsed ? 'Back to Site' : undefined}

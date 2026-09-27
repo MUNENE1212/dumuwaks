@@ -285,7 +285,7 @@ const FeeConfiguration: React.FC = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-bone flex items-center gap-3">
-            <DollarSign className="h-8 w-8 text-circuit" />
+            <DollarSign className="h-8 w-8 text-lumen-ink" />
             Fee Configuration
           </h1>
           <p className="mt-1 text-sm text-steel">
@@ -296,7 +296,7 @@ const FeeConfiguration: React.FC = () => {
           <button
             onClick={fetchConfig}
             disabled={isLoading}
-            className="px-3 py-2 text-steel hover:text-bone hover:bg-hover rounded-lg transition-colors"
+            className="px-3 py-2 text-steel hover:text-bone hover:bg-surface-300 rounded-lg transition-colors"
             title="Refresh"
           >
             <RefreshCw className={clsx('w-5 h-5', isLoading && 'animate-spin')} />
@@ -304,7 +304,7 @@ const FeeConfiguration: React.FC = () => {
           <button
             onClick={handleResetToDefaults}
             disabled={isSaving}
-            className="px-3 py-2 text-steel hover:text-bone hover:bg-hover rounded-lg transition-colors"
+            className="px-3 py-2 text-steel hover:text-bone hover:bg-surface-300 rounded-lg transition-colors"
             title="Reset to Defaults"
           >
             <RefreshCw className="w-5 h-5" />
@@ -353,13 +353,13 @@ const FeeConfiguration: React.FC = () => {
       </div>
 
       {/* Fee Tiers Table */}
-      <div className="bg-charcoal/30 border border-subtle rounded-xl overflow-hidden">
-        <div className="px-6 py-4 border-b border-subtle flex items-center justify-between">
+      <div className="bg-charcoal/30 border border-line rounded-xl overflow-hidden">
+        <div className="px-6 py-4 border-b border-line flex items-center justify-between">
           <h2 className="text-lg font-semibold text-bone">Fee Tiers</h2>
           <button
             onClick={handleAddTier}
             disabled={isSaving}
-            className="px-4 py-2 bg-circuit text-white rounded-lg hover:bg-circuit-600 transition-colors flex items-center gap-2 text-sm font-medium"
+            className="px-4 py-2 bg-lumen text-on-lumen rounded-lg hover:bg-lumen-hover transition-colors flex items-center gap-2 text-sm font-medium"
           >
             <Plus className="w-4 h-4" />
             Add Tier
@@ -369,7 +369,7 @@ const FeeConfiguration: React.FC = () => {
         {config?.bookingFeeTiers && config.bookingFeeTiers.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-charcoal/50 border-b border-subtle">
+              <thead className="bg-charcoal/50 border-b border-line">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-semibold text-steel uppercase tracking-wider">
                     Label
@@ -393,7 +393,7 @@ const FeeConfiguration: React.FC = () => {
               </thead>
               <tbody className="divide-y divide-subtle">
                 {config.bookingFeeTiers.map((tier, index) => (
-                  <tr key={index} className="hover:bg-hover/30 transition-colors">
+                  <tr key={index} className="hover:bg-surface-300/30 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className="text-sm font-medium text-bone">{tier.label}</span>
                     </td>
@@ -404,7 +404,7 @@ const FeeConfiguration: React.FC = () => {
                       {formatAmount(tier.maxAmount)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm font-medium text-circuit">{tier.percentage}%</span>
+                      <span className="text-sm font-medium text-lumen-ink">{tier.percentage}%</span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
@@ -422,7 +422,7 @@ const FeeConfiguration: React.FC = () => {
                       <button
                         onClick={() => handleEditTier(tier, index)}
                         disabled={isSaving}
-                        className="text-steel hover:text-circuit mr-3 transition-colors"
+                        className="text-steel hover:text-lumen-ink mr-3 transition-colors"
                         title="Edit tier"
                       >
                         <Edit2 className="w-4 h-4" />
@@ -447,7 +447,7 @@ const FeeConfiguration: React.FC = () => {
             <p className="text-steel">No fee tiers configured</p>
             <button
               onClick={handleAddTier}
-              className="mt-4 px-4 py-2 bg-circuit text-white rounded-lg hover:bg-circuit-600 transition-colors text-sm"
+              className="mt-4 px-4 py-2 bg-lumen text-on-lumen rounded-lg hover:bg-lumen-hover transition-colors text-sm"
             >
               Add First Tier
             </button>
@@ -456,17 +456,17 @@ const FeeConfiguration: React.FC = () => {
 
         {/* Version info */}
         {config && (
-          <div className="px-6 py-3 border-t border-subtle bg-charcoal/20 text-xs text-steel">
+          <div className="px-6 py-3 border-t border-line bg-charcoal/20 text-xs text-steel">
             Version {config.version} | Last updated: {new Date(config.updatedAt).toLocaleString()}
           </div>
         )}
       </div>
 
       {/* Preview Calculator */}
-      <div className="bg-charcoal/30 border border-subtle rounded-xl overflow-hidden">
-        <div className="px-6 py-4 border-b border-subtle">
+      <div className="bg-charcoal/30 border border-line rounded-xl overflow-hidden">
+        <div className="px-6 py-4 border-b border-line">
           <h2 className="text-lg font-semibold text-bone flex items-center gap-2">
-            <Calculator className="w-5 h-5 text-circuit" />
+            <Calculator className="w-5 h-5 text-lumen-ink" />
             Fee Preview Calculator
           </h2>
           <p className="mt-1 text-sm text-steel">
@@ -487,7 +487,7 @@ const FeeConfiguration: React.FC = () => {
                 onChange={(e) => setPreviewAmount(e.target.value)}
                 placeholder="e.g., 10000"
                 min="0"
-                className="w-full px-4 py-2.5 bg-charcoal border border-subtle rounded-lg text-bone placeholder-steel/50 focus:outline-none focus:ring-2 focus:ring-circuit focus:border-transparent"
+                className="w-full px-4 py-2.5 bg-charcoal border border-line rounded-lg text-bone placeholder-steel/50 focus:outline-none focus:ring-2 focus:ring-lumen focus:border-transparent"
               />
             </div>
             <div className="flex items-end">
@@ -495,8 +495,8 @@ const FeeConfiguration: React.FC = () => {
                 onClick={handleCalculatePreview}
                 disabled={isCalculating || !previewAmount}
                 className={clsx(
-                  'px-6 py-2.5 bg-circuit text-white rounded-lg transition-colors flex items-center gap-2 text-sm font-medium',
-                  'hover:bg-circuit-600',
+                  'px-6 py-2.5 bg-lumen text-on-lumen rounded-lg transition-colors flex items-center gap-2 text-sm font-medium',
+                  'hover:bg-lumen-hover',
                   (isCalculating || !previewAmount) && 'opacity-50 cursor-not-allowed'
                 )}
               >
@@ -517,7 +517,7 @@ const FeeConfiguration: React.FC = () => {
 
           {/* Preview Result */}
           {previewResult && (
-            <div className="mt-6 bg-charcoal/50 border border-subtle rounded-lg p-4">
+            <div className="mt-6 bg-charcoal/50 border border-line rounded-lg p-4">
               <h4 className="text-sm font-medium text-steel mb-3 flex items-center gap-2">
                 <Info className="w-4 h-4" />
                 Fee Calculation Result
@@ -532,7 +532,7 @@ const FeeConfiguration: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-xs text-steel uppercase tracking-wide">Booking Fee</p>
-                  <p className="mt-1 text-xl font-bold text-circuit">
+                  <p className="mt-1 text-xl font-bold text-lumen-ink">
                     KES {previewResult.feeAmount.toLocaleString()}
                   </p>
                 </div>
@@ -544,10 +544,10 @@ const FeeConfiguration: React.FC = () => {
                 </div>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-subtle">
+              <div className="mt-4 pt-4 border-t border-line">
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
                   <span className="text-steel">Tier Applied:</span>
-                  <span className="px-2 py-1 bg-circuit/10 text-circuit rounded font-medium">
+                  <span className="px-2 py-1 bg-lumen/10 text-lumen-ink rounded font-medium">
                     {previewResult.tierLabel}
                   </span>
                   <span className="text-steel">|</span>

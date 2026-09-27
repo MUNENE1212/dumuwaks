@@ -100,8 +100,8 @@ export const Tooltip: React.FC<TooltipProps> = ({
           role="tooltip"
           className={cn(
             'fixed z-tooltip px-3 py-2 max-w-xs',
-            'bg-neutral-900 dark:bg-neutral-100',
-            'text-white dark:text-neutral-900',
+            'bg-surface-300',
+            'text-ink text-ink',
             'text-sm font-medium rounded-lg',
             'pointer-events-none',
             'animate-fade-in',
@@ -112,7 +112,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
           {/* Arrow */}
           <div
             className={cn(
-              'absolute w-2 h-2 bg-neutral-900 dark:bg-neutral-100 rotate-45',
+              'absolute w-2 h-2 bg-surface-300 rotate-45',
               {
                 'bottom-[-4px] left-1/2 -translate-x-1/2': placement === 'top',
                 'top-[-4px] left-1/2 -translate-x-1/2': placement === 'bottom',

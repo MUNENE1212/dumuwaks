@@ -17,8 +17,8 @@ const BoostedLabel: React.FC<BoostedLabelProps> = ({ boostLevel, className }) =>
       className={cn(
         'inline-flex items-center space-x-1 rounded-md px-2 py-1 text-xs font-medium',
         isPremium
-          ? 'bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 border border-purple-200'
-          : 'bg-gradient-to-r from-blue-50 to-cyan-50 text-blue-700 border border-blue-200',
+          ? ' bg-purple-50 text-purple-700 border border-purple-200'
+          : ' bg-blue-50 text-blue-700 border border-blue-200',
         className
       )}
       title="Boosted post - Enhanced visibility"

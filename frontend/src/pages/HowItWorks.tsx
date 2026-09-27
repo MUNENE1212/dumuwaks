@@ -6,32 +6,32 @@ const HowItWorks = () => {
     {
       icon: Search,
       title: 'Describe Your Problem',
-      description: 'Tell Dumu Waks what you need - plumbing, electrical, carpentry, appliance repair, or any maintenance service.',
+      description: 'Tell Dumuwaks what you need - plumbing, electrical, carpentry, appliance repair, or any maintenance service.',
     },
     {
       icon: UserCheck,
       title: 'Get Matched Instantly',
-      description: 'Our AI matches you with the RIGHT technician in under 60 seconds based on skills, location, and availability.',
+      description: 'We suggest technicians near you, ranked by skills, distance and availability.',
     },
     {
       icon: DollarSign,
       title: 'See Exact Pricing',
-      description: 'View the exact cost in KES before booking. No hidden fees or surprises with Dumu Waks transparent pricing.',
+      description: 'View the exact cost in KES before booking. No hidden fees or surprises with Dumuwaks transparent pricing.',
     },
     {
       icon: Calendar,
       title: 'Book Your Service',
-      description: 'Choose your preferred date and time. Pay 20% booking fee via M-Pesa. Emergency services available 24/7.',
+      description: 'Choose your preferred date and time. Once a technician accepts, you pay the full price by M-Pesa and Dumuwaks holds it. Mark it urgent and we look for someone today.',
     },
     {
       icon: Wrench,
       title: 'Technician Arrives',
-      description: 'Your verified technician arrives on time and completes the work professionally.',
+      description: 'The technician travels once your payment is held, and marks the job done when finished.',
     },
     {
       icon: Star,
       title: 'Rate & Pay Balance',
-      description: 'Review the work, rate your technician, and pay the remaining 80% via M-Pesa only if satisfied.',
+      description: 'Confirm the work is done and the held payment goes to the technician. Report a problem and it stays frozen until it is sorted.',
     },
   ];
 
@@ -72,12 +72,12 @@ const HowItWorks = () => {
     {
       icon: Shield,
       title: 'Secure Payments',
-      description: 'M-Pesa integration with escrow protection. Customers pay 20% upfront, 80% after completion.',
+      description: 'Customers pay into escrow before you travel, so the money is there. You\'re paid by M-Pesa or bank as soon as they confirm.',
     },
     {
       icon: UserCheck,
-      title: 'Verified Professionals',
-      description: 'All technicians are vetted, rated, and reviewed by the community.',
+      title: 'Public Track Record',
+      description: 'Every technician builds ratings and reviews from completed jobs.',
     },
     {
       icon: MessageCircle,
@@ -92,13 +92,13 @@ const HowItWorks = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-surface-100">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-primary-600 to-primary-800 text-white py-16">
+      <div className="border-b border-line bg-surface-000 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">How Dumu Waks Works</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">How Dumuwaks Works</h1>
           <p className="text-xl text-primary-100 max-w-3xl mx-auto">
-            Get professional maintenance and repair services in 6 simple steps. Quality guaranteed or your money back.
+            Get professional maintenance and repair services in 6 simple steps. Your payment is held until you confirm the work is done.
           </p>
         </div>
       </div>
@@ -106,10 +106,10 @@ const HowItWorks = () => {
       {/* For Customers */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+          <h2 className="text-3xl font-bold text-ink mb-4">
             For Customers
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-ink-muted max-w-2xl mx-auto">
             From booking to payment, we've made it incredibly simple
           </p>
         </div>
@@ -120,17 +120,17 @@ const HowItWorks = () => {
             return (
               <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-start space-x-4">
-                  <div className="bg-primary-100 dark:bg-primary-900/30 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="bg-primary-900/30 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
                     <Icon className="h-6 w-6 text-primary-600" />
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-primary-600 mb-1">
                       Step {index + 1}
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                    <h3 className="text-lg font-semibold text-ink mb-2">
                       {step.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm">
+                    <p className="text-ink-muted text-sm">
                       {step.description}
                     </p>
                   </div>
@@ -142,13 +142,13 @@ const HowItWorks = () => {
       </div>
 
       {/* For Technicians */}
-      <div className="bg-gray-100 dark:bg-gray-800 py-16">
+      <div className="bg-surface-200 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            <h2 className="text-3xl font-bold text-ink mb-4">
               For Technicians
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            <p className="text-ink-muted max-w-2xl mx-auto">
               Turn your skills into income. Join our network of professionals
             </p>
           </div>
@@ -159,17 +159,17 @@ const HowItWorks = () => {
               return (
                 <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
                   <div className="flex items-start space-x-4">
-                    <div className="bg-green-100 dark:bg-green-900/30 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="bg-green-900/30 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
                       <Icon className="h-6 w-6 text-green-600" />
                     </div>
                     <div>
                       <div className="text-sm font-semibold text-green-600 mb-1">
                         Step {index + 1}
                       </div>
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                      <h3 className="text-lg font-semibold text-ink mb-2">
                         {step.title}
                       </h3>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm">
+                      <p className="text-ink-muted text-sm">
                         {step.description}
                       </p>
                     </div>
@@ -184,11 +184,11 @@ const HowItWorks = () => {
       {/* Key Features */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-            Why Choose Dumu Waks?
+          <h2 className="text-3xl font-bold text-ink mb-4">
+            Why Choose Dumuwaks?
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Features that make Dumu Waks the best platform for maintenance and repair services in Kenya
+          <p className="text-ink-muted max-w-2xl mx-auto">
+            Features that make Dumuwaks the best platform for maintenance and repair services in Kenya
           </p>
         </div>
 
@@ -197,13 +197,13 @@ const HowItWorks = () => {
             const Icon = feature.icon;
             return (
               <Card key={index} className="p-6 text-center hover:shadow-lg transition-shadow">
-                <div className="bg-blue-100 dark:bg-blue-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="bg-blue-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Icon className="h-8 w-8 text-blue-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                <h3 className="text-xl font-semibold text-ink mb-2">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-ink-muted">
                   {feature.description}
                 </p>
               </Card>
@@ -213,10 +213,10 @@ const HowItWorks = () => {
       </div>
 
       {/* Pricing Info */}
-      <div className="bg-primary-600 py-16">
+      <div className="border-y border-line bg-surface-000 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-4">
+            <h2 className="text-3xl font-bold text-ink mb-4">
               Transparent Pricing
             </h2>
             <p className="text-primary-100 max-w-2xl mx-auto">
@@ -226,32 +226,32 @@ const HowItWorks = () => {
 
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <Card className="p-6 text-center">
-              <div className="text-4xl font-bold text-primary-600 mb-2">20%</div>
-              <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                Booking Fee
+              <div className="font-mono text-4xl text-lumen-ink mb-2">Held</div>
+              <h3 className="font-semibold text-ink mb-2">
+                Full price in escrow
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Paid upfront and held in escrow until job completion
+              <p className="text-sm text-ink-muted">
+                Paid by M-Pesa after the technician accepts, held by Dumuwaks until you confirm the work
               </p>
             </Card>
 
             <Card className="p-6 text-center">
-              <div className="text-4xl font-bold text-green-600 mb-2">80%</div>
-              <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                After Service
+              <div className="font-mono text-4xl text-ok-ink mb-2">3 days</div>
+              <h3 className="font-semibold text-ink mb-2">
+                To raise a problem
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Pay the balance after you're satisfied with the work
+              <p className="text-sm text-ink-muted">
+                After the technician marks the job done. With no report, the payment is released automatically
               </p>
             </Card>
 
             <Card className="p-6 text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">10%</div>
-              <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                Platform Fee
+              <div className="font-mono text-4xl text-ink mb-2">7.5%</div>
+              <h3 className="font-semibold text-ink mb-2">
+                Platform fee, plus VAT
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Small commission to maintain and improve the platform
+              <p className="text-sm text-ink-muted">
+                Taken from the technician's payout. You pay the price you agreed, nothing added
               </p>
             </Card>
           </div>
@@ -260,23 +260,23 @@ const HowItWorks = () => {
 
       {/* CTA */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <Card className="p-8 md:p-12 bg-gradient-to-r from-primary-600 to-primary-800 text-white text-center">
+        <Card className="p-8 md:p-12 bg-surface-000 text-center">
           <h2 className="text-3xl font-bold mb-4">
             Ready to Get Started?
           </h2>
-          <p className="text-xl text-primary-100 mb-8">
-            Join thousands of satisfied customers and technicians on Dumu Waks
+          <p className="text-xl text-ink-muted mb-8">
+            Book a technician, or join as one.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/register?role=customer"
-              className="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+              className="bg-surface-200 text-primary-600 px-8 py-3 rounded-lg font-semibold hover:bg-surface-300 transition-colors"
             >
               I Need a Technician
             </a>
             <a
               href="/register?role=technician"
-              className="bg-primary-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-600 transition-colors border-2 border-white"
+              className="bg-lumen text-on-lumen px-8 py-3 rounded-md font-semibold hover:bg-lumen-hover transition-colors"
             >
               I'm a Technician
             </a>

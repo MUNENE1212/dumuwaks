@@ -122,7 +122,7 @@ const ServicePricingForm: React.FC<ServicePricingFormProps> = ({
         </h3>
         <p className="text-sm text-steel mt-1">{service.description}</p>
         {service.basePriceMin && service.basePriceMax && (
-          <p className="text-sm text-circuit mt-2">
+          <p className="text-sm text-lumen-ink mt-2">
             Suggested: {formatPrice(service.basePriceMin)} - {formatPrice(service.basePriceMax)}
           </p>
         )}
@@ -159,8 +159,8 @@ const ServicePricingForm: React.FC<ServicePricingFormProps> = ({
                 className={clsx(
                   'p-4 rounded-lg border text-left transition-all duration-200',
                   pricingType === type
-                    ? 'border-circuit bg-circuit/10 text-bone'
-                    : 'border-subtle bg-charcoal text-steel hover:border-steel'
+                    ? 'border-lumen bg-lumen/10 text-bone'
+                    : 'border-line bg-charcoal text-steel hover:border-steel'
                 )}
                 data-testid={`pricing-type-${type}`}
               >
@@ -189,9 +189,9 @@ const ServicePricingForm: React.FC<ServicePricingFormProps> = ({
                 placeholder="e.g., 1500"
                 className={clsx(
                   'w-full h-12 pl-14 pr-4',
-                  'bg-charcoal border border-subtle rounded-lg',
+                  'bg-charcoal border border-line rounded-lg',
                   'text-bone placeholder:text-steel',
-                  'focus:outline-none focus:border-circuit focus:ring-1 focus:ring-circuit',
+                  'focus:outline-none focus:border-lumen focus:ring-1 focus:ring-lumen',
                   'transition-colors duration-200'
                 )}
                 data-testid="hourly-rate-input"
@@ -219,9 +219,9 @@ const ServicePricingForm: React.FC<ServicePricingFormProps> = ({
                 placeholder="e.g., 5000"
                 className={clsx(
                   'w-full h-12 pl-14 pr-4',
-                  'bg-charcoal border border-subtle rounded-lg',
+                  'bg-charcoal border border-line rounded-lg',
                   'text-bone placeholder:text-steel',
-                  'focus:outline-none focus:border-circuit focus:ring-1 focus:ring-circuit',
+                  'focus:outline-none focus:border-lumen focus:ring-1 focus:ring-lumen',
                   'transition-colors duration-200'
                 )}
                 data-testid="fixed-price-input"
@@ -251,9 +251,9 @@ const ServicePricingForm: React.FC<ServicePricingFormProps> = ({
                     placeholder="e.g., 2000"
                     className={clsx(
                       'w-full h-12 pl-14 pr-4',
-                      'bg-charcoal border border-subtle rounded-lg',
+                      'bg-charcoal border border-line rounded-lg',
                       'text-bone placeholder:text-steel',
-                      'focus:outline-none focus:border-circuit focus:ring-1 focus:ring-circuit',
+                      'focus:outline-none focus:border-lumen focus:ring-1 focus:ring-lumen',
                       'transition-colors duration-200'
                     )}
                     data-testid="min-price-input"
@@ -274,9 +274,9 @@ const ServicePricingForm: React.FC<ServicePricingFormProps> = ({
                     placeholder="e.g., 10000"
                     className={clsx(
                       'w-full h-12 pl-14 pr-4',
-                      'bg-charcoal border border-subtle rounded-lg',
+                      'bg-charcoal border border-line rounded-lg',
                       'text-bone placeholder:text-steel',
-                      'focus:outline-none focus:border-circuit focus:ring-1 focus:ring-circuit',
+                      'focus:outline-none focus:border-lumen focus:ring-1 focus:ring-lumen',
                       'transition-colors duration-200'
                     )}
                     data-testid="max-price-input"
@@ -301,9 +301,9 @@ const ServicePricingForm: React.FC<ServicePricingFormProps> = ({
             onChange={(e) => setEstimatedDuration(e.target.value)}
             className={clsx(
               'w-full h-12 px-4',
-              'bg-charcoal border border-subtle rounded-lg',
+              'bg-charcoal border border-line rounded-lg',
               'text-bone',
-              'focus:outline-none focus:border-circuit focus:ring-1 focus:ring-circuit',
+              'focus:outline-none focus:border-lumen focus:ring-1 focus:ring-lumen',
               'transition-colors duration-200'
             )}
             data-testid="estimated-duration-select"
@@ -332,9 +332,9 @@ const ServicePricingForm: React.FC<ServicePricingFormProps> = ({
               placeholder="e.g., 500"
               className={clsx(
                 'w-full h-12 pl-14 pr-4',
-                'bg-charcoal border border-subtle rounded-lg',
+                'bg-charcoal border border-line rounded-lg',
                 'text-bone placeholder:text-steel',
-                'focus:outline-none focus:border-circuit focus:ring-1 focus:ring-circuit',
+                'focus:outline-none focus:border-lumen focus:ring-1 focus:ring-lumen',
                 'transition-colors duration-200'
               )}
               data-testid="call-out-fee-input"
@@ -360,13 +360,13 @@ const ServicePricingForm: React.FC<ServicePricingFormProps> = ({
             onClick={() => setNegotiable(!negotiable)}
             className={clsx(
               'relative inline-flex h-7 w-12 items-center rounded-full transition-colors',
-              negotiable ? 'bg-circuit' : 'bg-charcoal border border-subtle'
+              negotiable ? 'bg-lumen' : 'bg-charcoal border border-line'
             )}
             data-testid="negotiable-toggle"
           >
             <span
               className={clsx(
-                'inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform',
+                'inline-block h-5 w-5 transform rounded-full bg-surface-200 shadow transition-transform',
                 negotiable ? 'translate-x-6' : 'translate-x-1'
               )}
             />
@@ -387,9 +387,9 @@ const ServicePricingForm: React.FC<ServicePricingFormProps> = ({
             placeholder="Add any specific details about how you offer this service..."
             className={clsx(
               'w-full px-4 py-3',
-              'bg-charcoal border border-subtle rounded-lg',
+              'bg-charcoal border border-line rounded-lg',
               'text-bone placeholder:text-steel',
-              'focus:outline-none focus:border-circuit focus:ring-1 focus:ring-circuit',
+              'focus:outline-none focus:border-lumen focus:ring-1 focus:ring-lumen',
               'transition-colors duration-200 resize-none'
             )}
             data-testid="description-input"
@@ -400,7 +400,7 @@ const ServicePricingForm: React.FC<ServicePricingFormProps> = ({
         </div>
 
         {/* Form Actions */}
-        <div className="flex justify-end gap-3 pt-4 border-t border-subtle">
+        <div className="flex justify-end gap-3 pt-4 border-t border-line">
           <Button
             type="button"
             variant="ghost"

@@ -69,7 +69,7 @@ export const QRCodeDisplay = ({
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'Dumu Waks',
+          title: 'Dumuwaks',
           text: description,
           url: data
         });
@@ -91,7 +91,7 @@ export const QRCodeDisplay = ({
   }
 
   return (
-    <div className={cn("bg-white dark:bg-neutral-900 rounded-2xl p-6 shadow-lg", className)}>
+    <div className={cn("bg-surface-100 rounded-2xl p-6 shadow-lg", className)}>
       {/* QR Code Image */}
       <div className="flex flex-col items-center">
         <motion.div
@@ -101,7 +101,7 @@ export const QRCodeDisplay = ({
         >
           {/* QR Code */}
           <div
-            className="bg-white p-4 rounded-xl shadow-inner border-2 border-neutral-200 dark:border-neutral-800"
+            className="bg-surface-200 p-4 rounded-xl shadow-inner border-2 border-line"
             style={{ width: size + 32, height: size + 32 }}
           >
             <img
@@ -112,13 +112,13 @@ export const QRCodeDisplay = ({
             />
           </div>
 
-          {/* Dumu Waks Logo Overlay */}
+          {/* Dumuwaks Logo Overlay */}
           {showLogo && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="bg-white dark:bg-neutral-900 p-2 rounded-lg shadow-lg">
+              <div className="bg-surface-100 p-2 rounded-lg shadow-lg">
                 <img
                   src={logoUrl}
-                  alt="Dumu Waks Logo"
+                  alt="Dumuwaks Logo"
                   className="w-12 h-12 object-contain"
                 />
               </div>
@@ -128,13 +128,13 @@ export const QRCodeDisplay = ({
 
         {/* Title & Description */}
         {title && (
-          <h3 className="mt-4 text-lg font-semibold text-neutral-900 dark:text-white text-center">
+          <h3 className="mt-4 text-lg font-semibold text-ink dark:text-ink text-center">
             {title}
           </h3>
         )}
 
         {description && (
-          <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 text-center max-w-xs">
+          <p className="mt-2 text-sm text-ink-muted text-center max-w-xs">
             {description}
           </p>
         )}

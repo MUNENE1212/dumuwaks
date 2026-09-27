@@ -165,7 +165,7 @@ export default defineConfig({
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
         "font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com; " +
         "img-src 'self' data: https: blob:; " +
-        "connect-src 'self' https://api.ementech.co.ke http://localhost:5000 ws://localhost:5000 wss://localhost:5000 https://fonts.googleapis.com https://fonts.gstatic.com wss://localhost:3000 ws://localhost:3000 ws://localhost:3001 ws://localhost:3002 https://storage.googleapis.com; " +
+        "connect-src 'self' https://dumuwaks.co.ke wss://dumuwaks.co.ke https://api.ementech.co.ke wss://api.ementech.co.ke http://localhost:5000 ws://localhost:5000 wss://localhost:5000 https://fonts.googleapis.com https://fonts.gstatic.com wss://localhost:3000 ws://localhost:3000 ws://localhost:3001 ws://localhost:3002 https://storage.googleapis.com; " +
         "media-src 'self' blob: https:; " +
         "object-src 'none'; " +
         "base-uri 'self'; " +

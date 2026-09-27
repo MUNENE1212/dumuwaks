@@ -149,29 +149,29 @@ export const PortfolioUploadModal: React.FC<PortfolioUploadModalProps> = ({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface-000/50">
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          className="bg-white dark:bg-neutral-800 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden"
+          className="bg-surface-200 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden"
           role="dialog"
           aria-modal="true"
           aria-labelledby="portfolio-upload-title"
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-6 text-white">
+          <div className=" bg-indigo-500 p-6 text-on-lumen">
             <div className="flex items-start justify-between">
               <div>
                 <h2 id="portfolio-upload-title" className="text-2xl font-bold mb-1">Add to Portfolio</h2>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-ink/90">
                   Showcase your verified work to attract more customers
                 </p>
               </div>
               <button
                 onClick={onClose}
                 disabled={uploading}
-                className="text-white/80 hover:text-white transition-colors disabled:opacity-50"
+                className="text-ink/80 hover:text-ink transition-colors disabled:opacity-50"
                 aria-label="Close"
               >
                 <X className="w-6 h-6" />
@@ -181,10 +181,10 @@ export const PortfolioUploadModal: React.FC<PortfolioUploadModalProps> = ({
             {/* Progress Steps */}
             <div className="flex items-center gap-2 mt-4">
               <div className={`flex-1 h-1 rounded-full transition-colors ${
-                step === 'details' || step === 'images' || step === 'submitting' ? 'bg-white' : 'bg-white/30'
+                step === 'details' || step === 'images' || step === 'submitting' ? 'bg-surface-200' : 'bg-ink/30'
               }`} />
               <div className={`flex-1 h-1 rounded-full transition-colors ${
-                step === 'images' || step === 'submitting' ? 'bg-white' : 'bg-white/30'
+                step === 'images' || step === 'submitting' ? 'bg-surface-200' : 'bg-ink/30'
               }`} />
             </div>
           </div>
@@ -201,13 +201,13 @@ export const PortfolioUploadModal: React.FC<PortfolioUploadModalProps> = ({
                   {/* Link to Booking (Optional) */}
                   {bookings.length > 0 && (
                     <div>
-                      <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+                      <label className="block text-sm font-medium text-ink-muted mb-2">
                         Link to Completed Booking (Optional)
                       </label>
                       <select
                         value={selectedBooking}
                         onChange={(e) => setSelectedBooking(e.target.value)}
-                        className="w-full px-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white"
+                        className="w-full px-4 py-2 border border-line-strong rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-surface-300 text-ink text-ink"
                       >
                         <option value="">Upload without linking (requires admin approval)</option>
                         {bookings.map(booking => (
@@ -217,7 +217,7 @@ export const PortfolioUploadModal: React.FC<PortfolioUploadModalProps> = ({
                         ))}
                       </select>
                       {isAutoVerified && (
-                        <div className="mt-2 flex items-center gap-2 text-xs text-green-600 dark:text-green-400">
+                        <div className="mt-2 flex items-center gap-2 text-xs text-green-400">
                           <CheckCircle className="w-4 h-4" />
                           <span>This will be auto-verified from your completed booking</span>
                         </div>
@@ -227,7 +227,7 @@ export const PortfolioUploadModal: React.FC<PortfolioUploadModalProps> = ({
 
                   {/* Title */}
                   <div>
-                    <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+                    <label className="block text-sm font-medium text-ink-muted mb-2">
                       Project Title *
                     </label>
                     <input
@@ -235,7 +235,7 @@ export const PortfolioUploadModal: React.FC<PortfolioUploadModalProps> = ({
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                       placeholder="e.g., Complete Kitchen Renovation"
-                      className="w-full px-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white"
+                      className="w-full px-4 py-2 border border-line-strong rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-surface-300 text-ink text-ink"
                       maxLength={100}
                       required
                     />
@@ -243,31 +243,31 @@ export const PortfolioUploadModal: React.FC<PortfolioUploadModalProps> = ({
 
                   {/* Description */}
                   <div>
-                    <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+                    <label className="block text-sm font-medium text-ink-muted mb-2">
                       Description *
                     </label>
                     <textarea
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       placeholder="Describe what you did, challenges you faced, and how you solved them..."
-                      className="w-full h-32 px-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white resize-none"
+                      className="w-full h-32 px-4 py-2 border border-line-strong rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-surface-300 text-ink text-ink resize-none"
                       maxLength={1000}
                       required
                     />
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
+                    <p className="text-xs text-ink-muted mt-1">
                       {description.length}/1000 characters
                     </p>
                   </div>
 
                   {/* Service Category */}
                   <div>
-                    <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+                    <label className="block text-sm font-medium text-ink-muted mb-2">
                       Service Category *
                     </label>
                     <select
                       value={serviceCategory}
                       onChange={(e) => setServiceCategory(e.target.value)}
-                      className="w-full px-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white"
+                      className="w-full px-4 py-2 border border-line-strong rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-surface-300 text-ink text-ink"
                       required
                     >
                       <option value="">Select a category</option>
@@ -279,7 +279,7 @@ export const PortfolioUploadModal: React.FC<PortfolioUploadModalProps> = ({
 
                   {/* Location */}
                   <div>
-                    <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+                    <label className="block text-sm font-medium text-ink-muted mb-2">
                       Location (City) *
                     </label>
                     <input
@@ -287,7 +287,7 @@ export const PortfolioUploadModal: React.FC<PortfolioUploadModalProps> = ({
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
                       placeholder="e.g., Nairobi"
-                      className="w-full px-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white"
+                      className="w-full px-4 py-2 border border-line-strong rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-surface-300 text-ink text-ink"
                       required
                     />
                   </div>
@@ -296,7 +296,7 @@ export const PortfolioUploadModal: React.FC<PortfolioUploadModalProps> = ({
                   <button
                     type="button"
                     onClick={() => setStep('images')}
-                    className="w-full px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all flex items-center justify-center gap-2"
+                    className="w-full px-6 py-3 bg-indigo-500 text-on-lumen font-semibold rounded-lg hover:bg-indigo-600 transition-all flex items-center justify-center gap-2"
                   >
                     Continue to Images
                     <Plus className="w-4 h-4" />
@@ -311,24 +311,24 @@ export const PortfolioUploadModal: React.FC<PortfolioUploadModalProps> = ({
                   className="space-y-4"
                 >
                   <div>
-                    <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+                    <label className="block text-sm font-medium text-ink-muted mb-2">
                       Upload Images *
                     </label>
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-3">
+                    <p className="text-xs text-ink-muted mb-3">
                       Upload up to 10 images. Max 5MB per image. Show before/after, work in progress, or final results.
                     </p>
 
                     {/* Upload Area */}
-                    <label className="block w-full p-8 border-2 border-dashed border-neutral-300 dark:border-neutral-600 rounded-lg hover:border-purple-500 dark:hover:border-purple-500 transition-colors cursor-pointer bg-neutral-50 dark:bg-neutral-900/50">
+                    <label className="block w-full p-8 border-2 border-dashed border-line-strong rounded-lg hover:border-purple-500 transition-colors cursor-pointer bg-surface-100/50">
                       <div className="flex flex-col items-center gap-3">
-                        <div className="bg-purple-100 dark:bg-purple-900/30 rounded-full p-3">
-                          <Upload className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                        <div className="bg-purple-900/30 rounded-full p-3">
+                          <Upload className="w-6 h-6 text-purple-400" />
                         </div>
                         <div className="text-center">
-                          <p className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
+                          <p className="text-sm font-medium text-ink-muted">
                             Click to upload or drag and drop
                           </p>
-                          <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
+                          <p className="text-xs text-ink-muted mt-1">
                             PNG, JPG, GIF up to 5MB
                           </p>
                         </div>
@@ -356,13 +356,13 @@ export const PortfolioUploadModal: React.FC<PortfolioUploadModalProps> = ({
                           <button
                             type="button"
                             onClick={() => removeImage(index)}
-                            className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="absolute top-2 right-2 bg-red-500 text-on-lumen p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                             aria-label={`Remove image ${index + 1}`}
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
-                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
-                            <p className="text-white text-xs">Image {index + 1}</p>
+                          <div className="absolute bottom-0 left-0 right-0 bg-surface-000/70 p-2">
+                            <p className="text-ink text-xs">Image {index + 1}</p>
                           </div>
                         </div>
                       ))}
@@ -375,18 +375,18 @@ export const PortfolioUploadModal: React.FC<PortfolioUploadModalProps> = ({
                       type="button"
                       onClick={() => setStep('details')}
                       disabled={uploading}
-                      className="flex-1 px-6 py-3 border border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors font-medium disabled:opacity-50"
+                      className="flex-1 px-6 py-3 border border-line-strong text-ink-muted rounded-lg hover:bg-surface-300 transition-colors font-medium disabled:opacity-50"
                     >
                       Back
                     </button>
                     <button
                       type="submit"
                       disabled={uploading || images.length === 0}
-                      className="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      className="flex-1 px-6 py-3 bg-indigo-500 text-on-lumen font-semibold rounded-lg hover:bg-indigo-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
                       {uploading ? (
                         <>
-                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          <div className="w-4 h-4 border-2 border-ink/30 border-t-line rounded-full animate-spin" />
                           Uploading...
                         </>
                       ) : (
@@ -405,13 +405,13 @@ export const PortfolioUploadModal: React.FC<PortfolioUploadModalProps> = ({
           {/* Info Box */}
           {step === 'details' && (
             <div className="px-6 pb-6">
-              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 flex items-start gap-3">
-                <AlertCircle className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+              <div className="bg-blue-900/20 rounded-lg p-4 flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-blue-900 dark:text-blue-100">
+                  <p className="text-sm font-medium text-blue-100">
                     Build Trust with Your Portfolio
                   </p>
-                  <p className="text-xs text-blue-700 dark:text-blue-300 mt-1">
+                  <p className="text-xs text-blue-300 mt-1">
                     Customers are 3x more likely to book technicians who showcase their work.
                     Upload high-quality images of your best projects.
                   </p>

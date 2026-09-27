@@ -255,15 +255,15 @@ const MatchingPreferences: React.FC = () => {
     <div className="mx-auto max-w-5xl">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Matching Preferences</h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">
+        <h1 className="text-3xl font-bold text-ink">Matching Preferences</h1>
+        <p className="mt-2 text-ink-muted">
           Customize how our AI finds the perfect technicians for you
         </p>
       </div>
 
       <form onSubmit={handleSubmit}>
         {/* Tabs */}
-        <div className="mb-6 border-b border-gray-200 dark:border-gray-700">
+        <div className="mb-6 border-b border-line">
           <div className="flex space-x-4 overflow-x-auto">
             {tabs.map((tab) => {
               const Icon = tab.icon;
@@ -275,7 +275,7 @@ const MatchingPreferences: React.FC = () => {
                   className={`flex items-center space-x-2 whitespace-nowrap border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
                     activeTab === tab.id
                       ? 'border-primary-600 text-primary-600'
-                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                      : 'border-transparent text-ink-muted hover:border-line-strong hover:text-ink'
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -287,18 +287,18 @@ const MatchingPreferences: React.FC = () => {
         </div>
 
         {/* Tab Content */}
-        <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
+        <div className="rounded-lg border border-line bg-surface-200 p-6 shadow-sm">
           {/* General Tab */}
           {activeTab === 'general' && (
             <div className="space-y-6">
               <div>
-                <h2 className="mb-4 flex items-center text-lg font-semibold text-gray-900 dark:text-gray-100">
+                <h2 className="mb-4 flex items-center text-lg font-semibold text-ink">
                   <MapPin className="mr-2 h-5 w-5 text-primary-600" />
                   Location & Distance
                 </h2>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium text-ink-muted">
                       Maximum Distance (km): {formData.general.maxDistance} km
                     </label>
                     <input
@@ -317,7 +317,7 @@ const MatchingPreferences: React.FC = () => {
                       }
                       className="mt-2 w-full"
                     />
-                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    <p className="mt-1 text-xs text-ink-muted">
                       Only show technicians within this distance from your location
                     </p>
                   </div>
@@ -325,12 +325,12 @@ const MatchingPreferences: React.FC = () => {
               </div>
 
               <div>
-                <h2 className="mb-4 flex items-center text-lg font-semibold text-gray-900 dark:text-gray-100">
+                <h2 className="mb-4 flex items-center text-lg font-semibold text-ink">
                   <DollarSign className="mr-2 h-5 w-5 text-primary-600" />
                   Pricing Preferences
                 </h2>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Price Range</label>
+                  <label className="block text-sm font-medium text-ink-muted">Price Range</label>
                   <select
                     value={formData.general.priceRange.preference}
                     onChange={(e) =>
@@ -345,7 +345,7 @@ const MatchingPreferences: React.FC = () => {
                         },
                       }))
                     }
-                    className="mt-1 w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-4 py-2 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="mt-1 w-full rounded-lg border border-line-strong bg-surface-300 text-ink px-4 py-2 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
                   >
                     <option value="budget">Budget - Most affordable options</option>
                     <option value="moderate">Moderate - Balance of price and quality</option>
@@ -356,13 +356,13 @@ const MatchingPreferences: React.FC = () => {
               </div>
 
               <div>
-                <h2 className="mb-4 flex items-center text-lg font-semibold text-gray-900 dark:text-gray-100">
+                <h2 className="mb-4 flex items-center text-lg font-semibold text-ink">
                   <Clock className="mr-2 h-5 w-5 text-primary-600" />
                   Time Preferences
                 </h2>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium text-ink-muted">
                       Expected Response Time
                     </label>
                     <select
@@ -376,7 +376,7 @@ const MatchingPreferences: React.FC = () => {
                           },
                         }))
                       }
-                      className="mt-1 w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-4 py-2 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="mt-1 w-full rounded-lg border border-line-strong bg-surface-300 text-ink px-4 py-2 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
                     >
                       <option value="immediate">Immediate - Within 5 minutes</option>
                       <option value="within_hour">Within an hour</option>
@@ -386,7 +386,7 @@ const MatchingPreferences: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium text-ink-muted">
                       Default Urgency Level
                     </label>
                     <select
@@ -400,7 +400,7 @@ const MatchingPreferences: React.FC = () => {
                           },
                         }))
                       }
-                      className="mt-1 w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-4 py-2 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="mt-1 w-full rounded-lg border border-line-strong bg-surface-300 text-ink px-4 py-2 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
                     >
                       <option value="low">Low - Within a week</option>
                       <option value="medium">Medium - Within 2-3 days</option>
@@ -417,13 +417,13 @@ const MatchingPreferences: React.FC = () => {
           {activeTab === 'technician' && (
             <div className="space-y-6">
               <div>
-                <h2 className="mb-4 flex items-center text-lg font-semibold text-gray-900 dark:text-gray-100">
+                <h2 className="mb-4 flex items-center text-lg font-semibold text-ink">
                   <Star className="mr-2 h-5 w-5 text-primary-600" />
                   Rating Requirements
                 </h2>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium text-ink-muted">
                       Rating Importance (0-10): {formData.technicianPreferences.ratingImportance}
                     </label>
                     <input
@@ -442,13 +442,13 @@ const MatchingPreferences: React.FC = () => {
                       }
                       className="mt-2 w-full"
                     />
-                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    <p className="mt-1 text-xs text-ink-muted">
                       How important is technician rating to you?
                     </p>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium text-ink-muted">
                       Minimum Rating: {formData.technicianPreferences.minRating.toFixed(1)} stars
                     </label>
                     <input
@@ -468,7 +468,7 @@ const MatchingPreferences: React.FC = () => {
                       }
                       className="mt-2 w-full"
                     />
-                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    <p className="mt-1 text-xs text-ink-muted">
                       Only show technicians with at least this rating
                     </p>
                   </div>
@@ -476,12 +476,12 @@ const MatchingPreferences: React.FC = () => {
               </div>
 
               <div>
-                <h2 className="mb-4 flex items-center text-lg font-semibold text-gray-900 dark:text-gray-100">
+                <h2 className="mb-4 flex items-center text-lg font-semibold text-ink">
                   <Award className="mr-2 h-5 w-5 text-primary-600" />
                   Experience Requirements
                 </h2>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label className="block text-sm font-medium text-ink-muted">
                     Minimum Years of Experience: {formData.technicianPreferences.minYearsExperience}
                   </label>
                   <input
@@ -504,7 +504,7 @@ const MatchingPreferences: React.FC = () => {
               </div>
 
               <div>
-                <h2 className="mb-4 flex items-center text-lg font-semibold text-gray-900 dark:text-gray-100">
+                <h2 className="mb-4 flex items-center text-lg font-semibold text-ink">
                   <Shield className="mr-2 h-5 w-5 text-primary-600" />
                   Verification Requirements
                 </h2>
@@ -522,9 +522,9 @@ const MatchingPreferences: React.FC = () => {
                           },
                         }))
                       }
-                      className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                      className="h-4 w-4 rounded border-line-strong text-primary-600 focus:ring-primary-500"
                     />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">Require Certifications</span>
+                    <span className="text-sm text-ink-muted">Require Certifications</span>
                   </label>
 
                   <label className="flex items-center space-x-3">
@@ -540,30 +540,13 @@ const MatchingPreferences: React.FC = () => {
                           },
                         }))
                       }
-                      className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                      className="h-4 w-4 rounded border-line-strong text-primary-600 focus:ring-primary-500"
                     />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">Require Background Check</span>
+                    <span className="text-sm text-ink-muted">Only ID-verified technicians</span>
                   </label>
 
-                  <label className="flex items-center space-x-3">
-                    <input
-                      type="checkbox"
-                      checked={formData.technicianPreferences.requireInsurance}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          technicianPreferences: {
-                            ...prev.technicianPreferences,
-                            requireInsurance: e.target.checked,
-                          },
-                        }))
-                      }
-                      className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
-                    />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">Require Insurance</span>
-                  </label>
                 </div>
-                <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                <p className="mt-2 text-xs text-ink-muted">
                   Note: Requiring these may reduce the number of available matches
                 </p>
               </div>
@@ -574,13 +557,13 @@ const MatchingPreferences: React.FC = () => {
           {activeTab === 'communication' && (
             <div className="space-y-6">
               <div>
-                <h2 className="mb-4 flex items-center text-lg font-semibold text-gray-900 dark:text-gray-100">
+                <h2 className="mb-4 flex items-center text-lg font-semibold text-ink">
                   <Bell className="mr-2 h-5 w-5 text-primary-600" />
                   Notification Preferences
                 </h2>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium text-ink-muted">
                       Preferred Contact Method
                     </label>
                     <select
@@ -594,7 +577,7 @@ const MatchingPreferences: React.FC = () => {
                           },
                         }))
                       }
-                      className="mt-1 w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-4 py-2 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="mt-1 w-full rounded-lg border border-line-strong bg-surface-300 text-ink px-4 py-2 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
                     >
                       <option value="in_app_chat">In-App Chat</option>
                       <option value="phone">Phone Call</option>
@@ -618,9 +601,9 @@ const MatchingPreferences: React.FC = () => {
                             },
                           }))
                         }
-                        className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                        className="h-4 w-4 rounded border-line-strong text-primary-600 focus:ring-primary-500"
                       />
-                      <span className="text-sm text-gray-700 dark:text-gray-300">Notify me when matches are found</span>
+                      <span className="text-sm text-ink-muted">Notify me when matches are found</span>
                     </label>
 
                     <label className="flex items-center space-x-3">
@@ -636,16 +619,16 @@ const MatchingPreferences: React.FC = () => {
                             },
                           }))
                         }
-                        className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                        className="h-4 w-4 rounded border-line-strong text-primary-600 focus:ring-primary-500"
                       />
-                      <span className="text-sm text-gray-700 dark:text-gray-300">
+                      <span className="text-sm text-ink-muted">
                         Notify me when a better match becomes available
                       </span>
                     </label>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className="block text-sm font-medium text-ink-muted">
                       Match Notification Frequency
                     </label>
                     <select
@@ -659,7 +642,7 @@ const MatchingPreferences: React.FC = () => {
                           },
                         }))
                       }
-                      className="mt-1 w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-4 py-2 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="mt-1 w-full rounded-lg border border-line-strong bg-surface-300 text-ink px-4 py-2 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
                       disabled={!formData.communication.notifyOnMatch}
                     >
                       <option value="instant">Instant - As soon as matches are found</option>
@@ -677,9 +660,9 @@ const MatchingPreferences: React.FC = () => {
           {activeTab === 'ai' && (
             <div className="space-y-6">
               <div>
-                <h2 className="mb-4 flex items-center text-lg font-semibold text-gray-900 dark:text-gray-100">
+                <h2 className="mb-4 flex items-center text-lg font-semibold text-ink">
                   <Brain className="mr-2 h-5 w-5 text-primary-600" />
-                  AI-Powered Features
+                  Suggestions
                 </h2>
                 <div className="space-y-3">
                   <label className="flex items-center space-x-3">
@@ -695,13 +678,13 @@ const MatchingPreferences: React.FC = () => {
                           },
                         }))
                       }
-                      className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                      className="h-4 w-4 rounded border-line-strong text-primary-600 focus:ring-primary-500"
                     />
                     <div>
-                      <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Enable AI Recommendations
+                      <span className="block text-sm font-medium text-ink-muted">
+                        Personalised suggestions
                       </span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                      <span className="text-xs text-ink-muted">
                         Get personalized technician suggestions based on your preferences
                       </span>
                     </div>
@@ -720,12 +703,12 @@ const MatchingPreferences: React.FC = () => {
                           },
                         }))
                       }
-                      className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                      className="h-4 w-4 rounded border-line-strong text-primary-600 focus:ring-primary-500"
                       disabled={!formData.ai.enableAIRecommendations}
                     />
                     <div>
-                      <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">Auto-Match</span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                      <span className="block text-sm font-medium text-ink-muted">Auto-Match</span>
+                      <span className="text-xs text-ink-muted">
                         Automatically find matches without manual search
                       </span>
                     </div>
@@ -744,13 +727,13 @@ const MatchingPreferences: React.FC = () => {
                           },
                         }))
                       }
-                      className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                      className="h-4 w-4 rounded border-line-strong text-primary-600 focus:ring-primary-500"
                     />
                     <div>
-                      <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                      <span className="block text-sm font-medium text-ink-muted">
                         Smart Scheduling
                       </span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                      <span className="text-xs text-ink-muted">
                         AI suggests optimal booking times based on your patterns
                       </span>
                     </div>
@@ -769,13 +752,13 @@ const MatchingPreferences: React.FC = () => {
                           },
                         }))
                       }
-                      className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                      className="h-4 w-4 rounded border-line-strong text-primary-600 focus:ring-primary-500"
                     />
                     <div>
-                      <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                      <span className="block text-sm font-medium text-ink-muted">
                         Price Prediction
                       </span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                      <span className="text-xs text-ink-muted">
                         Get estimated pricing before booking
                       </span>
                     </div>
@@ -794,13 +777,13 @@ const MatchingPreferences: React.FC = () => {
                           },
                         }))
                       }
-                      className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                      className="h-4 w-4 rounded border-line-strong text-primary-600 focus:ring-primary-500"
                     />
                     <div>
-                      <span className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                      <span className="block text-sm font-medium text-ink-muted">
                         Learn from My Behavior
                       </span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                      <span className="text-xs text-ink-muted">
                         Improve recommendations based on your booking history
                       </span>
                     </div>
@@ -809,7 +792,7 @@ const MatchingPreferences: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                <label className="block text-sm font-medium text-ink-muted">
                   Personalization Level
                 </label>
                 <select
@@ -823,14 +806,14 @@ const MatchingPreferences: React.FC = () => {
                       },
                     }))
                   }
-                  className="mt-1 w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-4 py-2 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="mt-1 w-full rounded-lg border border-line-strong bg-surface-300 text-ink px-4 py-2 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={!formData.ai.enableAIRecommendations}
                 >
                   <option value="minimal">Minimal - Basic recommendations</option>
                   <option value="moderate">Moderate - Balanced personalization</option>
                   <option value="high">High - Highly tailored recommendations</option>
                 </select>
-                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                <p className="mt-1 text-xs text-ink-muted">
                   Higher personalization uses more of your data to refine matches
                 </p>
               </div>
@@ -842,12 +825,12 @@ const MatchingPreferences: React.FC = () => {
             <div className="space-y-6">
               <div>
                 <div className="mb-4 flex items-center justify-between">
-                  <h2 className="flex items-center text-lg font-semibold text-gray-900 dark:text-gray-100">
+                  <h2 className="flex items-center text-lg font-semibold text-ink">
                     <Star className="mr-2 h-5 w-5 text-primary-600" />
                     Custom Match Weights
                   </h2>
                   <div className="flex items-center space-x-2">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Total:</span>
+                    <span className="text-sm text-ink-muted">Total:</span>
                     <span
                       className={`text-lg font-bold ${
                         totalWeight === 100 ? 'text-green-600' : 'text-red-600'
@@ -857,7 +840,7 @@ const MatchingPreferences: React.FC = () => {
                     </span>
                   </div>
                 </div>
-                <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                <p className="mb-4 text-sm text-ink-muted">
                   Customize how much each factor matters in finding matches. Total must equal 100%.
                 </p>
 
@@ -865,12 +848,12 @@ const MatchingPreferences: React.FC = () => {
                   {Object.entries(formData.customWeights).map(([key, value]) => (
                     <div key={key}>
                       <div className="flex items-center justify-between">
-                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        <label className="text-sm font-medium text-ink-muted">
                           {key
                             .replace(/([A-Z])/g, ' $1')
                             .replace(/^./, (str) => str.toUpperCase())}
                         </label>
-                        <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{value}%</span>
+                        <span className="text-sm font-semibold text-ink">{value}%</span>
                       </div>
                       <input
                         type="range"

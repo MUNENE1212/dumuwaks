@@ -90,25 +90,25 @@ export const PWAInstallPrompt = () => {
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-96 z-50"
       >
-        <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-200 dark:border-neutral-800 p-6">
+        <div className="bg-surface-100 rounded-2xl shadow-2xl border border-line p-6">
           <button
             onClick={handleDismiss}
-            className="absolute top-4 right-4 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors"
+            className="absolute top-4 right-4 text-ink-muted hover:text-ink-muted transition-colors"
             aria-label="Close"
           >
             <X className="h-5 w-5" />
           </button>
 
           <div className="flex items-start gap-4">
-            <div className="bg-primary-100 dark:bg-primary-900/30 p-3 rounded-xl flex-shrink-0">
-              <Smartphone className="h-6 w-6 text-primary-600 dark:text-primary-400" />
+            <div className="bg-primary-900/30 p-3 rounded-xl flex-shrink-0">
+              <Smartphone className="h-6 w-6 text-primary-400" />
             </div>
 
             <div className="flex-1">
-              <h3 className="font-semibold text-lg text-neutral-900 dark:text-white mb-1">
-                Install Dumu Waks
+              <h3 className="font-semibold text-lg text-ink dark:text-ink mb-1">
+                Install Dumuwaks
               </h3>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
+              <p className="text-sm text-ink-muted mb-4">
                 Get the full app experience with offline access and faster performance
               </p>
 

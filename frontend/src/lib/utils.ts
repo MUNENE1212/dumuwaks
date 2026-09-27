@@ -11,7 +11,7 @@ export function cn(...inputs: ClassValue[]) {
 
 /* ============================================
    DESIGN TOKEN ACCESS UTILITIES
-   Rich Dark Design System for Dumu Waks
+   Rich Dark Design System for Dumuwaks
    ============================================ */
 
 /**
@@ -37,23 +37,23 @@ export function colorToken(color: keyof typeof colorTokens): string {
  */
 export const colorTokens = {
   // Background colors
-  bgPrimary: '--dw-bg-primary',      // Deep Mahogany #261212
-  bgSecondary: '--dw-bg-secondary',    // Iron Charcoal #1C1C1C
+  bgPrimary: '--dw-bg-primary',      // Deep Mahogany #14110c
+  bgSecondary: '--dw-bg-secondary',    // Iron Charcoal #1d1811
   bgTertiary: '--dw-bg-tertiary',
   bgElevated: '--dw-bg-elevated',
   bgHover: '--dw-bg-hover',
   bgActive: '--dw-bg-active',
 
   // Text colors
-  textPrimary: '--dw-text-primary',    // Soft Bone #E0E0E0
-  textSecondary: '--dw-text-secondary',  // Steel Grey #9BA4B0
+  textPrimary: '--dw-text-primary',    // Soft Bone #f5eee1
+  textSecondary: '--dw-text-secondary',  // Steel Grey #b8ab95
   textTertiary: '--dw-text-tertiary',
   textDisabled: '--dw-text-disabled',
-  textLink: '--dw-text-link',          // Circuit Blue #0090C5
+  textLink: '--dw-text-link',          // Circuit Blue #e8a317
 
   // Brand/Accent colors
-  accentPrimary: '--dw-accent-primary',  // Circuit Blue #0090C5
-  accentSecondary: '--dw-accent-secondary', // Wrench Purple #7D4E9F
+  accentPrimary: '--dw-accent-primary',  // Circuit Blue #e8a317
+  accentSecondary: '--dw-accent-secondary', // Wrench Purple #1fa3d6
   accentHover: '--dw-accent-hover',
 
   // Semantic colors

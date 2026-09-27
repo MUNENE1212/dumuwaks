@@ -44,7 +44,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
   return (
     <div
       className={cn(
-        'bg-neutral-200 dark:bg-neutral-800',
+        'bg-surface-200',
         variantClasses[variant],
         animation && 'animate-shimmer',
         className
@@ -65,7 +65,7 @@ Skeleton.displayName = 'Skeleton';
  */
 export const CardSkeleton: React.FC<{ className?: string }> = ({ className }) => {
   return (
-    <div className={cn('p-6 border border-neutral-200 dark:border-neutral-800 rounded-2xl', className)}>
+    <div className={cn('p-6 border border-line rounded-2xl', className)}>
       <div className="flex items-start gap-4 mb-4">
         <Skeleton variant="circular" width={48} height={48} />
         <div className="flex-1 space-y-2">

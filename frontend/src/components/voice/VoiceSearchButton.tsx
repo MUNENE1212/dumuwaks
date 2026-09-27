@@ -60,9 +60,9 @@ export const VoiceSearchButton = ({
         aria-label={isListening ? 'Stop listening' : 'Start voice search'}
       >
         {isListening ? (
-          <MicOff className="h-6 w-6 text-white" />
+          <MicOff className="h-6 w-6 text-ink" />
         ) : (
-          <Mic className="h-6 w-6 text-white" />
+          <Mic className="h-6 w-6 text-ink" />
         )}
 
         {/* Ripple effect when listening */}
@@ -90,48 +90,48 @@ export const VoiceSearchButton = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 10 }}
             transition={{ duration: 0.2 }}
-            className="absolute bottom-full right-0 mb-4 w-80 bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl p-4 border border-neutral-200 dark:border-neutral-800 z-50"
+            className="absolute bottom-full right-0 mb-4 w-80 bg-surface-100 rounded-2xl shadow-2xl p-4 border border-line z-50"
           >
             <div className="flex items-start justify-between mb-2">
               <div className="flex items-center gap-2">
                 <div className={cn(
                   'p-2 rounded-full',
                   isListening
-                    ? 'bg-red-100 dark:bg-red-900'
-                    : 'bg-primary-100 dark:bg-primary-900'
+                    ? 'bg-red-900'
+                    : 'bg-primary-900'
                 )}>
                   <Mic className={cn(
                     'h-4 w-4',
                     isListening
-                      ? 'text-red-600 dark:text-red-400'
-                      : 'text-primary-600 dark:text-primary-400'
+                      ? 'text-red-400'
+                      : 'text-primary-400'
                   )} />
                 </div>
                 <div>
-                  <p className="font-medium text-sm text-neutral-900 dark:text-white">
+                  <p className="font-medium text-sm text-ink dark:text-ink">
                     {isListening ? 'Listening...' : 'Voice Search'}
                   </p>
-                  <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                  <p className="text-xs text-ink-muted">
                     {isListening ? 'Speak now' : 'Tap microphone to start'}
                   </p>
                 </div>
               </div>
               <button
                 onClick={handleClose}
-                className="p-1 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-full transition-colors"
+                className="p-1 hover:bg-surface-200 rounded-full transition-colors"
                 aria-label="Close"
               >
-                <X className="h-4 w-4 text-neutral-400" />
+                <X className="h-4 w-4 text-ink-muted" />
               </button>
             </div>
 
             {transcript ? (
-              <div className="mt-3 p-3 bg-neutral-50 dark:bg-neutral-800 rounded-xl">
-                <p className="text-sm text-neutral-700 dark:text-neutral-300">{transcript}</p>
+              <div className="mt-3 p-3 bg-surface-200 rounded-xl">
+                <p className="text-sm text-ink-muted">{transcript}</p>
               </div>
             ) : (
-              <div className="mt-3 p-3 bg-neutral-50 dark:bg-neutral-800 rounded-xl">
-                <p className="text-sm text-neutral-400 italic">
+              <div className="mt-3 p-3 bg-surface-200 rounded-xl">
+                <p className="text-sm text-ink-muted italic">
                   "{placeholder}"
                 </p>
               </div>

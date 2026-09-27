@@ -19,11 +19,11 @@ const Messages: React.FC = () => {
   return (
     <div className="w-full h-[100vh] md:h-screen flex flex-col">
       {/* Page Header */}
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex-shrink-0">
+      <div className="bg-surface-200 border-b border-line px-4 py-3 flex-shrink-0">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">Messages</h1>
-            <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
+            <h1 className="text-xl md:text-2xl font-bold text-ink">Messages</h1>
+            <p className="text-xs md:text-sm text-ink-muted">
               {unreadCount > 0 ? `${unreadCount} unread message${unreadCount !== 1 ? 's' : ''}` : 'All caught up'}
             </p>
           </div>
@@ -32,7 +32,7 @@ const Messages: React.FC = () => {
           {!showMobileList && (
             <button
               onClick={handleBackToList}
-              className="md:hidden p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              className="md:hidden p-2 text-ink-muted hover:bg-surface-300 rounded-lg transition-colors"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/>

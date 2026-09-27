@@ -36,7 +36,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
   subtitle,
   icon,
   trend,
-  colorClass = 'bg-circuit/20 text-circuit',
+  colorClass = 'bg-lumen/20 text-lumen-ink',
   isLoading = false,
 }) => (
   <div className="glass-card rounded-xl p-5 transition-all hover:border-strong">
@@ -44,7 +44,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
       <div className="flex-1">
         <p className="text-sm text-steel font-medium">{title}</p>
         {isLoading ? (
-          <div className="h-8 w-24 bg-subtle rounded animate-pulse mt-2" />
+          <div className="h-8 w-24 bg-surface-300 rounded animate-pulse mt-2" />
         ) : (
           <p className="text-2xl font-bold text-bone mt-1">
             {typeof value === 'number' ? value.toLocaleString() : value}
@@ -100,8 +100,8 @@ const QuickActionButton: React.FC<QuickActionProps> = ({
   variant = 'secondary',
 }) => {
   const variantClasses = {
-    primary: 'bg-circuit text-white hover:bg-circuit-600 shadow-led',
-    secondary: 'bg-charcoal text-bone hover:bg-hover border border-subtle',
+    primary: 'bg-lumen text-on-lumen hover:bg-lumen-hover shadow-led',
+    secondary: 'bg-charcoal text-bone hover:bg-surface-300 border border-line',
     warning: 'bg-warning/20 text-warning hover:bg-warning/30',
     danger: 'bg-error/20 text-error hover:bg-error/30',
   };
@@ -178,7 +178,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
           <button
             onClick={onRefresh}
             disabled={isLoading}
-            className="flex items-center gap-2 px-4 py-2 bg-charcoal text-bone rounded-lg hover:bg-hover border border-subtle transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 bg-charcoal text-bone rounded-lg hover:bg-surface-300 border border-line transition-colors disabled:opacity-50"
           >
             <svg
               className={clsx('w-4 h-4', isLoading && 'animate-spin')}
@@ -201,7 +201,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
       {/* Services Section */}
       <section>
         <h2 className="text-lg font-semibold text-bone mb-4 flex items-center gap-2">
-          <svg className="w-5 h-5 text-circuit" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-lumen-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -251,7 +251,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
       {/* Escrow Section */}
       <section>
         <h2 className="text-lg font-semibold text-bone mb-4 flex items-center gap-2">
-          <svg className="w-5 h-5 text-circuit" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-lumen-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -327,7 +327,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
                 />
               </svg>
             }
-            colorClass="bg-circuit/20 text-circuit"
+            colorClass="bg-lumen/20 text-lumen-ink"
             isLoading={isLoading}
           />
         </div>
@@ -336,7 +336,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
       {/* Transactions & Users Section */}
       <section>
         <h2 className="text-lg font-semibold text-bone mb-4 flex items-center gap-2">
-          <svg className="w-5 h-5 text-circuit" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-lumen-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -417,7 +417,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
                 />
               </svg>
             }
-            colorClass="bg-circuit/20 text-circuit"
+            colorClass="bg-lumen/20 text-lumen-ink"
             isLoading={isLoading}
           />
         </div>
@@ -426,7 +426,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
       {/* Quick Actions */}
       <section>
         <h2 className="text-lg font-semibold text-bone mb-4 flex items-center gap-2">
-          <svg className="w-5 h-5 text-circuit" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-lumen-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -505,13 +505,13 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
         <div className="glass-card rounded-xl p-5">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-bone">Today's Bookings</h3>
-            <span className="text-3xl font-bold text-circuit">
+            <span className="text-3xl font-bold text-lumen-ink">
               {metrics?.totalBookingsToday ?? 0}
             </span>
           </div>
           <div className="w-full bg-charcoal rounded-full h-2 overflow-hidden">
             <div
-              className="bg-circuit h-full transition-all duration-500"
+              className="bg-lumen h-full transition-all duration-500"
               style={{
                 width: `${Math.min(((metrics?.totalBookingsToday ?? 0) / 100) * 100, 100)}%`,
               }}

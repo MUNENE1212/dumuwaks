@@ -45,7 +45,7 @@ export const SwipeableCard = ({
         <motion.div
           style={{ opacity: opacityLeft }}
           className={cn(
-            'absolute inset-0 flex items-center justify-start px-6 text-white rounded-2xl',
+            'absolute inset-0 flex items-center justify-start px-6 text-ink rounded-2xl',
             leftAction.color
           )}
         >
@@ -61,7 +61,7 @@ export const SwipeableCard = ({
         <motion.div
           style={{ opacity: opacityRight }}
           className={cn(
-            'absolute inset-0 flex items-center justify-end px-6 text-white rounded-2xl',
+            'absolute inset-0 flex items-center justify-end px-6 text-ink rounded-2xl',
             rightAction.color
           )}
         >
@@ -80,20 +80,20 @@ export const SwipeableCard = ({
         onDragEnd={handleDragEnd}
         style={{ x }}
         whileTap={{ scale: 0.98 }}
-        className="relative bg-white dark:bg-neutral-900 rounded-2xl shadow-lg touch-pan-x"
+        className="relative bg-surface-100 rounded-2xl shadow-lg touch-pan-x"
       >
         {children}
 
         {/* Visual indicators */}
         {!isDragged && (leftAction || rightAction) && (
           <div className="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
-            <ChevronLeft className="h-8 w-8 text-neutral-300 dark:text-neutral-600" />
+            <ChevronLeft className="h-8 w-8 text-ink-muted" />
           </div>
         )}
 
         {!isDragged && (leftAction || rightAction) && (
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-            <ChevronRight className="h-8 w-8 text-neutral-300 dark:text-neutral-600" />
+            <ChevronRight className="h-8 w-8 text-ink-muted" />
           </div>
         )}
       </motion.div>

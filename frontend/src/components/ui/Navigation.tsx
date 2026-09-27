@@ -33,7 +33,7 @@ export const BottomNavigation: React.FC<{ items?: NavItem[] }> = ({
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-fixed bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 lg:hidden"
+      className="fixed bottom-0 left-0 right-0 z-fixed bg-surface-100 border-t border-line lg:hidden"
       aria-label="Main navigation"
     >
       <div className="flex items-center justify-around h-16 safe-bottom">
@@ -49,8 +49,8 @@ export const BottomNavigation: React.FC<{ items?: NavItem[] }> = ({
                 'flex flex-col items-center justify-center flex-1 min-w-0 transition-all duration-200',
                 'active:scale-95',
                 isActive
-                  ? 'text-primary-500 dark:text-primary-400'
-                  : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-300'
+                  ? 'text-primary-400'
+                  : 'text-ink-muted hover:text-ink-muted'
               )}
               aria-label={item.label}
               aria-current={isActive ? 'page' : undefined}
@@ -58,7 +58,7 @@ export const BottomNavigation: React.FC<{ items?: NavItem[] }> = ({
               <div className="relative">
                 <Icon className="w-6 h-6 mb-1" />
                 {item.badge && (
-                  <span className="absolute -top-1 -right-2 min-w-[18px] h-[18px] flex items-center justify-center px-1 bg-error-500 text-white text-[10px] font-bold rounded-full">
+                  <span className="absolute -top-1 -right-2 min-w-[18px] h-[18px] flex items-center justify-center px-1 bg-error-500 text-ink text-[10px] font-bold rounded-full">
                     {typeof item.badge === 'number' && item.badge > 99 ? '99+' : item.badge}
                   </span>
                 )}
@@ -97,7 +97,7 @@ export const TopNavigation: React.FC<{
 
   return (
     <nav
-      className="sticky top-0 z-sticky bg-white/80 dark:bg-neutral-900/80 backdrop-blur-lg border-b border-neutral-200 dark:border-neutral-800 hidden lg:block"
+      className="sticky top-0 z-sticky bg-surface-100/80 border-b border-line hidden lg:block"
       aria-label="Main navigation"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -120,8 +120,8 @@ export const TopNavigation: React.FC<{
                       'flex items-center px-4 py-2 rounded-xl font-medium transition-all duration-200',
                       'min-h-[48px]',
                       isActive
-                        ? 'text-primary-500 bg-primary-50 dark:bg-primary-950/20'
-                        : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                        ? 'text-primary-500 bg-primary-950/20'
+                        : 'text-ink-muted hover:text-ink hover:bg-surface-200'
                     )}
                     aria-label={item.label}
                     aria-current={isActive ? 'page' : undefined}
@@ -129,7 +129,7 @@ export const TopNavigation: React.FC<{
                     <Icon className="w-5 h-5 mr-2" />
                     {item.label}
                     {item.badge && (
-                      <span className="ml-2 min-w-[20px] h-5 flex items-center justify-center px-1.5 bg-error-500 text-white text-xs font-bold rounded-full">
+                      <span className="ml-2 min-w-[20px] h-5 flex items-center justify-center px-1.5 bg-error-500 text-ink text-xs font-bold rounded-full">
                         {typeof item.badge === 'number' && item.badge > 99 ? '99+' : item.badge}
                       </span>
                     )}

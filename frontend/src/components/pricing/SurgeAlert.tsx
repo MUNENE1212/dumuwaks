@@ -43,38 +43,38 @@ const SurgeAlert: React.FC<SurgeAlertProps> = ({
     switch (level) {
       case 'severe':
         return {
-          bg: 'bg-red-600 dark:bg-red-900',
-          border: 'border-red-700 dark:border-red-800',
-          text: 'text-white',
-          badge: 'bg-red-800 text-white'
+          bg: 'bg-red-900',
+          border: 'border-red-800',
+          text: 'text-ink',
+          badge: 'bg-red-800 text-ink'
         };
       case 'high':
         return {
-          bg: 'bg-red-500 dark:bg-red-800',
-          border: 'border-red-600 dark:border-red-700',
-          text: 'text-white',
-          badge: 'bg-red-700 text-white'
+          bg: 'bg-red-800',
+          border: 'border-red-700',
+          text: 'text-ink',
+          badge: 'bg-red-700 text-on-lumen'
         };
       case 'moderate':
         return {
-          bg: 'bg-orange-500 dark:bg-orange-800',
-          border: 'border-orange-600 dark:border-orange-700',
-          text: 'text-white',
-          badge: 'bg-orange-700 text-white'
+          bg: 'bg-orange-800',
+          border: 'border-orange-700',
+          text: 'text-ink',
+          badge: 'bg-orange-700 text-on-lumen'
         };
       case 'low':
         return {
-          bg: 'bg-yellow-500 dark:bg-yellow-800',
-          border: 'border-yellow-600 dark:border-yellow-700',
-          text: 'text-white',
-          badge: 'bg-yellow-700 text-white'
+          bg: 'bg-yellow-800',
+          border: 'border-yellow-700',
+          text: 'text-ink',
+          badge: 'bg-yellow-700 text-on-lumen'
         };
       default:
         return {
-          bg: 'bg-gray-500',
-          border: 'border-gray-600',
-          text: 'text-white',
-          badge: 'bg-gray-700 text-white'
+          bg: 'bg-ink-faint',
+          border: 'border-line-strong',
+          text: 'text-ink',
+          badge: 'bg-surface-300 text-ink'
         };
     }
   };
@@ -115,7 +115,7 @@ const SurgeAlert: React.FC<SurgeAlertProps> = ({
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className={`p-1.5 rounded-lg hover:bg-white/10 transition-colors ${styles.text}`}
+            className={`p-1.5 rounded-lg hover:bg-ink/10 transition-colors ${styles.text}`}
             aria-label={isExpanded ? 'Collapse' : 'Expand'}
           >
             {isExpanded ? (
@@ -126,7 +126,7 @@ const SurgeAlert: React.FC<SurgeAlertProps> = ({
           </button>
           <button
             onClick={handleDismiss}
-            className={`p-1.5 rounded-lg hover:bg-white/10 transition-colors ${styles.text}`}
+            className={`p-1.5 rounded-lg hover:bg-ink/10 transition-colors ${styles.text}`}
             aria-label="Dismiss"
           >
             <X className="h-5 w-5" />
@@ -158,7 +158,7 @@ const SurgeAlert: React.FC<SurgeAlertProps> = ({
                 {alerts.map((alert) => (
                   <div
                     key={alert.category}
-                    className="flex items-center justify-between bg-white/10 rounded px-3 py-1.5"
+                    className="flex items-center justify-between bg-ink/10 rounded px-3 py-1.5"
                   >
                     <span className="text-sm font-medium">
                       {getCategoryLabel(alert.category)}
@@ -173,7 +173,7 @@ const SurgeAlert: React.FC<SurgeAlertProps> = ({
           </div>
 
           {/* Tips */}
-          <div className="mt-4 pt-4 border-t border-white/20">
+          <div className="mt-4 pt-4 border-t border-ink/20">
             <p className="text-sm opacity-90">
               <strong>Tip:</strong> Prices typically normalize after peak hours (7-9 AM and 5-7 PM).
               Consider scheduling your service for off-peak times to get standard rates.

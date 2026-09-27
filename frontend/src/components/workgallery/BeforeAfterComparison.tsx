@@ -85,23 +85,23 @@ const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface-000/80">
+      <div className="bg-surface-200 rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-700">
+        <div className="flex items-center justify-between p-4 border-b border-line">
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+            <h2 className="text-xl font-semibold text-ink dark:text-ink">
               Before & After Comparison
             </h2>
             {beforeImage.caption && (
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              <p className="text-sm text-ink-muted mt-1">
                 {beforeImage.caption}
               </p>
             )}
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors p-1"
+            className="text-ink-muted hover:text-ink-muted transition-colors p-1"
             aria-label="Close comparison"
           >
             <X className="h-6 w-6" />
@@ -111,7 +111,7 @@ const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
         {/* Comparison Container */}
         <div
           ref={containerRef}
-          className="relative aspect-video bg-gray-100 dark:bg-gray-700"
+          className="relative aspect-video bg-surface-300"
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
@@ -140,32 +140,32 @@ const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
 
           {/* Slider Handle */}
           <div
-            className="absolute top-0 bottom-0 w-1 bg-white shadow-lg cursor-ew-resize"
+            className="absolute top-0 bottom-0 w-1 bg-surface-200 shadow-lg cursor-ew-resize"
             style={{ left: `${sliderPosition}%` }}
             onMouseDown={handleMouseDown}
             onTouchStart={handleTouchStart}
           >
             {/* Slider Handle Circle */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-surface-200 rounded-full shadow-lg flex items-center justify-center">
               <div className="flex gap-0.5">
-                <div className="w-0.5 h-4 bg-gray-400 rounded" />
-                <div className="w-0.5 h-4 bg-gray-400 rounded" />
+                <div className="w-0.5 h-4 bg-ink-faint rounded" />
+                <div className="w-0.5 h-4 bg-ink-faint rounded" />
               </div>
             </div>
           </div>
 
           {/* Labels */}
-          <div className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1.5 rounded-full text-sm font-medium backdrop-blur-sm">
+          <div className="absolute top-4 left-4 bg-surface-000/70 text-ink px-3 py-1.5 rounded-full text-sm font-medium">
             Before
           </div>
-          <div className="absolute top-4 right-4 bg-black/70 text-white px-3 py-1.5 rounded-full text-sm font-medium backdrop-blur-sm">
+          <div className="absolute top-4 right-4 bg-surface-000/70 text-ink px-3 py-1.5 rounded-full text-sm font-medium">
             After
           </div>
         </div>
 
         {/* Image Details */}
-        <div className="p-4 border-t border-gray-100 dark:border-gray-700">
-          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+        <div className="p-4 border-t border-line">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-ink-muted">
             <span className="flex items-center gap-1.5">
               <svg
                 className="h-4 w-4"

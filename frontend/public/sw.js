@@ -23,7 +23,8 @@ self.skipWaiting();
 workbox.core.clientsClaim();
 
 // Configuration - API base URL (adjust for production/staging)
-const API_BASE_URL = 'https://api.ementech.co.ke/api/v1';
+// Same origin as the app (https://dumuwaks.co.ke/api/v1); nginx proxies /api to the backend.
+const API_BASE_URL = `${self.location.origin}/api/v1`;
 
 // Cache names with versioning
 const CACHE_VERSION = 'v1';

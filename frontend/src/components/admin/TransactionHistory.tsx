@@ -73,7 +73,7 @@ const getStatusColor = (status: TransactionStatus): string => {
   const colors: Record<TransactionStatus, string> = {
     completed: 'bg-success/20 text-success',
     pending: 'bg-warning/20 text-warning',
-    processing: 'bg-circuit/20 text-circuit',
+    processing: 'bg-lumen/20 text-lumen-ink',
     failed: 'bg-error/20 text-error',
     cancelled: 'bg-steel/20 text-steel',
   };
@@ -151,7 +151,7 @@ const TransactionDetailModal: React.FC<TransactionDetailModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-overlay-medium">
       <div className="glass-modal rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="p-6 border-b border-subtle">
+        <div className="p-6 border-b border-line">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-xl font-bold text-bone">Transaction Details</h2>
@@ -161,7 +161,7 @@ const TransactionDetailModal: React.FC<TransactionDetailModalProps> = ({
             </div>
             <button
               onClick={onClose}
-              className="p-2 rounded-lg hover:bg-hover text-steel hover:text-bone transition-colors"
+              className="p-2 rounded-lg hover:bg-surface-300 text-steel hover:text-bone transition-colors"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -208,7 +208,7 @@ const TransactionDetailModal: React.FC<TransactionDetailModalProps> = ({
               </div>
             )}
             {transaction.description && (
-              <div className="pt-2 border-t border-subtle">
+              <div className="pt-2 border-t border-line">
                 <p className="text-sm text-steel">{transaction.description}</p>
               </div>
             )}
@@ -455,7 +455,7 @@ const TransactionHistory: React.FC = () => {
                 value={filters.search}
                 onChange={(e) => updateFilter('search', e.target.value)}
                 placeholder="Search transactions..."
-                className="w-full pl-9 pr-4 py-2 bg-charcoal border border-subtle rounded-lg text-bone text-sm placeholder:text-steel/50 focus:border-circuit focus:outline-none"
+                className="w-full pl-9 pr-4 py-2 bg-charcoal border border-line rounded-lg text-bone text-sm placeholder:text-steel/50 focus:border-lumen focus:outline-none"
               />
             </div>
           </div>
@@ -467,7 +467,7 @@ const TransactionHistory: React.FC = () => {
               type="date"
               value={filters.startDate}
               onChange={(e) => updateFilter('startDate', e.target.value)}
-              className="w-full px-3 py-2 bg-charcoal border border-subtle rounded-lg text-bone text-sm focus:border-circuit focus:outline-none"
+              className="w-full px-3 py-2 bg-charcoal border border-line rounded-lg text-bone text-sm focus:border-lumen focus:outline-none"
             />
           </div>
 
@@ -478,7 +478,7 @@ const TransactionHistory: React.FC = () => {
               type="date"
               value={filters.endDate}
               onChange={(e) => updateFilter('endDate', e.target.value)}
-              className="w-full px-3 py-2 bg-charcoal border border-subtle rounded-lg text-bone text-sm focus:border-circuit focus:outline-none"
+              className="w-full px-3 py-2 bg-charcoal border border-line rounded-lg text-bone text-sm focus:border-lumen focus:outline-none"
             />
           </div>
 
@@ -488,7 +488,7 @@ const TransactionHistory: React.FC = () => {
             <select
               value={filters.type}
               onChange={(e) => updateFilter('type', e.target.value)}
-              className="w-full px-3 py-2 bg-charcoal border border-subtle rounded-lg text-bone text-sm focus:border-circuit focus:outline-none"
+              className="w-full px-3 py-2 bg-charcoal border border-line rounded-lg text-bone text-sm focus:border-lumen focus:outline-none"
             >
               {transactionTypes.map((type) => (
                 <option key={type.value} value={type.value}>
@@ -504,7 +504,7 @@ const TransactionHistory: React.FC = () => {
             <select
               value={filters.status}
               onChange={(e) => updateFilter('status', e.target.value)}
-              className="w-full px-3 py-2 bg-charcoal border border-subtle rounded-lg text-bone text-sm focus:border-circuit focus:outline-none"
+              className="w-full px-3 py-2 bg-charcoal border border-line rounded-lg text-bone text-sm focus:border-lumen focus:outline-none"
             >
               {transactionStatuses.map((status) => (
                 <option key={status.value} value={status.value}>
@@ -528,7 +528,7 @@ const TransactionHistory: React.FC = () => {
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-subtle">
+              <tr className="border-b border-line">
                 <th className="px-4 py-3 text-left text-xs font-semibold text-steel uppercase">
                   Transaction
                 </th>
@@ -558,10 +558,10 @@ const TransactionHistory: React.FC = () => {
             <tbody>
               {isLoading ? (
                 Array.from({ length: 10 }).map((_, i) => (
-                  <tr key={i} className="border-b border-subtle animate-pulse">
+                  <tr key={i} className="border-b border-line animate-pulse">
                     {Array.from({ length: 8 }).map((_, j) => (
                       <td key={j} className="px-4 py-4">
-                        <div className="h-4 bg-subtle rounded w-16" />
+                        <div className="h-4 bg-surface-300 rounded w-16" />
                       </td>
                     ))}
                   </tr>
@@ -576,7 +576,7 @@ const TransactionHistory: React.FC = () => {
                 transactions.map((transaction) => (
                   <tr
                     key={transaction._id}
-                    className="border-b border-subtle hover:bg-hover/30 transition-colors"
+                    className="border-b border-line hover:bg-surface-300/30 transition-colors"
                   >
                     <td className="px-4 py-4">
                       <div>

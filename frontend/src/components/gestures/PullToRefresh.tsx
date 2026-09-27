@@ -45,10 +45,10 @@ export const PullToRefresh = ({
       >
         <motion.div
           style={{ rotate, opacity }}
-          className="bg-primary-100 dark:bg-primary-900 p-3 rounded-full shadow-lg"
+          className="bg-primary-900 p-3 rounded-full shadow-lg"
         >
           <RefreshCw className={cn(
-            'h-6 w-6 text-primary-600 dark:text-primary-400',
+            'h-6 w-6 text-primary-400',
             isRefreshing && 'animate-spin'
           )} />
         </motion.div>

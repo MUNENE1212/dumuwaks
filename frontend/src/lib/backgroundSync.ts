@@ -1,5 +1,5 @@
 /**
- * Background Sync Utilities for Dumu Waks PWA
+ * Background Sync Utilities for Dumuwaks PWA
  *
  * This module handles background synchronization for critical actions like
  * bookings and messages when the device comes back online.

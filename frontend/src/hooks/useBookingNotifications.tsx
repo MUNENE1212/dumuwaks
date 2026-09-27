@@ -197,12 +197,12 @@ export function useBookingNotifications(
             <div
               className={`${
                 t.visible ? 'animate-enter' : 'animate-leave'
-              } max-w-md w-full bg-charcoal border border-subtle shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+              } max-w-md w-full bg-charcoal border border-line shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-line ring-opacity-5`}
             >
               <div className="flex-1 w-0 p-4">
                 <div className="flex items-start">
                   <div className="flex-shrink-0 pt-0.5">
-                    <span className="text-circuit text-xl">
+                    <span className="text-lumen-ink text-xl">
                       {type === BOOKING_NOTIFICATION_EVENTS.STATUS_CHANGED
                         ? '📋'
                         : type === BOOKING_NOTIFICATION_EVENTS.ASSIGNED
@@ -223,7 +223,7 @@ export function useBookingNotifications(
                           navigate(`/bookings/${bookingId}`);
                           toast.dismiss(t.id);
                         }}
-                        className="mt-2 text-sm font-medium text-circuit hover:text-circuit/80"
+                        className="mt-2 text-sm font-medium text-lumen-ink hover:text-lumen-ink/80"
                       >
                         View Booking
                       </button>
@@ -231,7 +231,7 @@ export function useBookingNotifications(
                   </div>
                 </div>
               </div>
-              <div className="flex border-l border-subtle">
+              <div className="flex border-l border-line">
                 <button
                   onClick={() => toast.dismiss(t.id)}
                   className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-steel hover:text-bone focus:outline-none"

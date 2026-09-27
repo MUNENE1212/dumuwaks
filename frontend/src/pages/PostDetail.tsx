@@ -56,11 +56,11 @@ const PostDetail = () => {
   if (error || !post) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Post Not Found</h2>
-        <p className="text-gray-600 mb-4">{error || 'The post you are looking for does not exist.'}</p>
+        <h2 className="text-2xl font-bold text-ink mb-2">Post Not Found</h2>
+        <p className="text-ink-muted mb-4">{error || 'The post you are looking for does not exist.'}</p>
         <button
           onClick={() => navigate(-1)}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="px-4 py-2 bg-blue-600 text-on-lumen rounded-lg hover:bg-blue-700 transition-colors"
         >
           Go Back
         </button>
@@ -118,7 +118,7 @@ const PostDetail = () => {
 
   const getPostTypeColor = () => {
     const colors: Record<string, string> = {
-      text: 'text-gray-600',
+      text: 'text-ink-muted',
       question: 'text-purple-600',
       tip: 'text-yellow-600',
       portfolio: 'text-green-600',
@@ -143,21 +143,21 @@ const PostDetail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-surface-100">
       <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
         {/* Back Button */}
         <button
           onClick={() => navigate(-1)}
-          className="mb-4 flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+          className="mb-4 flex items-center text-ink-muted hover:text-ink transition-colors"
         >
           <ArrowLeft className="w-5 h-5 mr-2" />
           Back
         </button>
 
         {/* Post Card */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+        <div className="bg-surface-200 rounded-lg shadow-md overflow-hidden">
           {/* Post Header */}
-          <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="p-4 border-b border-line">
             <div className="flex items-start justify-between">
               <Link
                 to={`/profile/${post.author._id}`}
@@ -170,7 +170,7 @@ const PostDetail = () => {
                 />
                 <div>
                   <div className="flex items-center space-x-2">
-                    <h4 className="font-semibold text-gray-900 dark:text-gray-100">
+                    <h4 className="font-semibold text-ink">
                       {post.author.firstName} {post.author.lastName}
                     </h4>
                     <span
@@ -179,7 +179,7 @@ const PostDetail = () => {
                       {post.author.role}
                     </span>
                   </div>
-                  <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center space-x-2 text-sm text-ink-muted">
                     <span>{timeAgo(post.createdAt)}</span>
                     {post.author.rating && (
                       <>
@@ -195,19 +195,19 @@ const PostDetail = () => {
               <div className="relative">
                 <button
                   onClick={() => setShowMenu(!showMenu)}
-                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                  className="p-2 rounded-full hover:bg-surface-300 transition-colors"
                 >
-                  <MoreVertical className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+                  <MoreVertical className="h-5 w-5 text-ink-muted" />
                 </button>
 
                 {showMenu && (
                   <>
                     <div className="fixed inset-0 z-10" onClick={() => setShowMenu(false)} />
-                    <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl border border-gray-200 dark:border-gray-600 z-20">
+                    <div className="absolute right-0 mt-2 w-48 bg-surface-300 rounded-lg shadow-xl border border-line-strong z-20">
                       {isOwnPost ? (
                         <button
                           onClick={handleDelete}
-                          className="w-full px-4 py-2 text-left text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center space-x-2 rounded-lg transition-colors"
+                          className="w-full px-4 py-2 text-left text-red-400 hover:bg-red-900/20 flex items-center space-x-2 rounded-lg transition-colors"
                         >
                           <Trash2 className="h-4 w-4" />
                           <span>Delete Post</span>
@@ -215,7 +215,7 @@ const PostDetail = () => {
                       ) : (
                         <button
                           onClick={() => {}}
-                          className="w-full px-4 py-2 text-left text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 flex items-center space-x-2 rounded-lg transition-colors"
+                          className="w-full px-4 py-2 text-left text-ink-muted hover:bg-surface-400 flex items-center space-x-2 rounded-lg transition-colors"
                         >
                           <Flag className="h-4 w-4" />
                           <span>Report Post</span>
@@ -237,7 +237,7 @@ const PostDetail = () => {
 
           {/* Post Content */}
           <div className="p-4">
-            <p className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap leading-relaxed">
+            <p className="text-ink whitespace-pre-wrap leading-relaxed">
               {post.caption}
             </p>
 
@@ -247,7 +247,7 @@ const PostDetail = () => {
                 {post.hashtags.map((tag, index) => (
                   <span
                     key={index}
-                    className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer text-sm"
+                    className="text-blue-400 hover:underline cursor-pointer text-sm"
                   >
                     #{tag}
                   </span>
@@ -281,8 +281,8 @@ const PostDetail = () => {
           </div>
 
           {/* Post Stats */}
-          <div className="px-4 py-2 border-t border-gray-200 dark:border-gray-700">
-            <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+          <div className="px-4 py-2 border-t border-line">
+            <div className="flex justify-between text-sm text-ink-muted">
               <span>{post.likesCount} likes</span>
               <div className="flex space-x-4">
                 <span>{post.commentsCount} comments</span>
@@ -293,15 +293,15 @@ const PostDetail = () => {
           </div>
 
           {/* Post Actions */}
-          <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-700">
+          <div className="px-4 py-3 border-t border-line">
             <div className="flex justify-around">
               <button
                 onClick={handleLike}
                 disabled={isLiking}
                 className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
                   post.isLiked
-                    ? 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20'
-                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                    ? 'text-red-400 bg-red-900/20'
+                    : 'text-ink-muted hover:bg-surface-300'
                 }`}
               >
                 <Heart className={`h-5 w-5 ${post.isLiked ? 'fill-current' : ''}`} />
@@ -309,7 +309,7 @@ const PostDetail = () => {
               </button>
 
               <button
-                className="flex items-center space-x-2 px-4 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                className="flex items-center space-x-2 px-4 py-2 rounded-lg text-ink-muted hover:bg-surface-300 transition-colors"
               >
                 <MessageCircle className="h-5 w-5" />
                 <span className="font-medium">Comment</span>
@@ -317,7 +317,7 @@ const PostDetail = () => {
 
               <button
                 onClick={handleShare}
-                className="flex items-center space-x-2 px-4 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                className="flex items-center space-x-2 px-4 py-2 rounded-lg text-ink-muted hover:bg-surface-300 transition-colors"
               >
                 <Share2 className="h-5 w-5" />
                 <span className="font-medium">Share</span>
@@ -328,8 +328,8 @@ const PostDetail = () => {
                 disabled={isBookmarking}
                 className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
                   post.isBookmarked
-                    ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
-                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                    ? 'text-blue-400 bg-blue-900/20'
+                    : 'text-ink-muted hover:bg-surface-300'
                 }`}
               >
                 <Bookmark className={`h-5 w-5 ${post.isBookmarked ? 'fill-current' : ''}`} />
@@ -338,9 +338,9 @@ const PostDetail = () => {
           </div>
 
           {/* Comments Section */}
-          <div className="border-t border-gray-200 dark:border-gray-700">
+          <div className="border-t border-line">
             {/* Comment Input */}
-            <form onSubmit={handleComment} className="p-4 border-b border-gray-200 dark:border-gray-700">
+            <form onSubmit={handleComment} className="p-4 border-b border-line">
               <div className="flex items-start space-x-3">
                 <img
                   src={getProfilePicture(user)}
@@ -352,14 +352,14 @@ const PostDetail = () => {
                     value={commentText}
                     onChange={setCommentText}
                     placeholder="Write a comment..."
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
+                    className="w-full px-3 py-2 border border-line-strong rounded-lg focus:ring-2 focus:ring-blue-500 bg-surface-300 text-ink"
                     maxLength={500}
                   />
                   <div className="flex justify-end mt-2">
                     <button
                       type="submit"
                       disabled={!commentText.trim()}
-                      className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-on-lumen rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                       <Send className="h-4 w-4" />
                       <span>Post</span>
@@ -370,7 +370,7 @@ const PostDetail = () => {
             </form>
 
             {/* Comments List */}
-            <div className="divide-y divide-gray-200 dark:divide-gray-700">
+            <div className="divide-y divide-line">
               {post.comments && post.comments.length > 0 ? (
                 post.comments.map((comment) => (
                   <div key={comment._id} className="p-4">
@@ -383,18 +383,18 @@ const PostDetail = () => {
                         />
                       </Link>
                       <div className="flex-1">
-                        <div className="bg-gray-100 dark:bg-gray-700 rounded-lg px-4 py-2">
+                        <div className="bg-surface-300 rounded-lg px-4 py-2">
                           <Link
                             to={`/profile/${comment.user._id}`}
-                            className="font-semibold text-gray-900 dark:text-gray-100 hover:underline"
+                            className="font-semibold text-ink hover:underline"
                           >
                             {comment.user.firstName} {comment.user.lastName}
                           </Link>
-                          <p className="text-gray-800 dark:text-gray-200 mt-1">{comment.text}</p>
+                          <p className="text-ink mt-1">{comment.text}</p>
                         </div>
-                        <div className="flex items-center space-x-4 mt-2 text-sm text-gray-600 dark:text-gray-400">
+                        <div className="flex items-center space-x-4 mt-2 text-sm text-ink-muted">
                           <span>{timeAgo(comment.createdAt)}</span>
-                          <button className="hover:text-blue-600 dark:hover:text-blue-400">Like</button>
+                          <button className="hover:text-blue-400">Like</button>
                           <span>{comment.likesCount} likes</span>
                         </div>
                       </div>
@@ -402,7 +402,7 @@ const PostDetail = () => {
                   </div>
                 ))
               ) : (
-                <div className="p-8 text-center text-gray-500 dark:text-gray-400">
+                <div className="p-8 text-center text-ink-muted">
                   No comments yet. Be the first to comment!
                 </div>
               )}

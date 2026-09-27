@@ -46,7 +46,7 @@ const ServiceCategoryGrid: React.FC<ServiceCategoryGridProps> = ({
               'min-h-[60px] sm:min-h-[72px] lg:min-h-[80px]',
               'flex flex-col items-center justify-center',
               'p-3 sm:p-4',
-              'bg-charcoal border border-subtle rounded-lg',
+              'bg-charcoal border border-line rounded-lg',
               'shimmer'
             )}
           >
@@ -72,7 +72,7 @@ const ServiceCategoryGrid: React.FC<ServiceCategoryGridProps> = ({
         )}
         data-testid="category-grid-empty"
       >
-        <div className="w-20 h-20 mb-4 rounded-full bg-charcoal border border-subtle flex items-center justify-center">
+        <div className="w-20 h-20 mb-4 rounded-full bg-charcoal border border-line flex items-center justify-center">
           <svg
             className="w-10 h-10 text-steel"
             fill="none"
@@ -101,11 +101,11 @@ const ServiceCategoryGrid: React.FC<ServiceCategoryGridProps> = ({
             className={clsx(
               'inline-flex items-center gap-2',
               'px-4 py-2 min-h-[44px]',
-              'bg-charcoal border border-subtle rounded-lg',
+              'bg-charcoal border border-line rounded-lg',
               'text-bone font-medium text-sm',
-              'hover:border-circuit hover:text-circuit',
+              'hover:border-lumen hover:text-lumen-ink',
               'transition-all duration-200',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-circuit focus-visible:ring-offset-2 focus-visible:ring-offset-mahogany'
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lumen focus-visible:ring-offset-2 focus-visible:ring-offset-mahogany'
             )}
             aria-label="Refresh categories"
           >
@@ -167,8 +167,8 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, onClick }) => {
         'flex flex-col items-center justify-center',
         'p-3 sm:p-4',
         'transition-all duration-200 ease-out',
-        'hover:border-circuit hover:shadow-led',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-circuit focus-visible:ring-offset-2 focus-visible:ring-offset-mahogany'
+        'hover:border-lumen hover:shadow-led',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lumen focus-visible:ring-offset-2 focus-visible:ring-offset-mahogany'
       )}
       onClick={onClick}
       role="listitem"
@@ -187,7 +187,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, onClick }) => {
         className={clsx(
           'w-8 h-8 sm:w-10 sm:h-10 mb-2',
           'flex items-center justify-center',
-          'text-circuit group-hover:text-circuit-300',
+          'text-lumen-ink group-hover:text-lumen-ink',
           'transition-colors duration-200'
         )}
         aria-hidden="true"
@@ -201,7 +201,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, onClick }) => {
           'text-xs sm:text-sm font-bold text-bone',
           'uppercase tracking-wide',
           'text-center leading-tight',
-          'group-hover:text-circuit transition-colors duration-200'
+          'group-hover:text-lumen-ink transition-colors duration-200'
         )}
       >
         {category.name}

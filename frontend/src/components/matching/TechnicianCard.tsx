@@ -16,6 +16,7 @@ import { Match } from '@/store/slices/matchingSlice';
 import { cn } from '@/lib/utils';
 import Button from '../ui/Button';
 import { formatRating } from '@/utils/rating';
+import VerifiedBadge from '@/components/common/VerifiedBadge';
 
 interface TechnicianCardProps {
   match: Match;
@@ -43,7 +44,7 @@ const TechnicianCard: React.FC<TechnicianCardProps> = ({
       return { label: 'Excellent Match', color: 'bg-success-bg text-success border-success/30' };
     }
     if (score >= 75) {
-      return { label: 'Very Good', color: 'bg-info-bg text-circuit border-circuit/30' };
+      return { label: 'Very Good', color: 'bg-info-bg text-lumen-ink border-lumen/30' };
     }
     if (score >= 60) {
       return { label: 'Good Match', color: 'bg-wrench/20 text-wrench border-wrench/30' };
@@ -51,7 +52,7 @@ const TechnicianCard: React.FC<TechnicianCardProps> = ({
     if (score >= 40) {
       return { label: 'Fair Match', color: 'bg-warning-bg text-warning border-warning/30' };
     }
-    return { label: 'Poor Match', color: 'bg-hover text-steel border-subtle' };
+    return { label: 'Poor Match', color: 'bg-surface-300 text-steel border-line' };
   };
 
   const getProfilePicture = () => {
@@ -65,10 +66,10 @@ const TechnicianCard: React.FC<TechnicianCardProps> = ({
 
   const scoreItems = [
     { label: 'Skill Match', value: match.scores.skillMatch, icon: Award, color: 'text-wrench' },
-    { label: 'Location', value: match.scores.locationProximity, icon: MapPin, color: 'text-circuit' },
+    { label: 'Location', value: match.scores.locationProximity, icon: MapPin, color: 'text-lumen-ink' },
     { label: 'Availability', value: match.scores.availability, icon: Clock, color: 'text-success' },
     { label: 'Rating', value: match.scores.rating, icon: Star, color: 'text-warning' },
-    { label: 'Experience', value: match.scores.experienceLevel, icon: TrendingUp, color: 'text-circuit' },
+    { label: 'Experience', value: match.scores.experienceLevel, icon: TrendingUp, color: 'text-lumen-ink' },
   ];
 
   return (
@@ -82,11 +83,11 @@ const TechnicianCard: React.FC<TechnicianCardProps> = ({
               <img
                 src={getProfilePicture()}
                 alt={match.technician.firstName}
-                className="h-16 w-16 sm:h-20 sm:w-20 rounded-full object-cover ring-4 ring-circuit/20 hover:ring-circuit/50 transition-all"
+                className="h-16 w-16 sm:h-20 sm:w-20 rounded-full object-cover ring-4 ring-lumen/20 hover:ring-lumen/50 transition-all"
                 title={`View ${match.technician.firstName}'s profile`}
               />
               {match.technician.availability?.status === 'available' && (
-                <div className="absolute bottom-0 right-0 h-4 w-4 sm:h-5 sm:w-5 rounded-full border-2 border-charcoal bg-success" />
+                <div className="absolute bottom-0 right-0 h-4 w-4 sm:h-5 sm:w-5 rounded-full border-2 border-line bg-success" />
               )}
             </div>
 
@@ -94,12 +95,13 @@ const TechnicianCard: React.FC<TechnicianCardProps> = ({
             <div className="flex-1 min-w-0">
               <div className="flex items-center space-x-2">
                 <h3
-                  className="text-lg sm:text-xl font-bold text-bone cursor-pointer hover:text-circuit transition-colors truncate"
+                  className="text-lg sm:text-xl font-bold text-bone cursor-pointer hover:text-lumen-ink transition-colors truncate"
                   onClick={handleProfileClick}
                   title={`View ${match.technician.firstName}'s profile`}
                 >
                   {match.technician.firstName} {match.technician.lastName}
                 </h3>
+                <VerifiedBadge user={match.technician} />
                 {match.scores.overall >= 85 && (
                   <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-warning flex-shrink-0" />
                 )}
@@ -135,13 +137,13 @@ const TechnicianCard: React.FC<TechnicianCardProps> = ({
                 {match.technician.skills.slice(0, 3).map((skill, index) => (
                   <span
                     key={index}
-                    className="inline-flex items-center rounded-full bg-info-bg px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-medium text-circuit"
+                    className="inline-flex items-center rounded-full bg-info-bg px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-medium text-lumen-ink"
                   >
                     {skill.category.replace('_', ' ')} - {skill.proficiency}
                   </span>
                 ))}
                 {match.technician.skills.length > 3 && (
-                  <span className="inline-flex items-center rounded-full bg-hover px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-medium text-steel">
+                  <span className="inline-flex items-center rounded-full bg-surface-300 px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-medium text-steel">
                     +{match.technician.skills.length - 3} more
                   </span>
                 )}
@@ -168,8 +170,8 @@ const TechnicianCard: React.FC<TechnicianCardProps> = ({
 
         {/* Match Reasons */}
         {match.matchReasons.length > 0 && (
-          <div className="mt-4 rounded-lg bg-info-bg p-4 border border-circuit/20">
-            <h4 className="mb-2 flex items-center text-sm font-semibold text-circuit">
+          <div className="mt-4 rounded-lg bg-info-bg p-4 border border-lumen/20">
+            <h4 className="mb-2 flex items-center text-sm font-semibold text-lumen-ink">
               <Sparkles className="mr-2 h-4 w-4" />
               Why this match?
             </h4>
@@ -187,14 +189,14 @@ const TechnicianCard: React.FC<TechnicianCardProps> = ({
         {/* Score Breakdown Toggle */}
         <button
           onClick={() => setShowScores(!showScores)}
-          className="mt-4 text-sm font-medium text-circuit hover:text-circuit-600"
+          className="mt-4 text-sm font-medium text-lumen-ink hover:text-lumen-ink"
         >
           {showScores ? 'Hide' : 'Show'} detailed scores
         </button>
 
         {/* Detailed Scores */}
         {showScores && (
-          <div className="mt-4 grid grid-cols-2 gap-3 border-t border-subtle pt-4 sm:grid-cols-3">
+          <div className="mt-4 grid grid-cols-2 gap-3 border-t border-line pt-4 sm:grid-cols-3">
             {scoreItems.map((item, index) => {
               const Icon = item.icon;
               const percentage = item.value;
@@ -205,11 +207,11 @@ const TechnicianCard: React.FC<TechnicianCardProps> = ({
                     <span className="text-lg font-bold text-bone">{percentage}</span>
                   </div>
                   <div className="mt-1 text-xs text-steel">{item.label}</div>
-                  <div className="mt-2 h-1.5 w-full rounded-full bg-hover">
+                  <div className="mt-2 h-1.5 w-full rounded-full bg-surface-300">
                     <div
                       className={cn('h-1.5 rounded-full', {
                         'bg-success': percentage >= 80,
-                        'bg-circuit': percentage >= 60 && percentage < 80,
+                        'bg-lumen': percentage >= 60 && percentage < 80,
                         'bg-warning': percentage >= 40 && percentage < 60,
                         'bg-steel/40': percentage < 40,
                       })}
@@ -224,7 +226,7 @@ const TechnicianCard: React.FC<TechnicianCardProps> = ({
       </div>
 
       {/* Actions */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-3 border-t border-subtle bg-mahogany/30 px-4 sm:px-6 py-3 sm:py-4 rounded-b-lg">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-3 border-t border-line bg-surface-100/30 px-4 sm:px-6 py-3 sm:py-4 rounded-b-lg">
         <Button
           variant="outline"
           size="sm"

@@ -118,7 +118,7 @@ const VoiceNotePlayer: React.FC<VoiceNotePlayerProps> = ({
       // Color based on progress
       const isPlayed = index / waveformData.length < progress;
       if (isPlayed) {
-        ctx.fillStyle = isOwn ? 'rgba(255, 255, 255, 0.9)' : '#0090C5'; // Circuit Blue
+        ctx.fillStyle = isOwn ? 'rgba(255, 255, 255, 0.9)' : '#e8a317'; // Circuit Blue
       } else {
         ctx.fillStyle = isOwn ? 'rgba(255, 255, 255, 0.4)' : 'rgba(155, 164, 176, 0.5)';
       }
@@ -168,7 +168,7 @@ const VoiceNotePlayer: React.FC<VoiceNotePlayerProps> = ({
     return (
       <div className={cn(
         'flex items-center gap-2 px-3 py-2 rounded-lg',
-        'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm',
+        'bg-red-900/20 text-red-400 text-sm',
         className
       )}>
         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -191,8 +191,8 @@ const VoiceNotePlayer: React.FC<VoiceNotePlayerProps> = ({
         className={cn(
           'flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full transition-colors',
           isOwn
-            ? 'bg-white/20 hover:bg-white/30 text-white'
-            : 'bg-primary hover:bg-primary-dark text-white',
+            ? 'bg-ink/20 hover:bg-ink/30 text-ink'
+            : 'bg-primary hover:bg-primary-dark text-on-lumen',
           isLoading && 'opacity-50 cursor-not-allowed'
         )}
         title={isPlaying ? 'Pause' : 'Play'}
@@ -227,13 +227,13 @@ const VoiceNotePlayer: React.FC<VoiceNotePlayerProps> = ({
           />
 
           {/* Hover indicator */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 dark:group-hover:bg-white/5 transition-colors rounded" />
+          <div className="absolute inset-0 bg-surface-000/0 group-hover:bg-ink/5 transition-colors rounded" />
         </div>
 
         {/* Time display */}
         <div className={cn(
           'flex justify-between text-xs mt-1',
-          isOwn ? 'text-white/70' : 'text-gray-500 dark:text-gray-400'
+          isOwn ? '' : 'text-ink-muted'
         )}>
           <span className="font-mono">
             {isPlaying ? formatTime(currentTime) : '0:00'}

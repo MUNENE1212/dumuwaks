@@ -194,12 +194,12 @@ const RealtimeDashboard: React.FC = () => {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
         <AlertCircle className="h-12 w-12 text-red-500" />
-        <p className="text-lg text-gray-700 dark:text-gray-300">
+        <p className="text-lg text-ink-muted">
           {error}
         </p>
         <button
           onClick={handleRefresh}
-          className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+          className="px-4 py-2 bg-purple-600 text-on-lumen rounded-lg hover:bg-purple-700 transition-colors"
         >
           Try Again
         </button>
@@ -212,10 +212,10 @@ const RealtimeDashboard: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-ink dark:text-ink">
             Real-Time Analytics
           </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-sm text-ink-muted mt-1">
             Monitor platform activity in real-time
           </p>
         </div>
@@ -226,12 +226,12 @@ const RealtimeDashboard: React.FC = () => {
             {isSocketConnected ? (
               <>
                 <Wifi className="h-4 w-4 text-green-500" />
-                <span className="text-green-600 dark:text-green-400">Live</span>
+                <span className="text-green-400">Live</span>
               </>
             ) : (
               <>
                 <WifiOff className="h-4 w-4 text-yellow-500" />
-                <span className="text-yellow-600 dark:text-yellow-400">Polling</span>
+                <span className="text-yellow-400">Polling</span>
               </>
             )}
           </div>
@@ -242,8 +242,8 @@ const RealtimeDashboard: React.FC = () => {
             disabled={isRefreshing}
             className={cn(
               'flex items-center gap-2 px-3 py-1.5 text-sm rounded-lg transition-colors',
-              'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700',
-              'hover:bg-gray-50 dark:hover:bg-gray-700',
+              'bg-surface-200 border border-line',
+              'hover:bg-surface-300',
               isRefreshing && 'opacity-50 cursor-not-allowed'
             )}
           >
@@ -270,7 +270,7 @@ const RealtimeDashboard: React.FC = () => {
 
         {/* Activity Feed */}
         <div className="lg:col-span-1">
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+          <div className="bg-surface-200 rounded-xl p-6 shadow-sm border border-line">
             <ActivityFeed
               activities={activities}
               isLoading={isLoading}
@@ -282,9 +282,9 @@ const RealtimeDashboard: React.FC = () => {
 
       {/* Trends section (optional - can be expanded) */}
       {trends && (
-        <section className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+        <section className="bg-surface-200 rounded-xl p-6 shadow-sm border border-line">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-semibold text-ink dark:text-ink">
               Trends
             </h3>
             <div className="flex gap-2">
@@ -295,8 +295,8 @@ const RealtimeDashboard: React.FC = () => {
                   className={cn(
                     'px-3 py-1 text-sm rounded-lg transition-colors',
                     selectedPeriod === period
-                      ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300'
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600'
+                      ? 'bg-purple-900 text-purple-300'
+                      : 'bg-surface-300 text-ink-muted hover:bg-surface-400'
                   )}
                 >
                   {period}
@@ -307,23 +307,23 @@ const RealtimeDashboard: React.FC = () => {
 
           {/* Simple trend summary */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Total Bookings</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">
+            <div className="p-4 bg-surface-300/50 rounded-lg">
+              <p className="text-sm text-ink-muted">Total Bookings</p>
+              <p className="text-2xl font-bold text-ink dark:text-ink">
                 {trends.bookings.reduce((sum, b) => sum + (b.count || 0), 0)}
               </p>
             </div>
-            <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Total Revenue</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">
+            <div className="p-4 bg-surface-300/50 rounded-lg">
+              <p className="text-sm text-ink-muted">Total Revenue</p>
+              <p className="text-2xl font-bold text-ink dark:text-ink">
                 {analyticsService.formatCurrency(
                   trends.revenue.reduce((sum, r) => sum + (r.revenue || 0), 0)
                 )}
               </p>
             </div>
-            <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-              <p className="text-sm text-gray-500 dark:text-gray-400">New Users</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">
+            <div className="p-4 bg-surface-300/50 rounded-lg">
+              <p className="text-sm text-ink-muted">New Users</p>
+              <p className="text-2xl font-bold text-ink dark:text-ink">
                 {trends.users.reduce((sum, u) => sum + (u.count || 0), 0)}
               </p>
             </div>
@@ -332,7 +332,7 @@ const RealtimeDashboard: React.FC = () => {
       )}
 
       {/* Footer info */}
-      <div className="text-center text-xs text-gray-400 dark:text-gray-500">
+      <div className="text-center text-xs text-ink-muted">
         <p>
           Data refreshes automatically every 30 seconds via WebSocket.
           Last update: {metrics?.timestamp ? new Date(metrics.timestamp).toLocaleTimeString() : 'N/A'}

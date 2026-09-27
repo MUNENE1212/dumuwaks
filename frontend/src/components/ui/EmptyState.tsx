@@ -54,18 +54,18 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       )}
     >
       {/* Icon */}
-      <div className="w-16 h-16 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center">
-        {customIcon || (Icon && <Icon className="w-8 h-8 text-neutral-400 dark:text-neutral-600" />)}
+      <div className="w-16 h-16 rounded-full bg-surface-200 flex items-center justify-center">
+        {customIcon || (Icon && <Icon className="w-8 h-8 text-ink-muted" />)}
       </div>
 
       {/* Title */}
       <div className="space-y-2 max-w-md">
-        <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+        <h3 className="text-lg font-semibold text-ink">
           {title}
         </h3>
 
         {description && (
-          <p className="text-sm text-neutral-500 dark:text-neutral-400">
+          <p className="text-sm text-ink-muted">
             {description}
           </p>
         )}
@@ -75,7 +75,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       {action && (
         <button
           onClick={action.onClick}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-xl transition-colors duration-200 min-h-[48px]"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 hover:bg-primary-600 text-on-lumen font-semibold rounded-xl transition-colors duration-200 min-h-[48px]"
         >
           {action.icon && <span>{action.icon}</span>}
           {action.label}

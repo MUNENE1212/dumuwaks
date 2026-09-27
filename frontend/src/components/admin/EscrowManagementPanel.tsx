@@ -36,7 +36,7 @@ interface StatusTab {
 const statusTabs: StatusTab[] = [
   { value: 'all', label: 'All', color: 'bg-charcoal' },
   { value: 'pending', label: 'Pending', color: 'bg-warning/20 text-warning' },
-  { value: 'funded', label: 'Funded', color: 'bg-circuit/20 text-circuit' },
+  { value: 'funded', label: 'Funded', color: 'bg-lumen/20 text-lumen-ink' },
   { value: 'held', label: 'Held', color: 'bg-wrench/20 text-wrench' },
   { value: 'disputed', label: 'Disputed', color: 'bg-error/20 text-error' },
   { value: 'released', label: 'Released', color: 'bg-success/20 text-success' },
@@ -114,7 +114,7 @@ const EscrowDetailModal: React.FC<EscrowDetailModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-overlay-medium">
       <div className="glass-modal rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="p-6 border-b border-subtle">
+        <div className="p-6 border-b border-line">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-xl font-bold text-bone">Escrow Details</h2>
@@ -124,7 +124,7 @@ const EscrowDetailModal: React.FC<EscrowDetailModalProps> = ({
             </div>
             <button
               onClick={onClose}
-              className="p-2 rounded-lg hover:bg-hover text-steel hover:text-bone transition-colors"
+              className="p-2 rounded-lg hover:bg-surface-300 text-steel hover:text-bone transition-colors"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -143,7 +143,7 @@ const EscrowDetailModal: React.FC<EscrowDetailModalProps> = ({
             </div>
             <div className="glass-card rounded-lg p-4">
               <p className="text-xs text-steel">Platform Fee</p>
-              <p className="text-xl font-bold text-circuit">{formatKES(escrow.platformFee)}</p>
+              <p className="text-xl font-bold text-lumen-ink">{formatKES(escrow.platformFee)}</p>
             </div>
             <div className="glass-card rounded-lg p-4">
               <p className="text-xs text-steel">Technician Receives</p>
@@ -223,7 +223,7 @@ const EscrowDetailModal: React.FC<EscrowDetailModalProps> = ({
 
           {/* Action Section */}
           {action === 'none' && (canRelease || canRefund) && (
-            <div className="flex gap-3 pt-4 border-t border-subtle">
+            <div className="flex gap-3 pt-4 border-t border-line">
               {canRelease && (
                 <Button
                   variant="primary"
@@ -247,14 +247,14 @@ const EscrowDetailModal: React.FC<EscrowDetailModalProps> = ({
 
           {/* Release Form */}
           {action === 'release' && (
-            <div className="space-y-4 pt-4 border-t border-subtle">
+            <div className="space-y-4 pt-4 border-t border-line">
               <h3 className="text-sm font-semibold text-bone">Release Escrow</h3>
               <div>
                 <label className="block text-sm text-steel mb-2">Notes (optional)</label>
                 <textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  className="w-full px-4 py-2 bg-charcoal border border-subtle rounded-lg text-bone focus:border-circuit focus:outline-none"
+                  className="w-full px-4 py-2 bg-charcoal border border-line rounded-lg text-bone focus:border-lumen focus:outline-none"
                   rows={3}
                   placeholder="Add any notes about this release..."
                 />
@@ -272,14 +272,14 @@ const EscrowDetailModal: React.FC<EscrowDetailModalProps> = ({
 
           {/* Refund Form */}
           {action === 'refund' && (
-            <div className="space-y-4 pt-4 border-t border-subtle">
+            <div className="space-y-4 pt-4 border-t border-line">
               <h3 className="text-sm font-semibold text-bone">Refund Escrow</h3>
               <div>
                 <label className="block text-sm text-steel mb-2">Refund Reason *</label>
                 <textarea
                   value={refundReason}
                   onChange={(e) => setRefundReason(e.target.value)}
-                  className="w-full px-4 py-2 bg-charcoal border border-subtle rounded-lg text-bone focus:border-circuit focus:outline-none"
+                  className="w-full px-4 py-2 bg-charcoal border border-line rounded-lg text-bone focus:border-lumen focus:outline-none"
                   rows={3}
                   placeholder="Explain why you're refunding this escrow..."
                 />
@@ -520,8 +520,8 @@ const EscrowManagementPanel: React.FC = () => {
             className={clsx(
               'px-4 py-2 rounded-lg text-sm font-medium transition-all',
               selectedStatus === tab.value
-                ? 'bg-circuit text-white shadow-led'
-                : 'bg-charcoal text-steel hover:text-bone hover:bg-hover'
+                ? 'bg-lumen text-on-lumen shadow-led'
+                : 'bg-charcoal text-steel hover:text-bone hover:bg-surface-300'
             )}
           >
             {tab.label}
@@ -552,14 +552,14 @@ const EscrowManagementPanel: React.FC = () => {
             setPage(1);
           }}
           placeholder="Search by booking number, customer, or technician..."
-          className="w-full pl-10 pr-4 py-2 bg-charcoal border border-subtle rounded-lg text-bone placeholder:text-steel/50 focus:border-circuit focus:outline-none"
+          className="w-full pl-10 pr-4 py-2 bg-charcoal border border-line rounded-lg text-bone placeholder:text-steel/50 focus:border-lumen focus:outline-none"
         />
       </div>
 
       {/* Bulk Actions */}
       {selectedIds.size > 0 && (
-        <div className="flex items-center gap-4 p-4 bg-circuit/10 border border-circuit/30 rounded-lg">
-          <span className="text-sm text-circuit">
+        <div className="flex items-center gap-4 p-4 bg-lumen/10 border border-lumen/30 rounded-lg">
+          <span className="text-sm text-lumen-ink">
             {selectedIds.size} escrow(s) selected
           </span>
           <Button
@@ -585,13 +585,13 @@ const EscrowManagementPanel: React.FC = () => {
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-subtle">
+              <tr className="border-b border-line">
                 <th className="px-4 py-3 text-left">
                   <input
                     type="checkbox"
                     checked={selectedIds.size === escrows.length && escrows.length > 0}
                     onChange={toggleAllSelection}
-                    className="rounded border-steel text-circuit focus:ring-circuit"
+                    className="rounded border-steel text-lumen-ink focus:ring-lumen"
                   />
                 </th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-steel uppercase">
@@ -621,13 +621,13 @@ const EscrowManagementPanel: React.FC = () => {
               {isLoading ? (
                 // Loading skeletons
                 Array.from({ length: 5 }).map((_, i) => (
-                  <tr key={i} className="border-b border-subtle animate-pulse">
+                  <tr key={i} className="border-b border-line animate-pulse">
                     <td className="px-4 py-4">
-                      <div className="w-4 h-4 bg-subtle rounded" />
+                      <div className="w-4 h-4 bg-surface-300 rounded" />
                     </td>
                     {Array.from({ length: 7 }).map((_, j) => (
                       <td key={j} className="px-4 py-4">
-                        <div className="h-4 bg-subtle rounded w-20" />
+                        <div className="h-4 bg-surface-300 rounded w-20" />
                       </td>
                     ))}
                   </tr>
@@ -642,14 +642,14 @@ const EscrowManagementPanel: React.FC = () => {
                 escrows.map((escrow) => (
                   <tr
                     key={escrow._id}
-                    className="border-b border-subtle hover:bg-hover/30 transition-colors"
+                    className="border-b border-line hover:bg-surface-300/30 transition-colors"
                   >
                     <td className="px-4 py-4">
                       <input
                         type="checkbox"
                         checked={selectedIds.has(escrow._id)}
                         onChange={() => toggleSelection(escrow._id)}
-                        className="rounded border-steel text-circuit focus:ring-circuit"
+                        className="rounded border-steel text-lumen-ink focus:ring-lumen"
                       />
                     </td>
                     <td className="px-4 py-4">

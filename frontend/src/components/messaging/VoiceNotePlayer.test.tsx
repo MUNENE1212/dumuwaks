@@ -122,7 +122,7 @@ describe('VoiceNotePlayer', () => {
 
     await waitFor(() => {
       const button = screen.getByTitle('Play');
-      expect(button).toHaveClass('bg-white/20');
+      expect(button).toHaveClass('bg-ink/20');
     });
   });
 

@@ -170,12 +170,12 @@ const Dashboard: React.FC = () => {
                   <div className="glass-card rounded-2xl p-4 h-full transition-all duration-200 hover:shadow-led">
                     <div className="flex items-center justify-between mb-3">
                       <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${
-                        stat.accent === 'circuit' ? 'bg-circuit/15' :
+                        stat.accent === 'circuit' ? 'bg-lumen/15' :
                         stat.accent === 'wrench' ? 'bg-wrench/15' :
                         'bg-emerald-500/15'
                       }`}>
                         <Icon className={`h-4 w-4 ${
-                          stat.accent === 'circuit' ? 'text-circuit' :
+                          stat.accent === 'circuit' ? 'text-lumen-ink' :
                           stat.accent === 'wrench' ? 'text-wrench' :
                           'text-emerald-400'
                         }`} />
@@ -213,15 +213,15 @@ const Dashboard: React.FC = () => {
                 className="glass-card rounded-2xl p-4 text-left transition-all duration-200 hover:shadow-led hover:border-strong group"
               >
                 <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl ${
-                  action.accent === 'circuit' ? 'bg-circuit/15' : 'bg-wrench/15'
+                  action.accent === 'circuit' ? 'bg-lumen/15' : 'bg-wrench/15'
                 }`}>
                   <Icon className={`h-5 w-5 ${
-                    action.accent === 'circuit' ? 'text-circuit' : 'text-wrench'
+                    action.accent === 'circuit' ? 'text-lumen-ink' : 'text-wrench'
                   }`} />
                 </div>
                 <h3 className="font-medium text-bone text-sm">{action.label}</h3>
                 <p className="text-xs text-steel mt-0.5">{action.description}</p>
-                <ArrowRight className="mt-2 h-4 w-4 text-steel/40 transition-transform group-hover:translate-x-1 group-hover:text-circuit" />
+                <ArrowRight className="mt-2 h-4 w-4 text-steel/40 transition-transform group-hover:translate-x-1 group-hover:text-lumen-ink" />
               </button>
             );
           })}
@@ -276,7 +276,7 @@ const Dashboard: React.FC = () => {
                     const Icon = iconConfig.icon;
 
                     return (
-                      <div key={activity._id} className="flex items-start gap-3 p-2 rounded-xl hover:bg-hover/50 transition-colors">
+                      <div key={activity._id} className="flex items-start gap-3 p-2 rounded-xl hover:bg-surface-300/50 transition-colors">
                         <div className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg ${iconConfig.bg}`}>
                           <Icon className={`h-4 w-4 ${iconConfig.color}`} />
                         </div>
@@ -301,7 +301,7 @@ const Dashboard: React.FC = () => {
             {recentActivity.length > 0 && (
               <button
                 onClick={() => navigate('/bookings')}
-                className="flex w-full items-center justify-center gap-2 border-t border-subtle p-3 text-sm text-circuit hover:bg-hover/50 transition-colors"
+                className="flex w-full items-center justify-center gap-2 border-t border-line p-3 text-sm text-lumen-ink hover:bg-surface-300/50 transition-colors"
               >
                 View all activity
                 <ChevronRight className="h-4 w-4" />
@@ -323,11 +323,11 @@ const getActivityIcon = (type: string, status?: string) => {
     if (status === 'cancelled' || status === 'disputed') {
       return { icon: Calendar, bg: 'bg-red-500/15', color: 'text-red-400' };
     }
-    return { icon: Calendar, bg: 'bg-circuit/15', color: 'text-circuit' };
+    return { icon: Calendar, bg: 'bg-lumen/15', color: 'text-lumen-ink' };
   }
 
   if (type === 'message') {
-    return { icon: MessageSquare, bg: 'bg-circuit/15', color: 'text-circuit' };
+    return { icon: MessageSquare, bg: 'bg-lumen/15', color: 'text-lumen-ink' };
   }
 
   if (type === 'review') {
@@ -338,7 +338,7 @@ const getActivityIcon = (type: string, status?: string) => {
     return { icon: TrendingUp, bg: 'bg-emerald-500/15', color: 'text-emerald-400' };
   }
 
-  return { icon: User, bg: 'bg-hover', color: 'text-steel' };
+  return { icon: User, bg: 'bg-surface-300', color: 'text-steel' };
 };
 
 export default Dashboard;

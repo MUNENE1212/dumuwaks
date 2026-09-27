@@ -126,7 +126,7 @@ const ServiceSelectorModal: React.FC<ServiceSelectorModalProps> = ({
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-surface-000/70"
         onClick={handleOverlayClick}
         aria-hidden="true"
       />
@@ -136,19 +136,19 @@ const ServiceSelectorModal: React.FC<ServiceSelectorModalProps> = ({
         className={clsx(
           'relative w-full max-w-2xl max-h-[90vh]',
           'bg-charcoal rounded-xl shadow-2xl',
-          'border border-subtle',
+          'border border-line',
           'flex flex-col overflow-hidden',
           'animate-in fade-in zoom-in-95 duration-200'
         )}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-subtle">
+        <div className="flex items-center justify-between p-6 border-b border-line">
           <div className="flex items-center gap-3">
             {showPricingForm && (
               <button
                 type="button"
                 onClick={handleBack}
-                className="p-2 rounded-lg hover:bg-mahogany transition-colors"
+                className="p-2 rounded-lg hover:bg-surface-100 transition-colors"
                 aria-label="Back to service selection"
               >
                 <svg className="w-5 h-5 text-steel" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -166,7 +166,7 @@ const ServiceSelectorModal: React.FC<ServiceSelectorModalProps> = ({
           <button
             type="button"
             onClick={handleModalClose}
-            className="p-2 rounded-lg hover:bg-mahogany transition-colors"
+            className="p-2 rounded-lg hover:bg-surface-100 transition-colors"
             aria-label="Close modal"
           >
             <svg className="w-5 h-5 text-steel" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -207,10 +207,10 @@ const ServiceSelectorModal: React.FC<ServiceSelectorModalProps> = ({
 
         {/* Loading Overlay */}
         {isSubmitting && (
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-xl">
+          <div className="absolute inset-0 bg-surface-000/50 flex items-center justify-center rounded-xl">
             <div className="flex flex-col items-center gap-3">
               <svg
-                className="animate-spin h-8 w-8 text-circuit"
+                className="animate-spin h-8 w-8 text-lumen-ink"
                 fill="none"
                 viewBox="0 0 24 24"
               >

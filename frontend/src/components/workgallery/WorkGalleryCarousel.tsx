@@ -110,8 +110,8 @@ const WorkGalleryCarousel: React.FC<WorkGalleryCarouselProps> = ({
 
   if (isLoading) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
-        <div className="aspect-video bg-gray-100 dark:bg-gray-700 rounded-lg animate-pulse" />
+      <div className="bg-surface-200 rounded-xl shadow-sm p-6">
+        <div className="aspect-video bg-surface-300 rounded-lg animate-pulse" />
       </div>
     );
   }
@@ -119,11 +119,11 @@ const WorkGalleryCarousel: React.FC<WorkGalleryCarouselProps> = ({
   // Empty state
   if (!hasImages) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
+      <div className="bg-surface-200 rounded-xl shadow-sm p-6">
         <div className="text-center py-12">
-          <div className="mx-auto h-16 w-16 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-4">
+          <div className="mx-auto h-16 w-16 rounded-full bg-surface-300 flex items-center justify-center mb-4">
             <svg
-              className="h-8 w-8 text-gray-400"
+              className="h-8 w-8 text-ink-muted"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -136,10 +136,10 @@ const WorkGalleryCarousel: React.FC<WorkGalleryCarouselProps> = ({
               />
             </svg>
           </div>
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+          <h3 className="text-lg font-medium text-ink dark:text-ink mb-2">
             No Work Gallery Yet
           </h3>
-          <p className="text-gray-500 dark:text-gray-400 max-w-sm mx-auto">
+          <p className="text-ink-muted max-w-sm mx-auto">
             {technicianName
               ? `${technicianName} hasn't added any work photos yet.`
               : 'Showcase your best work to attract more customers.'}
@@ -152,12 +152,12 @@ const WorkGalleryCarousel: React.FC<WorkGalleryCarouselProps> = ({
   const currentImage = sortedImages[currentIndex];
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden">
+    <div className="bg-surface-200 rounded-xl shadow-sm overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-700">
-        <h3 className="font-semibold text-gray-900 dark:text-white">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-line">
+        <h3 className="font-semibold text-ink dark:text-ink">
           Work Gallery
-          <span className="ml-2 text-sm font-normal text-gray-500">
+          <span className="ml-2 text-sm font-normal text-ink-muted">
             ({currentIndex + 1} of {sortedImages.length})
           </span>
         </h3>
@@ -168,7 +168,7 @@ const WorkGalleryCarousel: React.FC<WorkGalleryCarouselProps> = ({
               'text-sm font-medium transition-colors',
               isEditMode
                 ? 'text-primary-600 hover:text-primary-700'
-                : 'text-gray-500 hover:text-gray-700'
+                : 'text-ink-muted hover:text-ink'
             )}
           >
             {isEditMode ? 'Done' : 'Edit'}
@@ -189,7 +189,7 @@ const WorkGalleryCarousel: React.FC<WorkGalleryCarouselProps> = ({
       >
         {/* Main Image */}
         <div
-          className="relative aspect-video bg-gray-100 dark:bg-gray-700"
+          className="relative aspect-video bg-surface-300"
           onClick={() => !isEditMode && onImageClick?.(currentImage)}
         >
           <img
@@ -201,7 +201,7 @@ const WorkGalleryCarousel: React.FC<WorkGalleryCarouselProps> = ({
 
           {/* Before/After Badge */}
           {currentImage.isBeforeAfter && (
-            <div className="absolute top-3 left-3 bg-black/70 text-white text-xs font-medium px-2 py-1 rounded-full">
+            <div className="absolute top-3 left-3 bg-surface-000/70 text-ink text-xs font-medium px-2 py-1 rounded-full">
               Before / After
             </div>
           )}
@@ -213,7 +213,7 @@ const WorkGalleryCarousel: React.FC<WorkGalleryCarouselProps> = ({
                 e.stopPropagation();
                 onImageClick?.(currentImage);
               }}
-              className="absolute top-3 right-3 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
+              className="absolute top-3 right-3 bg-surface-000/50 hover:bg-surface-000/70 text-ink p-2 rounded-full transition-colors"
               aria-label="Expand image"
             >
               <Maximize2 className="h-4 w-4" />
@@ -222,13 +222,13 @@ const WorkGalleryCarousel: React.FC<WorkGalleryCarouselProps> = ({
 
           {/* Edit Mode Overlay */}
           {isEditMode && (
-            <div className="absolute inset-0 bg-black/20 flex items-center justify-center gap-3">
+            <div className="absolute inset-0 bg-surface-000/20 flex items-center justify-center gap-3">
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   onEdit?.(currentImage);
                 }}
-                className="bg-white hover:bg-gray-100 text-gray-900 p-3 rounded-full shadow-lg transition-colors"
+                className="bg-surface-200 hover:bg-surface-300 text-ink p-3 rounded-full shadow-lg transition-colors"
                 aria-label="Edit image"
               >
                 <Edit2 className="h-5 w-5" />
@@ -240,7 +240,7 @@ const WorkGalleryCarousel: React.FC<WorkGalleryCarouselProps> = ({
                     onDelete?.(currentImage._id);
                   }
                 }}
-                className="bg-white hover:bg-red-50 text-red-600 p-3 rounded-full shadow-lg transition-colors"
+                className="bg-surface-200 hover:bg-red-50 text-red-600 p-3 rounded-full shadow-lg transition-colors"
                 aria-label="Delete image"
               >
                 <Trash2 className="h-5 w-5" />
@@ -254,14 +254,14 @@ const WorkGalleryCarousel: React.FC<WorkGalleryCarouselProps> = ({
           <>
             <button
               onClick={goToPrevious}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white dark:bg-gray-800/90 dark:hover:bg-gray-800 text-gray-900 dark:text-white p-2 rounded-full shadow-lg transition-all hover:scale-110"
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-surface-200/90 hover:bg-surface-200 text-ink text-ink p-2 rounded-full shadow-lg transition-all hover:scale-110"
               aria-label="Previous image"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
             <button
               onClick={goToNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white dark:bg-gray-800/90 dark:hover:bg-gray-800 text-gray-900 dark:text-white p-2 rounded-full shadow-lg transition-all hover:scale-110"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-surface-200/90 hover:bg-surface-200 text-ink text-ink p-2 rounded-full shadow-lg transition-all hover:scale-110"
               aria-label="Next image"
             >
               <ChevronRight className="h-5 w-5" />
@@ -279,8 +279,8 @@ const WorkGalleryCarousel: React.FC<WorkGalleryCarouselProps> = ({
                 className={clsx(
                   'h-2 rounded-full transition-all',
                   index === currentIndex
-                    ? 'w-6 bg-white'
-                    : 'w-2 bg-white/50 hover:bg-white/75'
+                    ? 'w-6 bg-surface-200'
+                    : 'w-2 bg-ink/50 hover:bg-ink/75'
                 )}
                 aria-label={`Go to image ${index + 1}`}
               />
@@ -305,13 +305,13 @@ const WorkGalleryCarousel: React.FC<WorkGalleryCarouselProps> = ({
 
         {/* Caption */}
         {currentImage.caption && (
-          <p className="text-gray-700 dark:text-gray-300 text-sm mb-3">
+          <p className="text-ink-muted text-sm mb-3">
             {currentImage.caption}
           </p>
         )}
 
         {/* Location and Date */}
-        <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+        <div className="flex items-center gap-4 text-xs text-ink-muted">
           {currentImage.location && (
             <span className="flex items-center gap-1">
               <svg
@@ -365,7 +365,7 @@ const WorkGalleryCarousel: React.FC<WorkGalleryCarouselProps> = ({
                   'flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all',
                   index === currentIndex
                     ? 'border-primary-500 scale-105'
-                    : 'border-transparent hover:border-gray-300'
+                    : 'border-transparent hover:border-line-strong'
                 )}
               >
                 <img

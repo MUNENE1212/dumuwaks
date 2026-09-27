@@ -63,7 +63,7 @@ const Slider = forwardRef<HTMLInputElement, SliderProps>(
         {(label || showValue) && (
           <div className="flex items-center justify-between mb-2">
             {label && (
-              <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
+              <label className="text-sm font-medium text-ink-muted">
                 {label}
               </label>
             )}
@@ -77,7 +77,7 @@ const Slider = forwardRef<HTMLInputElement, SliderProps>(
 
         <div className="relative h-6 flex items-center">
           {/* Track */}
-          <div className="absolute w-full h-2 bg-neutral-200 dark:bg-neutral-800 rounded-full overflow-hidden">
+          <div className="absolute w-full h-2 bg-surface-200 rounded-full overflow-hidden">
             {/* Fill */}
             <div
               className="h-full bg-gradient-primary rounded-full transition-all duration-150"
@@ -101,13 +101,13 @@ const Slider = forwardRef<HTMLInputElement, SliderProps>(
               'disabled:cursor-not-allowed disabled:opacity-50',
               // Thumb styling
               '[&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5',
-              '[&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-md',
+              '[&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-surface-200 [&::-webkit-slider-thumb]:shadow-md',
               '[&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-primary-500',
               '[&::-webkit-slider-thumb]:transition-transform [&::-webkit-slider-thumb]:hover:scale-110',
               '[&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:rounded-full',
-              '[&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-primary-500',
+              '[&::-moz-range-thumb]:bg-surface-200 [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-primary-500',
               '[&::-moz-range-thumb]:shadow-md [&::-moz-range-thumb]:transition-transform [&::-moz-range-thumb]:hover:scale-110',
-              disabled && '[&::-webkit-slider-thumb]:bg-neutral-300 [&::-moz-range-thumb]:bg-neutral-300',
+              disabled && '[&::-webkit-slider-thumb]:bg-line-strong [&::-moz-range-thumb]:bg-line-strong',
               className
             )}
             {...props}
@@ -115,7 +115,7 @@ const Slider = forwardRef<HTMLInputElement, SliderProps>(
         </div>
 
         {/* Min/Max labels */}
-        <div className="flex justify-between mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+        <div className="flex justify-between mt-1 text-xs text-ink-muted">
           <span>{formatValue ? formatValue(min) : min}</span>
           <span>{formatValue ? formatValue(max) : max}</span>
         </div>

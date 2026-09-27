@@ -208,11 +208,11 @@ const CustomServiceForm: React.FC<CustomServiceFormProps> = ({
               'w-full h-12 px-4',
               'bg-charcoal border rounded-lg',
               'text-bone placeholder:text-steel',
-              'focus:outline-none focus:border-circuit focus:ring-1 focus:ring-circuit',
+              'focus:outline-none focus:border-lumen focus:ring-1 focus:ring-lumen',
               'transition-colors duration-200',
               touched.name && errors.some((e) => e.includes('name'))
                 ? 'border-error'
-                : 'border-subtle'
+                : 'border-line'
             )}
             aria-required="true"
           />
@@ -239,11 +239,11 @@ const CustomServiceForm: React.FC<CustomServiceFormProps> = ({
               'w-full h-12 px-4',
               'bg-charcoal border rounded-lg',
               'text-bone',
-              'focus:outline-none focus:border-circuit focus:ring-1 focus:ring-circuit',
+              'focus:outline-none focus:border-lumen focus:ring-1 focus:ring-lumen',
               'transition-colors duration-200',
               touched.categoryId && errors.some((e) => e.includes('category'))
                 ? 'border-error'
-                : 'border-subtle'
+                : 'border-line'
             )}
             aria-required="true"
           >
@@ -276,11 +276,11 @@ const CustomServiceForm: React.FC<CustomServiceFormProps> = ({
               'w-full px-4 py-3',
               'bg-charcoal border rounded-lg',
               'text-bone placeholder:text-steel',
-              'focus:outline-none focus:border-circuit focus:ring-1 focus:ring-circuit',
+              'focus:outline-none focus:border-lumen focus:ring-1 focus:ring-lumen',
               'transition-colors duration-200 resize-none',
               touched.description && errors.some((e) => e.includes('Description'))
                 ? 'border-error'
-                : 'border-subtle'
+                : 'border-line'
             )}
             aria-required="true"
           />
@@ -313,11 +313,11 @@ const CustomServiceForm: React.FC<CustomServiceFormProps> = ({
                   'w-full h-12 px-4',
                   'bg-charcoal border rounded-lg',
                   'text-bone placeholder:text-steel',
-                  'focus:outline-none focus:border-circuit focus:ring-1 focus:ring-circuit',
+                  'focus:outline-none focus:border-lumen focus:ring-1 focus:ring-lumen',
                   'transition-colors duration-200',
                   touched.basePriceMin && errors.some((e) => e.includes('price'))
                     ? 'border-error'
-                    : 'border-subtle'
+                    : 'border-line'
                 )}
                 aria-label="Minimum price in KES"
               />
@@ -341,11 +341,11 @@ const CustomServiceForm: React.FC<CustomServiceFormProps> = ({
                   'w-full h-12 px-4',
                   'bg-charcoal border rounded-lg',
                   'text-bone placeholder:text-steel',
-                  'focus:outline-none focus:border-circuit focus:ring-1 focus:ring-circuit',
+                  'focus:outline-none focus:border-lumen focus:ring-1 focus:ring-lumen',
                   'transition-colors duration-200',
                   touched.basePriceMax && errors.some((e) => e.includes('price'))
                     ? 'border-error'
-                    : 'border-subtle'
+                    : 'border-line'
                 )}
                 aria-label="Maximum price in KES"
               />
@@ -353,7 +353,7 @@ const CustomServiceForm: React.FC<CustomServiceFormProps> = ({
             </div>
           </div>
           {formData.basePriceMin > 0 && formData.basePriceMax > 0 && (
-            <p className="mt-2 text-sm text-circuit">
+            <p className="mt-2 text-sm text-lumen-ink">
               Price range: {formatPrice(formData.basePriceMin)} - {formatPrice(formData.basePriceMax)}
             </p>
           )}
@@ -376,11 +376,11 @@ const CustomServiceForm: React.FC<CustomServiceFormProps> = ({
               'w-full h-12 px-4',
               'bg-charcoal border rounded-lg',
               'text-bone',
-              'focus:outline-none focus:border-circuit focus:ring-1 focus:ring-circuit',
+              'focus:outline-none focus:border-lumen focus:ring-1 focus:ring-lumen',
               'transition-colors duration-200',
               touched.estimatedDuration && errors.some((e) => e.includes('duration'))
                 ? 'border-error'
-                : 'border-subtle'
+                : 'border-line'
             )}
             aria-required="true"
           >
@@ -402,7 +402,7 @@ const CustomServiceForm: React.FC<CustomServiceFormProps> = ({
             {/* Icon Preview */}
             {iconPreview ? (
               <div className="relative">
-                <div className="w-16 h-16 rounded-lg overflow-hidden bg-charcoal border border-subtle">
+                <div className="w-16 h-16 rounded-lg overflow-hidden bg-charcoal border border-line">
                   <img
                     src={iconPreview}
                     alt="Service icon preview"
@@ -415,7 +415,7 @@ const CustomServiceForm: React.FC<CustomServiceFormProps> = ({
                   className={clsx(
                     'absolute -top-2 -right-2',
                     'w-6 h-6 rounded-full',
-                    'bg-error text-white',
+                    'bg-error text-ink',
                     'flex items-center justify-center',
                     'hover:bg-error-600 transition-colors'
                   )}
@@ -432,7 +432,7 @@ const CustomServiceForm: React.FC<CustomServiceFormProps> = ({
                 onClick={() => fileInputRef.current?.click()}
                 className={clsx(
                   'w-16 h-16 rounded-lg',
-                  'bg-charcoal border-2 border-dashed border-subtle',
+                  'bg-charcoal border-2 border-dashed border-line',
                   'flex items-center justify-center',
                   'hover:border-steel transition-colors',
                   'text-steel hover:text-bone'

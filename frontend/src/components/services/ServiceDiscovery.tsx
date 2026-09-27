@@ -130,9 +130,9 @@ const ServiceDiscovery: React.FC<ServiceDiscoveryProps> = ({
             placeholder="Search services..."
             className={clsx(
               'w-full h-12 pl-12 pr-4',
-              'bg-charcoal border border-subtle rounded-lg',
+              'bg-charcoal border border-line rounded-lg',
               'text-bone placeholder:text-steel',
-              'focus:outline-none focus:border-circuit focus:ring-1 focus:ring-circuit',
+              'focus:outline-none focus:border-lumen focus:ring-1 focus:ring-lumen',
               'transition-colors duration-200'
             )}
             aria-label="Search services"
@@ -174,11 +174,11 @@ const ServiceDiscovery: React.FC<ServiceDiscoveryProps> = ({
               className={clsx(
                 'inline-flex items-center gap-2',
                 'px-3 py-2 min-h-[36px]',
-                'bg-charcoal border border-subtle rounded-lg',
+                'bg-charcoal border border-line rounded-lg',
                 'text-bone text-sm',
-                'hover:border-circuit hover:text-circuit',
+                'hover:border-lumen hover:text-lumen-ink',
                 'transition-all duration-200',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-circuit'
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lumen'
               )}
               aria-label="Retry loading categories"
             >
@@ -220,7 +220,7 @@ const ServiceDiscovery: React.FC<ServiceDiscoveryProps> = ({
                 type="button"
                 onClick={handleCustomServiceClick}
                 className={clsx(
-                  'text-sm text-circuit hover:text-circuit-300',
+                  'text-sm text-lumen-ink hover:text-lumen-ink',
                   'underline underline-offset-2',
                   'transition-colors duration-200'
                 )}
@@ -278,7 +278,7 @@ const ServiceDiscovery: React.FC<ServiceDiscoveryProps> = ({
                     {selectedService.description}
                   </p>
                   <div className="flex items-center gap-4 mt-3">
-                    <span className="text-circuit font-medium">
+                    <span className="text-lumen-ink font-medium">
                       {selectedService.estimatedDuration}
                     </span>
                   </div>
@@ -294,7 +294,7 @@ const ServiceDiscovery: React.FC<ServiceDiscoveryProps> = ({
                 type="button"
                 onClick={handleCustomServiceClick}
                 className={clsx(
-                  'text-sm text-circuit hover:text-circuit-300',
+                  'text-sm text-lumen-ink hover:text-lumen-ink',
                   'underline underline-offset-2',
                   'transition-colors duration-200'
                 )}

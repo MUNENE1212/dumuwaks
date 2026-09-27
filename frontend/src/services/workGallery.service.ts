@@ -240,11 +240,11 @@ export const getCategoryColorClass = (category: string): string => {
     plumbing: 'bg-blue-100 text-blue-800 border-blue-200',
     electrical: 'bg-yellow-100 text-yellow-800 border-yellow-200',
     carpentry: 'bg-amber-100 text-amber-800 border-amber-200',
-    masonry: 'bg-stone-100 text-stone-800 border-stone-200',
+    masonry: 'bg-surface-300 text-ink border-line',
     painting: 'bg-purple-100 text-purple-800 border-purple-200',
     hvac: 'bg-cyan-100 text-cyan-800 border-cyan-200',
     welding: 'bg-orange-100 text-orange-800 border-orange-200',
-    other: 'bg-gray-100 text-gray-800 border-gray-200',
+    other: 'bg-surface-300 text-ink border-line',
   };
   return colors[category] || colors.other;
 };

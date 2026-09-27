@@ -1,176 +1,80 @@
 import { useState } from 'react';
-import { MessageCircle, X, Send, Phone, Calendar, Wrench } from 'lucide-react';
-import { Button } from '@/components/ui';
+import { ArrowUpRight, X } from 'lucide-react';
+import { whatsappLink, WHATSAPP_INTENTS } from '@/config/brand';
 
-// WhatsApp business number
-const WHATSAPP_NUMBER = '254799954672'; // Format: country code + number (no + or spaces)
+/**
+ * Floating WhatsApp entry. Each choice opens WhatsApp with the keyword the
+ * Dumuwaks bot understands, so the customer never types a command.
+ */
+const CHOICES = [
+  { label: 'Book a technician', hint: 'Tell us the job and the area', message: WHATSAPP_INTENTS.book },
+  { label: 'Check my booking', hint: 'Status, technician, arrival', message: WHATSAPP_INTENTS.status },
+  { label: 'Talk to a person', hint: 'Reach the Dumuwaks team', message: WHATSAPP_INTENTS.help },
+];
 
-interface QuickAction {
-  icon: typeof Phone;
-  label: string;
-  message: string;
-}
+export const WhatsAppGlyph = ({ className = 'h-5 w-5' }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} aria-hidden="true" fill="currentColor">
+    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.83 9.83 0 0 0 12.04 2Zm5.8 14.06c-.24.68-1.42 1.3-1.95 1.35-.5.05-.97.23-3.27-.68-2.77-1.09-4.52-3.93-4.66-4.11-.13-.18-1.11-1.48-1.11-2.83 0-1.34.7-2 .95-2.28.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.46.23.54.77 1.87.84 2 .07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.7 1.16 1.51 1.88 1.04.93 1.92 1.21 2.19 1.35.27.14.43.11.59-.07.16-.18.68-.79.86-1.07.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.33Z" />
+  </svg>
+);
 
 const WhatsAppButton = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [customMessage, setCustomMessage] = useState('');
-
-  const quickActions: QuickAction[] = [
-    {
-      icon: Wrench,
-      label: 'Book a Technician',
-      message: 'Hello! I need help booking a technician for an emergency repair. Can you assist me?',
-    },
-    {
-      icon: Calendar,
-      label: 'Schedule Service',
-      message: 'Hi! I would like to schedule a maintenance service. When can someone help me?',
-    },
-    {
-      icon: Phone,
-      label: 'Emergency Support',
-      message: 'URGENT! I need immediate technical assistance. Please help!',
-    },
-  ];
-
-  const sendWhatsAppMessage = (message: string) => {
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-    setIsOpen(false);
-    setCustomMessage('');
-  };
-
-  const handleQuickAction = (action: QuickAction) => {
-    sendWhatsAppMessage(action.message);
-  };
-
-  const handleCustomMessage = () => {
-    if (customMessage.trim()) {
-      sendWhatsAppMessage(customMessage);
-    }
-  };
+  const [open, setOpen] = useState(false);
 
   return (
-    <>
-      {/* Floating Button */}
-      <div className="fixed bottom-6 right-6 z-50">
-        {!isOpen ? (
-          <button
-            onClick={() => setIsOpen(true)}
-            className="bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 group"
-            aria-label="Open WhatsApp Chat"
-          >
-            <MessageCircle className="h-6 w-6" />
-            <span className="hidden group-hover:inline-block pr-2 font-medium">
-              Chat with us
-            </span>
-          </button>
-        ) : (
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-80 sm:w-96 overflow-hidden border border-gray-200 dark:border-gray-700">
-            {/* Header */}
-            <div className="bg-green-500 text-white p-4 flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <div className="bg-white rounded-full p-2">
-                  <MessageCircle className="h-6 w-6 text-green-500" />
-                </div>
-                <div>
-                  <h3 className="font-bold">WhatsApp Support</h3>
-                  <p className="text-xs text-green-100">We typically reply instantly</p>
-                </div>
-              </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="hover:bg-green-600 rounded-full p-1 transition-colors"
-                aria-label="Close"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            {/* Body */}
-            <div className="p-4 max-h-96 overflow-y-auto">
-              {/* Welcome Message */}
-              <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 mb-4">
-                <p className="text-sm text-gray-700 dark:text-gray-300">
-                  👋 Hello! How can we help you today?
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  Choose a quick action or send us a custom message.
-                </p>
-              </div>
-
-              {/* Quick Actions */}
-              <div className="space-y-2 mb-4">
-                <p className="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-2">
-                  Quick Actions:
-                </p>
-                {quickActions.map((action, index) => {
-                  const Icon = action.icon;
-                  return (
-                    <button
-                      key={index}
-                      onClick={() => handleQuickAction(action)}
-                      className="w-full flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-700 hover:bg-green-50 dark:hover:bg-green-900/20 border border-gray-200 dark:border-gray-600 rounded-lg transition-colors text-left"
-                    >
-                      <div className="bg-green-100 dark:bg-green-900/30 p-2 rounded-full">
-                        <Icon className="h-4 w-4 text-green-600 dark:text-green-400" />
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
-                          {action.label}
-                        </p>
-                      </div>
-                      <Send className="h-4 w-4 text-gray-400" />
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Custom Message */}
-              <div>
-                <label className="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-2">
-                  Or send a custom message:
-                </label>
-                <div className="flex space-x-2">
-                  <input
-                    type="text"
-                    value={customMessage}
-                    onChange={(e) => setCustomMessage(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && handleCustomMessage()}
-                    placeholder="Type your message..."
-                    className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-                  />
-                  <Button
-                    onClick={handleCustomMessage}
-                    disabled={!customMessage.trim()}
-                    className="bg-green-500 hover:bg-green-600 text-white px-4"
-                    size="sm"
-                  >
-                    <Send className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="bg-gray-50 dark:bg-gray-900 px-4 py-3 text-center">
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                Powered by WhatsApp Business
-              </p>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Backdrop (mobile only) */}
-      {isOpen && (
+    <div className="whatsapp-float fixed bottom-5 right-4 z-50 sm:right-6">
+      {open && (
         <div
-          className="fixed inset-0 bg-black/20 z-40 md:hidden"
-          onClick={() => setIsOpen(false)}
-        />
+          role="dialog"
+          aria-label="Continue on WhatsApp"
+          className="mb-3 w-[min(20rem,calc(100vw-2rem))] overflow-hidden rounded-lg border border-line-strong bg-surface-200 shadow-float animate-scale-in"
+        >
+          <div className="flex items-start justify-between gap-3 border-b border-line px-4 py-3">
+            <div>
+              <p className="eyebrow">WhatsApp</p>
+              <p className="mt-1 text-body-sm text-ink">What do you need?</p>
+            </div>
+            <button
+              onClick={() => setOpen(false)}
+              className="-mr-1 inline-flex h-8 w-8 items-center justify-center rounded-md text-ink-muted hover:bg-surface-300 hover:text-ink"
+              aria-label="Close"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+          <ul>
+            {CHOICES.map((c) => (
+              <li key={c.message} className="border-b border-line last:border-b-0">
+                <a
+                  href={whatsappLink(c.message)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setOpen(false)}
+                  className="group flex items-center justify-between gap-3 px-4 py-3 hover:bg-surface-300"
+                >
+                  <span>
+                    <span className="block text-body-sm font-medium text-ink">{c.label}</span>
+                    <span className="block text-caption text-ink-muted">{c.hint}</span>
+                  </span>
+                  <ArrowUpRight className="h-4 w-4 text-ink-muted group-hover:text-lumen-ink" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
-    </>
+      <div className="flex justify-end">
+        <button
+          onClick={() => setOpen((o) => !o)}
+          className="inline-flex h-12 items-center gap-2 rounded-md bg-whatsapp pl-3.5 pr-4 font-semibold text-surface-000 shadow-float hover:brightness-110"
+          aria-expanded={open}
+          aria-label="Chat on WhatsApp"
+        >
+          <WhatsAppGlyph />
+          <span className="hidden text-body-sm sm:inline">WhatsApp</span>
+        </button>
+      </div>
+    </div>
   );
 };
 

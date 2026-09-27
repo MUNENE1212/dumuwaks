@@ -185,10 +185,10 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
       <div className="space-y-6">
         {!embedded && (
           <div className="text-center">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+            <h3 className="text-xl font-bold text-ink dark:text-ink mb-2">
               🔧 What problem are you experiencing?
             </h3>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-ink-muted">
               I'll help you diagnose the issue and find the best solution
             </p>
           </div>
@@ -197,7 +197,7 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
         <div className="space-y-4">
           {Object.entries(problems).map(([category, probs]) => (
             <div key={category} className="space-y-2">
-              <h4 className="font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <h4 className="font-semibold text-ink-muted flex items-center gap-2">
                 {getCategoryIcon(category)}
                 {category}
               </h4>
@@ -211,10 +211,10 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
                       setSelectedProblem(problem.id);
                       startDiagnostic(problem.id);
                     }}
-                    className="text-left px-4 py-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:shadow-md transition-all flex items-center justify-between group"
+                    className="text-left px-4 py-3 bg-surface-200 rounded-lg border border-line hover:border-blue-500 hover:shadow-md transition-all flex items-center justify-between group"
                   >
                     <span>{problem.name}</span>
-                    <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-blue-500" />
+                    <ChevronRight className="h-5 w-5 text-ink-muted group-hover:text-blue-500" />
                   </motion.button>
                 ))}
               </div>
@@ -225,7 +225,7 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
         {onClose && (
           <button
             onClick={onClose}
-            className="w-full px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+            className="w-full px-4 py-2 text-ink-muted hover:text-ink hover:text-ink transition-colors"
           >
             Cancel
           </button>
@@ -241,14 +241,14 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
         {!embedded && (
           <div>
             <div className="flex items-center justify-between mb-2">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+              <h3 className="text-lg font-bold text-ink dark:text-ink">
                 {problemName}
               </h3>
-              <span className="text-sm text-gray-500">
+              <span className="text-sm text-ink-muted">
                 {questionNumber} of {totalQuestions}
               </span>
             </div>
-            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+            <div className="w-full bg-surface-300 rounded-full h-2">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${(questionNumber / totalQuestions) * 100}%` }}
@@ -259,7 +259,7 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
         )}
 
         <div className="space-y-4">
-          <p className="text-lg font-medium text-gray-900 dark:text-white">
+          <p className="text-lg font-medium text-ink dark:text-ink">
             {currentQuestion.question}
           </p>
 
@@ -273,8 +273,8 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
                 className={cn(
                   "w-full text-left px-4 py-3 rounded-lg border-2 transition-all",
                   selectedOption === option.value
-                    ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
-                    : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-blue-300"
+                    ? "border-blue-500 bg-blue-900/20"
+                    : "border-line bg-surface-200 hover:border-blue-300"
                 )}
               >
                 <div className="flex items-center justify-between">
@@ -295,8 +295,8 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
             className={cn(
               "w-full py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2",
               selectedOption
-                ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:shadow-lg"
-                : "bg-gray-200 dark:bg-gray-700 text-gray-500 cursor-not-allowed"
+                ? " bg-blue-500 text-on-lumen hover:shadow-lg"
+                : "bg-surface-300 text-ink-muted cursor-not-allowed"
             )}
           >
             {loading ? (
@@ -346,17 +346,17 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-green-50 dark:bg-green-900/20 border-2 border-green-200 dark:border-green-800 rounded-lg p-5"
+            className="bg-green-900/20 border-2 border-green-800 rounded-lg p-5"
           >
             <div className="flex items-start gap-3 mb-4">
-              <div className="bg-green-500 text-white p-2 rounded-full">
+              <div className="bg-green-500 text-on-lumen p-2 rounded-full">
                 <Wrench className="h-5 w-5" />
               </div>
               <div>
-                <h4 className="font-bold text-lg text-green-900 dark:text-green-100">
+                <h4 className="font-bold text-lg text-green-100">
                   💡 You Can Fix This Yourself!
                 </h4>
-                <p className="text-green-700 dark:text-green-300 mt-1">
+                <p className="text-green-300 mt-1">
                   {diagnosis.diySolution.description}
                 </p>
               </div>
@@ -375,11 +375,11 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
               </div>
 
               {diagnosis.diySolution.safetyWarnings && diagnosis.diySolution.safetyWarnings.length > 0 && (
-                <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-3">
-                  <p className="font-semibold text-yellow-900 dark:text-yellow-100 text-sm mb-2">
+                <div className="bg-yellow-900/20 border border-yellow-800 rounded-lg p-3">
+                  <p className="font-semibold text-yellow-100 text-sm mb-2">
                     ⚠️ Safety Warnings:
                   </p>
-                  <ul className="text-sm text-yellow-800 dark:text-yellow-200 space-y-1">
+                  <ul className="text-sm text-yellow-200 space-y-1">
                     {diagnosis.diySolution.safetyWarnings.map((warning, i) => (
                       <li key={i}>• {warning}</li>
                     ))}
@@ -388,12 +388,12 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
               )}
 
               <div>
-                <p className="font-semibold text-gray-900 dark:text-white mb-2">Tools Needed:</p>
+                <p className="font-semibold text-ink dark:text-ink mb-2">Tools Needed:</p>
                 <div className="flex flex-wrap gap-2">
                   {diagnosis.diySolution.tools.map((tool, i) => (
                     <span
                       key={i}
-                      className="px-3 py-1 bg-white dark:bg-gray-800 rounded-full text-sm border border-gray-200 dark:border-gray-700"
+                      className="px-3 py-1 bg-surface-200 rounded-full text-sm border border-line"
                     >
                       {tool}
                     </span>
@@ -402,14 +402,14 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
               </div>
 
               <div>
-                <p className="font-semibold text-gray-900 dark:text-white mb-2">Steps:</p>
+                <p className="font-semibold text-ink dark:text-ink mb-2">Steps:</p>
                 <ol className="space-y-2">
                   {diagnosis.diySolution.steps.map((step, i) => (
                     <li key={i} className="flex gap-3">
-                      <span className="flex-shrink-0 w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                      <span className="flex-shrink-0 w-6 h-6 bg-green-500 text-on-lumen rounded-full flex items-center justify-center text-sm font-bold">
                         {i + 1}
                       </span>
-                      <span className="text-gray-700 dark:text-gray-300 text-sm">{step}</span>
+                      <span className="text-ink-muted text-sm">{step}</span>
                     </li>
                   ))}
                 </ol>
@@ -424,17 +424,17 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-200 dark:border-blue-800 rounded-lg p-5"
+            className="bg-blue-900/20 border-2 border-blue-800 rounded-lg p-5"
           >
             <div className="flex items-start gap-3 mb-4">
-              <div className="bg-blue-500 text-white p-2 rounded-full">
+              <div className="bg-blue-500 text-on-lumen p-2 rounded-full">
                 <Zap className="h-5 w-5" />
               </div>
               <div>
-                <h4 className="font-bold text-lg text-blue-900 dark:text-blue-100">
+                <h4 className="font-bold text-lg text-blue-100">
                   👷 Professional Help Recommended
                 </h4>
-                <p className="text-blue-700 dark:text-blue-300 mt-1">
+                <p className="text-blue-300 mt-1">
                   This issue requires a professional technician for best results
                 </p>
               </div>
@@ -442,10 +442,10 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
 
             <div className="space-y-3 mt-4">
               <div>
-                <p className="font-semibold text-gray-900 dark:text-white mb-2">Likely Causes:</p>
+                <p className="font-semibold text-ink dark:text-ink mb-2">Likely Causes:</p>
                 <ul className="space-y-1">
                   {diagnosis.technicianPrep.likelyCauses.map((cause, i) => (
-                    <li key={i} className="text-gray-700 dark:text-gray-300 text-sm flex items-center gap-2">
+                    <li key={i} className="text-ink-muted text-sm flex items-center gap-2">
                       <span className="text-blue-500">•</span>
                       {cause}
                     </li>
@@ -454,12 +454,12 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
               </div>
 
               <div>
-                <p className="font-semibold text-gray-900 dark:text-white mb-2">Technician Will Bring:</p>
+                <p className="font-semibold text-ink dark:text-ink mb-2">Technician Will Bring:</p>
                 <div className="flex flex-wrap gap-2">
                   {diagnosis.technicianPrep.toolsNeeded.map((tool, i) => (
                     <span
                       key={i}
-                      className="px-3 py-1 bg-white dark:bg-gray-800 rounded-full text-sm border border-gray-200 dark:border-gray-700"
+                      className="px-3 py-1 bg-surface-200 rounded-full text-sm border border-line"
                     >
                       {tool}
                     </span>
@@ -468,15 +468,15 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
               </div>
 
               <div className="grid grid-cols-2 gap-3 text-sm">
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
-                  <p className="text-gray-500 dark:text-gray-400 text-xs mb-1">Est. Duration</p>
-                  <p className="font-semibold text-gray-900 dark:text-white">
+                <div className="bg-surface-200 rounded-lg p-3 border border-line">
+                  <p className="text-ink-muted text-xs mb-1">Est. Duration</p>
+                  <p className="font-semibold text-ink dark:text-ink">
                     {diagnosis.technicianPrep.estimatedJobDuration}
                   </p>
                 </div>
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
-                  <p className="text-gray-500 dark:text-gray-400 text-xs mb-1">Complexity</p>
-                  <p className="font-semibold text-gray-900 dark:text-white capitalize">
+                <div className="bg-surface-200 rounded-lg p-3 border border-line">
+                  <p className="text-ink-muted text-xs mb-1">Complexity</p>
+                  <p className="font-semibold text-ink dark:text-ink capitalize">
                     {diagnosis.technicianPrep.complexity}
                   </p>
                 </div>
@@ -490,7 +490,7 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
                 // Navigate to booking with diagnosis info
                 window.location.href = `/booking/create?service=${diagnosis.problemSummary}`;
               }}
-              className="w-full mt-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-semibold flex items-center justify-center gap-2 hover:shadow-lg transition-all"
+              className="w-full mt-4 py-3 bg-blue-500 text-on-lumen rounded-lg font-semibold flex items-center justify-center gap-2 hover:shadow-lg transition-all"
             >
               Book Prepared Technician
               <ArrowRight className="h-5 w-5" />
@@ -509,7 +509,7 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
             onClick={() => {
               window.location.href = `/booking/create?service=${diagnosis.problemSummary}`;
             }}
-            className="w-full py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all"
+            className="w-full py-3 bg-surface-200 text-ink-muted rounded-lg font-semibold hover:bg-surface-300 transition-all"
           >
             Still prefer a professional? Book a Technician →
           </motion.button>
@@ -518,7 +518,7 @@ export const DiagnosticFlow: React.FC<DiagnosticProps> = ({
         {onClose && (
           <button
             onClick={onClose}
-            className="w-full py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+            className="w-full py-2 text-ink-muted hover:text-ink hover:text-ink transition-colors"
           >
             Close
           </button>

@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { register as registerUser, clearError } from '@/store/slices/authSlice';
 import { Button, Input, Alert } from '@/components/ui';
@@ -33,6 +33,7 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isLoading, error } = useAppSelector((state) => state.auth);
+  const [searchParams] = useSearchParams();
 
   const {
     register,
@@ -41,7 +42,8 @@ const Register: React.FC = () => {
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      role: 'customer',
+      // Links from the home page and the WhatsApp JOIN reply use ?role=technician
+      role: searchParams.get('role') === 'technician' ? 'technician' : 'customer',
     },
   });
 
@@ -54,10 +56,10 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12">
+    <div className="flex items-start justify-center px-4 py-6 sm:py-14">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-center text-3xl font-bold">Create Your Dumu Waks Account</CardTitle>
+          <CardTitle className="text-center text-3xl font-bold">Create Your Dumuwaks Account</CardTitle>
           <CardDescription className="text-center">
             Join Kenya's trusted platform for professional maintenance and repair services
           </CardDescription>
@@ -106,11 +108,11 @@ const Register: React.FC = () => {
             />
 
             <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label className="mb-2 block text-sm font-medium text-ink-muted">
                 I am a<span className="text-red-500 ml-1">*</span>
               </label>
               <div className="grid grid-cols-2 gap-4">
-                <label className="flex cursor-pointer items-center rounded-lg border-2 border-gray-300 p-3 hover:border-primary-500">
+                <label className="flex cursor-pointer items-center rounded-lg border-2 border-line-strong p-3 hover:border-primary-500">
                   <input
                     type="radio"
                     value="customer"
@@ -119,7 +121,7 @@ const Register: React.FC = () => {
                   />
                   <span className="text-sm font-medium">Customer</span>
                 </label>
-                <label className="flex cursor-pointer items-center rounded-lg border-2 border-gray-300 p-3 hover:border-primary-500">
+                <label className="flex cursor-pointer items-center rounded-lg border-2 border-line-strong p-3 hover:border-primary-500">
                   <input
                     type="radio"
                     value="technician"
@@ -151,7 +153,7 @@ const Register: React.FC = () => {
               {...register('confirmPassword')}
             />
 
-            <div className="text-sm text-gray-600 dark:text-gray-400">
+            <div className="text-sm text-ink-muted">
               By signing up, you agree to our{' '}
               <Link to="/terms" className="text-primary-600 hover:text-primary-700">
                 Terms of Service
@@ -172,7 +174,7 @@ const Register: React.FC = () => {
               Create Account
             </Button>
 
-            <div className="text-center text-sm text-gray-600 dark:text-gray-400">
+            <div className="text-center text-sm text-ink-muted">
               Already have an account?{' '}
               <Link
                 to="/login"

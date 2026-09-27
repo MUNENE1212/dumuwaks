@@ -91,14 +91,14 @@ export const CameraCapture = ({
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={startCapture}
-            className="w-full flex items-center gap-3 px-6 py-4 bg-neutral-100 dark:bg-neutral-800 rounded-2xl border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-primary-500 dark:hover:border-primary-500 transition-colors group"
+            className="w-full flex items-center gap-3 px-6 py-4 bg-surface-200 rounded-2xl border-2 border-dashed border-line hover:border-primary-500 transition-colors group"
           >
-            <div className="bg-primary-100 dark:bg-primary-900 p-3 rounded-xl group-hover:bg-primary-200 dark:group-hover:bg-primary-800 transition-colors">
-              <Camera className="h-6 w-6 text-primary-600 dark:text-primary-400" />
+            <div className="bg-primary-900 p-3 rounded-xl group-hover:bg-primary-800 transition-colors">
+              <Camera className="h-6 w-6 text-primary-400" />
             </div>
             <div className="text-left flex-1">
-              <p className="font-medium text-neutral-900 dark:text-white">{label}</p>
-              <p className="text-sm text-neutral-500 dark:text-neutral-400">Tap to capture or upload</p>
+              <p className="font-medium text-ink dark:text-ink">{label}</p>
+              <p className="text-sm text-ink-muted">Tap to capture or upload</p>
             </div>
           </motion.button>
         ) : (
@@ -120,7 +120,7 @@ export const CameraCapture = ({
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={clearPreview}
-                className="bg-red-500 text-white p-2 rounded-full shadow-lg hover:bg-red-600 transition-colors"
+                className="bg-red-500 text-on-lumen p-2 rounded-full shadow-lg hover:bg-red-600 transition-colors"
                 aria-label="Remove photo"
               >
                 <X className="h-4 w-4" />
@@ -128,9 +128,9 @@ export const CameraCapture = ({
             </div>
 
             <div className="absolute bottom-2 left-2 right-2">
-              <div className="bg-black/50 backdrop-blur-sm px-3 py-1.5 rounded-full inline-flex items-center gap-2">
+              <div className="bg-surface-000/50 px-3 py-1.5 rounded-full inline-flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <p className="text-xs text-white font-medium">Photo captured</p>
+                <p className="text-xs text-ink font-medium">Photo captured</p>
               </div>
             </div>
           </motion.div>
@@ -141,7 +141,7 @@ export const CameraCapture = ({
         <motion.p
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-2 text-sm text-red-600 dark:text-red-400"
+          className="mt-2 text-sm text-red-400"
         >
           {error}
         </motion.p>

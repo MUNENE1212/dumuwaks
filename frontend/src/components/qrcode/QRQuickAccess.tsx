@@ -46,7 +46,7 @@ export const QRQuickAccess = ({
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-36 right-4 z-40 bg-gradient-to-br from-primary-500 to-secondary-500 text-white p-4 rounded-full shadow-2xl hover:shadow-primary-500/50 transition-shadow"
+          className="fixed bottom-36 right-4 z-40 bg-primary-500 text-on-lumen p-4 rounded-full shadow-2xl hover:shadow-primary-500/50 transition-shadow"
           title="QR Codes"
         >
           <QrCode className="h-6 w-6" />
@@ -60,18 +60,18 @@ export const QRQuickAccess = ({
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="fixed bottom-36 right-4 z-40 bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl p-4 border border-neutral-200 dark:border-neutral-800 w-80"
+            className="fixed bottom-36 right-4 z-40 bg-surface-100 rounded-2xl shadow-2xl p-4 border border-line w-80"
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
+              <h3 className="font-semibold text-ink dark:text-ink flex items-center gap-2">
                 <QrCode className="h-5 w-5 text-primary-500" />
                 QR Codes
               </h3>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-full transition-colors"
+                className="p-1 hover:bg-surface-200 rounded-full transition-colors"
               >
-                <X className="h-5 w-5 text-neutral-400" />
+                <X className="h-5 w-5 text-ink-muted" />
               </button>
             </div>
 
@@ -79,7 +79,7 @@ export const QRQuickAccess = ({
               {hasTechnicianAccess && (
                 <Button
                   variant="ghost"
-                  className="w-full justify-start hover:bg-primary-50 dark:hover:bg-primary-950"
+                  className="w-full justify-start hover:bg-primary-950"
                   onClick={() => {
                     setQrType('technician');
                     setIsOpen(false);
@@ -118,8 +118,8 @@ export const QRQuickAccess = ({
             </div>
 
             {/* Info Text */}
-            <div className="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-800">
-              <p className="text-xs text-neutral-600 dark:text-neutral-400 text-center">
+            <div className="mt-4 pt-4 border-t border-line">
+              <p className="text-xs text-ink-muted text-center">
                 Generate and share QR codes for quick access
               </p>
             </div>
@@ -134,7 +134,7 @@ export const QRQuickAccess = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-surface-000/50 z-50 flex items-center justify-center p-4"
             onClick={() => setQrType(null)}
           >
             <motion.div
@@ -142,19 +142,19 @@ export const QRQuickAccess = ({
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white dark:bg-neutral-900 rounded-2xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto"
+              className="bg-surface-100 rounded-2xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto"
             >
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-neutral-900 dark:text-white">
+                <h3 className="text-lg font-semibold text-ink dark:text-ink">
                   {qrType === 'technician' && 'Profile QR Code'}
                   {qrType === 'pwa' && 'Install App'}
                   {qrType === 'booking' && 'Booking QR Code'}
                 </h3>
                 <button
                   onClick={() => setQrType(null)}
-                  className="p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-full transition-colors"
+                  className="p-2 hover:bg-surface-200 rounded-full transition-colors"
                 >
-                  <X className="h-5 w-5 text-neutral-400" />
+                  <X className="h-5 w-5 text-ink-muted" />
                 </button>
               </div>
 

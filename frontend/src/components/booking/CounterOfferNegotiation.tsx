@@ -140,10 +140,10 @@ const CounterOfferNegotiation: React.FC<CounterOfferNegotiationProps> = ({
     const diff = expiry.getTime() - now.getTime();
     const hours = diff / (1000 * 60 * 60);
 
-    if (hours <= 0) return 'text-red-600 dark:text-red-400';
-    if (hours < 1) return 'text-orange-600 dark:text-orange-400';
-    if (hours < 6) return 'text-yellow-600 dark:text-yellow-400';
-    return 'text-gray-600 dark:text-gray-400';
+    if (hours <= 0) return 'text-red-400';
+    if (hours < 1) return 'text-orange-400';
+    if (hours < 6) return 'text-yellow-400';
+    return 'text-ink-muted';
   };
 
   const handleAccept = async () => {
@@ -205,28 +205,28 @@ const CounterOfferNegotiation: React.FC<CounterOfferNegotiationProps> = ({
       case 'pending':
         return <Clock className="h-5 w-5 text-yellow-500" />;
       case 'expired':
-        return <AlertCircle className="h-5 w-5 text-gray-500" />;
+        return <AlertCircle className="h-5 w-5 text-ink-muted" />;
       case 'superseded':
-        return <RefreshCw className="h-5 w-5 text-gray-400" />;
+        return <RefreshCw className="h-5 w-5 text-ink-muted" />;
       case 'withdrawn':
-        return <XCircle className="h-5 w-5 text-gray-400" />;
+        return <XCircle className="h-5 w-5 text-ink-muted" />;
       default:
-        return <Clock className="h-5 w-5 text-gray-400" />;
+        return <Clock className="h-5 w-5 text-ink-muted" />;
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'accepted':
-        return 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800';
+        return 'bg-green-900/20 border-green-800';
       case 'rejected':
-        return 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800';
+        return 'bg-red-900/20 border-red-800';
       case 'pending':
-        return 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800';
+        return 'bg-yellow-900/20 border-yellow-800';
       case 'expired':
-        return 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700';
+        return 'bg-surface-200 border-line';
       default:
-        return 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700';
+        return 'bg-surface-200 border-line';
     }
   };
 
@@ -241,11 +241,11 @@ const CounterOfferNegotiation: React.FC<CounterOfferNegotiationProps> = ({
   }
 
   return (
-    <div className={`bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 ${className}`}>
+    <div className={`bg-surface-200 rounded-xl shadow-lg border border-line ${className}`}>
       {/* Header */}
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+      <div className="p-4 border-b border-line">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+          <h3 className="text-lg font-semibold text-ink flex items-center gap-2">
             <DollarSign className="h-5 w-5 text-primary-500" />
             Counter Offer
           </h3>
@@ -256,31 +256,31 @@ const CounterOfferNegotiation: React.FC<CounterOfferNegotiationProps> = ({
             </span>
           )}
         </div>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-sm text-ink-muted mt-1">
           Round {counterOffer.round || 1} of {maxRounds} - {roundsRemaining} rounds remaining
         </p>
       </div>
 
       {/* Price comparison */}
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+      <div className="p-4 border-b border-line">
         <div className="grid grid-cols-3 gap-4 items-center">
           {/* Original price */}
           <div className="text-center">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Original</p>
-            <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+            <p className="text-sm text-ink-muted">Original</p>
+            <p className="text-xl font-bold text-ink">
               {formatCurrency(originalPrice, counterOffer.proposedPricing.currency)}
             </p>
           </div>
 
           {/* Arrow */}
           <div className="flex justify-center">
-            <ArrowRight className="h-6 w-6 text-gray-400" />
+            <ArrowRight className="h-6 w-6 text-ink-muted" />
           </div>
 
           {/* Proposed price */}
           <div className="text-center">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Proposed</p>
-            <p className={`text-xl font-bold ${priceDifference > 0 ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
+            <p className="text-sm text-ink-muted">Proposed</p>
+            <p className={`text-xl font-bold ${priceDifference > 0 ? 'text-red-400' : 'text-green-400'}`}>
               {formatCurrency(proposedPrice, counterOffer.proposedPricing.currency)}
             </p>
             {priceDifference !== 0 && (
@@ -294,12 +294,12 @@ const CounterOfferNegotiation: React.FC<CounterOfferNegotiationProps> = ({
 
         {/* Reason */}
         {counterOffer.reason && (
-          <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+          <div className="mt-4 p-3 bg-surface-300/50 rounded-lg">
+            <p className="text-sm text-ink-muted">
               <strong>Reason:</strong> {counterOffer.reason}
             </p>
             {counterOffer.additionalNotes && (
-              <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">
+              <p className="text-sm text-ink-muted mt-1">
                 {counterOffer.additionalNotes}
               </p>
             )}
@@ -309,8 +309,8 @@ const CounterOfferNegotiation: React.FC<CounterOfferNegotiationProps> = ({
 
       {/* Negotiation history */}
       {negotiationHistory.length > 0 && (
-        <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-          <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2 mb-3">
+        <div className="p-4 border-b border-line">
+          <h4 className="text-sm font-medium text-ink-muted flex items-center gap-2 mb-3">
             <History className="h-4 w-4" />
             Negotiation History
           </h4>
@@ -323,19 +323,19 @@ const CounterOfferNegotiation: React.FC<CounterOfferNegotiationProps> = ({
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     {getStatusIcon(item.status)}
-                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                    <span className="text-sm font-medium text-ink">
                       Round {item.round}
                     </span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                    <span className="text-xs text-ink-muted">
                       by {item.proposedBy === 'technician' ? 'Technician' : 'Customer'}
                     </span>
                   </div>
-                  <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                  <span className="text-sm font-semibold text-ink">
                     {formatCurrency(item.proposedAmount, counterOffer.proposedPricing.currency)}
                   </span>
                 </div>
                 {item.reason && (
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  <p className="text-xs text-ink-muted mt-1">
                     {item.reason}
                   </p>
                 )}
@@ -412,7 +412,7 @@ const CounterOfferNegotiation: React.FC<CounterOfferNegotiationProps> = ({
           ) : (
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label className="block text-sm font-medium text-ink-muted mb-1">
                   Your Counter Amount (KES)
                 </label>
                 <Input
@@ -424,7 +424,7 @@ const CounterOfferNegotiation: React.FC<CounterOfferNegotiationProps> = ({
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label className="block text-sm font-medium text-ink-muted mb-1">
                   Reason for Counter *
                 </label>
                 <Textarea
@@ -455,7 +455,7 @@ const CounterOfferNegotiation: React.FC<CounterOfferNegotiationProps> = ({
                   Cancel
                 </Button>
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+              <p className="text-xs text-ink-muted text-center">
                 This will be round {(counterOffer.round || 1) + 1} of {maxRounds}
               </p>
             </div>
@@ -465,8 +465,8 @@ const CounterOfferNegotiation: React.FC<CounterOfferNegotiationProps> = ({
 
       {/* Technician view (read-only) */}
       {userRole === 'technician' && counterOffer.status === 'pending' && (
-        <div className="p-4 bg-gray-50 dark:bg-gray-700/50">
-          <p className="text-sm text-gray-600 dark:text-gray-400 text-center">
+        <div className="p-4 bg-surface-300/50">
+          <p className="text-sm text-ink-muted text-center">
             <Clock className="h-4 w-4 inline mr-1" />
             Waiting for customer response...
           </p>

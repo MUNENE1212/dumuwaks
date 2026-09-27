@@ -74,11 +74,11 @@ const WorkGalleryLightbox: React.FC<WorkGalleryLightboxProps> = ({
   const showBeforeAfter = currentImage.isBeforeAfter && pairedImage;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/95 flex flex-col">
+    <div className="fixed inset-0 z-50 bg-surface-000/95 flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 bg-black/50">
+      <div className="flex items-center justify-between p-4 bg-surface-000/50">
         <div className="flex items-center gap-3">
-          <span className="text-white text-sm font-medium">
+          <span className="text-ink text-sm font-medium">
             {currentIndex + 1} / {images.length}
           </span>
           <span
@@ -92,7 +92,7 @@ const WorkGalleryLightbox: React.FC<WorkGalleryLightboxProps> = ({
         </div>
         <button
           onClick={onClose}
-          className="text-white hover:text-gray-300 transition-colors p-1"
+          className="text-ink hover:text-ink-muted transition-colors p-1"
           aria-label="Close lightbox"
         >
           <X className="h-6 w-6" />
@@ -114,14 +114,14 @@ const WorkGalleryLightbox: React.FC<WorkGalleryLightboxProps> = ({
             <>
               <button
                 onClick={goToPrevious}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-colors"
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-ink/20 hover:bg-ink/30 text-ink p-3 rounded-full transition-colors"
                 aria-label="Previous image"
               >
                 <ChevronLeft className="h-6 w-6" />
               </button>
               <button
                 onClick={goToNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-ink/20 hover:bg-ink/30 text-ink p-3 rounded-full transition-colors"
                 aria-label="Next image"
               >
                 <ChevronRight className="h-6 w-6" />
@@ -132,12 +132,12 @@ const WorkGalleryLightbox: React.FC<WorkGalleryLightboxProps> = ({
       </div>
 
       {/* Footer - Image Details */}
-      <div className="bg-black/50 p-4">
+      <div className="bg-surface-000/50 p-4">
         <div className="max-w-4xl mx-auto">
           {currentImage.caption && (
-            <p className="text-white text-lg mb-2">{currentImage.caption}</p>
+            <p className="text-ink text-lg mb-2">{currentImage.caption}</p>
           )}
-          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-300">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-ink-muted">
             {currentImage.location && (
               <span className="flex items-center gap-1.5">
                 <svg
@@ -202,7 +202,7 @@ const WorkGalleryLightbox: React.FC<WorkGalleryLightboxProps> = ({
 
       {/* Thumbnail Strip */}
       {images.length > 1 && (
-        <div className="bg-black/70 p-3">
+        <div className="bg-surface-000/70 p-3">
           <div className="flex gap-2 overflow-x-auto justify-center">
             {images.map((image, index) => (
               <button
@@ -211,7 +211,7 @@ const WorkGalleryLightbox: React.FC<WorkGalleryLightboxProps> = ({
                 className={cn(
                   'flex-shrink-0 w-16 h-16 rounded overflow-hidden border-2 transition-all',
                   index === currentIndex
-                    ? 'border-white scale-110'
+                    ? 'border-line scale-110'
                     : 'border-transparent opacity-60 hover:opacity-100'
                 )}
               >

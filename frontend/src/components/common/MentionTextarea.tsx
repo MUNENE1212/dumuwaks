@@ -140,15 +140,15 @@ const MentionTextarea: React.FC<MentionTextareaProps> = ({
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'technician':
-        return 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300';
+        return 'bg-blue-900 text-blue-300';
       case 'customer':
-        return 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300';
+        return 'bg-green-900 text-green-300';
       case 'support':
-        return 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300';
+        return 'bg-purple-900 text-purple-300';
       case 'admin':
-        return 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300';
+        return 'bg-red-900 text-red-300';
       default:
-        return 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
+        return 'bg-surface-300 text-ink-muted';
     }
   };
 
@@ -170,10 +170,10 @@ const MentionTextarea: React.FC<MentionTextareaProps> = ({
       {showSuggestions && suggestions.length > 0 && (
         <div
           ref={suggestionsRef}
-          className="absolute bottom-full mb-2 w-full max-w-md bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg max-h-60 overflow-y-auto z-50"
+          className="absolute bottom-full mb-2 w-full max-w-md bg-surface-200 border border-line rounded-lg shadow-lg max-h-60 overflow-y-auto z-50"
         >
           <div className="p-2">
-            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 px-2">
+            <div className="text-xs font-medium text-ink-muted mb-2 px-2">
               Mention someone
             </div>
             {suggestions.map((user, index) => (
@@ -183,8 +183,8 @@ const MentionTextarea: React.FC<MentionTextareaProps> = ({
                 onClick={() => selectMention(user)}
                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
                   index === selectedIndex
-                    ? 'bg-blue-50 dark:bg-blue-900/20'
-                    : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                    ? 'bg-blue-900/20'
+                    : 'hover:bg-surface-300/50'
                 }`}
               >
                 {/* Profile picture */}
@@ -196,7 +196,7 @@ const MentionTextarea: React.FC<MentionTextareaProps> = ({
                       className="w-10 h-10 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold">
+                    <div className="w-10 h-10 rounded-full bg-blue-400 flex items-center justify-center text-ink font-semibold">
                       {user.name.charAt(0).toUpperCase()}
                     </div>
                   )}
@@ -205,14 +205,14 @@ const MentionTextarea: React.FC<MentionTextareaProps> = ({
                 {/* User info */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="font-medium text-gray-900 dark:text-white truncate">
+                    <span className="font-medium text-ink dark:text-ink truncate">
                       {user.name}
                     </span>
                     <span className={`px-2 py-0.5 text-xs font-medium rounded ${getRoleBadgeColor(user.role)}`}>
                       {user.role}
                     </span>
                   </div>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                  <span className="text-sm text-ink-muted">
                     @{user.username}
                   </span>
                 </div>
@@ -224,7 +224,7 @@ const MentionTextarea: React.FC<MentionTextareaProps> = ({
 
       {/* Character count */}
       {maxLength && (
-        <div className="absolute bottom-2 right-2 text-xs text-gray-400 dark:text-gray-500">
+        <div className="absolute bottom-2 right-2 text-xs text-ink-muted">
           {value.length}/{maxLength}
         </div>
       )}

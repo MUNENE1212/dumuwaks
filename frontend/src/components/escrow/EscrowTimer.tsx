@@ -69,27 +69,27 @@ function getUrgencyClasses(level: 'safe' | 'warning' | 'urgent' | 'critical'): {
 } {
   const styles = {
     safe: {
-      bg: 'bg-green-100 dark:bg-green-900/20',
-      text: 'text-green-700 dark:text-green-400',
-      border: 'border-green-200 dark:border-green-800',
+      bg: 'bg-green-900/20',
+      text: 'text-green-400',
+      border: 'border-green-800',
       pulse: ''
     },
     warning: {
-      bg: 'bg-yellow-100 dark:bg-yellow-900/20',
-      text: 'text-yellow-700 dark:text-yellow-400',
-      border: 'border-yellow-200 dark:border-yellow-800',
+      bg: 'bg-yellow-900/20',
+      text: 'text-yellow-400',
+      border: 'border-yellow-800',
       pulse: ''
     },
     urgent: {
-      bg: 'bg-orange-100 dark:bg-orange-900/20',
-      text: 'text-orange-700 dark:text-orange-400',
-      border: 'border-orange-200 dark:border-orange-800',
+      bg: 'bg-orange-900/20',
+      text: 'text-orange-400',
+      border: 'border-orange-800',
       pulse: 'animate-pulse'
     },
     critical: {
-      bg: 'bg-red-100 dark:bg-red-900/20',
-      text: 'text-red-700 dark:text-red-400',
-      border: 'border-red-200 dark:border-red-800',
+      bg: 'bg-red-900/20',
+      text: 'text-red-400',
+      border: 'border-red-800',
       pulse: 'animate-pulse'
     }
   };
@@ -135,11 +135,11 @@ export const EscrowTimer: React.FC<EscrowTimerProps> = ({
       <div
         className={clsx(
           'rounded-lg border px-3 py-2',
-          'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700',
+          'bg-surface-200 border-line',
           className
         )}
       >
-        <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+        <div className="flex items-center gap-2 text-ink-muted">
           <ExpiryIcon className="h-4 w-4" />
           <span className="text-sm font-medium">Expired</span>
         </div>
@@ -236,17 +236,17 @@ const TimeBlock: React.FC<{
   const displayValue = padZero ? value.toString().padStart(2, '0') : value;
 
   const bgClasses = {
-    safe: 'bg-green-200 dark:bg-green-800',
-    warning: 'bg-yellow-200 dark:bg-yellow-800',
-    urgent: 'bg-orange-200 dark:bg-orange-800',
-    critical: 'bg-red-200 dark:bg-red-800'
+    safe: 'bg-green-800',
+    warning: 'bg-yellow-800',
+    urgent: 'bg-orange-800',
+    critical: 'bg-red-800'
   };
 
   const textClasses = {
-    safe: 'text-green-800 dark:text-green-100',
-    warning: 'text-yellow-800 dark:text-yellow-100',
-    urgent: 'text-orange-800 dark:text-orange-100',
-    critical: 'text-red-800 dark:text-red-100'
+    safe: 'text-green-100',
+    warning: 'text-yellow-100',
+    urgent: 'text-orange-100',
+    critical: 'text-red-100'
   };
 
   return (

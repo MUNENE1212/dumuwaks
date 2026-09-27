@@ -46,15 +46,15 @@ const ProBadge: React.FC<ProBadgeProps> = ({
     ? {
         label: 'Premium',
         icon: Crown,
-        gradient: 'bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600',
-        textColor: 'text-white',
+        gradient: ' bg-purple-600',
+        textColor: 'text-ink',
         glowColor: 'shadow-purple-500/50'
       }
     : {
         label: 'Pro',
         icon: Zap,
-        gradient: 'bg-gradient-to-r from-blue-600 to-cyan-600',
-        textColor: 'text-white',
+        gradient: ' bg-blue-600',
+        textColor: 'text-ink',
         glowColor: 'shadow-blue-500/50'
       };
 

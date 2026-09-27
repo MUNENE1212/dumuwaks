@@ -168,10 +168,10 @@ export const EscrowManagement: React.FC<EscrowManagementProps> = ({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-2xl font-bold text-ink dark:text-ink">
             {adminMode ? 'Escrow Management' : 'My Escrows'}
           </h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-sm text-ink-muted mt-1">
             {adminMode
               ? 'Manage all platform escrows'
               : 'View and manage your payment escrows'}
@@ -181,28 +181,28 @@ export const EscrowManagement: React.FC<EscrowManagementProps> = ({
         {/* Stats Summary */}
         <div className="flex gap-4">
           <div className="text-center">
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">
+            <p className="text-2xl font-bold text-ink dark:text-ink">
               {pagination.total}
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Total</p>
+            <p className="text-xs text-ink-muted">Total</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-green-600 dark:text-green-400">
+            <p className="text-2xl font-bold text-green-400">
               {escrows.filter(e => e.status === 'released').length}
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Released</p>
+            <p className="text-xs text-ink-muted">Released</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
+            <p className="text-2xl font-bold text-yellow-400">
               {escrows.filter(e => e.status === 'funded').length}
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Pending</p>
+            <p className="text-xs text-ink-muted">Pending</p>
           </div>
         </div>
       </div>
 
       {/* Status Tabs */}
-      <div className="border-b border-gray-200 dark:border-gray-700">
+      <div className="border-b border-line">
         <nav className="flex space-x-4 overflow-x-auto" aria-label="Tabs">
           {STATUS_TABS.map((tab) => {
             const isActive = activeTab === tab.status;
@@ -213,8 +213,8 @@ export const EscrowManagement: React.FC<EscrowManagementProps> = ({
                 className={clsx(
                   'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors',
                   isActive
-                    ? 'border-circuit text-circuit'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                    ? 'border-lumen text-lumen-ink'
+                    : 'border-transparent hover:border-line-strong text-ink-muted hover:text-ink-muted'
                 )}
               >
                 {tab.label}
@@ -227,7 +227,7 @@ export const EscrowManagement: React.FC<EscrowManagementProps> = ({
       {/* Loading State */}
       {isLoading && (
         <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-circuit"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-lumen"></div>
         </div>
       )}
 
@@ -236,7 +236,7 @@ export const EscrowManagement: React.FC<EscrowManagementProps> = ({
         <Card>
           <CardContent className="py-12 text-center">
             <svg
-              className="mx-auto h-12 w-12 text-gray-400"
+              className="mx-auto h-12 w-12 text-ink-muted"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -248,10 +248,10 @@ export const EscrowManagement: React.FC<EscrowManagementProps> = ({
                 d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
               />
             </svg>
-            <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">
+            <h3 className="mt-2 text-sm font-medium text-ink dark:text-ink">
               No escrows found
             </h3>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-sm text-ink-muted">
               {activeTab === 'all'
                 ? 'No escrows available.'
                 : `No ${ESCROW_STATUS_LABELS[activeTab as EscrowStatus]} escrows.`}
@@ -271,18 +271,18 @@ export const EscrowManagement: React.FC<EscrowManagementProps> = ({
                 className={clsx(
                   'w-full text-left rounded-lg border transition-all duration-200 p-4',
                   selectedEscrow?._id === escrow._id
-                    ? 'border-circuit bg-circuit/5 dark:bg-circuit/10'
-                    : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 bg-white dark:bg-charcoal'
+                    ? 'border-lumen bg-lumen/10'
+                    : 'border-line hover:border-line-strong bg-surface-200 bg-charcoal'
                 )}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <StatusBadge status={escrow.status} />
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white">
+                      <p className="font-medium text-ink dark:text-ink">
                         {formatKES(escrow.totalAmount)}
                       </p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-ink-muted">
                         Created {new Date(escrow.createdAt).toLocaleDateString()}
                       </p>
                     </div>
@@ -290,16 +290,16 @@ export const EscrowManagement: React.FC<EscrowManagementProps> = ({
 
                   <div className="flex items-center gap-4">
                     <div className="text-right">
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-ink-muted">
                         Technician gets
                       </p>
-                      <p className="font-semibold text-green-600 dark:text-green-400">
+                      <p className="font-semibold text-green-400">
                         {formatKES(escrow.technicianPayout)}
                       </p>
                     </div>
                     <svg
                       className={clsx(
-                        'h-5 w-5 text-gray-400 transition-transform duration-200',
+                        'h-5 w-5 text-ink-muted transition-transform duration-200',
                         selectedEscrow?._id === escrow._id && 'rotate-180'
                       )}
                       fill="none"
@@ -342,7 +342,7 @@ export const EscrowManagement: React.FC<EscrowManagementProps> = ({
             Previous
           </Button>
 
-          <span className="text-sm text-gray-500 dark:text-gray-400">
+          <span className="text-sm text-ink-muted">
             Page {pagination.page} of {pagination.pages}
           </span>
 
@@ -398,13 +398,13 @@ export const EscrowManagement: React.FC<EscrowManagementProps> = ({
  */
 const StatusBadge: React.FC<{ status: EscrowStatus }> = ({ status }) => {
   const colorClasses = {
-    pending: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
-    funded: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
-    partial_release: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-400',
-    released: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-    refunded: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
-    disputed: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
-    cancelled: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
+    pending: 'bg-yellow-900/30 text-yellow-400',
+    funded: 'bg-blue-900/30 text-blue-400',
+    partial_release: 'bg-indigo-900/30 text-indigo-400',
+    released: 'bg-green-900/30 text-green-400',
+    refunded: 'bg-purple-900/30 text-purple-400',
+    disputed: 'bg-red-900/30 text-red-400',
+    cancelled: 'bg-surface-300 text-ink-muted'
   };
 
   return (
@@ -431,10 +431,10 @@ const ConfirmationModal: React.FC<{
   onCancel: () => void;
   isLoading?: boolean;
 }> = ({ title, message, confirmLabel, variant, onConfirm, onCancel, isLoading }) => (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-    <div className="bg-white dark:bg-charcoal rounded-lg p-6 max-w-md w-full mx-4">
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{title}</h3>
-      <p className="text-gray-600 dark:text-gray-300 mb-6">{message}</p>
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-surface-000/50">
+    <div className="bg-surface-200 dark:bg-charcoal rounded-lg p-6 max-w-md w-full mx-4">
+      <h3 className="text-lg font-semibold text-ink dark:text-ink mb-2">{title}</h3>
+      <p className="text-ink-muted mb-6">{message}</p>
       <div className="flex justify-end gap-3">
         <Button variant="outline" onClick={onCancel} disabled={isLoading}>
           Cancel
@@ -464,32 +464,32 @@ const RefundModal: React.FC<{
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-white dark:bg-charcoal rounded-lg p-6 max-w-md w-full mx-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Refund Escrow</h3>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-surface-000/50">
+      <div className="bg-surface-200 dark:bg-charcoal rounded-lg p-6 max-w-md w-full mx-4">
+        <h3 className="text-lg font-semibold text-ink dark:text-ink mb-4">Refund Escrow</h3>
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-ink-muted mb-1">
               Refund Amount (KES)
             </label>
             <input
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="w-full px-3 py-2 border rounded-lg dark:bg-gray-800 dark:border-gray-600"
+              className="w-full px-3 py-2 border rounded-lg bg-surface-200 border-line-strong"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-ink-muted mb-1">
               Reason
             </label>
             <textarea
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               rows={3}
-              className="w-full px-3 py-2 border rounded-lg dark:bg-gray-800 dark:border-gray-600"
+              className="w-full px-3 py-2 border rounded-lg bg-surface-200 border-line-strong"
               placeholder="Enter refund reason..."
             />
           </div>
@@ -530,33 +530,33 @@ const DisputeModal: React.FC<{
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-white dark:bg-charcoal rounded-lg p-6 max-w-md w-full mx-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Open Dispute</h3>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-surface-000/50">
+      <div className="bg-surface-200 dark:bg-charcoal rounded-lg p-6 max-w-md w-full mx-4">
+        <h3 className="text-lg font-semibold text-ink dark:text-ink mb-4">Open Dispute</h3>
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-ink-muted mb-1">
               Reason
             </label>
             <input
               type="text"
               value={reason}
               onChange={(e) => setReason(e.target.value)}
-              className="w-full px-3 py-2 border rounded-lg dark:bg-gray-800 dark:border-gray-600"
+              className="w-full px-3 py-2 border rounded-lg bg-surface-200 border-line-strong"
               placeholder="Brief reason for dispute..."
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-ink-muted mb-1">
               Description
             </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={4}
-              className="w-full px-3 py-2 border rounded-lg dark:bg-gray-800 dark:border-gray-600"
+              className="w-full px-3 py-2 border rounded-lg bg-surface-200 border-line-strong"
               placeholder="Provide detailed description of the issue..."
             />
           </div>

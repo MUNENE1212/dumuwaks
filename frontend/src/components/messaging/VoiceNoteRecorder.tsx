@@ -268,7 +268,7 @@ const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
   // Recording state
   if (isRecording) {
     return (
-      <div className={cn('flex flex-col gap-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg', className)}>
+      <div className={cn('flex flex-col gap-3 p-4 bg-surface-200 rounded-lg', className)}>
         {/* Waveform visualization */}
         <div className="flex items-center justify-center h-16 gap-0.5">
           {waveformData.map((value, index) => (
@@ -276,13 +276,13 @@ const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
               key={index}
               className={cn(
                 'w-1 rounded-full transition-all duration-75',
-                isPaused ? 'bg-gray-400' : 'bg-primary'
+                isPaused ? 'bg-ink-faint' : 'bg-primary'
               )}
               style={{ height: `${Math.max(4, value * 100)}%` }}
             />
           ))}
           {waveformData.length === 0 && (
-            <div className="text-sm text-gray-500">Initializing...</div>
+            <div className="text-sm text-ink-muted">Initializing...</div>
           )}
         </div>
 
@@ -291,17 +291,17 @@ const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
           <div className="flex items-center gap-2">
             <span className={cn(
               'text-lg font-mono font-medium',
-              recordingTime >= maxDuration - 10 ? 'text-red-500' : 'text-gray-700 dark:text-gray-300'
+              recordingTime >= maxDuration - 10 ? '' : 'text-ink-muted'
             )}>
               {formatTime(recordingTime)}
             </span>
-            <span className="text-sm text-gray-500">/ {formatTime(maxDuration)}</span>
+            <span className="text-sm text-ink-muted">/ {formatTime(maxDuration)}</span>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={cancelRecording}
-              className="p-2 text-gray-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors"
+              className="p-2 text-ink-muted hover:text-red-500 hover:bg-red-900/20 rounded-full transition-colors"
               title="Cancel"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -311,7 +311,7 @@ const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
 
             <button
               onClick={togglePause}
-              className="p-2 text-gray-500 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
+              className="p-2 text-ink-muted hover:text-primary hover:bg-surface-300 rounded-full transition-colors"
               title={isPaused ? 'Resume' : 'Pause'}
             >
               {isPaused ? (
@@ -327,7 +327,7 @@ const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
 
             <button
               onClick={stopRecording}
-              className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+              className="p-3 bg-red-500 text-on-lumen rounded-full hover:bg-red-600 transition-colors"
               title="Stop recording"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -343,12 +343,12 @@ const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
   // Preview state (after recording, before sending)
   if (audioBlob && audioUrl) {
     return (
-      <div className={cn('flex flex-col gap-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg', className)}>
+      <div className={cn('flex flex-col gap-3 p-4 bg-surface-200 rounded-lg', className)}>
         {/* Audio preview */}
         <div className="flex items-center gap-3">
           <button
             onClick={togglePlayback}
-            className="p-3 bg-primary text-white rounded-full hover:bg-primary-dark transition-colors"
+            className="p-3 bg-primary text-on-lumen rounded-full hover:bg-primary-dark transition-colors"
             title={isPlaying ? 'Pause' : 'Play'}
           >
             {isPlaying ? (
@@ -363,7 +363,7 @@ const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
           </button>
 
           <div className="flex-1">
-            <div className="flex items-center gap-2 text-sm text-gray-500">
+            <div className="flex items-center gap-2 text-sm text-ink-muted">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
                 <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
@@ -378,13 +378,13 @@ const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
         <div className="flex items-center justify-end gap-2">
           <button
             onClick={cancelRecording}
-            className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
+            className="px-4 py-2 text-ink-muted hover:bg-surface-300 rounded-lg transition-colors"
           >
             Cancel
           </button>
           <button
             onClick={handleSend}
-            className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors flex items-center gap-2"
+            className="px-4 py-2 bg-primary text-on-lumen rounded-lg hover:bg-primary-dark transition-colors flex items-center gap-2"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
@@ -400,26 +400,26 @@ const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
   return (
     <div className={cn('flex flex-col items-center gap-3 p-4', className)}>
       {permissionDenied && (
-        <div className="w-full p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-600 dark:text-red-400 text-center">
+        <div className="w-full p-3 bg-red-900/20 border border-red-800 rounded-lg text-sm text-red-400 text-center">
           Microphone access denied. Please enable microphone permissions in your browser settings.
         </div>
       )}
 
       <button
         onClick={startRecording}
-        className="flex flex-col items-center gap-2 p-6 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors group"
+        className="flex flex-col items-center gap-2 p-6 bg-surface-200 hover:bg-surface-300 rounded-full transition-colors group"
         title="Record voice message"
       >
         <div className="p-4 bg-red-500 rounded-full group-hover:bg-red-600 transition-colors">
-          <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+          <svg className="w-8 h-8 text-ink" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
             <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
           </svg>
         </div>
-        <span className="text-sm text-gray-500 dark:text-gray-400">Tap to record voice message</span>
+        <span className="text-sm text-ink-muted">Tap to record voice message</span>
       </button>
 
-      <span className="text-xs text-gray-400">Max {maxDuration} seconds</span>
+      <span className="text-xs text-ink-muted">Max {maxDuration} seconds</span>
     </div>
   );
 };

@@ -69,7 +69,7 @@ const UserProfile: React.FC = () => {
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
           <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary-600 border-t-transparent mx-auto"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">Loading profile...</p>
+          <p className="mt-4 text-ink-muted">Loading profile...</p>
         </div>
       </div>
     );
@@ -79,8 +79,8 @@ const UserProfile: React.FC = () => {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">User not found</h2>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">The profile you're looking for doesn't exist.</p>
+          <h2 className="text-2xl font-bold text-ink">User not found</h2>
+          <p className="mt-2 text-ink-muted">The profile you're looking for doesn't exist.</p>
           <Link to="/dashboard">
             <Button className="mt-4">Go to Dashboard</Button>
           </Link>
@@ -92,26 +92,26 @@ const UserProfile: React.FC = () => {
   const portfolioPosts = profilePosts.filter((post) => post.type === 'portfolio');
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+    <div className="min-h-screen bg-surface-100 py-8">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         {/* Profile Header */}
-        <div className="rounded-lg bg-white dark:bg-gray-800 p-8 shadow-sm">
+        <div className="rounded-lg bg-surface-200 p-8 shadow-sm">
           <div className="flex flex-col md:flex-row md:items-start md:space-x-6">
             {/* Profile Picture */}
             <img
               src={getProfilePicture()}
               alt={`${currentProfile.firstName} ${currentProfile.lastName}`}
-              className="h-32 w-32 rounded-full object-cover ring-4 ring-gray-100"
+              className="h-32 w-32 rounded-full object-cover ring-4 ring-line"
             />
 
             {/* Profile Info */}
             <div className="mt-4 flex-1 md:mt-0">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div>
-                  <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+                  <h1 className="text-3xl font-bold text-ink">
                     {currentProfile.firstName} {currentProfile.lastName}
                   </h1>
-                  <p className="mt-1 text-lg capitalize text-gray-600 dark:text-gray-400">
+                  <p className="mt-1 text-lg capitalize text-ink-muted">
                     {currentProfile.role}
                   </p>
                 </div>
@@ -148,33 +148,33 @@ const UserProfile: React.FC = () => {
 
               {/* Bio */}
               {currentProfile.bio && (
-                <p className="mt-4 text-gray-700 dark:text-gray-300">{currentProfile.bio}</p>
+                <p className="mt-4 text-ink-muted">{currentProfile.bio}</p>
               )}
 
               {/* Stats */}
               <div className="mt-6 flex flex-wrap gap-6">
                 <div className="flex items-center space-x-2">
-                  <FileText className="h-5 w-5 text-gray-400" />
-                  <span className="text-gray-700 dark:text-gray-300">
+                  <FileText className="h-5 w-5 text-ink-muted" />
+                  <span className="text-ink-muted">
                     <strong>{currentProfile.postsCount || 0}</strong> Posts
                   </span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Users className="h-5 w-5 text-gray-400" />
-                  <span className="text-gray-700 dark:text-gray-300">
+                  <Users className="h-5 w-5 text-ink-muted" />
+                  <span className="text-ink-muted">
                     <strong>{currentProfile.followersCount || 0}</strong> Followers
                   </span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Users className="h-5 w-5 text-gray-400" />
-                  <span className="text-gray-700 dark:text-gray-300">
+                  <Users className="h-5 w-5 text-ink-muted" />
+                  <span className="text-ink-muted">
                     <strong>{currentProfile.followingCount || 0}</strong> Following
                   </span>
                 </div>
                 {currentProfile.rating && currentProfile.rating.count > 0 && (
                   <div className="flex items-center space-x-2">
                     <Star className="h-5 w-5 text-yellow-500" />
-                    <span className="text-gray-700 dark:text-gray-300">
+                    <span className="text-ink-muted">
                       <strong>{formatRating(currentProfile.rating)}</strong> (
                       {getRatingCount(currentProfile.rating)} reviews)
                     </span>
@@ -183,7 +183,7 @@ const UserProfile: React.FC = () => {
               </div>
 
               {/* Additional Info */}
-              <div className="mt-4 flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400">
+              <div className="mt-4 flex flex-wrap gap-4 text-sm text-ink-muted">
                 {currentProfile.location?.city && (
                   <div className="flex items-center space-x-1">
                     <MapPin className="h-4 w-4" />
@@ -205,7 +205,7 @@ const UserProfile: React.FC = () => {
               {/* Technician-specific info */}
               {currentProfile.role === 'technician' && currentProfile.skills && (
                 <div className="mt-4">
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">Skills</h3>
+                  <h3 className="font-semibold text-ink">Skills</h3>
                   <div className="mt-2 flex flex-wrap gap-2">
                     {currentProfile.skills.slice(0, 5).map((skill: any, index: number) => (
                       <span
@@ -223,14 +223,14 @@ const UserProfile: React.FC = () => {
         </div>
 
         {/* Tabs */}
-        <div className="mt-6 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <div className="mt-6 border-b border-line bg-surface-200">
           <nav className="flex space-x-8 px-6" aria-label="Tabs">
             <button
               onClick={() => setActiveTab('posts')}
               className={`whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium ${
                 activeTab === 'posts'
                   ? 'border-primary-600 text-primary-600'
-                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                  : 'border-transparent text-ink-muted hover:border-line-strong hover:text-ink'
               }`}
             >
               All Posts ({profilePosts.length})
@@ -241,7 +241,7 @@ const UserProfile: React.FC = () => {
                 className={`whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium ${
                   activeTab === 'portfolio'
                     ? 'border-primary-600 text-primary-600'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                    : 'border-transparent text-ink-muted hover:border-line-strong hover:text-ink'
                 }`}
               >
                 Portfolio ({portfolioPosts.length})
@@ -257,9 +257,9 @@ const UserProfile: React.FC = () => {
               {profilePosts.length > 0 ? (
                 profilePosts.map((post) => <PostCard key={post._id} post={post} />)
               ) : (
-                <div className="rounded-lg bg-white dark:bg-gray-800 p-8 text-center">
-                  <FileText className="mx-auto h-12 w-12 text-gray-400" />
-                  <p className="mt-2 text-gray-600 dark:text-gray-400">No posts yet</p>
+                <div className="rounded-lg bg-surface-200 p-8 text-center">
+                  <FileText className="mx-auto h-12 w-12 text-ink-muted" />
+                  <p className="mt-2 text-ink-muted">No posts yet</p>
                 </div>
               )}
             </>
@@ -270,9 +270,9 @@ const UserProfile: React.FC = () => {
               {portfolioPosts.length > 0 ? (
                 portfolioPosts.map((post) => <PostCard key={post._id} post={post} />)
               ) : (
-                <div className="rounded-lg bg-white dark:bg-gray-800 p-8 text-center">
-                  <Briefcase className="mx-auto h-12 w-12 text-gray-400" />
-                  <p className="mt-2 text-gray-600 dark:text-gray-400">No portfolio items yet</p>
+                <div className="rounded-lg bg-surface-200 p-8 text-center">
+                  <Briefcase className="mx-auto h-12 w-12 text-ink-muted" />
+                  <p className="mt-2 text-ink-muted">No portfolio items yet</p>
                 </div>
               )}
             </>

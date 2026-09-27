@@ -219,7 +219,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
         return (
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Select Service Category</h3>
+              <h3 className="text-xl font-semibold mb-4 text-ink dark:text-ink">Select Service Category</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {SERVICE_CATEGORIES.map((category) => (
                   <motion.button
@@ -230,11 +230,11 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
                     className={cn(
                       'p-4 rounded-xl border-2 transition-all text-left',
                       formData.serviceCategory === category.value
-                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
+                        ? 'border-blue-500 bg-blue-900/20'
+                        : 'border-line hover:border-line-strong'
                     )}
                   >
-                    <span className="text-sm font-medium text-gray-900 dark:text-white">{category.label}</span>
+                    <span className="text-sm font-medium text-ink dark:text-ink">{category.label}</span>
                   </motion.button>
                 ))}
               </div>
@@ -259,17 +259,17 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
         return (
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Describe Your Problem</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+              <h3 className="text-xl font-semibold mb-2 text-ink dark:text-ink">Describe Your Problem</h3>
+              <p className="text-sm text-ink-muted mb-4">
                 Let our AI help you identify and describe the issue accurately
               </p>
             </div>
 
             {/* AI Chat Assistant */}
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+            <div className="bg-surface-200 rounded-xl p-4 border border-line">
               <div className="flex items-center gap-2 mb-4">
                 <Bot className="h-5 w-5 text-blue-500" />
-                <span className="font-medium text-gray-900 dark:text-white">AI Problem Assistant</span>
+                <span className="font-medium text-ink dark:text-ink">AI Problem Assistant</span>
               </div>
 
               <div className="space-y-3 max-h-64 overflow-y-auto mb-4">
@@ -286,8 +286,8 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
                     <div className={cn(
                       'max-w-[80%] p-3 rounded-2xl text-sm',
                       msg.role === 'user'
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600'
+                        ? 'bg-blue-500 text-on-lumen'
+                        : 'bg-surface-300 text-ink text-ink border border-line-strong'
                     )}>
                       <p className="whitespace-pre-wrap">{msg.content}</p>
                       {msg.options && (
@@ -296,7 +296,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
                             <button
                               key={idx}
                               onClick={() => handleBotMessage(option)}
-                              className="w-full text-left px-3 py-2 bg-gray-100 dark:bg-gray-600 rounded-lg text-xs font-medium hover:bg-gray-200 dark:hover:bg-gray-500 transition-colors"
+                              className="w-full text-left px-3 py-2 bg-surface-400 rounded-lg text-xs font-medium hover:bg-ink-faint transition-colors"
                             >
                               {option}
                             </button>
@@ -313,11 +313,11 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
                     animate={{ opacity: 1 }}
                     className="flex gap-2"
                   >
-                    <div className="bg-gray-200 dark:bg-gray-700 px-4 py-3 rounded-2xl">
+                    <div className="bg-surface-300 px-4 py-3 rounded-2xl">
                       <div className="flex gap-1">
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                        <div className="w-2 h-2 bg-ink-faint rounded-full animate-bounce" />
+                        <div className="w-2 h-2 bg-ink-faint rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                        <div className="w-2 h-2 bg-ink-faint rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
                       </div>
                     </div>
                   </motion.div>
@@ -330,13 +330,13 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
                   value={formData.description}
                   onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
                   placeholder="Type your problem or use AI suggestions above..."
-                  className="flex-1 px-4 py-3 bg-white dark:bg-gray-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white"
+                  className="flex-1 px-4 py-3 bg-surface-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-ink"
                 />
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => formData.description && handleBotMessage(formData.description)}
-                  className="bg-blue-500 text-white px-4 rounded-xl font-medium"
+                  className="bg-blue-500 text-on-lumen px-4 rounded-xl font-medium"
                 >
                   Send
                 </motion.button>
@@ -353,7 +353,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
 
             {/* Camera Capture for Problem Photo */}
             <div>
-              <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">
+              <h4 className="text-sm font-medium text-ink dark:text-ink mb-3">
                 Add Photo of the Problem (Optional)
               </h4>
               <CameraCapture
@@ -368,7 +368,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
                 aspectRatio="auto"
               />
               {problemImage && (
-                <p className="text-xs text-green-600 dark:text-green-400 mt-2">
+                <p className="text-xs text-green-400 mt-2">
                   Photo added successfully!
                 </p>
               )}
@@ -380,12 +380,12 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
         return (
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Schedule Your Service</h3>
+              <h3 className="text-xl font-semibold mb-4 text-ink dark:text-ink">Schedule Your Service</h3>
             </div>
 
             <div className="grid gap-4 md:grid-cols-3">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Date <span className="text-red-500">*</span>
                 </label>
                 <Input
@@ -398,7 +398,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Time <span className="text-red-500">*</span>
                 </label>
                 <Input
@@ -410,7 +410,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Duration (hours)
                 </label>
                 <Input
@@ -429,7 +429,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-ink-muted mb-2">
                 Quantity / Units
               </label>
               <Input
@@ -441,7 +441,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
                 placeholder="1"
                 className="w-full"
               />
-              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+              <p className="mt-1 text-xs text-ink-muted">
                 For per-unit services (e.g., number of sockets, fans, fixtures)
               </p>
             </div>
@@ -452,12 +452,12 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
         return (
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Service Location</h3>
+              <h3 className="text-xl font-semibold mb-4 text-ink dark:text-ink">Service Location</h3>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Address <span className="text-red-500">*</span>
                 </label>
                 <Input
@@ -473,7 +473,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Nearby Landmarks
                 </label>
                 <Input
@@ -506,50 +506,50 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
         return (
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Confirm Your Booking</h3>
+              <h3 className="text-xl font-semibold mb-4 text-ink dark:text-ink">Confirm Your Booking</h3>
             </div>
 
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 space-y-4">
-              <div className="flex justify-between items-center pb-3 border-b border-gray-200 dark:border-gray-700">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Service Category</span>
-                <span className="font-medium text-gray-900 dark:text-white">
+            <div className="bg-surface-200 rounded-xl p-6 space-y-4">
+              <div className="flex justify-between items-center pb-3 border-b border-line">
+                <span className="text-sm text-ink-muted">Service Category</span>
+                <span className="font-medium text-ink dark:text-ink">
                   {SERVICE_CATEGORIES.find(c => c.value === formData.serviceCategory)?.label || 'Not selected'}
                 </span>
               </div>
 
-              <div className="flex justify-between items-center pb-3 border-b border-gray-200 dark:border-gray-700">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Service Type</span>
-                <span className="font-medium text-gray-900 dark:text-white">{formData.serviceType || 'Not specified'}</span>
+              <div className="flex justify-between items-center pb-3 border-b border-line">
+                <span className="text-sm text-ink-muted">Service Type</span>
+                <span className="font-medium text-ink dark:text-ink">{formData.serviceType || 'Not specified'}</span>
               </div>
 
-              <div className="flex justify-between items-center pb-3 border-b border-gray-200 dark:border-gray-700">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Date & Time</span>
-                <span className="font-medium text-gray-900 dark:text-white">
+              <div className="flex justify-between items-center pb-3 border-b border-line">
+                <span className="text-sm text-ink-muted">Date & Time</span>
+                <span className="font-medium text-ink dark:text-ink">
                   {formData.scheduledDate && formData.scheduledTime
                     ? `${formData.scheduledDate} at ${formData.scheduledTime}`
                     : 'Not specified'}
                 </span>
               </div>
 
-              <div className="flex justify-between items-center pb-3 border-b border-gray-200 dark:border-gray-700">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Location</span>
-                <span className="font-medium text-gray-900 dark:text-white max-w-xs truncate">
+              <div className="flex justify-between items-center pb-3 border-b border-line">
+                <span className="text-sm text-ink-muted">Location</span>
+                <span className="font-medium text-ink dark:text-ink max-w-xs truncate">
                   {formData.serviceLocation.address || 'Not specified'}
                 </span>
               </div>
 
               {technician && (
                 <div className="flex justify-between items-center pt-3">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Technician</span>
-                  <span className="font-medium text-gray-900 dark:text-white">
+                  <span className="text-sm text-ink-muted">Technician</span>
+                  <span className="font-medium text-ink dark:text-ink">
                     {technician.firstName} {technician.lastName}
                   </span>
                 </div>
               )}
             </div>
 
-            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 border border-blue-200 dark:border-blue-800">
-              <p className="text-sm text-blue-800 dark:text-blue-200">
+            <div className="bg-blue-900/20 rounded-xl p-4 border border-blue-800">
+              <p className="text-sm text-blue-200">
                 <strong>Note:</strong> A booking fee will be required to confirm your appointment. You'll be prompted to pay after confirming this booking.
               </p>
             </div>
@@ -578,9 +578,9 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-24 md:pb-8">
+    <div className="min-h-screen bg-surface-100 pb-24 md:pb-8">
       {/* Progress Header */}
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-30">
+      <div className="bg-surface-200 border-b border-line sticky top-0 z-30">
         <div className="container mx-auto px-4 py-6">
           {/* Step Progress */}
           <div className="flex items-center justify-between mb-4">
@@ -591,10 +591,10 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
                   className={cn(
                     'w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center relative z-10 transition-all',
                     currentStep > step.id
-                      ? 'bg-green-500 text-white'
+                      ? 'bg-green-500 text-on-lumen'
                       : currentStep === step.id
-                      ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
-                      : 'bg-gray-200 dark:bg-gray-700 text-gray-500'
+                      ? ' bg-blue-500 text-on-lumen'
+                      : 'bg-surface-300 text-ink-muted'
                   )}
                 >
                   {currentStep > step.id ? (
@@ -607,7 +607,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
                   <div
                     className={cn(
                       'flex-1 h-1 mx-2 md:mx-4 rounded-full transition-all',
-                      currentStep > step.id ? 'bg-green-500' : 'bg-gray-200 dark:bg-gray-700'
+                      currentStep > step.id ? '' : 'bg-surface-300'
                     )}
                   />
                 )}
@@ -620,7 +620,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
             key={currentStep}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white"
+            className="text-xl md:text-2xl font-bold text-ink dark:text-ink"
           >
             {steps[currentStep - 1].title}
           </motion.h1>
@@ -637,7 +637,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
             exit={{ opacity: 0, x: direction > 0 ? -20 : 20 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-8">
+            <div className="bg-surface-200 rounded-2xl shadow-lg p-6 md:p-8">
               {renderStepContent()}
             </div>
           </motion.div>
@@ -653,8 +653,8 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
             className={cn(
               'flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all',
               currentStep === 1
-                ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 cursor-not-allowed'
-                : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600'
+                ? 'bg-surface-200 text-ink-muted cursor-not-allowed'
+                : 'bg-surface-300 text-ink text-ink hover:bg-surface-400'
             )}
           >
             <ChevronLeft className="h-5 w-5" />
@@ -670,8 +670,8 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
               className={cn(
                 'flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all',
                 isStepValid()
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:shadow-lg'
-                  : 'bg-gray-200 dark:bg-gray-700 text-gray-400 cursor-not-allowed'
+                  ? ' bg-blue-500 text-on-lumen hover:shadow-lg'
+                  : 'bg-surface-300 text-ink-muted cursor-not-allowed'
               )}
             >
               Continue
@@ -686,8 +686,8 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
               className={cn(
                 'flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all',
                 isCreating
-                  ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 cursor-wait'
-                  : 'bg-gradient-to-r from-green-500 to-green-600 text-white hover:shadow-lg'
+                  ? 'bg-surface-300 text-ink-muted cursor-wait'
+                  : ' bg-green-500 text-on-lumen hover:shadow-lg'
               )}
             >
               {isCreating ? 'Creating...' : 'Complete Booking'}

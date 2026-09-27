@@ -41,6 +41,7 @@ import UserManagement from './pages/UserManagement';
 import SystemSettings from './pages/SystemSettings';
 import ReportsPage from './pages/ReportsPage';
 import SupportDashboard from './pages/SupportDashboard';
+import WhatsAppDesk from './pages/WhatsAppDesk';
 import { AIDiagnosticBot } from './components/bot/AIDiagnosticBot';
 import { useAppSelector } from './store/hooks';
 import { useSocket } from './hooks/useSocket';
@@ -68,31 +69,32 @@ const App: React.FC = () => {
           <OfflineIndicator />
           <PWAInstallPrompt />
 
-          {/* AI Diagnostic Bot */}
-          <AIDiagnosticBot />
+          {/* One floating control: the assistant for members, WhatsApp (in Layout) for visitors */}
+          {isAuthenticated && <AIDiagnosticBot />}
 
           <Toaster
             position="top-right"
             toastOptions={{
               duration: 4000,
               style: {
-                background: '#1C1C1C',
-                color: '#E0E0E0',
-                border: '1px solid rgba(155, 164, 176, 0.3)',
-                borderRadius: '12px',
+                background: '#1d1811',
+                color: '#f5eee1',
+                border: '1px solid #453a29',
+                borderRadius: '4px',
+                fontFamily: 'var(--font-sans)',
               },
               success: {
                 duration: 3000,
                 iconTheme: {
-                  primary: '#00ba7c',
-                  secondary: '#1C1C1C',
+                  primary: '#5cb860',
+                  secondary: '#1d1811',
                 },
               },
               error: {
                 duration: 4000,
                 iconTheme: {
-                  primary: '#f4212e',
-                  secondary: '#1C1C1C',
+                  primary: '#e0705c',
+                  secondary: '#1d1811',
                 },
               },
             }}
@@ -150,6 +152,7 @@ const App: React.FC = () => {
 
               {/* Support Routes */}
               <Route path="support-dashboard" element={<SupportDashboard />} />
+              <Route path="whatsapp-desk" element={<FeatureErrorBoundary name="WhatsApp desk"><WhatsAppDesk /></FeatureErrorBoundary>} />
             </Route>
 
             {/* 404 Page */}

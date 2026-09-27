@@ -255,7 +255,7 @@ const PaymentPlanSelector: React.FC<PaymentPlanSelectorProps> = ({
           <div className="flex items-center gap-3">
             <div className={`p-2 rounded-lg ${
               selected
-                ? 'bg-[var(--dw-accent-primary)] text-white'
+                ? 'bg-[var(--dw-accent-primary)] text-ink'
                 : 'bg-[var(--dw-bg-tertiary)] text-[var(--dw-text-secondary)]'
             }`}>
               {PLAN_TYPE_ICONS[plan.planType]}
