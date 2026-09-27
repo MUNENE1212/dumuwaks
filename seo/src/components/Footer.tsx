@@ -11,8 +11,8 @@ export default function Footer() {
               <span style={{ color: '#0090C5' }}>Dumu</span> Waks
             </h3>
             <p style={{ fontSize: 14, color: '#9BA4B0', lineHeight: 1.7 }}>
-              Kenya&apos;s trusted platform for professional maintenance &amp; repair services.
-              Verified technicians, transparent pricing, M-Pesa payments.
+              Book technicians for repairs in Kenya. Pay by M-Pesa, held until the job is done.
+              Price agreed upfront. M-Pesa payments held in escrow.
             </p>
           </div>
 

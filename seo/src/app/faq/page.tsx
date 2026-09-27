@@ -4,13 +4,13 @@ import { SITE_NAME, SITE_URL, APP_URL, FAQS } from '@/lib/constants';
 import FAQAccordion from './FAQAccordion';
 
 export const metadata: Metadata = {
-  title: 'Frequently Asked Questions - Dumu Waks Kenya',
+  title: 'Frequently Asked Questions - Dumuwaks Kenya',
   description:
-    'Find answers to common questions about Dumu Waks: booking technicians, M-Pesa payments, cancellation policy, emergency services, and becoming a technician in Kenya.',
+    'Find answers to common questions about Dumuwaks: booking technicians, M-Pesa payments, cancellation policy, emergency services, and becoming a technician in Kenya.',
   alternates: { canonical: `${SITE_URL}/faq` },
   openGraph: {
     title: `FAQ | ${SITE_NAME}`,
-    description: 'Answers to common questions about booking technicians on Dumu Waks.',
+    description: 'Answers to common questions about booking technicians on Dumuwaks.',
     url: `${SITE_URL}/faq`,
   },
 };
@@ -59,7 +59,7 @@ export default function FAQPage() {
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
           <h1 style={{ marginBottom: 12 }}>Frequently Asked Questions</h1>
           <p style={{ color: '#9BA4B0', fontSize: 18 }}>
-            Find answers to common questions about Dumu Waks
+            Find answers to common questions about Dumuwaks
           </p>
         </div>
 

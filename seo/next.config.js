@@ -5,6 +5,10 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'dumuwaks.co.ke',
+      },
+      {
+        protocol: 'https',
         hostname: 'api.ementech.co.ke',
       },
       {
@@ -18,7 +22,7 @@ const nextConfig = {
       // Proxy API calls to the backend
       {
         source: '/api/:path*',
-        destination: 'https://api.ementech.co.ke/api/:path*',
+        destination: 'https://dumuwaks.co.ke/api/:path*',
       },
     ];
   },

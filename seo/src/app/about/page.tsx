@@ -1,16 +1,15 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SITE_NAME, SITE_URL, APP_URL } from '@/lib/constants';
-import { getPublicStats } from '@/lib/api';
 
 export const metadata: Metadata = {
-  title: 'About Dumu Waks - Kenya\'s Trusted Maintenance & Repair Platform',
+  title: 'About Dumuwaks - Book Repair & Maintenance Technicians in Kenya',
   description:
-    'Learn about Dumu Waks - connecting Kenyans with verified, skilled technicians for quality home and business maintenance services across all 47 counties.',
+    'Learn about Dumuwaks, an Emen Tech product: book technicians for home and business repairs in Kenya, pay by M-Pesa, money held until the job is done.',
   alternates: { canonical: `${SITE_URL}/about` },
   openGraph: {
     title: `About ${SITE_NAME}`,
-    description: 'Your trusted platform for professional maintenance and repair services in Kenya.',
+    description: 'Book technicians for repairs in Kenya. Pay by M-Pesa, held until the job is done.',
     url: `${SITE_URL}/about`,
   },
 };
@@ -19,17 +18,17 @@ const values = [
   {
     icon: '🛡️',
     title: 'Quality',
-    description: 'We maintain the highest standards by thoroughly vetting every technician on Dumu Waks.',
+    description: 'Every technician has a public profile with ratings and finished jobs, so you can check before you book.',
   },
   {
     icon: '⚡',
     title: 'Transparency',
-    description: 'See exact pricing before booking. No hidden fees with Dumu Waks.',
+    description: 'You see the price before you book, and pay exactly that. The platform fee comes out of the technician\'s share.',
   },
   {
     icon: '❤️',
-    title: 'Reliability',
-    description: 'We show up when you need us. Fast response times, 24/7 emergency support.',
+    title: 'Protection',
+    description: 'Your M-Pesa payment is held until you confirm the work. Report a problem and it stays frozen.',
   },
   {
     icon: '🏆',
@@ -39,21 +38,18 @@ const values = [
 ];
 
 export default async function AboutPage() {
-  const statsRes = await getPublicStats();
-  const stats = statsRes?.data;
-
   const aboutJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
     name: `About ${SITE_NAME}`,
-    description: 'Your trusted platform for professional maintenance and repair services in Kenya.',
+    description: 'Book technicians for repairs in Kenya. Pay by M-Pesa, held until the job is done.',
     url: `${SITE_URL}/about`,
     mainEntity: {
       '@type': 'Organization',
       name: SITE_NAME,
       url: SITE_URL,
       foundingLocation: { '@type': 'Country', name: 'Kenya' },
-      description: 'Connecting Kenyans with verified, skilled technicians for quality maintenance services.',
+      description: 'Connecting Kenyans with skilled technicians for home and business repairs.',
     },
   };
 
@@ -72,10 +68,10 @@ export default async function AboutPage() {
             <span>/</span>
             <span>About</span>
           </nav>
-          <h1 style={{ marginBottom: 16 }}>About Dumu Waks</h1>
+          <h1 style={{ marginBottom: 16 }}>About Dumuwaks</h1>
           <p style={{ color: '#9BA4B0', maxWidth: 700, fontSize: 18, lineHeight: 1.7 }}>
-            Your trusted platform for professional maintenance and repair services in Kenya.
-            Connecting skilled technicians with quality-conscious customers across all 47 counties.
+            Book technicians for home and business repairs in Kenya, on the web or WhatsApp.
+            Pay by M-Pesa — the money is held until you confirm the job is done.
           </p>
         </div>
       </section>
@@ -92,49 +88,21 @@ export default async function AboutPage() {
                 and stress-free for everyone.
               </p>
               <p style={{ color: '#9BA4B0', lineHeight: 1.8 }}>
-                Whether you need emergency plumbing at midnight or routine appliance maintenance,
-                Dumu Waks ensures you get the right technician, at the right price, exactly when you need them.
+                Whether it&apos;s an urgent leak or routine appliance maintenance, you see who is coming and
+                what it costs before anyone arrives.
               </p>
             </div>
             <div className="glass-card" style={{ padding: 32 }}>
               <h2 style={{ marginBottom: 16 }}>🔭 Our Vision</h2>
               <p style={{ color: '#9BA4B0', lineHeight: 1.8 }}>
-                To be Kenya&apos;s most trusted platform for maintenance and repair services, where every technician
-                is verified, every price is transparent, and every customer is satisfied. We&apos;re building a future
-                where finding quality help is never a hassle.
+                A place where finding good help is never a gamble: the price agreed upfront, the money safe
+                until the work is done, and every technician building a public record job by job.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="stats-bar">
-        <div className="container">
-          <div className="grid-4" style={{ textAlign: 'center' }}>
-            <div>
-              <div style={{ fontSize: 36, fontWeight: 800, color: 'white' }}>
-                {stats?.totalCustomers?.toLocaleString() || '10,000+'}
-              </div>
-              <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.8)' }}>Happy Customers</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 36, fontWeight: 800, color: 'white' }}>
-                {stats?.totalTechnicians?.toLocaleString() || '500+'}
-              </div>
-              <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.8)' }}>Verified Technicians</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 36, fontWeight: 800, color: 'white' }}>47</div>
-              <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.8)' }}>Counties Covered</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 36, fontWeight: 800, color: 'white' }}>24/7</div>
-              <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.8)' }}>Emergency Support</div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Values */}
       <section className="section">
@@ -158,28 +126,27 @@ export default async function AboutPage() {
       {/* Story */}
       <section className="section" style={{ background: 'var(--bg-secondary)' }}>
         <div className="container" style={{ maxWidth: 800, margin: '0 auto' }}>
-          <h2 style={{ textAlign: 'center', marginBottom: 24 }}>The Dumu Waks Story</h2>
+          <h2 style={{ textAlign: 'center', marginBottom: 24 }}>The Dumuwaks Story</h2>
           <div style={{ color: '#9BA4B0', lineHeight: 1.8, fontSize: 16 }}>
             <p style={{ marginBottom: 16 }}>
-              Dumu Waks was born from a simple frustration: finding a reliable technician in Kenya
+              Dumuwaks was born from a simple frustration: finding a reliable technician in Kenya
               shouldn&apos;t be this hard. Whether it&apos;s a burst pipe at 2 AM or a faulty appliance
               before a big family gathering, we&apos;ve all experienced the stress of emergency repairs.
             </p>
             <p style={{ marginBottom: 16 }}>
               We asked ourselves: why can&apos;t finding a trustworthy technician be as simple as
-              ordering a ride? Why do Kenyans have to rely on word-of-mouth or gamble with
-              unverified contacts?
+              ordering a ride? Why do Kenyans have to rely on word-of-mouth or gamble on
+              a stranger&apos;s number?
             </p>
             <p style={{ marginBottom: 16 }}>
-              So we built Dumu Waks — a platform that connects you with verified, skilled technicians
-              in under 60 seconds. With AI-powered matching, transparent M-Pesa payments, and a
-              quality guarantee, we&apos;re making home maintenance stress-free.
+              So we built Dumuwaks: you describe the job, choose a technician by their ratings and
+              finished work, and pay by M-Pesa into escrow. The technician is paid only when you
+              confirm the work is done.
             </p>
             <p style={{ marginBottom: 16 }}>
-              Today, Dumu Waks serves customers across all 47 Kenyan counties, offering everything
-              from plumbing and electrical work to carpentry and appliance repair. Every technician
-              on our platform is background-checked, every price is upfront, and every job is
-              backed by our satisfaction guarantee.
+              We cover plumbing, electrical work, carpentry, masonry, painting, AC and fridge repair
+              and welding. Every price is agreed before the job, and if something goes wrong the
+              payment stays frozen until the Dumuwaks team has spoken to you both.
             </p>
             <p style={{ fontWeight: 600, color: '#E0E0E0' }}>
               We&apos;re not just fixing things — we&apos;re building trust, one repair at a time.
@@ -191,9 +158,9 @@ export default async function AboutPage() {
       {/* CTA */}
       <section className="section" style={{ textAlign: 'center' }}>
         <div className="container">
-          <h2 style={{ marginBottom: 12 }}>Ready to Experience the Dumu Waks Difference?</h2>
+          <h2 style={{ marginBottom: 12 }}>Something needs fixing?</h2>
           <p style={{ color: '#9BA4B0', marginBottom: 32, fontSize: 18, maxWidth: 600, margin: '0 auto 32px' }}>
-            Join thousands of satisfied customers across Kenya.
+            Book on the web or send BOOK on WhatsApp.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href={`${APP_URL}/register?role=customer`} className="btn btn-primary btn-lg">

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     'Dumu Waks', 'technician Kenya', 'plumber Nairobi', 'electrician Kenya',
     'home repair Kenya', 'maintenance services', 'handyman Kenya',
     'appliance repair Nairobi', 'carpenter Kenya', 'M-Pesa payment',
-    'emergency plumber Kenya', 'verified technicians',
+    'emergency plumber Kenya', 'fundi Nairobi',
   ],
   authors: [{ name: SITE_NAME }],
   creator: SITE_NAME,
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     locale: 'en_KE',
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} - Find Verified Technicians in Kenya`,
+    title: `${SITE_NAME} - Book Technicians in Kenya`,
     description: SITE_DESCRIPTION,
     images: [
       {

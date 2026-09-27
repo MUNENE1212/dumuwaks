@@ -9,7 +9,7 @@ interface Props {
 async function getTechnician(id: string) {
   try {
     const res = await fetch(
-      `${process.env.API_URL || 'https://api.ementech.co.ke'}/api/public/technicians?id=${id}`,
+      `${process.env.API_URL || 'https://dumuwaks.co.ke'}/api/public/technicians?id=${id}`,
       { next: { revalidate: 600 } }
     );
     if (!res.ok) return null;
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!tech) {
     return {
       title: 'Technician Profile',
-      description: 'View verified technician profiles on Dumu Waks.',
+      description: 'Technician profiles on Dumuwaks.',
     };
   }
 
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${name} - ${services} Technician in ${location}`,
-    description: `Hire ${name}, a verified ${services} technician in ${location}. ${rating}★ rating, ${tech.publicStats?.jobsCompleted || 0} jobs completed. Book on Dumu Waks with M-Pesa.`,
+    description: `Hire ${name}, a ${services} technician in ${location}. ${rating}★ rating, ${tech.publicStats?.jobsCompleted || 0} jobs completed. Book on Dumuwaks with M-Pesa.`,
     alternates: { canonical: `${SITE_URL}/technicians/${params.id}` },
     openGraph: {
       title: `${name} | ${SITE_NAME}`,

@@ -47,7 +47,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let technicianPages: MetadataRoute.Sitemap = [];
   try {
     const res = await fetch(
-      `${process.env.API_URL || 'https://api.ementech.co.ke'}/api/public/technicians?limit=100`,
+      `${process.env.API_URL || 'https://dumuwaks.co.ke'}/api/public/technicians?limit=100`,
       { next: { revalidate: 3600 } }
     );
     if (res.ok) {

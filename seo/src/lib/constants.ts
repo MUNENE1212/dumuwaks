@@ -1,15 +1,15 @@
 // Identity facts derive from the vendored brand.registry.json (repo root —
 // the estate-wide single source of truth, vendored from ementech-website).
-// Display name keeps the public "Dumu Waks" spelling; the registry's
-// canonical name is "DumuWaks" (both forms are aliased there).
+// Display name follows the domain: "Dumuwaks" (wordmark DUMUWAKS). The
+// registry aliases "DumuWaks" and "Dumu Waks" to the same product.
 import brandRegistry from '../../../brand.registry.json';
 
 const dumuwaks = brandRegistry.brands.dumuwaks;
 
 export const SITE_URL = dumuwaks.domain;
-export const SITE_NAME = 'Dumu Waks';
+export const SITE_NAME = 'Dumuwaks';
 export const SITE_DESCRIPTION =
-  'Professional maintenance & repair services in Kenya. Find verified plumbers, electricians, carpenters & more. Book in 60 seconds, pay via M-Pesa.';
+  'Verified plumbers, electricians, carpenters and more across Kenya. Book on the web or WhatsApp; pay by M-Pesa, held until the job is done.';
 export const APP_URL = dumuwaks.domain;
 
 export const SERVICES = [
@@ -23,7 +23,7 @@ export const SERVICES = [
   {
     name: 'Electrical',
     slug: 'electrical',
-    description: 'Licensed electricians for wiring, installations, repairs, and electrical safety inspections.',
+    description: 'Electricians for wiring, installations, repairs, and electrical safety checks.',
     icon: '⚡',
     keywords: ['electrician', 'wiring', 'electrical repair', 'socket installation', 'power'],
   },
@@ -78,51 +78,51 @@ export const COUNTIES = [
 
 export const FAQS = [
   {
-    question: 'How do I book a technician on Dumu Waks?',
-    answer: "Simply describe your problem, get matched with verified technicians in under 60 seconds, see the exact pricing in KES, choose your preferred date/time, and pay the 20% booking fee via M-Pesa. Your technician will arrive at the scheduled time.",
+    question: "How do I book a technician on Dumuwaks?",
+    answer: "Describe the problem and choose a technician and a time, on the web or by sending BOOK on WhatsApp to +254 799 954 672. When the technician accepts, you pay the agreed price by M-Pesa. Dumuwaks holds it, and the technician is paid only after you confirm the work is done.",
   },
   {
-    question: 'Is the booking fee refundable?',
-    answer: "Yes! The 20% booking fee is fully refundable if the technician doesn't show up or if you're not satisfied with the service. Dumu Waks holds funds in escrow for your protection.",
+    question: "What happens to my money if something goes wrong?",
+    answer: "Your payment is held in escrow until you confirm the job. If the technician cancels, or the job never starts within 14 days, you get it all back. If you report a problem, the money is frozen until the Dumuwaks team has spoken to you both and resolved it.",
   },
   {
-    question: 'How are technicians verified on Dumu Waks?',
-    answer: "All technicians undergo background checks, ID verification, and skills assessment. They're also continuously rated by customers after each job, ensuring only the best serve you.",
+    question: "How do I choose a technician?",
+    answer: "Each technician has a profile with their skills, ratings from customers who booked them, finished jobs and prices. Every technician is labelled ID verified (Dumuwaks has checked their ID) or Not yet verified, so you can choose. You can also set your preferences to show only ID-verified technicians.",
   },
   {
-    question: 'What payment methods does Dumu Waks accept?',
-    answer: "We accept M-Pesa for all payments. It's fast, secure, and the most trusted payment method in Kenya. You pay 20% upfront and 80% after satisfactory service completion.",
+    question: "What payment methods does Dumuwaks accept?",
+    answer: "M-Pesa. You pay the full agreed price once the technician accepts. It is released to the technician when you confirm the work, or 3 days after they mark it done if you report nothing.",
   },
   {
-    question: "What if I'm not satisfied with the service?",
-    answer: "Contact Dumu Waks support immediately. We'll mediate the dispute and can refund your payment if the issue isn't resolved. Your satisfaction is guaranteed.",
+    question: "What if I'm not satisfied with the work?",
+    answer: "Tap Report a problem on the booking before confirming. The payment stays frozen while the Dumuwaks team talks to you and the technician; it can be released, refunded, or split depending on what happened.",
   },
   {
-    question: 'How much does Dumu Waks charge?',
-    answer: "Dumu Waks charges a small platform fee on completed jobs. You'll see the exact cost breakdown before booking - no hidden fees or surprises.",
+    question: "How much does Dumuwaks charge?",
+    answer: "Customers pay the price agreed with the technician, nothing added. Dumuwaks takes a 7.5% platform fee (plus VAT) from the technician's payment.",
   },
   {
-    question: 'Can I cancel a booking on Dumu Waks?',
-    answer: 'Yes, you can cancel up to 24 hours before the scheduled time for a full refund. Cancellations within 24 hours may incur a small cancellation fee.',
+    question: "Can I cancel a booking?",
+    answer: "Yes. More than 24 hours before the scheduled time you get everything back. Closer to the time, part goes to the technician for the slot they kept: 25% within 24 hours, 50% within 6 hours, 75% within 2 hours. If the technician cancels, you get a full refund.",
   },
   {
-    question: 'Does Dumu Waks offer emergency services?',
-    answer: 'Yes! We have technicians available 24/7 for emergency plumbing, electrical issues, and other urgent repairs across Kenya.',
+    question: "Can I get help urgently?",
+    answer: "Mark the job urgent when you book and we look for someone available today. Whether someone can come depends on technicians near you; you'll see who accepts before you pay.",
   },
   {
-    question: 'How do I become a technician on Dumu Waks?',
-    answer: "Register as a technician, verify your skills and national ID, complete your profile with your service areas and rates, and start receiving job requests. It's free to join!",
+    question: "How do I become a technician on Dumuwaks?",
+    answer: "Register as a technician, complete your profile with your skills, service areas and rates, and add your M-Pesa or bank payout details. Joining is free; Dumuwaks takes a 7.5% fee plus VAT from completed jobs.",
   },
   {
-    question: 'What areas does Dumu Waks serve in Kenya?',
-    answer: 'Dumu Waks serves all 47 counties in Kenya, including Nairobi, Mombasa, Kisumu, Nakuru, and all major towns.',
+    question: "Where does Dumuwaks work?",
+    answer: "You can book anywhere in Kenya. Whether a technician is available depends on who is registered near you — you'll see who can take the job when you book.",
   },
   {
-    question: 'How quickly can I get a technician?',
-    answer: 'Our AI-powered matching system connects you with the right technician in under 60 seconds. Many same-day bookings are completed within hours.',
+    question: "How quickly can I get a technician?",
+    answer: "It depends on who is available near you and when they accept. You'll get a WhatsApp message as soon as a technician accepts your job.",
   },
   {
-    question: 'What types of services does Dumu Waks offer?',
-    answer: 'Dumu Waks offers plumbing, electrical work, carpentry, appliance repair, painting, HVAC, masonry, roofing, and more - covering 99+ service categories.',
+    question: "What services does Dumuwaks offer?",
+    answer: "Plumbing, electrical work, carpentry, masonry, painting, AC and fridge repair, welding, and other repairs.",
   },
 ];

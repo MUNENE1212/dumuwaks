@@ -1,4 +1,4 @@
-const API_BASE = process.env.API_URL || 'https://api.ementech.co.ke';
+const API_BASE = process.env.API_URL || 'https://dumuwaks.co.ke';
 
 export async function fetchAPI<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {

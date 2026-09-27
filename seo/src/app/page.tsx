@@ -4,7 +4,7 @@ import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, SERVICES, APP_URL } from '@/lib/
 import { getPublicStats, getPublicReviews } from '@/lib/api';
 
 export const metadata: Metadata = {
-  title: `${SITE_NAME} - Find Verified Technicians for Home & Business Repairs in Kenya`,
+  title: `${SITE_NAME} - Book Technicians for Home & Business Repairs in Kenya`,
   description: SITE_DESCRIPTION,
   alternates: { canonical: SITE_URL },
 };
@@ -13,25 +13,25 @@ const steps = [
   {
     number: '1',
     title: 'Describe Your Problem',
-    description: 'Tell us what needs fixing - from leaky taps to electrical faults. Our AI matches you with the right specialist.',
+    description: 'Tell us what needs fixing - from leaky taps to electrical faults - on the web or on WhatsApp.',
   },
   {
     number: '2',
-    title: 'Get Matched Instantly',
-    description: 'Receive verified technician matches in under 60 seconds. Compare ratings, prices, and availability.',
+    title: 'Choose a Technician',
+    description: 'See technicians near you with their ratings, finished jobs and prices before you book.',
   },
   {
     number: '3',
     title: 'Book & Pay via M-Pesa',
-    description: 'Confirm your booking and pay securely via M-Pesa. Only 20% upfront, rest after completion.',
+    description: 'When the technician accepts, pay by M-Pesa. Dumuwaks holds the money until you confirm the work is done.',
   },
 ];
 
+// Only facts the platform enforces (see backend/src/config/fees.js and services/payments)
 const trustBadges = [
-  { label: 'Verified Technicians', icon: '✓' },
-  { label: 'M-Pesa Secure', icon: '🔒' },
-  { label: '4.8★ Average Rating', icon: '⭐' },
-  { label: 'Money-Back Guarantee', icon: '💯' },
+  { label: 'Pay by M-Pesa', icon: '📱' },
+  { label: 'Money held until the job is done', icon: '🔒' },
+  { label: 'Book on WhatsApp', icon: '💬' },
 ];
 
 export default async function HomePage() {
@@ -73,11 +73,12 @@ export default async function HomePage() {
     },
     areaServed: 'Kenya',
     priceRange: 'KES 500 - KES 50,000',
-    aggregateRating: stats?.averageRating
+    // Only when real reviews exist — never a placeholder count
+    aggregateRating: stats?.averageRating && stats?.totalReviews
       ? {
           '@type': 'AggregateRating',
           ratingValue: stats.averageRating.toFixed(1),
-          reviewCount: stats.totalReviews || 100,
+          reviewCount: stats.totalReviews,
           bestRating: 5,
           worstRating: 1,
         }
@@ -116,8 +117,8 @@ export default async function HomePage() {
               <span style={{ color: '#0090C5' }}>Across Kenya</span>
             </h1>
             <p style={{ fontSize: 18, color: '#9BA4B0', marginBottom: 32, lineHeight: 1.7 }}>
-              Find verified plumbers, electricians, carpenters &amp; more. Book in 60 seconds,
-              pay via M-Pesa. Trusted by thousands of Kenyans.
+              Book plumbers, electricians, carpenters &amp; more on the web or WhatsApp. Pay by
+              M-Pesa — the money is held until you confirm the job is done.
             </p>
 
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 32 }}>
@@ -155,33 +156,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Stats Bar */}
-      <section className="stats-bar" aria-label="Platform statistics">
-        <div className="container">
-          <div className="grid-4" style={{ textAlign: 'center' }}>
-            <div>
-              <div style={{ fontSize: 32, fontWeight: 800, color: 'white' }}>
-                {stats?.totalCustomers?.toLocaleString() || '10,000+'}
-              </div>
-              <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.8)' }}>Happy Customers</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 32, fontWeight: 800, color: 'white' }}>
-                {stats?.totalTechnicians?.toLocaleString() || '500+'}
-              </div>
-              <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.8)' }}>Verified Technicians</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 32, fontWeight: 800, color: 'white' }}>47</div>
-              <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.8)' }}>Counties Covered</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 32, fontWeight: 800, color: 'white' }}>24/7</div>
-              <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.8)' }}>Emergency Support</div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Services Section */}
       <section className="section" id="services" aria-labelledby="services-heading">
@@ -226,7 +200,7 @@ export default async function HomePage() {
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
             <h2 id="how-it-works-heading" style={{ marginBottom: 12 }}>
-              How Dumu Waks Works
+              How Dumuwaks Works
             </h2>
             <p style={{ color: '#9BA4B0', maxWidth: 600, margin: '0 auto' }}>
               Get your repair done in three simple steps
@@ -254,7 +228,7 @@ export default async function HomePage() {
                 What Customers Say
               </h2>
               <p style={{ color: '#9BA4B0' }}>
-                Real reviews from verified customers across Kenya
+                Reviews left by customers after a completed Dumuwaks booking
               </p>
             </div>
 
@@ -284,7 +258,7 @@ export default async function HomePage() {
             Ready to Get Your Repair Done?
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.85)', maxWidth: 600, margin: '0 auto 32px', fontSize: 18 }}>
-            Join thousands of satisfied Kenyans. Book a verified technician in under 60 seconds.
+            Tell us what needs fixing. You pay only into escrow, and the technician is paid when you confirm.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link

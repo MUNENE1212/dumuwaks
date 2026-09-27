@@ -3,13 +3,13 @@ import Link from 'next/link';
 import { SITE_NAME, SITE_URL, APP_URL } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'How Dumu Waks Works - Book a Technician in 3 Simple Steps',
+  title: 'How Dumuwaks Works - Book a Technician in 3 Simple Steps',
   description:
-    'Learn how to book a verified technician on Dumu Waks in 3 easy steps: describe your problem, get matched instantly, book and pay via M-Pesa. Available across all 47 Kenyan counties.',
+    'How to book a technician on Dumuwaks: describe the problem, choose a technician, pay by M-Pesa into escrow. The technician is paid when you confirm the work.',
   alternates: { canonical: `${SITE_URL}/how-it-works` },
   openGraph: {
     title: `How It Works | ${SITE_NAME}`,
-    description: 'Book a verified technician in 3 simple steps on Dumu Waks.',
+    description: 'Book a technician in 3 steps on Dumuwaks.',
     url: `${SITE_URL}/how-it-works`,
   },
 };
@@ -21,34 +21,34 @@ const steps = [
     description:
       'Tell us what needs fixing. Select your service type (plumbing, electrical, carpentry, etc.), describe the issue, and choose your preferred date and time.',
     details: [
-      'Choose from 99+ service categories',
+      'Plumbing, electrical, carpentry, masonry, painting, AC & fridges, welding',
       'Add photos of the problem',
       'Set your preferred schedule',
-      'Get instant price estimates in KES',
+      'See a price estimate in KES',
     ],
   },
   {
     number: '2',
-    title: 'Get Matched with Verified Technicians',
+    title: 'Choose Your Technician',
     description:
-      'Our AI-powered system matches you with the best available technicians in under 60 seconds. Compare ratings, reviews, pricing, and availability.',
+      'We suggest technicians near you, ranked by skills, distance and availability. Compare ratings, reviews and prices before you book.',
     details: [
-      'AI-powered matching in < 60 seconds',
+      'Suggestions ranked by skills, distance and availability',
       'View technician profiles and ratings',
       'Compare prices from multiple technicians',
-      'All technicians are ID-verified and background-checked',
+      'See each technician\'s finished jobs before booking',
     ],
   },
   {
     number: '3',
     title: 'Book & Pay Securely via M-Pesa',
     description:
-      'Confirm your booking and pay the 20% booking fee via M-Pesa. The remaining 80% is paid after the job is completed to your satisfaction.',
+      'When the technician accepts, pay the agreed price by M-Pesa. Dumuwaks holds it and pays the technician only after you confirm the work is done.',
     details: [
       'Secure M-Pesa STK push payment',
-      'Only 20% upfront, 80% after completion',
+      'Paid to the technician only when you confirm',
       'Funds held in escrow for protection',
-      'Full refund if not satisfied',
+      'Full refund if the technician cancels or never starts',
     ],
   },
 ];
@@ -57,7 +57,7 @@ const forTechnicians = [
   {
     number: '1',
     title: 'Create Your Profile',
-    description: 'Sign up free, verify your ID, list your skills, service areas, and set your rates.',
+    description: 'Sign up free, list your skills and service areas, and set your rates.',
   },
   {
     number: '2',
@@ -67,7 +67,7 @@ const forTechnicians = [
   {
     number: '3',
     title: 'Complete & Get Paid',
-    description: 'Do great work, receive payment directly via M-Pesa. Build your reputation with reviews.',
+    description: 'The customer pays into escrow before you travel. When they confirm the work, you are paid by M-Pesa or bank.',
   },
 ];
 
@@ -75,8 +75,8 @@ export default function HowItWorksPage() {
   const howToJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: 'How to Book a Technician on Dumu Waks',
-    description: 'Book a verified maintenance technician in Kenya in 3 simple steps.',
+    name: 'How to Book a Technician on Dumuwaks',
+    description: 'Book a maintenance technician in Kenya in 3 steps.',
     step: steps.map((s) => ({
       '@type': 'HowToStep',
       name: s.title,
@@ -100,9 +100,9 @@ export default function HowItWorksPage() {
         </nav>
 
         <div style={{ textAlign: 'center', marginBottom: 64 }}>
-          <h1 style={{ marginBottom: 12 }}>How Dumu Waks Works</h1>
+          <h1 style={{ marginBottom: 12 }}>How Dumuwaks Works</h1>
           <p style={{ color: '#9BA4B0', fontSize: 18, maxWidth: 600, margin: '0 auto' }}>
-            Get your repair done in three simple steps. No hassle, no hidden fees.
+            Three steps. You pay the agreed price, and the money moves only when the job is done.
           </p>
         </div>
 

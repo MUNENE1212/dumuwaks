@@ -5,11 +5,11 @@ import { SITE_NAME, SITE_URL, SERVICES, APP_URL } from '@/lib/constants';
 export const metadata: Metadata = {
   title: 'All Maintenance & Repair Services in Kenya',
   description:
-    'Browse all professional maintenance and repair services available on Dumu Waks. Plumbing, electrical, carpentry, appliance repair, painting, HVAC, and more across all 47 Kenyan counties.',
+    'Browse all professional maintenance and repair services available on Dumuwaks. Plumbing, electrical, carpentry, appliance repair, painting, HVAC, and more in Kenya.',
   alternates: { canonical: `${SITE_URL}/services` },
   openGraph: {
     title: `All Services | ${SITE_NAME}`,
-    description: 'Find verified technicians for plumbing, electrical, carpentry, appliance repair and more across Kenya.',
+    description: 'Book technicians for plumbing, electrical, carpentry, appliance repair and more in Kenya.',
     url: `${SITE_URL}/services`,
   },
 };
@@ -27,7 +27,7 @@ export default function ServicesPage() {
   const serviceListJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Dumu Waks Services',
+    name: 'Dumuwaks Services',
     description: 'Professional maintenance and repair services available in Kenya',
     itemListElement: SERVICES.map((s, i) => ({
       '@type': 'ListItem',
@@ -67,8 +67,8 @@ export default function ServicesPage() {
         <div style={{ marginBottom: 48 }}>
           <h1 style={{ marginBottom: 12 }}>Maintenance &amp; Repair Services in Kenya</h1>
           <p style={{ color: '#9BA4B0', maxWidth: 700, fontSize: 18 }}>
-            Find verified professionals for every home and business maintenance need.
-            All technicians are background-checked and rated by customers.
+            Technicians for home and business maintenance. Compare ratings, finished jobs and prices
+            before you book.
           </p>
         </div>
 
@@ -97,7 +97,7 @@ export default function ServicesPage() {
         <div style={{ textAlign: 'center', marginTop: 64 }}>
           <h2 style={{ marginBottom: 12 }}>Can&apos;t Find Your Service?</h2>
           <p style={{ color: '#9BA4B0', marginBottom: 24 }}>
-            We cover 99+ service categories. Tell us what you need and we&apos;ll match you with the right technician.
+            Don&apos;t see your job listed? Choose Something else and describe it — we&apos;ll suggest technicians who can do it.
           </p>
           <Link href={`${APP_URL}/register`} className="btn btn-primary btn-lg">
             Get Started Free
