@@ -1,293 +1,108 @@
-# =============================================================================
-# Dumu Waks CI Pipeline
-# =============================================================================
-# This workflow runs on all pull requests to master and develop branches.
-# It performs linting, testing, and build verification for both backend
-# and frontend applications.
-#
-# Required Secrets:
-#   - MONGODB_URI: MongoDB connection string for test database
-#   - JWT_SECRET: JWT secret for authentication tests
-#   - JWT_REFRESH_SECRET: JWT refresh token secret
-#
-# Optional Secrets:
-#   - REDIS_HOST: Redis host for cache tests (defaults to localhost)
-#   - REDIS_PORT: Redis port (defaults to 6379)
-# =============================================================================
+# CI — every pull request, and every deploy (deploy-vps.yml calls this first).
+# Actions are pinned to commit SHAs; the token is read-only.
 
-name: CI Pipeline
+name: CI
 
 on:
   pull_request:
-    branches:
-      - master
-      - develop
-    types:
-      - opened
-      - synchronize
-      - reopened
-  push:
-    branches:
-      - develop
+  workflow_call:
+  workflow_dispatch:
 
-# Cancel in-progress runs for the same PR
+permissions:
+  contents: read
+
 concurrency:
-  group: ci-${{ github.head_ref || github.ref }}
+  group: ci-${{ github.event.pull_request.number || github.run_id }}
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: '20.x'
-  CI: true
+  NODE_VERSION: '20'
 
 jobs:
-  # ===========================================================================
-  # Linting Job
-  # ===========================================================================
-  lint:
-    name: Lint Code
+  secrets:
+    name: Secret scan
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: |
-            backend/package-lock.json
-            frontend/package-lock.json
+          fetch-depth: 0
+          persist-credentials: false
+      - name: gitleaks (new commits only)
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+            BASE="$HEAD~1"
+          fi
+          docker run --rm -v "$PWD:/repo" zricethezav/gitleaks:v8.30.1 \
+            git /repo --no-banner --redact --log-opts="$BASE..$HEAD"
 
-      - name: Install backend dependencies
-        working-directory: ./backend
-        run: npm ci
-
-      - name: Install frontend dependencies
-        working-directory: ./frontend
-        run: npm ci
-
-      - name: Lint backend
-        working-directory: ./backend
-        run: npm run lint --if-present
-        continue-on-error: true
-
-      - name: Lint frontend
-        working-directory: ./frontend
-        run: npm run lint
-
-  # ===========================================================================
-  # Backend Test Job
-  # ===========================================================================
-  test-backend:
-    name: Test Backend
+  backend:
+    name: Backend tests
     runs-on: ubuntu-latest
-    needs: lint
-
     services:
-      # MongoDB service container for integration tests
       mongodb:
         image: mongo:7.0
-        ports:
-          - 27017:27017
+        ports: ['27017:27017']
         options: >-
-          --health-cmd "echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-      # Redis service container for cache tests
+          --health-cmd "mongosh --quiet --eval 'db.runCommand({ping:1}).ok'"
+          --health-interval 5s --health-timeout 5s --health-retries 20
       redis:
         image: redis:7-alpine
-        ports:
-          - 6379:6379
+        ports: ['6379:6379']
         options: >-
           --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
+          --health-interval 5s --health-timeout 5s --health-retries 20
     env:
       NODE_ENV: test
-      MONGODB_URI: mongodb://localhost:27017/dumuwaks_test
-      JWT_SECRET: ${{ secrets.JWT_SECRET || 'ci-only-not-for-prod-a9f8c7b6e5d4c3b2a1f0e9d8c7b6a5f4e3d2c1b0' }}
-      JWT_REFRESH_SECRET: ${{ secrets.JWT_REFRESH_SECRET || 'ci-only-not-for-prod-b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9' }}
-      JWT_EXPIRE: 1h
+      TEST_MONGODB_URI: mongodb://localhost:27017/dumuwaks_test
+      JWT_SECRET: ci-only-not-a-real-secret-a9f8c7b6e5d4c3b2a1f0e9d8c7b6a5f4
+      JWT_REFRESH_SECRET: ci-only-not-a-real-secret-b0c1d2e3f4a5b6c7d8e9f0a1b2c3
       REDIS_HOST: localhost
-      REDIS_PORT: 6379
-      # M-Pesa test credentials (sandbox)
-      MPESA_ENVIRONMENT: sandbox
-      MPESA_CONSUMER_KEY: test-consumer-key
-      MPESA_CONSUMER_SECRET: test-consumer-secret
-      MPESA_SHORTCODE: 174379
-      MPESA_PASSKEY: test-passkey
-
+      REDIS_PORT: '6379'
+    defaults:
+      run:
+        working-directory: backend
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: npm
           cache-dependency-path: backend/package-lock.json
-
-      - name: Install backend dependencies
-        working-directory: ./backend
-        run: npm ci
-
-      - name: Wait for MongoDB
-        run: |
-          echo "Waiting for MongoDB to be ready..."
-          for i in {1..30}; do
-            if echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet; then
-              echo "MongoDB is ready!"
-              break
-            fi
-            echo "Waiting for MongoDB... ($i/30)"
-            sleep 2
-          done
-
-      - name: Run backend tests
-        working-directory: ./backend
-        run: npm run test:coverage -- --detectOpenHandles --forceExit
+      - run: npm ci
+      - name: Dependency audit (production, high+)
+        run: npm audit --omit=dev --audit-level=high
+      - name: Tests
+        run: npx jest --ci --forceExit
         timeout-minutes: 15
 
-      - name: Upload backend coverage to artifacts
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: backend-coverage
-          path: backend/coverage/
-          retention-days: 7
-
-      - name: Backend coverage summary
-        if: always()
-        working-directory: ./backend
-        run: |
-          echo "## Backend Coverage Report" >> $GITHUB_STEP_SUMMARY
-          if [ -f coverage/coverage-summary.json ]; then
-            cat coverage/coverage-summary.json | jq -r '.total | "Lines: \(.lines.pct)%, Functions: \(.functions.pct)%, Branches: \(.branches.pct)%, Statements: \(.statements.pct)%"' >> $GITHUB_STEP_SUMMARY
-          fi
-
-  # ===========================================================================
-  # Frontend Test Job
-  # ===========================================================================
-  test-frontend:
-    name: Test Frontend
+  frontend:
+    name: Frontend lint, types, tests, build
     runs-on: ubuntu-latest
-    needs: lint
-
+    defaults:
+      run:
+        working-directory: frontend
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: npm
           cache-dependency-path: frontend/package-lock.json
-
-      - name: Install frontend dependencies
-        working-directory: ./frontend
-        run: npm ci
-
-      - name: Run frontend tests
-        working-directory: ./frontend
-        run: npm run test:coverage
+      - run: npm ci
+      - name: Dependency audit (production, high+)
+        run: npm audit --omit=dev --audit-level=high
+      - run: npm run lint
+      - run: npm run type-check
+      - run: npm test
         timeout-minutes: 10
-
-      - name: Build frontend
-        working-directory: ./frontend
-        run: npm run build
+      - name: Build
+        run: npx vite build
         env:
-          VITE_API_URL: http://localhost:5000/api/v1
-
-      - name: Upload frontend coverage to artifacts
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: frontend-coverage
-          path: frontend/coverage/
-          retention-days: 7
-
-      - name: Upload frontend build to artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-build
-          path: frontend/dist/
-          retention-days: 1
-
-      - name: Frontend coverage summary
-        if: always()
-        working-directory: ./frontend
-        run: |
-          echo "## Frontend Coverage Report" >> $GITHUB_STEP_SUMMARY
-          if [ -f coverage/coverage-summary.json ]; then
-            cat coverage/coverage-summary.json | jq -r '.total | "Lines: \(.lines.pct)%, Functions: \(.functions.pct)%, Branches: \(.branches.pct)%, Statements: \(.statements.pct)%"' >> $GITHUB_STEP_SUMMARY
-          fi
-
-  # ===========================================================================
-  # Combined Coverage Report
-  # ===========================================================================
-  coverage-report:
-    name: Coverage Report
-    runs-on: ubuntu-latest
-    needs: [test-backend, test-frontend]
-    if: always()
-
-    steps:
-      - name: Download backend coverage
-        uses: actions/download-artifact@v4
-        with:
-          name: backend-coverage
-          path: coverage/backend
-        continue-on-error: true
-
-      - name: Download frontend coverage
-        uses: actions/download-artifact@v4
-        with:
-          name: frontend-coverage
-          path: coverage/frontend
-        continue-on-error: true
-
-      - name: Generate coverage summary
-        run: |
-          echo "# Test Coverage Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "## Backend Coverage" >> $GITHUB_STEP_SUMMARY
-          if [ -f coverage/backend/coverage-summary.json ]; then
-            cat coverage/backend/coverage-summary.json | jq -r '.total | "| Metric | Coverage |\\n|--------|----------|\\n| Lines | \(.lines.pct)% |\\n| Functions | \(.functions.pct)% |\\n| Branches | \(.branches.pct)% |\\n| Statements | \(.statements.pct)% |"' >> $GITHUB_STEP_SUMMARY
-          else
-            echo "Coverage report not available" >> $GITHUB_STEP_SUMMARY
-          fi
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "## Frontend Coverage" >> $GITHUB_STEP_SUMMARY
-          if [ -f coverage/frontend/coverage-summary.json ]; then
-            cat coverage/frontend/coverage-summary.json | jq -r '.total | "| Metric | Coverage |\\n|--------|----------|\\n| Lines | \(.lines.pct)% |\\n| Functions | \(.functions.pct)% |\\n| Branches | \(.branches.pct)% |\\n| Statements | \(.statements.pct)% |"' >> $GITHUB_STEP_SUMMARY
-          else
-            echo "Coverage report not available" >> $GITHUB_STEP_SUMMARY
-          fi
-
-  # ===========================================================================
-  # CI Status Check
-  # ===========================================================================
-  ci-status:
-    name: CI Status
-    runs-on: ubuntu-latest
-    needs: [lint, test-backend, test-frontend]
-    if: always()
-
-    steps:
-      - name: Check CI status
-        run: |
-          if [[ "${{ needs.lint.result }}" == "failure" ]] || \
-             [[ "${{ needs.test-backend.result }}" == "failure" ]] || \
-             [[ "${{ needs.test-frontend.result }}" == "failure" ]]; then
-            echo "CI checks failed!"
-            exit 1
-          fi
-          echo "All CI checks passed!"
+          VITE_API_URL: /api/v1

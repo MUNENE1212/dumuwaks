@@ -1,566 +1,107 @@
-# =============================================================================
-# Dumu Waks VPS Deployment Pipeline
-# =============================================================================
-# This workflow handles production deployments to the VPS at 69.164.244.165
-# It implements zero-downtime deployment with automatic rollback capability.
+# Production deploy — every push to master (and manual runs).
 #
-# Required Secrets:
-#   - VPS_SSH_KEY: Private SSH key for VPS access
-#   - VPS_HOST: VPS IP address (69.164.244.165)
-#   - VPS_USER: SSH username (root or deploy user)
-#   - VPS_PORT: SSH port (default 22)
+# CI (ci.yml) must pass first. The release is built here, shipped as one
+# tarball over SSH to a key that can only run /usr/local/sbin/dumuwaks-deploy
+# (scripts/deploy/dumuwaks-deploy), which installs it as a new release, swaps
+# symlinks, reloads PM2 and rolls back by itself if /health fails.
 #
-# Optional Secrets:
-#   - SLACK_WEBHOOK_URL: For Slack notifications
-#
-# Deployment Strategy:
-#   1. CI must pass before deployment can proceed
-#   2. Blue-green deployment using symlink swap
-#   3. PM2 graceful reload for zero-downtime backend
-#   4. Automatic rollback on health check failure
-# =============================================================================
+# Secrets (environment "production"):
+#   VPS_HOST, VPS_USER     server address and login (root, forced-command key)
+#   VPS_SSH_KEY            the deploy private key (ed25519, no passphrase)
+#   VPS_KNOWN_HOSTS        pinned host key line(s) — never keyscan at deploy time
+# Variables: PUBLIC_URL (default https://dumuwaks.co.ke)
 
-name: Deploy to VPS
+name: Deploy
 
 on:
   push:
-    branches:
-      - master
+    branches: [master]
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Deployment environment'
-        required: true
-        default: 'production'
-        type: choice
-        options:
-          - production
-          - staging
-      action:
-        description: 'Deployment action'
-        required: true
-        default: 'deploy'
-        type: choice
-        options:
-          - deploy
-          - rollback
-      version:
-        description: 'Version to rollback to (for rollback action)'
-        required: false
-        type: string
 
-# Only one deployment at a time
+permissions:
+  contents: read
+
 concurrency:
-  group: deploy-vps-${{ github.ref }}
+  group: deploy-production
   cancel-in-progress: false
 
-env:
-  NODE_VERSION: '20.x'
-  DEPLOY_PATH: '/var/www/dumuwaks'
-  APP_NAME: 'dumuwaks-backend'
-
 jobs:
-  # ===========================================================================
-  # Verify CI Passed
-  # ===========================================================================
-  verify-ci:
-    name: Verify CI Status
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  package:
+    name: Build release
+    needs: ci
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.action != 'rollback')
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Check CI status
-        uses: actions/github-script@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          script: |
-            const { owner, repo } = context.repo;
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Build frontend
+        working-directory: frontend
+        run: |
+          npm ci
+          npx vite build
+        env:
+          # Same origin: nginx proxies /api/v1 and /socket.io to the backend
+          VITE_API_URL: /api/v1
+          VITE_WHATSAPP_NUMBER: ${{ vars.WHATSAPP_NUMBER || '254799954672' }}
+      - name: Pack release
+        run: |
+          mkdir -p out
+          git archive --format=tar HEAD backend | tar -x -C out
+          cp -r frontend/dist out/frontend
+          printf '%s\n' "$GITHUB_SHA" > out/REVISION
+          tar -czf release.tgz -C out .
+          sha256sum release.tgz | tee -a "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release
+          path: release.tgz
+          retention-days: 14
+          if-no-files-found: error
 
-            // Get the latest CI workflow run for this commit
-            const runs = await github.rest.actions.listWorkflowRuns({
-              owner,
-              repo,
-              workflow_id: 'ci.yml',
-              head_sha: context.sha,
-              status: 'completed',
-              per_page: 1
-            });
-
-            if (runs.data.workflow_runs.length === 0) {
-              // If no CI run found, allow deployment for workflow_dispatch
-              if (context.eventName === 'workflow_dispatch') {
-                console.log('No CI run found, but manual deployment requested. Proceeding...');
-                return;
-              }
-              core.setFailed('No completed CI runs found for this commit. Please ensure CI passes before deploying.');
-              return;
-            }
-
-            const latestRun = runs.data.workflow_runs[0];
-            if (latestRun.conclusion !== 'success') {
-              core.setFailed(`Latest CI run concluded with: ${latestRun.conclusion}. CI must pass before deployment.`);
-              return;
-            }
-
-            console.log(`CI run ${latestRun.id} passed successfully.`);
-            core.summary.addRaw(`CI verification passed. Run ID: ${latestRun.id}`);
-
-  # ===========================================================================
-  # Production Deployment
-  # ===========================================================================
   deploy:
     name: Deploy to VPS
+    needs: package
     runs-on: ubuntu-latest
-    needs: verify-ci
-    if: |
-      always() &&
-      (needs.verify-ci.result == 'success' || needs.verify-ci.result == 'skipped') &&
-      (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.action != 'rollback'))
-
     environment:
-      name: production-vps
-      url: https://dumuwaks.co.ke
-
+      name: production
+      url: ${{ vars.PUBLIC_URL || 'https://dumuwaks.co.ke' }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.9.0
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
-
-      - name: Add VPS to known hosts
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
-
-      - name: Get deployment timestamp
-        id: timestamp
-        run: echo "RELEASE_TS=$(date +%Y%m%d_%H%M%S)" >> $GITHUB_OUTPUT
-
-      - name: Deploy to VPS
-        id: deploy
+          name: release
+      - name: Ship release
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
-          VPS_PORT: ${{ secrets.VPS_PORT || '22' }}
-          DEPLOY_PATH: ${{ env.DEPLOY_PATH }}
-          RELEASE_TS: ${{ steps.timestamp.outputs.RELEASE_TS }}
-          COMMIT_SHA: ${{ github.sha }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          VPS_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
         run: |
-          echo "Starting deployment to VPS..."
-          echo "Release: ${RELEASE_TS}"
-          echo "Commit: ${COMMIT_SHA}"
-
-          ssh -o StrictHostKeyChecking=no -p ${VPS_PORT} ${VPS_USER}@${VPS_HOST} << 'ENDSSH'
-            set -e
-
-            DEPLOY_PATH="/var/www/dumuwaks"
-            RELEASE_TS="${RELEASE_TS}"
-            COMMIT_SHA="${COMMIT_SHA}"
-            RELEASE_DIR="${DEPLOY_PATH}/releases/${RELEASE_TS}"
-            APP_NAME="dumuwaks-backend"
-
-            echo "=========================================="
-            echo "Dumuwaks VPS Deployment"
-            echo "=========================================="
-            echo "Release: ${RELEASE_TS}"
-            echo "Commit: ${COMMIT_SHA}"
-            echo "Path: ${RELEASE_DIR}"
-            echo "=========================================="
-
-            # Create release directory
-            mkdir -p ${RELEASE_DIR}
-            mkdir -p ${DEPLOY_PATH}/shared/logs
-            mkdir -p ${DEPLOY_PATH}/shared/uploads
-
-            # Clone/copy repository to release directory
-            if [ -d "${DEPLOY_PATH}/repo" ]; then
-              cd ${DEPLOY_PATH}/repo
-              git fetch origin
-              git checkout master
-              git pull origin master
-            else
-              git clone https://github.com/${{ github.repository }}.git ${DEPLOY_PATH}/repo
-              cd ${DEPLOY_PATH}/repo
-              git checkout master
-            fi
-
-            # Copy to release directory
-            cp -r ${DEPLOY_PATH}/repo/* ${RELEASE_DIR}/
-            cp -r ${DEPLOY_PATH}/repo/.* ${RELEASE_DIR}/ 2>/dev/null || true
-
-            cd ${RELEASE_DIR}
-
-            # ========================================
-            # Build Backend
-            # ========================================
-            echo "Building backend..."
-            cd ${RELEASE_DIR}/backend
-            npm ci --production
-
-            # ========================================
-            # Build Frontend
-            # ========================================
-            echo "Building frontend..."
-            cd ${RELEASE_DIR}/frontend
-
-            # Create production .env if it doesn't exist
-            if [ ! -f "${DEPLOY_PATH}/shared/.env.frontend" ]; then
-              echo "VITE_API_URL=https://dumuwaks.co.ke/api/v1" > ${DEPLOY_PATH}/shared/.env.frontend
-            fi
-
-            cp ${DEPLOY_PATH}/shared/.env.frontend .env.production
-            npm ci
-            npm run build
-
-            # ========================================
-            # Pre-deployment Health Check
-            # ========================================
-            echo "Checking current application health..."
-            CURRENT_HEALTH=$(curl -s -o /dev/null -w "%{http_code}" https://dumuwaks.co.ke/api/v1/health || echo "000")
-            echo "Current health status: ${CURRENT_HEALTH}"
-
-            # ========================================
-            # Backup Current Version
-            # ========================================
-            if [ -L "${DEPLOY_PATH}/current" ]; then
-              CURRENT_RELEASE=$(readlink ${DEPLOY_PATH}/current)
-              echo "Backing up current release: ${CURRENT_RELEASE}"
-              rm -rf ${DEPLOY_PATH}/backup
-              cp -r ${CURRENT_RELEASE} ${DEPLOY_PATH}/backup
-            fi
-
-            # ========================================
-            # Deploy Frontend (atomic symlink swap)
-            # ========================================
-            echo "Deploying frontend..."
-            ln -sfn ${RELEASE_DIR}/frontend/dist ${DEPLOY_PATH}/current-frontend-staging
-            mv -Tf ${DEPLOY_PATH}/current-frontend-staging ${DEPLOY_PATH}/current-frontend
-
-            # ========================================
-            # Deploy Backend (PM2 graceful reload)
-            # ========================================
-            echo "Deploying backend..."
-
-            # Check if PM2 ecosystem config exists
-            if [ -f "${RELEASE_DIR}/ecosystem.config.js" ]; then
-              # Update PM2 with new code
-              cd ${RELEASE_DIR}/backend
-
-              # Copy ecosystem config if needed
-              cp ${RELEASE_DIR}/ecosystem.config.js ${RELEASE_DIR}/backend/
-
-              # Graceful reload
-              pm2 reload ${APP_NAME} --update-env || pm2 start ecosystem.config.js --only ${APP_NAME}
-            else
-              # Fallback: direct restart
-              cd ${RELEASE_DIR}/backend
-              pm2 restart ${APP_NAME} --update-env || pm2 start src/server.js --name ${APP_NAME}
-            fi
-
-            # Save PM2 configuration
-            pm2 save
-
-            # ========================================
-            # Update current symlink
-            # ========================================
-            ln -sfn ${RELEASE_DIR} ${DEPLOY_PATH}/current-staging
-            mv -Tf ${DEPLOY_PATH}/current-staging ${DEPLOY_PATH}/current
-
-            # ========================================
-            # Post-deployment Health Check
-            # ========================================
-            echo "Waiting for application to start..."
-            sleep 5
-
-            MAX_RETRIES=12
-            RETRY_COUNT=0
-            HEALTH_URL="http://localhost:5000/api/v1/health"
-
-            while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-              HEALTH_STATUS=$(curl -s -o /dev/null -w "%{http_code}" ${HEALTH_URL} || echo "000")
-
-              if [ "$HEALTH_STATUS" = "200" ]; then
-                echo "Health check passed!"
-                break
-              fi
-
-              RETRY_COUNT=$((RETRY_COUNT + 1))
-              echo "Health check attempt ${RETRY_COUNT}/${MAX_RETRIES} (HTTP ${HEALTH_STATUS})"
-              sleep 5
-            done
-
-            if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
-              echo "ERROR: Health check failed after deployment!"
-
-              # ========================================
-              # Automatic Rollback
-              # ========================================
-              echo "Initiating automatic rollback..."
-
-              if [ -d "${DEPLOY_PATH}/backup" ]; then
-                # Restore frontend
-                rm -rf ${DEPLOY_PATH}/current-frontend
-                cp -r ${DEPLOY_PATH}/backup/frontend/dist ${DEPLOY_PATH}/current-frontend
-
-                # Restore backend
-                cd ${DEPLOY_PATH}/backup/backend
-                pm2 restart ${APP_NAME}
-
-                # Restore symlink
-                ln -sfn ${DEPLOY_PATH}/backup ${DEPLOY_PATH}/current
-
-                echo "Rollback completed!"
-              fi
-
-              exit 1
-            fi
-
-            # ========================================
-            # Cleanup old releases (keep last 5)
-            # ========================================
-            echo "Cleaning up old releases..."
-            cd ${DEPLOY_PATH}/releases
-            ls -1t | tail -n +6 | xargs -r rm -rf
-
-            echo "=========================================="
-            echo "Deployment completed successfully!"
-            echo "=========================================="
-ENDSSH
-
-      - name: Verify external health
-        run: |
-          echo "Verifying external health check..."
-          MAX_RETRIES=6
-          RETRY_COUNT=0
-
-          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-            HEALTH_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://dumuwaks.co.ke/api/v1/health || echo "000")
-
-            if [ "$HEALTH_STATUS" = "200" ]; then
-              echo "External health check passed!"
-              exit 0
-            fi
-
-            RETRY_COUNT=$((RETRY_COUNT + 1))
-            echo "External health check attempt ${RETRY_COUNT}/${MAX_RETRIES} (HTTP ${HEALTH_STATUS})"
-            sleep 10
+          for v in VPS_HOST VPS_USER VPS_SSH_KEY VPS_KNOWN_HOSTS; do
+            [ -n "${!v}" ] || { echo "::error::missing secret $v"; exit 1; }
           done
-
-          echo "Warning: External health check did not pass within timeout."
-          echo "Please manually verify: https://dumuwaks.co.ke/api/v1/health"
-
-      - name: Deployment summary
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/deploy_key
+          printf '%s\n' "$VPS_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/deploy_key ~/.ssh/known_hosts
+          ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o BatchMode=yes \
+              -o StrictHostKeyChecking=yes -o UserKnownHostsFile=~/.ssh/known_hosts \
+              -o ConnectTimeout=20 \
+              "$VPS_USER@$VPS_HOST" "deploy $GITHUB_SHA" < release.tgz
+      - name: Remove key
         if: always()
-        run: |
-          echo "## VPS Deployment Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Commit**: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "- **Author**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Release**: ${{ steps.timestamp.outputs.RELEASE_TS }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Environment**: Production VPS" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "## URLs" >> $GITHUB_STEP_SUMMARY
-          echo "- Frontend: https://dumuwaks.co.ke" >> $GITHUB_STEP_SUMMARY
-          echo "- API: https://dumuwaks.co.ke/api/v1" >> $GITHUB_STEP_SUMMARY
-          echo "- Health: https://dumuwaks.co.ke/api/v1/health" >> $GITHUB_STEP_SUMMARY
-
-  # ===========================================================================
-  # Rollback Deployment
-  # ===========================================================================
-  rollback:
-    name: Rollback VPS Deployment
-    runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'rollback'
-
-    environment:
-      name: production-vps
-      url: https://dumuwaks.co.ke
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
-
-      - name: Add VPS to known hosts
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
-
-      - name: Rollback deployment
-        id: rollback
+        run: rm -f ~/.ssh/deploy_key
+      - name: Public smoke test
         env:
-          VPS_HOST: ${{ secrets.VPS_HOST }}
-          VPS_USER: ${{ secrets.VPS_USER }}
-          VPS_PORT: ${{ secrets.VPS_PORT || '22' }}
-          DEPLOY_PATH: ${{ env.DEPLOY_PATH }}
-          TARGET_VERSION: ${{ github.event.inputs.version }}
+          PUBLIC_URL: ${{ vars.PUBLIC_URL || 'https://dumuwaks.co.ke' }}
         run: |
-          echo "Starting rollback..."
-
-          ssh -o StrictHostKeyChecking=no -p ${VPS_PORT} ${VPS_USER}@${VPS_HOST} << 'ENDSSH'
-            set -e
-
-            DEPLOY_PATH="/var/www/dumuwaks"
-            APP_NAME="dumuwaks-backend"
-            TARGET_VERSION="${TARGET_VERSION}"
-
-            echo "=========================================="
-            echo "Dumuwaks VPS Rollback"
-            echo "=========================================="
-
-            # Determine target release
-            if [ -n "${TARGET_VERSION}" ]; then
-              TARGET_RELEASE="${DEPLOY_PATH}/releases/${TARGET_VERSION}"
-              if [ ! -d "${TARGET_RELEASE}" ]; then
-                echo "ERROR: Target release not found: ${TARGET_RELEASE}"
-                exit 1
-              fi
-            else
-              # Use backup
-              TARGET_RELEASE="${DEPLOY_PATH}/backup"
-              if [ ! -d "${TARGET_RELEASE}" ]; then
-                echo "ERROR: No backup available for rollback"
-                exit 1
-              fi
-            fi
-
-            echo "Rolling back to: ${TARGET_RELEASE}"
-
-            # Rollback frontend
-            echo "Rolling back frontend..."
-            rm -rf ${DEPLOY_PATH}/current-frontend
-            cp -r ${TARGET_RELEASE}/frontend/dist ${DEPLOY_PATH}/current-frontend
-
-            # Rollback backend
-            echo "Rolling back backend..."
-            cd ${TARGET_RELEASE}/backend
-            pm2 restart ${APP_NAME}
-
-            # Update current symlink
-            ln -sfn ${TARGET_RELEASE} ${DEPLOY_PATH}/current
-
-            # Health check
-            echo "Waiting for application to start..."
-            sleep 5
-
-            MAX_RETRIES=12
-            RETRY_COUNT=0
-
-            while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-              HEALTH_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/api/v1/health || echo "000")
-
-              if [ "$HEALTH_STATUS" = "200" ]; then
-                echo "Health check passed!"
-                break
-              fi
-
-              RETRY_COUNT=$((RETRY_COUNT + 1))
-              echo "Health check attempt ${RETRY_COUNT}/${MAX_RETRIES} (HTTP ${HEALTH_STATUS})"
-              sleep 5
-            done
-
-            if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
-              echo "ERROR: Health check failed after rollback!"
-              exit 1
-            fi
-
-            echo "=========================================="
-            echo "Rollback completed successfully!"
-            echo "=========================================="
-ENDSSH
-
-      - name: Rollback summary
-        if: always()
-        run: |
-          echo "## VPS Rollback Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Initiated by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Target version**: ${{ github.event.inputs.version || 'backup' }}" >> $GITHUB_STEP_SUMMARY
-
-  # ===========================================================================
-  # Notification
-  # ===========================================================================
-  notify:
-    name: Send Notifications
-    runs-on: ubuntu-latest
-    needs: [deploy, rollback]
-    if: always() && (needs.deploy.result != 'skipped' || needs.rollback.result != 'skipped')
-
-    steps:
-      - name: Determine status
-        id: status
-        run: |
-          if [ "${{ needs.deploy.result }}" = "success" ] || [ "${{ needs.rollback.result }}" = "success" ]; then
-            echo "status=success" >> $GITHUB_OUTPUT
-            echo "emoji=:white_check_mark:" >> $GITHUB_OUTPUT
-            echo "message=Deployment successful" >> $GITHUB_OUTPUT
-          else
-            echo "status=failure" >> $GITHUB_OUTPUT
-            echo "emoji=:x:" >> $GITHUB_OUTPUT
-            echo "message=Deployment failed" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Send Slack notification
-        if: env.SLACK_WEBHOOK_URL != ''
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        run: |
-          curl -X POST -H 'Content-type: application/json' \
-            --data '{
-              "blocks": [
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "${{ steps.status.outputs.emoji }} Dumuwaks ${{ github.event.inputs.action || 'deploy' }}"
-                  }
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {"type": "mrkdwn", "text": "*Status:*\n${{ steps.status.outputs.message }}"},
-                    {"type": "mrkdwn", "text": "*Environment:*\nProduction VPS"},
-                    {"type": "mrkdwn", "text": "*Commit:*\n<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>" },
-                    {"type": "mrkdwn", "text": "*Author:*\n${{ github.actor }}"}
-                  ]
-                },
-                {
-                  "type": "actions",
-                  "elements": [
-                    {
-                      "type": "button",
-                      "text": {"type": "plain_text", "text": "View Deployment"},
-                      "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                    },
-                    {
-                      "type": "button",
-                      "text": {"type": "plain_text", "text": "View Site"},
-                      "url": "https://dumuwaks.co.ke"
-                    }
-                  ]
-                }
-              ]
-            }' \
-            ${SLACK_WEBHOOK_URL}
-
-      - name: Final summary
-        run: |
-          echo "# Deployment Notification" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Status: **${{ steps.status.outputs.message }}**" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Links:" >> $GITHUB_STEP_SUMMARY
-          echo "- Frontend: https://dumuwaks.co.ke" >> $GITHUB_STEP_SUMMARY
-          echo "- API: https://dumuwaks.co.ke/api/v1" >> $GITHUB_STEP_SUMMARY
-          echo "- Health: https://dumuwaks.co.ke/api/v1/health" >> $GITHUB_STEP_SUMMARY
+          curl -fsS --retry 5 --retry-delay 5 --retry-all-errors "$PUBLIC_URL/health"
+          curl -fsS "$PUBLIC_URL/" | grep -q 'id="root"'
+          curl -fsS "$PUBLIC_URL/api/v1/payments/config"

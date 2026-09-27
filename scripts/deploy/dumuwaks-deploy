@@ -1,0 +1,136 @@
+#!/usr/bin/env bash
+# Dumuwaks release manager — the ONLY thing the GitHub deploy key can run.
+#
+# Installed on the VPS as /usr/local/sbin/dumuwaks-deploy (root:root 0755) and
+# bound to the deploy key in /root/.ssh/authorized_keys:
+#   command="/usr/local/sbin/dumuwaks-deploy",restrict ssh-ed25519 AAAA… dumuwaks-github-deploy
+#
+# Commands (from SSH_ORIGINAL_COMMAND, or argv when run by hand as root):
+#   deploy <40-hex commit sha>   release tarball on stdin
+#   rollback                     switch back to the previous release
+#   status                       show the live release and the ones kept
+#
+# Layout:
+#   /var/www/dumuwaks/releases/<utc>-<sha7>/{backend,frontend,REVISION}
+#   /var/www/dumuwaks/backend  -> releases/<live>/backend    (PM2 cwd)
+#   /var/www/dumuwaks/current  -> releases/<live>/frontend   (nginx root)
+#   /var/www/dumuwaks/shared/{backend.env,uploads,logs}      (survive releases)
+set -Eeuo pipefail
+umask 022
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+APP=/var/www/dumuwaks
+RELEASES=$APP/releases
+SHARED=$APP/shared
+KEEP=5
+PM2_NAME=dumuwaks-backend
+HEALTH_URL=http://127.0.0.1:5000/health
+MAX_BYTES=$((150 * 1024 * 1024))
+LOG=/var/log/dumuwaks-deploy.log
+
+log() { printf '[%s] %s\n' "$(date -u +%FT%TZ)" "$*" | tee -a "$LOG" >&2; }
+die() { log "ERROR: $*"; exit 1; }
+
+exec 9>/run/lock/dumuwaks-deploy.lock
+flock -n 9 || die "another deploy is running"
+
+live_release() { dirname "$(readlink -f "$APP/backend")"; }
+
+# Releases oldest → newest (names start with a UTC timestamp, so they sort).
+list_releases() { find "$RELEASES" -mindepth 1 -maxdepth 1 -type d -name '[0-9]*-*' -printf '%f\n' | sort; }
+
+switch_to() { # $1 = release dir
+  local rel=$1
+  [[ -f $rel/backend/package.json && -f $rel/frontend/index.html ]] || die "not a release: $rel"
+  ln -sfn "$rel/backend" "$APP/.backend.new" && mv -Tf "$APP/.backend.new" "$APP/backend"
+  ln -sfn "$rel/frontend" "$APP/.current.new" && mv -Tf "$APP/.current.new" "$APP/current"
+  pm2 reload "$PM2_NAME" >/dev/null
+}
+
+healthy() {
+  local _
+  for _ in $(seq 1 30); do
+    if curl -fsS --max-time 3 "$HEALTH_URL" >/dev/null 2>&1; then return 0; fi
+    sleep 2
+  done
+  return 1
+}
+
+cmd_status() {
+  echo "live: $(basename "$(live_release)") ($(cat "$(live_release)/REVISION" 2>/dev/null || echo legacy))"
+  echo "kept:"; list_releases | sed 's/^/  /'
+  pm2 describe "$PM2_NAME" 2>/dev/null | grep -E '^\│ (status|uptime|restarts)' || true
+}
+
+cmd_deploy() {
+  local sha=$1 ts rel tmp prev
+  ts=$(date -u +%Y%m%d%H%M%S)
+  rel=$RELEASES/$ts-${sha:0:7}
+  tmp=$RELEASES/.incoming-$ts
+  prev=$(live_release)
+  trap 'rm -rf "$tmp" "$tmp.tgz"' EXIT
+
+  log "deploy $sha requested (live: $(basename "$prev"))"
+  head -c $((MAX_BYTES + 1)) >"$tmp.tgz"
+  (( $(stat -c %s "$tmp.tgz") <= MAX_BYTES )) || die "upload larger than $MAX_BYTES bytes"
+  (( $(stat -c %s "$tmp.tgz") > 0 )) || die "empty upload"
+
+  mkdir -p "$tmp"
+  tar -xzf "$tmp.tgz" -C "$tmp" --no-same-owner --no-same-permissions
+  [[ $(cat "$tmp/REVISION" 2>/dev/null) == "$sha" ]] || die "REVISION does not match $sha"
+  [[ -f $tmp/backend/package-lock.json && -f $tmp/frontend/index.html ]] || die "bad release layout"
+  chmod -R u=rwX,go=rX "$tmp"
+
+  log "installing backend dependencies"
+  (cd "$tmp/backend" && npm ci --omit=dev --ignore-scripts --no-audit --no-fund --loglevel=error) >&2
+
+  # Secrets and state live outside the release.
+  rm -rf "$tmp/backend/.env" "$tmp/backend/uploads" "$tmp/backend/logs"
+  ln -s "$SHARED/backend.env" "$tmp/backend/.env"
+  ln -s "$SHARED/uploads" "$tmp/backend/uploads"
+  ln -s "$SHARED/logs" "$tmp/backend/logs"
+
+  mv -T "$tmp" "$rel"
+  trap - EXIT
+  rm -f "$tmp.tgz"
+
+  log "switching to $(basename "$rel")"
+  switch_to "$rel"
+  if ! healthy; then
+    log "health check failed — rolling back to $(basename "$prev")"
+    switch_to "$prev"
+    healthy || log "WARNING: previous release is not healthy either"
+    die "deploy of $sha failed; rolled back"
+  fi
+  log "live: $(basename "$rel")"
+
+  # Keep the newest $KEEP releases; never delete the live or previous one.
+  local old
+  list_releases | head -n -"$KEEP" | while read -r old; do
+    [[ $RELEASES/$old == "$rel" || $RELEASES/$old == "$prev" ]] && continue
+    rm -rf "${RELEASES:?}/$old"
+    log "pruned $old"
+  done
+}
+
+cmd_rollback() {
+  local live target
+  live=$(basename "$(live_release)")
+  target=$(list_releases | grep -B1 -x -- "$live" | head -n 1)
+  [[ -n $target && $target != "$live" ]] || die "no release before $live"
+  log "rollback $live -> $target"
+  switch_to "$RELEASES/$target"
+  healthy || die "rolled back to $target but it is not healthy"
+  log "live: $target"
+}
+
+read -r action arg extra <<<"${SSH_ORIGINAL_COMMAND:-$*}" || true
+[[ -z ${extra:-} ]] || die "unexpected arguments"
+case "${action:-}" in
+  deploy)
+    [[ ${arg:-} =~ ^[0-9a-f]{40}$ ]] || die "deploy needs a full commit sha"
+    cmd_deploy "$arg" ;;
+  rollback) [[ -z ${arg:-} ]] || die "rollback takes no arguments"; cmd_rollback ;;
+  status) [[ -z ${arg:-} ]] || die "status takes no arguments"; cmd_status ;;
+  *) die "usage: deploy <sha> | rollback | status" ;;
+esac
