@@ -130,6 +130,14 @@ app.use('/api/', limiter);
 // ===== ROUTES =====
 
 // Health Check (both /health and /api/v1/health for Render compatibility)
+// REVISION is written next to backend/ by the release packer (scripts/deploy)
+const RELEASE = (() => {
+  try {
+    return require('fs').readFileSync(require('path').join(__dirname, '../../REVISION'), 'utf8').trim().slice(0, 12);
+  } catch {
+    return 'dev';
+  }
+})();
 const healthCheckHandler = async (req, res) => {
   const { checkDatabaseHealth } = require('./config/db');
   const dbHealth = await checkDatabaseHealth();
@@ -138,8 +146,9 @@ const healthCheckHandler = async (req, res) => {
     status: dbHealth.isHealthy ? 'healthy' : 'unhealthy',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
-    environment: process.env.NODE_ENV,
-    database: dbHealth
+    release: RELEASE,
+    // public endpoint: never expose hosts, database or collection names
+    database: dbHealth.isHealthy ? 'connected' : 'unavailable'
   });
 };
 
