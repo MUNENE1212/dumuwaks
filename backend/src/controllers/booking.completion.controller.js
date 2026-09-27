@@ -195,6 +195,17 @@ exports.completeBySupport = async (req, res) => {
 
     await booking.save();
 
+    // Real escrow: support approval pays the technician; a dispute freezes the money
+    if (booking.paymentProvider === 'intasend' && booking.escrow) {
+      try {
+        const engine = require('../services/payments/escrow.engine');
+        if (booking.status === 'verified') await engine.release(booking.escrow, { by: req.user.id });
+        if (booking.status === 'disputed') await engine.openDispute(booking.escrow, { by: req.user.id, reason: notes || 'Customer disputed completion' });
+      } catch (escrowError) {
+        console.error('Escrow action after support follow-up failed:', escrowError);
+      }
+    }
+
     await booking.populate('completionRequest.supportFollowUp.completedBy', 'firstName lastName');
 
     res.status(200).json({

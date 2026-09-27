@@ -335,7 +335,10 @@ exports.getBookings = async (req, res) => {
     const isAdminOrSupport = req.user.role === 'admin' || req.user.role === 'support';
     const safeBookings = bookings.map(booking => {
       const bookingObj = booking.toObject();
-      const paymentVerified = ['held', 'paid', 'released'].includes(bookingObj.bookingFee?.status);
+      const paymentVerified =
+        ['held', 'paid', 'released'].includes(bookingObj.bookingFee?.status) ||
+        // Real escrow: the full price is held (processing) or already paid out (completed)
+        (bookingObj.paymentProvider === 'intasend' && ['processing', 'completed'].includes(bookingObj.payment?.status));
 
       if (!paymentVerified && !isAdminOrSupport) {
         // Hide customer contact info from technician
@@ -394,7 +397,7 @@ exports.getBooking = async (req, res) => {
   try {
     const populateOptions = [
       { path: 'customer', select: 'firstName lastName email phoneNumber profilePicture location' },
-      { path: 'technician', select: 'firstName lastName email phoneNumber profilePicture rating skills location' }
+      { path: 'technician', select: 'firstName lastName email phoneNumber profilePicture rating skills location kyc.verified kyc.verifiedAt' }
     ];
 
     // Add WORD BANK service and payment plan population if models exist
@@ -426,7 +429,10 @@ exports.getBooking = async (req, res) => {
     }
 
     // Hide contact information until payment is verified
-    const paymentVerified = ['held', 'paid', 'released'].includes(booking.bookingFee?.status);
+    const paymentVerified =
+      ['held', 'paid', 'released'].includes(booking.bookingFee?.status) ||
+      // Real escrow: the full price is held (processing) or already paid out (completed)
+      (booking.paymentProvider === 'intasend' && ['processing', 'completed'].includes(booking.payment?.status));
     const isAdminOrSupport = req.user.role === 'admin' || req.user.role === 'support';
 
     const safeBooking = booking.toObject();

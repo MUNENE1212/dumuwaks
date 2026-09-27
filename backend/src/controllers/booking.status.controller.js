@@ -34,6 +34,18 @@ exports.updateToEnRoute = async (req, res) => {
       });
     }
 
+    // Real escrow: the technician travels only once the full price is held
+    if (booking.paymentProvider === 'intasend') {
+      const Escrow = require('../models/Escrow');
+      const escrow = await Escrow.findOne({ booking: booking._id }).select('status');
+      if (escrow?.status !== 'funded') {
+        return res.status(402).json({
+          success: false,
+          message: "Waiting for the customer's payment. You'll be notified as soon as it is held in escrow."
+        });
+      }
+    }
+
     // Update to en_route status
     booking.status = 'en_route';
     booking.actualStartTime = new Date();
@@ -258,6 +270,14 @@ exports.requestCompletion = async (req, res) => {
 
     await booking.save();
 
+    if (booking.paymentProvider === 'intasend') {
+      try {
+        await require('../services/payments/escrow.engine').onCompletionRequested(booking._id);
+      } catch (escrowError) {
+        console.error('Escrow completion clock error:', escrowError);
+      }
+    }
+
     // Notify customer (URGENT - requires action)
     try {
       const notificationService = require('../services/notification.service');
@@ -334,6 +354,41 @@ exports.confirmCompletion = async (req, res) => {
     if (approved) {
       // Customer approved - now process remaining payment
       booking.completionRequest.status = 'approved';
+
+      // Real escrow: the full price is already held — confirm and pay the technician
+      if (booking.paymentProvider === 'intasend') {
+        booking.status = 'verified';
+        booking.statusHistory.push({
+          status: 'verified',
+          changedBy: req.user.id,
+          changedAt: new Date(),
+          notes: isSupport ? 'Completion approved by support' : 'Completion confirmed by customer'
+        });
+        await booking.save();
+
+        let release = null;
+        try {
+          release = await require('../services/payments/escrow.engine').release(booking.escrow, { by: req.user.id });
+        } catch (releaseError) {
+          console.error('Escrow release error:', releaseError);
+        }
+
+        try {
+          const notificationService = require('../services/notification.service');
+          const customerName = `${booking.customer.firstName} ${booking.customer.lastName}`;
+          await notificationService.notifyCompletionResponse(booking, customerName, true);
+        } catch (notifError) {
+          console.error('Notification error:', notifError);
+        }
+
+        return res.status(200).json({
+          success: true,
+          message: 'Job confirmed. Payment to the technician is on its way.',
+          paymentRequired: false,
+          escrowStatus: release?.status,
+          booking
+        });
+      }
 
       // Calculate remaining amount to be paid
       const totalAmount = booking.pricing.totalAmount;
@@ -546,11 +601,17 @@ exports.cancelBooking = async (req, res) => {
 
     await booking.save();
 
-    // Process refund if booking fee was held
+    // Return held money
     try {
-      if (booking.bookingFee?.status === 'held' && booking.escrow) {
+      if (booking.paymentProvider === 'intasend') {
+        await require('../services/payments/escrow.engine').cancel(booking._id, {
+          cancelledBy: isCancellingCustomer ? 'customer' : isCancellingTechnician ? 'technician' : 'admin',
+          by: req.user.id,
+          reason: reason || 'Booking cancelled'
+        });
+      } else if (booking.bookingFee?.status === 'held' && booking.escrow) {
         const escrowService = require('../services/escrow.service');
-        await escrowService.refundEscrow(booking.escrow, 'system', 'Booking cancelled');
+        await escrowService.refundEscrow(booking.escrow, reason || 'Booking cancelled', undefined, req.user.id);
       }
     } catch (refundError) {
       console.error('Refund processing error:', refundError);

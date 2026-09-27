@@ -145,7 +145,8 @@ exports.processPayout = async (req, res) => {
     // Initiate M-Pesa B2C
     const b2cResult = await mpesaService.initiateB2C({
       phoneNumber: payout.payee.phoneNumber,
-      amount: payout.amount.gross,
+      // Net of platform fee and VAT: gross would pay the platform's share to the technician
+      amount: payout.amount.net ?? payout.amount.gross,
       remarks: remarks || `Payout for ${payout.booking.bookingNumber}`,
       occasion: payout.booking.bookingNumber,
     });
@@ -242,7 +243,8 @@ exports.batchProcessPayouts = async (req, res) => {
         // Initiate B2C
         const b2cResult = await mpesaService.initiateB2C({
           phoneNumber: payout.payee.phoneNumber,
-          amount: payout.amount.gross,
+          // Net of platform fee and VAT: gross would pay the platform's share to the technician
+          amount: payout.amount.net ?? payout.amount.gross,
           remarks: remarks || `Payout for ${payout.booking.bookingNumber}`,
           occasion: payout.booking.bookingNumber,
         });
@@ -258,7 +260,8 @@ exports.batchProcessPayouts = async (req, res) => {
 
           results.successful.push({
             payoutId,
-            amount: payout.amount.gross,
+            // Net of platform fee and VAT: gross would pay the platform's share to the technician
+            amount: payout.amount.net ?? payout.amount.gross,
             technician: `${payout.payee.firstName} ${payout.payee.lastName}`,
           });
         } else {

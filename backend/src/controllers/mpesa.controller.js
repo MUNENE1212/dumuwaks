@@ -35,6 +35,14 @@ exports.initiateSTKPush = async (req, res) => {
       });
     }
 
+    // Bookings on real escrow pay through IntaSend, never this legacy path
+    if (booking.paymentProvider === 'intasend') {
+      return res.status(409).json({
+        success: false,
+        message: 'This booking is paid into escrow. Use POST /api/v1/payments/bookings/:id/escrow/pay',
+      });
+    }
+
     // Validate amount based on payment type
     if (type === 'booking_fee') {
       const expectedAmount = booking.bookingFee?.amount;

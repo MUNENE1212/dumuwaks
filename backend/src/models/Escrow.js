@@ -182,6 +182,43 @@ const EscrowHistorySchema = new Schema({
 }, { _id: false });
 
 /**
+ * One STK push into the IntaSend escrow wallet (initial payment or a top-up).
+ */
+const EscrowCollectionSchema = new Schema({
+  kind: { type: String, enum: ['initial', 'topup'], default: 'initial' },
+  topupIndex: Number,
+  apiRef: { type: String, required: true },
+  invoiceId: String,
+  phone: String,
+  amount: { type: Number, required: true, min: 0 },
+  state: {
+    type: String,
+    enum: ['REQUESTING', 'PENDING', 'PROCESSING', 'COMPLETE', 'FAILED'],
+    default: 'REQUESTING'
+  },
+  value: Number,
+  netAmount: Number,
+  charges: Number,
+  providerRef: String,
+  failedReason: String,
+  requestedAt: { type: Date, default: Date.now },
+  confirmedAt: Date
+}, { _id: true });
+
+/**
+ * Extra cost agreed on site: proposed by the technician, approved by the customer,
+ * then collected into the same escrow.
+ */
+const EscrowTopupSchema = new Schema({
+  amount: { type: Number, required: true, min: 1 },
+  reason: { type: String, required: true, maxlength: 500 },
+  proposedBy: { type: Schema.Types.ObjectId, ref: 'User' },
+  proposedAt: { type: Date, default: Date.now },
+  status: { type: String, enum: ['proposed', 'approved', 'rejected', 'paid'], default: 'proposed' },
+  decidedAt: Date
+}, { _id: true });
+
+/**
  * Main Escrow Schema
  * Holds payment in escrow until job completion
  */
@@ -232,6 +269,17 @@ const EscrowSchema = new Schema({
     default: 'KES'
   },
 
+  // Where the money actually is. `legacy` escrows (before IntaSend) are status-only.
+  provider: {
+    type: String,
+    enum: ['legacy', 'intasend'],
+    default: 'legacy'
+  },
+  collections: [EscrowCollectionSchema],
+  topups: [EscrowTopupSchema],
+  // When the technician asked the customer to confirm the work; auto-release counts from here
+  completionRequestedAt: Date,
+
   // Status management
   status: {
     type: String,
@@ -242,7 +290,10 @@ const EscrowSchema = new Schema({
       'released',       // All funds released to technician
       'refunded',       // Funds returned to customer
       'disputed',       // Under dispute
-      'cancelled'       // Cancelled before funding
+      'cancelled',      // Cancelled before funding
+      'release_pending', // Payout to technician under way
+      'refunding',      // Refund to customer under way
+      'partially_refunded' // Refunded in part, rest paid to the technician
     ],
     default: 'pending'
   },
@@ -299,11 +350,11 @@ const EscrowSchema = new Schema({
 });
 
 // ===== INDEXES =====
-EscrowSchema.index({ booking: 1 });
+// booking already has a unique index from the field definition
 EscrowSchema.index({ customer: 1, status: 1 });
 EscrowSchema.index({ technician: 1, status: 1 });
 EscrowSchema.index({ status: 1, expiresAt: 1 });
-EscrowSchema.index({ 'funding.checkoutRequestID': 1 });
+// funding.checkoutRequestID already has a sparse index from the field definition
 EscrowSchema.index({ createdAt: -1 });
 
 // ===== VIRTUALS =====
@@ -474,12 +525,15 @@ EscrowSchema.methods.getReleasedMilestoneTotal = function() {
 EscrowSchema.methods.canTransitionTo = function(newStatus) {
   const validTransitions = {
     'pending': ['funded', 'cancelled'],
-    'funded': ['partial_release', 'released', 'refunded', 'disputed'],
+    'funded': ['partial_release', 'released', 'refunded', 'disputed', 'release_pending', 'refunding'],
     'partial_release': ['released', 'refunded', 'disputed'],
     'released': ['disputed'],
     'refunded': [],
-    'disputed': ['released', 'refunded'],
-    'cancelled': []
+    'disputed': ['released', 'refunded', 'release_pending', 'refunding'],
+    'cancelled': [],
+    'release_pending': ['released'],
+    'refunding': ['refunded', 'partially_refunded'],
+    'partially_refunded': []
   };
 
   return validTransitions[this.status]?.includes(newStatus) || false;
@@ -583,5 +637,8 @@ EscrowSchema.statics.getStats = async function(startDate, endDate) {
     }
   };
 };
+
+EscrowSchema.index({ 'collections.invoiceId': 1 });
+EscrowSchema.index({ provider: 1, status: 1 });
 
 module.exports = mongoose.model('Escrow', EscrowSchema);

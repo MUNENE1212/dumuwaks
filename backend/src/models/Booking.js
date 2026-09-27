@@ -100,6 +100,15 @@ const BookingSchema = new Schema({
     ref: 'Escrow'
   },
 
+  // Every booking is paid into real escrow (services/payments): technician
+  // accepts → customer pays the full price → held → released on confirmation.
+  // `legacy` (20% booking fee) is kept only so old records still read correctly.
+  paymentProvider: {
+    type: String,
+    enum: ['legacy', 'intasend'],
+    default: 'intasend'
+  },
+
   // Deposit tracking
   depositPaid: {
     type: Boolean,
@@ -695,10 +704,10 @@ BookingSchema.methods.transitionTo = async function(newStatus, userId, reason = 
     'in_progress': ['paused', 'completed', 'cancelled'],
     'paused': ['in_progress', 'cancelled'],
     'completed': ['verified', 'disputed', 'cancelled'],
-    'verified': ['payment_pending'],
+    'verified': ['payment_pending', 'paid'],
     'payment_pending': ['paid', 'disputed'],
     'paid': ['disputed'],
-    'disputed': ['refunded', 'completed'],
+    'disputed': ['refunded', 'completed', 'paid'],
     'cancelled': [],
     'refunded': []
   };

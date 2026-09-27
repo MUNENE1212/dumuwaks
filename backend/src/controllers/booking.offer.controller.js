@@ -37,7 +37,10 @@ exports.acceptBooking = async (req, res) => {
     }
 
     // IMPORTANT: Verify booking fee has been paid
-    const paymentVerified = ['held', 'paid', 'released'].includes(booking.bookingFee?.status);
+    const paymentVerified =
+      ['held', 'paid', 'released'].includes(booking.bookingFee?.status) ||
+      // Real escrow: the full price is held (processing) or already paid out (completed)
+      (booking.paymentProvider === 'intasend' && ['processing', 'completed'].includes(booking.payment?.status));
     if (!paymentVerified) {
       return res.status(400).json({
         success: false,

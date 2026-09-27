@@ -16,7 +16,7 @@ const BOOKING_POPULATES = {
   // Used by booking list (getBookings)
   list: [
     { path: 'customer', select: 'firstName lastName phoneNumber profilePicture' },
-    { path: 'technician', select: 'firstName lastName phoneNumber profilePicture rating skills' }
+    { path: 'technician', select: 'firstName lastName phoneNumber profilePicture rating skills kyc.verified kyc.verifiedAt' }
   ],
 
   // Used by offer operations (accept, reject, counterOffer, respond, withdraw)

@@ -224,7 +224,10 @@ exports.getBookings = async (req, res) => {
     const isAdminOrSupport = req.user.role === 'admin' || req.user.role === 'support';
     const safeBookings = bookings.map(booking => {
       const bookingObj = booking.toObject();
-      const paymentVerified = ['held', 'paid', 'released'].includes(bookingObj.bookingFee?.status);
+      const paymentVerified =
+        ['held', 'paid', 'released'].includes(bookingObj.bookingFee?.status) ||
+        // Real escrow: the full price is held (processing) or already paid out (completed)
+        (bookingObj.paymentProvider === 'intasend' && ['processing', 'completed'].includes(bookingObj.payment?.status));
 
       if (!paymentVerified && !isAdminOrSupport) {
         // Hide customer contact info from technician
@@ -308,7 +311,10 @@ exports.getBooking = async (req, res) => {
 
     // Hide contact information until payment is verified
     // Payment must be confirmed (held/paid/released) for contacts to be visible
-    const paymentVerified = ['held', 'paid', 'released'].includes(booking.bookingFee?.status);
+    const paymentVerified =
+      ['held', 'paid', 'released'].includes(booking.bookingFee?.status) ||
+      // Real escrow: the full price is held (processing) or already paid out (completed)
+      (booking.paymentProvider === 'intasend' && ['processing', 'completed'].includes(booking.payment?.status));
     const isAdminOrSupport = req.user.role === 'admin' || req.user.role === 'support';
 
     // Create a safe version of the booking with potentially hidden contact info
@@ -513,7 +519,10 @@ exports.assignTechnician = async (req, res) => {
     }
 
     // Check if booking fee has been paid
-    const paymentVerified = ['held', 'paid', 'released'].includes(booking.bookingFee?.status);
+    const paymentVerified =
+      ['held', 'paid', 'released'].includes(booking.bookingFee?.status) ||
+      // Real escrow: the full price is held (processing) or already paid out (completed)
+      (booking.paymentProvider === 'intasend' && ['processing', 'completed'].includes(booking.payment?.status));
     if (!paymentVerified) {
       return res.status(400).json({
         success: false,
