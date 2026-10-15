@@ -39,7 +39,14 @@ const failures = [];
 const check = (name, ok, detail = '') => {
   if (ok) pass += 1;
   else failures.push(name);
-  console[ok ? 'warn' : 'error'](`${ok ? 'ok  ' : 'FAIL'}  ${name}${detail ? ` — ${detail}` : ''}`);
+  // Written as two literal calls, not console[ok ? 'warn' : 'error'](...). A
+  // dynamic method name reads fine and lints clean in most configs, but a
+  // no-console rule that only permits warn/error cannot see through it and
+  // flags the whole script — so the vendored copy failed its repo's own lint
+  // before this check ever ran.
+  const msg = `${ok ? 'ok  ' : 'FAIL'}  ${name}${detail ? ` — ${detail}` : ''}`;
+  if (ok) console.warn(msg);
+  else console.error(msg);
 };
 
 let registry;
@@ -129,7 +136,10 @@ const lineByName = (wanted) => {
 console.warn('\n— the three lines —\n');
 
 for (const line of ['Emen Shop', 'Emen Tech', 'Emen Lighting']) {
-  check(`the registry declares ${line}`, Boolean(lineByName(line)), line);
+  // Report what was actually found, not the name being asked about: a detail
+  // that echoes the query is a detail that lies when the answer is no.
+  const found = lineByName(line);
+  check(`the registry declares ${line}`, Boolean(found), found ? `${found.name ?? 'unnamed'}` : '(absent)');
 }
 
 // Emen Lighting is not live. Promoting a line that cannot be bought is the
