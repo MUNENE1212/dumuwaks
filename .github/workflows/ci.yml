@@ -80,6 +80,25 @@ jobs:
         run: npx jest --ci --forceExit
         timeout-minutes: 15
 
+  brand-registry:
+    name: Brand registry agrees with the estate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      # No npm ci: the check is zero-dependency, so it must not be able to fail
+      # for a reason unrelated to brand facts.
+      #
+      # This matters here more than anywhere else in the estate. seo/src/lib/
+      # constants.ts imports this registry, so the SEO build reads whatever
+      # fork it contains — and it was still a v1-era copy with no `lines` block
+      # at all, predating the three-line brand entirely.
+      - run: node scripts/verify-brand-registry.mjs brand.registry.json
+
   frontend:
     name: Frontend lint, types, tests, build
     runs-on: ubuntu-latest
