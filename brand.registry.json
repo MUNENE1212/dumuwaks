@@ -1,27 +1,33 @@
 {
   "_meta": {
-    "what": "Single machine-readable source of truth for Emen Engineering identity, brands, and product portfolio. Facts only — no copy, no keywords, no voice.",
+    "what": "Single machine-readable source of truth for Emen identity, brands, lines and product portfolio. Facts only — no copy, no keywords, no voice.",
     "rule": "No file, skill, or generated content may assert a brand fact, product status, or domain that contradicts this registry. Other repos vendor a committed copy rather than importing across repo boundaries.",
-    "version": 1,
-    "updated": "2026-09-04",
-    "verified": "All status:'live' liveUrls fetched and title-checked on 2026-09-04. Enforced by scripts/verify-claims.mjs (npm run verify:claims)."
+    "vendoredFrom": "ementech/ementech-website/src/config/brand.registry.json",
+    "vendoredNote": "This is a VENDORED COPY, not an independent source. The master is the ementech-website file named above; this repo cannot import across the boundary, so it commits a copy and keeps it honest by hand. If you change a fact here, change it in the master too — a fact that differs between the two is drift that no build in either repo will catch.",
+    "version": 2,
+    "updated": "2026-10-15",
+    "verified": "Synced from master v2 on 2026-10-15. Live checks that day: dumuwaks.co.ke 200; dumuwaks.ementech.co.ke 301 -> it; ardalink.onrender.com 200; baitech.co.ke no DNS."
   },
   "_notes": {
     "nap": "PROVISIONAL: Nairobi is what all three live sites' JSON-LD already publish (least public drift). Director to confirm against the registered address and Google Business Profile (decision D3, brand-trust-remediation-plan.md). If Athi River is the registered address, change it HERE only.",
     "baitechEmail": "baitech@ementech.co.ke is taken from the storefront's SITE_CONFIG; mailbox existence not independently verified. info@baitech.co.ke is dead (baitech.co.ke has no DNS).",
-    "baitechDomain": "baitech.co.ke is dead (no A/NS/SOA records). Whether it is recoverable is unconfirmed (decision D5). Do not cite it anywhere.",
+    "baitechDomain": "RETIRED, and no longer recoverable-and-optional: baitech.co.ke has no DNS. Baitech was absorbed into the Emen Shop line on 2026-09-20. Purge remaining Baitech links rather than buying the domain back.",
+    "masterBrand": "Restructured 2026-09-20: Emen is a master brand with three lines — Emen Lighting, Emen Tech, Emen Shop. A line is not a separate brand: one mark, one palette, one voice, one site. Products (DumuWaks, ArdaLink, SmartBiz, OnlineDuka) sit inside a line and never become a fourth line. Legal entity remains Emen Engineering Limited.",
+    "emenAfrica": "VERIFIED 2026-10-15: emen.africa resolves, serves a valid certificate and answers 200. It is the canonical brand address, and ementech.co.ke 301s onto emen.africa/tech.",
+    "ementechDomain": "ementech.co.ke is owned and keeps working: it 301s onto emen.africa, landing on /tech. Mailboxes stay @ementech.co.ke — the Postfix/Dovecot server is on that domain and moving mail is a separate job from moving the site.",
+    "baitech": "RETIRED 2026-09-20: Baitech is absorbed into the Emen Shop line. The storefront itself is live and unchanged at emen.onlineduka.shop; only the name is gone.",
     "keroma": "Downgraded 2026-09-04: 502 and the unresolved 2026-08-02 security incident. Do not restore to make a portfolio claim true.",
     "kukuTracker": "Fixed + deployed 2026-09-04: product identity corrected (repo 2026/zebray/kuku-egg-tracker) and zebra.ementech.co.ke now serves title 'Kuku Egg Tracker'. Verified live; registry flipped to live same day.",
     "tomtin": "Downgraded 2026-09-04: hostname does not resolve; nginx server_name fix and DNS record not yet deployed.",
     "iphoneOnlineduka": "iphone.onlineduka.shop unreachable as of 2026-09-04.",
-    "dumuwaksDomain": "Moved 2026-09-26 from dumuwaks.ementech.co.ke to dumuwaks.co.ke (old host 301s to the new one). Pending: DNS + certbot for dumuwaks.co.ke/www, then verify:claims. Mirror this change in the master registry (ementech-website)."
+    "dumuwaksDomain": "Moved 2026-09-26 from dumuwaks.ementech.co.ke to dumuwaks.co.ke. VERIFIED 2026-10-15: dumuwaks.co.ke answers 200 and the old host 301s onto it, so DNS and certbot are done. Mirrored into the master registry the same day — the master had been naming the redirecting host, and it did not."
   },
   "company": {
     "legalName": "Emen Engineering Limited",
     "shortName": "Emen Engineering",
     "registrationNumber": "PVT-EY137V3Z",
     "tagline": "Build for Africa to scale globally",
-    "domain": "https://ementech.co.ke",
+    "domain": "https://emen.africa",
     "nap": {
       "locality": "Nairobi",
       "region": "Nairobi",
@@ -47,25 +53,11 @@
   },
   "brands": {
     "ementech": {
-      "name": "Emen Engineering",
-      "role": "parent",
-      "domain": "https://ementech.co.ke",
-      "oneLiner": "Technology company in Kenya: custom software, embedded systems, IoT, automation, and AI solutions.",
+      "name": "Emen",
+      "role": "master-brand",
+      "domain": "https://emen.africa",
+      "oneLiner": "Emen makes businesses visible and workable: signage and lighting, systems and storefronts, and a shop that supplies the kit.",
       "email": "info@ementech.co.ke"
-    },
-    "baitech": {
-      "name": "Baitech",
-      "role": "storefront-on-platform",
-      "platform": "onlineduka",
-      "domain": "https://emen.onlineduka.shop",
-      "oneLiner": "Premium Electronics & Tech Services — laptops, phones, TVs, accessories, and repairs in Kenya.",
-      "tagline": "Tech that fits your budget.",
-      "email": "baitech@ementech.co.ke",
-      "social": {
-        "twitter": "baitech_ke",
-        "facebook": "baitech.ke",
-        "instagram": "baitech.ke"
-      }
     },
     "dumuwaks": {
       "name": "DumuWaks",
@@ -73,7 +65,8 @@
       "domain": "https://dumuwaks.co.ke",
       "oneLiner": "AI-powered technician marketplace connecting skilled professionals with customers across Kenya.",
       "tagline": "Find Trusted Technicians Near You",
-      "email": "dumuwaks@ementech.co.ke"
+      "email": "dumuwaks@ementech.co.ke",
+      "line": "tech"
     }
   },
   "platforms": {
@@ -81,7 +74,39 @@
       "name": "onlineduka.shop",
       "role": "multi-tenant SME platform (its own product with its own GTM)",
       "domain": "https://onlineduka.shop",
-      "oneLiner": "AI-first business platform for African SMEs. Baitech, SmartBiz and iPhone are tenants, not the platform itself."
+      "oneLiner": "AI-first business platform for African SMEs, and a product of Emen Tech. Emen Shop, SmartBiz and iPhone are tenants on it, not the platform itself.",
+      "line": "tech"
+    }
+  },
+  "lines": {
+    "shop": {
+      "name": "Emen Shop",
+      "path": "/shop",
+      "sells": "Tech products, repairs and installs",
+      "storefront": "https://emen.onlineduka.shop",
+      "email": "shop@ementech.co.ke",
+      "emailVerified": false,
+      "verb": "get equipped"
+    },
+    "tech": {
+      "name": "Emen Tech",
+      "path": "/tech",
+      "sells": "Systems, storefronts, automation, web",
+      "email": "info@ementech.co.ke",
+      "emailVerified": true,
+      "legacyDomain": "https://ementech.co.ke",
+      "verb": "get running"
+    },
+    "lighting": {
+      "name": "Emen Lighting",
+      "path": "/lighting",
+      "sells": "Signage, lighting and control",
+      "email": "lighting@ementech.co.ke",
+      "emailVerified": false,
+      "verb": "get seen",
+      "promise": "Lighting your brand. Lighting your world.",
+      "status": "not-live",
+      "promote": false
     }
   },
   "portfolio": [
@@ -112,17 +137,19 @@
       "brand": "dumuwaks"
     },
     {
-      "slug": "baitech",
-      "name": "Baitech",
+      "slug": "emenshop",
+      "name": "Emen Shop",
       "category": "ecommerce",
       "tagline": "Tech Products & Services Marketplace",
       "status": "live",
       "liveUrl": "https://emen.onlineduka.shop",
       "aliases": [
+        "Emen Shop",
         "Baitech",
         "BaiTech"
       ],
-      "brand": "baitech"
+      "brand": "shop",
+      "note": "Absorbed Baitech on 2026-09-20. The aliases are kept deliberately: the name is still what customers search for and what the storefront's social handles carry, but it is not a live brand."
     },
     {
       "slug": "image-generator",
@@ -174,7 +201,8 @@
       "name": "ArdaLink",
       "category": "iot",
       "tagline": "Pasture Intelligence for Pastoralists",
-      "status": "development",
+      "status": "live",
+      "liveUrl": "https://ardalink.onrender.com",
       "githubUrl": "https://github.com/MUNENE1212/ardalink-engine",
       "brand": "ardalink"
     },
