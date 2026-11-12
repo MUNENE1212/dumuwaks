@@ -6,6 +6,7 @@
   "description": "Dumu Waks - Professional Maintenance & Repair Services Platform Frontend",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/generate-sitemap.mjs",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 580",
     "preview": "vite preview",
