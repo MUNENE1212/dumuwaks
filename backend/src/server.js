@@ -182,6 +182,10 @@ app.get('/api-docs.json', (req, res) => {
 });
 
 // API Routes
+// WhatsApp tap pings. Stateless: the 204 is the whole job. nginx logs the
+// POST with its Referer, so the access log says which page sent a visitor to
+// WhatsApp -- which a wa.me link, leaving the site, can never tell us.
+app.post('/api/v1/track/wa', (req, res) => res.sendStatus(204));
 app.use('/api/v1/auth', require('./routes/auth.routes'));
 app.use('/api/v1/users', require('./routes/user.routes'));
 app.use('/api/v1/bookings', require('./routes/booking.routes'));
