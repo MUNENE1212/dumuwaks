@@ -27,6 +27,19 @@ export const WHATSAPP_NUMBER: string =
  * bot understands (BOOK, STATUS, HELP, JOIN) so the conversation starts in the
  * right place without the customer typing anything.
  */
+/**
+ * Tell the server a WhatsApp link was tapped (POST /api/v1/track/wa, logged
+ * by nginx with the page as Referer). Never throws: a ping must not be able
+ * to stop someone reaching us.
+ */
+export function pingWhatsAppClick(): void {
+  try {
+    navigator.sendBeacon?.('/api/v1/track/wa');
+  } catch {
+    /* the link still works */
+  }
+}
+
 export function whatsappLink(message = 'Hi Dumuwaks'): string {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
