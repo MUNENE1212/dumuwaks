@@ -11,6 +11,7 @@
 const express = require('express');
 const { query } = require('express-validator');
 const analyticsService = require('../services/analytics.service');
+const tractionService = require('../services/traction.service');
 const { protect, authorize } = require('../middleware/auth');
 const { validate } = require('../middleware/validation');
 
@@ -220,6 +221,44 @@ router.post(
       res.status(500).json({
         success: false,
         message: 'Failed to clear cache',
+      });
+    }
+  }
+);
+
+/**
+ * @route   GET /api/v1/admin/analytics/traction
+ * @desc    Traction KPIs for the weekly review: technicians, customers,
+ *          completed jobs per week, repeat rate, in-app payment share and
+ *          platform revenue per month
+ * @access  Admin only
+ *
+ * Query params:
+ * - weeks: weeks of history (4-52, default 12)
+ */
+router.get(
+  '/traction',
+  [
+    query('weeks')
+      .optional()
+      .isInt({ min: 4, max: 52 })
+      .withMessage('Weeks must be between 4 and 52'),
+    validate
+  ],
+  async (req, res) => {
+    try {
+      const weeks = parseInt(req.query.weeks) || 12;
+      const traction = await tractionService.getTraction({ weeks, includeRevenue: true });
+
+      res.json({
+        success: true,
+        data: traction
+      });
+    } catch (error) {
+      console.error('[Analytics API] Error getting traction:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Failed to retrieve traction figures',
       });
     }
   }

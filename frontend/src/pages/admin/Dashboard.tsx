@@ -21,6 +21,7 @@ import FeeConfiguration from '@/pages/admin/FeeConfiguration';
 import { getDashboardStats, getEscrowStats } from '@/services/admin.service';
 import type { DashboardMetrics } from '@/types/admin';
 import FinancePanel from '@/components/admin/FinancePanel';
+import TractionPanel from '@/components/admin/TractionPanel';
 
 /**
  * Admin Dashboard Page Component
@@ -146,6 +147,11 @@ const AdminDashboard: React.FC = () => {
     // Real escrow on IntaSend: wallet vs ledger, payout approvals, disputes
     if (path === '/admin/finance') {
       return <FinancePanel />;
+    }
+
+    // Traction KPIs for the weekly review
+    if (path === '/admin/traction') {
+      return <TractionPanel />;
     }
 
     // Escrow management

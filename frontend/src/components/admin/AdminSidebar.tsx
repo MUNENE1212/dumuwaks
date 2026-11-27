@@ -179,6 +179,12 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({
       title: 'Analytics',
       items: [
         {
+          id: 'traction',
+          label: 'Traction',
+          icon: Icons.Reports,
+          path: '/admin/traction',
+        },
+        {
           id: 'reports',
           label: 'Reports',
           icon: Icons.Reports,
