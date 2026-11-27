@@ -98,6 +98,23 @@ export const ANALYTICS_EVENTS = {
   ERROR: 'analytics:error',
 } as const;
 
+// Traction KPIs (GET /admin/analytics/traction)
+export interface TractionWeek {
+  weekStart: string; // YYYY-MM-DD, Monday, East Africa Time
+  count: number;
+}
+
+export interface TractionData {
+  asOf: string;
+  weeks: number;
+  technicians: { registered: number; verified: number };
+  customers: { registered: number };
+  completedJobs: { total: number; inWindow: number; perWeek: TractionWeek[] };
+  repeatCustomerRate: number | null; // 0-1, null when no customer has a completed job
+  inAppPaymentShare: number | null; // 0-1, null when no completed jobs in the window
+  platformRevenueByMonth?: { month: string; amountKes: number }[];
+}
+
 // API response types
 export interface AnalyticsApiResponse<T> {
   success: boolean;

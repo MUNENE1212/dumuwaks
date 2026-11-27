@@ -53,6 +53,7 @@ const corsOptions = {
       'https://www.dumuwaks.co.ke',
       'https://dumuwaks.ementech.co.ke',
       'https://api.ementech.co.ke',
+      'https://munene1212.github.io', // founder portfolio reads /api/v1/public/traction
       'http://localhost:3000',
       'http://localhost:3001',
       'http://localhost:5000', // Backend server (for Swagger UI)
@@ -194,6 +195,7 @@ app.use('/api/v1/notifications', require('./routes/notification.routes'));
 app.use('/api/v1/support', require('./routes/support.routes'));
 app.use('/api/v1/admin', require('./routes/admin.routes'));
 app.use('/api/v1/admin/analytics', require('./routes/analytics.routes'));
+app.use('/api/v1/public', require('./routes/traction.routes'));
 app.use('/api/v1/admin/fee-config', require('./routes/feeConfig.routes'));
 app.use('/api/v1/matching', require('./routes/matching.routes'));
 app.use('/api/v1/media', require('./routes/media.routes'));

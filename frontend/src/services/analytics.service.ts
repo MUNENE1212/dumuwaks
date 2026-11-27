@@ -14,6 +14,7 @@ import type {
   AnalyticsApiResponse,
   ActivityFeedResponse,
   TimePeriod,
+  TractionData,
 } from '@/types/analytics';
 
 const BASE_URL = '/admin/analytics';
@@ -66,6 +67,20 @@ export async function getActivityFeed(limit: number = 20): Promise<ActivityEvent
   const response = await axios.get<ActivityFeedResponse>(
     `${BASE_URL}/activity-feed`,
     { params: { limit } }
+  );
+  return response.data.data;
+}
+
+/**
+ * Get traction KPIs for the weekly review
+ *
+ * @param weeks - Weeks of history (4-52, default 12)
+ * @returns Promise with traction figures, including revenue
+ */
+export async function getTraction(weeks: number = 12): Promise<TractionData> {
+  const response = await axios.get<AnalyticsApiResponse<TractionData>>(
+    `${BASE_URL}/traction`,
+    { params: { weeks } }
   );
   return response.data.data;
 }
@@ -159,6 +174,7 @@ export default {
   getTrends,
   getStatusDistribution,
   getActivityFeed,
+  getTraction,
   clearCache,
   formatCurrency,
   formatNumber,
